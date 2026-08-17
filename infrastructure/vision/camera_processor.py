@@ -82,12 +82,15 @@ class CameraProcessor(threading.Thread):
 
             ret, frame = cap.read()
             if not ret:
-                self.streaming = False
-                self.last_error = "Lost frame"
-                logger.warning(f"Lost frame from {self.rtsp} - try reconnect...")
-                cap.release()
-                cap = None
-                time.sleep(1)
+                if not cap.isOpened():
+                    self.streaming = False
+                    self.last_error = "Lost stream"
+                    logger.warning(f"Lost stream from {self.rtsp} - try reconnect...")
+                    cap.release()
+                    cap = None
+                    time.sleep(1)
+                else:
+                    time.sleep(0.01)
                 continue
 
             if self.latest_frames_ref is not None and not getattr(frame, "is_cuda", False):
@@ -98,10 +101,14 @@ class CameraProcessor(threading.Thread):
 
             self.inference_engine.put_frame_with_drop(frame, self.cam_id)
 
+            paused = getattr(self.inference_engine, "_paused", None)
+            if paused is not None and paused.is_set():
+                time.sleep(0.03)
+                continue
+
             try:
                 detections = self.result_queue.get(timeout=0.1)
             except queue.Empty:
-                logger.warning(f"Inference timeout for {self.cam_id}, skipping frame")
                 time.sleep(0.01)
                 continue
 

@@ -2,23 +2,34 @@ import subprocess
 import threading
 import queue
 import numpy as np
-from config.settings import settings
+import torch
+from infrastructure.vision.annexb_pipe import pull_aus
+from infrastructure.vision.gpu_frame import decoded_frame_to_rgb
 from utils.setup_log import setup_logger
 
 logger = setup_logger("gpu_video_decoder", "logs/gpu_decoder/log")
 
 
+def _submit_au(decoder, nvc, au):
+    # PacketData.bsl_data = pointer (int), bsl = size. Buffer must live until Decode returns.
+    buf = np.frombuffer(au, dtype=np.uint8).copy()
+    pkt = nvc.PacketData()
+    pkt.bsl_data = int(buf.ctypes.data)
+    pkt.bsl = int(buf.nbytes)
+    out = decoder.Decode(pkt)
+    _ = buf
+    if out is None:
+        return []
+    return out
+
+
 class GPUVideoDecoder:
-    """
-    Giải mã RTSP bằng FFmpeg NVDEC (GPU), đọc frame BGR numpy ra queue.
-    PyNvVideoCodec CreateDemuxer không ổn định trên live pipe — giữ NVDEC, frame về RAM.
-    """
+    """FFmpeg demux (-c:v copy) → Annex-B → NVDEC in-process → tensor CUDA."""
 
     def __init__(self, rtsp_url, width=640, height=480):
         self.rtsp_url = rtsp_url
         self.width = width
         self.height = height
-        self.frame_size = width * height * 3
         self.queue = queue.Queue(maxsize=3)
         self.process = None
         self.thread = None
@@ -33,15 +44,17 @@ class GPUVideoDecoder:
 
         cmd = [
             "ffmpeg",
-            "-hwaccel", "cuda",
-            "-hwaccel_output_format", "cuda",
-            "-c:v", "h264_cuvid",
+            "-nostdin",
+            "-hide_banner",
+            "-loglevel", "warning",
             "-rtsp_transport", "tcp",
             "-i", self.rtsp_url,
-            "-vf", f"scale_cuda={self.width}:{self.height},hwdownload,format=nv12,format=bgr24",
-            "-f", "rawvideo",
-            "-pix_fmt", "bgr24",
-            "-",
+            "-map", "0:v:0",
+            "-c:v", "copy",
+            "-an",
+            "-bsf:v", "h264_mp4toannexb,dump_extra=freq=keyframe",
+            "-f", "h264",
+            "pipe:1",
         ]
 
         try:
@@ -50,7 +63,7 @@ class GPUVideoDecoder:
                 stdin=subprocess.DEVNULL,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                bufsize=getattr(settings, "GPU_DECODE_BUFFER_SIZE", 0),
+                bufsize=64 * 1024,
             )
             self.running = True
             self._opened = True
@@ -70,43 +83,60 @@ class GPUVideoDecoder:
                 continue
             logger.warning(f"ffmpeg: {text}")
 
-    def _read_exact(self, n):
-        buf = bytearray()
-        while len(buf) < n:
-            if self.process is None or self.process.stdout is None:
-                break
-            chunk = self.process.stdout.read(n - len(buf))
-            if not chunk:
-                break
-            buf.extend(chunk)
-        return bytes(buf)
-
     def _decode_loop(self):
+        decoder = None
         first_frame = True
-        while self.running:
-            try:
-                raw = self._read_exact(self.frame_size)
-                if len(raw) != self.frame_size:
-                    logger.error(
-                        f"FFmpeg stdout closed before full frame "
-                        f"({len(raw)}/{self.frame_size}) from {self.rtsp_url}"
-                    )
+        buf = bytearray()
+        try:
+            import PyNvVideoCodec as nvc
+
+            torch.cuda.init()
+            decoder = nvc.CreateDecoder(
+                gpuid=0,
+                codec=nvc.cudaVideoCodec.H264,
+                usedevicememory=True,
+                maxwidth=1920,
+                maxheight=1080,
+                latency=nvc.DisplayDecodeLatencyType.LOW,
+            )
+            logger.info(f"NVDEC session open {self.rtsp_url}")
+            stdout = self.process.stdout if self.process else None
+
+            while self.running and stdout is not None:
+                chunk = stdout.read(4096)
+                if not chunk:
                     break
-
-                frame = np.frombuffer(raw, np.uint8).reshape((self.height, self.width, 3))
-                if first_frame:
-                    self._ready.set()
-                    first_frame = False
-
-                if self.queue.full():
-                    try:
-                        self.queue.get_nowait()
-                    except queue.Empty:
-                        pass
-                self.queue.put(frame)
-            except Exception as e:
-                logger.error(f"Decode error: {e}")
-                break
+                buf.extend(chunk)
+                aus, buf = pull_aus(buf)
+                for au in aus:
+                    for decoded in _submit_au(decoder, nvc, au):
+                        frame = decoded_frame_to_rgb(
+                            decoded, self.height, self.width, self.height, self.width
+                        )
+                        if self.queue.full():
+                            try:
+                                self.queue.get_nowait()
+                            except queue.Empty:
+                                pass
+                        self.queue.put(frame)
+                        if first_frame:
+                            self._ready.set()
+                            first_frame = False
+                            logger.info(f"Decoder ready for {self.rtsp_url}")
+        except Exception as e:
+            msg = str(e)
+            if "Invoked with" in msg:
+                msg = msg.split("Invoked with")[0].strip()
+            logger.error(f"Decode error: {msg}")
+        finally:
+            self.running = False
+            self._opened = False
+            if self.process is not None and self.process.poll() is None:
+                try:
+                    self.process.kill()
+                except Exception:
+                    pass
+            del decoder
 
     def isOpened(self):
         return self._opened and self.process is not None and self.process.poll() is None
@@ -134,8 +164,6 @@ class GPUVideoDecoder:
 
     def wait_ready(self, timeout=10.0):
         is_ready = self._ready.wait(timeout)
-        if is_ready:
-            logger.info(f"Decoder ready for {self.rtsp_url}")
-        else:
+        if not is_ready:
             logger.warning(f"Decoder timeout waiting for first frame from {self.rtsp_url}")
         return is_ready

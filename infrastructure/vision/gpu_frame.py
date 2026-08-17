@@ -3,12 +3,23 @@ import torch
 import torch.nn.functional as F
 
 
+def _infer_hw(tensor, fallback_h, fallback_w):
+    if tensor.ndim == 3 and tensor.shape[0] == 3:
+        return tensor.shape[1], tensor.shape[2]
+    if tensor.ndim == 3 and tensor.shape[-1] == 3:
+        return tensor.shape[0], tensor.shape[1]
+    if tensor.ndim == 2:
+        return tensor.shape[0] * 2 // 3, tensor.shape[1]
+    return fallback_h, fallback_w
+
+
 def decoded_frame_to_rgb(frame, src_h, src_w, dst_h, dst_w):
     """
     Zero-copy DLPack rồi convert + resize trên GPU.
     clone() để decoder tái sử dụng surface không ghi đè frame trong queue.
     """
     tensor = torch.from_dlpack(frame)
+    src_h, src_w = _infer_hw(tensor, src_h, src_w)
     rgb = _as_rgb_chw(tensor, src_h, src_w)
     if rgb.shape[-2] != dst_h or rgb.shape[-1] != dst_w:
         rgb = F.interpolate(
