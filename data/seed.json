@@ -1,0 +1,165 @@
+{
+  "_meta": {
+    "purpose": "Seed Mongo cho test manual. Sửa URL/ROI/node cho khớp hiện trường rồi chạy: python scripts/seed_db.py --replace",
+    "collections": ["zones", "cameras", "nodes", "pairs"],
+    "notes": [
+      "Runtime.start() đọc cameras (get_all) + pairs enabled (get_as_tuples).",
+      "rois: [x, y, w, h] trên frame decode (mặc định 640x480).",
+      "node_id phải trùng key rois và start_point/end_point của pair.",
+      "pair_type=empty thì end_point=null; ICS empty dùng END_POINT_EMPTY trong .env.",
+      "camera.cameraId (int) = node.camera_id."
+    ]
+  },
+  "zones": [
+    {
+      "zone_id": "AE5",
+      "name": "Khu AE5",
+      "enabled": true
+    },
+    {
+      "zone_id": "AE6",
+      "name": "Khu AE6",
+      "enabled": true
+    }
+  ],
+  "cameras": [
+    {
+      "cameraId": 1,
+      "name": "AE5-CAM-01 — placeholder, sửa RTSP + ROI",
+      "url": "rtsp://USER:PASS@192.168.1.101:554/Streaming/Channels/101",
+      "zone_id": "AE5",
+      "enabled": true,
+      "rois": {
+        "start_10000060": { "roi": [80, 120, 140, 90], "start": true, "end": false },
+        "start_10000059": { "roi": [240, 120, 140, 90], "start": true, "end": false },
+        "end_10000760": { "roi": [80, 280, 140, 90], "start": false, "end": true },
+        "end_10000761": { "roi": [240, 280, 140, 90], "start": false, "end": true }
+      }
+    },
+    {
+      "cameraId": 2,
+      "name": "AE5-CAM-02 empty parking — placeholder",
+      "url": "rtsp://USER:PASS@192.168.1.102:554/Streaming/Channels/101",
+      "zone_id": "AE5",
+      "enabled": true,
+      "rois": {
+        "start_10000391": { "roi": [100, 150, 160, 100], "start": true, "end": false },
+        "start_10001287": { "roi": [300, 150, 160, 100], "start": true, "end": false }
+      }
+    },
+    {
+      "cameraId": 3,
+      "name": "AE6-CAM-01 — placeholder",
+      "url": "rtsp://USER:PASS@192.168.1.201:554/Streaming/Channels/101",
+      "zone_id": "AE6",
+      "enabled": true,
+      "rois": {
+        "start_10000037": { "roi": [80, 120, 140, 90], "start": true, "end": false },
+        "end_10000276": { "roi": [80, 280, 140, 90], "start": false, "end": true }
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "start_10000060",
+      "node_type": "start",
+      "zone_id": "AE5",
+      "camera_id": 1,
+      "priority": 1,
+      "enabled": true
+    },
+    {
+      "node_id": "start_10000059",
+      "node_type": "start",
+      "zone_id": "AE5",
+      "camera_id": 1,
+      "priority": 2,
+      "enabled": true
+    },
+    {
+      "node_id": "end_10000760",
+      "node_type": "end",
+      "zone_id": "AE5",
+      "camera_id": 1,
+      "priority": 1,
+      "enabled": true
+    },
+    {
+      "node_id": "end_10000761",
+      "node_type": "end",
+      "zone_id": "AE5",
+      "camera_id": 1,
+      "priority": 2,
+      "enabled": true
+    },
+    {
+      "node_id": "start_10000391",
+      "node_type": "start",
+      "zone_id": "AE5",
+      "camera_id": 2,
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "node_id": "start_10001287",
+      "node_type": "start",
+      "zone_id": "AE5",
+      "camera_id": 2,
+      "priority": 11,
+      "enabled": true
+    },
+    {
+      "node_id": "start_10000037",
+      "node_type": "start",
+      "zone_id": "AE6",
+      "camera_id": 3,
+      "priority": 1,
+      "enabled": true
+    },
+    {
+      "node_id": "end_10000276",
+      "node_type": "end",
+      "zone_id": "AE6",
+      "camera_id": 3,
+      "priority": 1,
+      "enabled": true
+    }
+  ],
+  "pairs": [
+    {
+      "start_point": "start_10000060",
+      "end_point": "end_10000760",
+      "zone_id": "AE5",
+      "pair_type": "normal",
+      "enabled": true
+    },
+    {
+      "start_point": "start_10000059",
+      "end_point": "end_10000761",
+      "zone_id": "AE5",
+      "pair_type": "normal",
+      "enabled": true
+    },
+    {
+      "start_point": "start_10000391",
+      "end_point": null,
+      "zone_id": "AE5",
+      "pair_type": "empty",
+      "enabled": true
+    },
+    {
+      "start_point": "start_10001287",
+      "end_point": null,
+      "zone_id": "AE5",
+      "pair_type": "empty",
+      "enabled": true
+    },
+    {
+      "start_point": "start_10000037",
+      "end_point": "end_10000276",
+      "zone_id": "AE6",
+      "pair_type": "normal",
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# ── AI & Vision ───────────────────────────────────────────────
+# Cài torch riêng bằng lệnh bên dưới, KHÔNG dùng pip install torch thông thường
+ultralytics==8.3.0        # YOLOv8
+opencv-python==4.10.0.84  # cv2
+numpy==1.26.4             # >= 2.0 có breaking changes, giữ 1.26.x cho ổn định
+
+# ── API & Server ──────────────────────────────────────────────
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.8.0
+pydantic-settings==2.4.0
+httpx==0.27.0
+requests==2.32.3
+
+# ── Database ──────────────────────────────────────────────────
+motor==3.5.1
+pymongo==4.8.0
+
+# ── Image ─────────────────────────────────────────────────────
+Pillow==10.4.0
+
+#Install Pytorch with CUDA 
+#uv pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0 --index-url https://download.pytorch.org/whl/cu128
+
+#Install FFmpeg NVDEC
+# FFmpeg với GPU support — tải từ https://www.gyan.dev/ffmpeg/builds/
+# Chọn bản ffmpeg-release-full.7z, giải nén, thêm vào PATH
+
+#Install TensorRT using .engine
+# Tải từ NVIDIA developer site — phải match đúng CUDA version
+# https://developer.nvidia.com/tensorrt
