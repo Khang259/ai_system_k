@@ -21,6 +21,13 @@ from application.state.get_zone_state import GetZoneState
 from application.cameras.start_stop import StartAllCameras, StopAllCameras
 from application.cameras.zone import StartZoneCameras, StopZoneCameras
 from application.cameras.get_status import GetCameraStatus
+from application.cameras.preview import GetCameraPreview, GetCameraPreviewMeta
+from application.cameras.webrtc_sessions import WebrtcSessionRegistry
+from application.cameras.webrtc_signaling import (
+    DeleteWebrtcSession,
+    GetWebrtcGrid,
+    OfferWebrtc,
+)
 from application.cameras.confirm_ready import ConfirmReady
 from application.cameras.pause_scan import PauseScan
 from application.cameras.on_dispatch_success import OnDispatchSuccess
@@ -57,6 +64,18 @@ class AppContainer:
         self.runtime_control = NullRuntimeControl()
         self.zone_pairs = NullZonePairs()
         self.dispatch_gateway = NullDispatchGateway()
+        from config.settings import settings
+
+        self.webrtc_sessions = WebrtcSessionRegistry(
+            max_sessions=settings.WEBRTC_MAX_SESSIONS
+        )
+        from infrastructure.webrtc import NullWebrtcGateway
+
+        self.webrtc_gateway = NullWebrtcGateway()
+        self._wire()
+
+    def bind_webrtc(self, gateway) -> None:
+        self.webrtc_gateway = gateway
         self._wire()
 
     def bind_repos(self, camera_repo, pairs_repo, node_repo, zone_pairs) -> None:
@@ -87,6 +106,13 @@ class AppContainer:
 
     def unbind_runtime(self) -> None:
         self.scan_session.reset()
+        for info in self.webrtc_sessions.drain():
+            remote = info.get("remote")
+            if remote:
+                try:
+                    self.webrtc_gateway.hangup(remote)
+                except Exception:
+                    pass
         self.cameras = NullCameraRuntime()
         self.inference = NullInference()
         self.state = NullNodeStateStore()
@@ -116,6 +142,18 @@ class AppContainer:
         self.start_zone_cameras = StartZoneCameras(cams)
         self.stop_zone_cameras = StopZoneCameras(cams, inf, scan)
         self.get_camera_status = GetCameraStatus(cams, scan)
+        self.get_camera_preview = GetCameraPreview(cams)
+        self.get_camera_preview_meta = GetCameraPreviewMeta(cams)
+        self.offer_webrtc = OfferWebrtc(
+            self.webrtc_sessions,
+            cameras=cams,
+            gateway=self.webrtc_gateway,
+        )
+        self.delete_webrtc_session = DeleteWebrtcSession(
+            self.webrtc_sessions,
+            gateway=self.webrtc_gateway,
+        )
+        self.get_webrtc_grid = GetWebrtcGrid(self.webrtc_sessions)
         self.confirm_ready = ConfirmReady(cams, inf, state, scan)
         self.pause_scan = PauseScan(inf, scan)
         self.on_dispatch_success = OnDispatchSuccess(inf, state, scan)

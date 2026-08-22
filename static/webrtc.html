@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Kortek WebRTC grid 2×2</title>
+  <style>
+    body { font-family: sans-serif; margin: 16px; background: #111; color: #eee; }
+    .hint { color: #aaa; font-size: 13px; max-width: 1280px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1280px; }
+    .slot { background: #1c1c1c; padding: 8px; }
+    .stage { position: relative; background: #000; min-height: 180px; }
+    video, canvas { width: 100%; display: block; }
+    canvas { position: absolute; left: 0; top: 0; pointer-events: none; }
+    label, button { margin: 4px 8px 4px 0; }
+    .err { color: #f66; font-size: 12px; min-height: 1.2em; }
+    .lag.bad { color: #f66; }
+    .lag.ok { color: #8c8; }
+  </style>
+</head>
+<body>
+  <h1>WebRTC grid 2×2</h1>
+  <p class="hint">
+    Tối đa 4 PeerConnection (mix preview/detect). Slot 5 → 409.
+    Detect poll <code>/preview/meta</code>. Passthrough không ABR.
+    ICE từ <code>/cameras/webrtc/ice</code> (trống = LAN).
+    JPEG: <a href="/static/preview.html">/static/preview.html</a>
+  </p>
+  <p id="cap">sessions —/4</p>
+  <div class="grid" id="grid"></div>
+  <script>
+    const MAX = 4;
+    const PREVIEW_MAX_MS = 500;
+    const DETECT_MAX_MS = 300;
+    const peers = [];
+    let iceServers = [];
+
+    fetch("/cameras/webrtc/ice").then((r) => r.json()).then((j) => {
+      iceServers = j.iceServers || [];
+    }).catch(() => {});
+
+    function slotIndex(el) {
+      return [...document.querySelectorAll(".slot")].indexOf(el);
+    }
+
+    function slot(i) {
+      const wrap = document.createElement("div");
+      wrap.className = "slot";
+      wrap.innerHTML =
+        '<label>camera_id <input class="cam" type="number" min="1" value="' + (i + 1) + '" /></label>' +
+        '<label>mode <select class="mode"><option value="preview">preview</option>' +
+        '<option value="detect"' + (i >= 2 ? " selected" : "") + ">detect</option></select></label>" +
+        '<button class="go" type="button">Connect</button>' +
+        '<button class="stop" type="button">Hangup</button>' +
+        '<div class="stage"><video autoplay playsinline muted></video><canvas></canvas></div>' +
+        '<div class="err"></div>';
+      return wrap;
+    }
+
+    const grid = document.getElementById("grid");
+    for (let i = 0; i < MAX; i++) {
+      grid.appendChild(slot(i));
+      peers.push(null);
+    }
+
+    async function refreshCap() {
+      try {
+        const j = await (await fetch("/cameras/webrtc/status")).json();
+        document.getElementById("cap").textContent =
+          "sessions " + j.count + "/" + j.max;
+      } catch (e) {}
+    }
+    refreshCap();
+    setInterval(refreshCap, 2000);
+
+    function sizeCanvas(el) {
+      const v = el.querySelector("video");
+      const c = el.querySelector("canvas");
+      if (v.videoWidth) {
+        c.width = v.videoWidth;
+        c.height = v.videoHeight;
+      }
+    }
+
+    function drawMeta(el, meta) {
+      const c = el.querySelector("canvas");
+      const ctx = c.getContext("2d");
+      ctx.clearRect(0, 0, c.width, c.height);
+      const sx = (meta.w ? c.width / meta.w : 1);
+      const sy = (meta.h ? c.height / meta.h : 1);
+      (meta.rois || []).forEach((r) => {
+        const b = r.roi || [];
+        if (b.length < 4) return;
+        const end = (r.node_id || "").indexOf("end_") === 0;
+        ctx.strokeStyle = end ? "#ffa500" : "#00dc00";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(b[0] * sx, b[1] * sy, b[2] * sx, b[3] * sy);
+        if (r.node_id) {
+          ctx.fillStyle = ctx.strokeStyle;
+          ctx.font = "12px sans-serif";
+          ctx.fillText(r.node_id, b[0] * sx, Math.max(12, b[1] * sy - 4));
+        }
+      });
+      (meta.dets || []).forEach((d) => {
+        const p = d.xyxy || [];
+        if (p.length < 4) return;
+        const x1 = p[0] * sx, y1 = p[1] * sy, x2 = p[2] * sx, y2 = p[3] * sy;
+        ctx.strokeStyle = "#ffff00";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
+        ctx.fillStyle = "#ffff00";
+        ctx.font = "12px sans-serif";
+        ctx.fillText(d.cls + " " + Number(d.conf).toFixed(2), x1, Math.max(12, y1 - 4));
+      });
+    }
+
+    async function previewLagMs(pc) {
+      const stats = await pc.getStats();
+      let rtt = 0, jb = 0;
+      stats.forEach((r) => {
+        if (r.type === "candidate-pair" && r.state === "succeeded" && r.currentRoundTripTime != null)
+          rtt = r.currentRoundTripTime * 1000;
+        if (r.type === "inbound-rtp" && r.kind === "video" && r.jitterBufferEmittedCount)
+          jb = (r.jitterBufferDelay / r.jitterBufferEmittedCount) * 1000;
+      });
+      return rtt / 2 + jb;
+    }
+
+    function setLag(el, ms, limit) {
+      const err = el.querySelector(".err");
+      const n = Math.round(ms);
+      const ok = n <= limit;
+      err.className = "err lag " + (ok ? "ok" : "bad");
+      err.textContent = "lag ~" + n + " ms (ngưỡng " + limit + " ms)";
+    }
+
+    function startMetaPoll(el, cameraId) {
+      const i = slotIndex(el);
+      const tick = async () => {
+        const st = peers[i];
+        if (!st || st.mode !== "detect") return;
+        try {
+          const res = await fetch("/cameras/" + cameraId + "/preview/meta");
+          const body = await res.json();
+          if (!res.ok) {
+            el.querySelector(".err").textContent = res.status + " " + (body.error || "meta");
+            return;
+          }
+          sizeCanvas(el);
+          drawMeta(el, body);
+          const lag = (Date.now() / 1000 - Number(body.ts)) * 1000;
+          setLag(el, lag, DETECT_MAX_MS);
+        } catch (e) {
+          el.querySelector(".err").textContent = String(e);
+        }
+      };
+      tick();
+      return setInterval(tick, 200);
+    }
+
+    function startPreviewLag(el, pc) {
+      const i = slotIndex(el);
+      const tick = async () => {
+        const st = peers[i];
+        if (!st || st.mode !== "preview") return;
+        try { setLag(el, await previewLagMs(pc), PREVIEW_MAX_MS); }
+        catch (e) {}
+      };
+      tick();
+      return setInterval(tick, 1000);
+    }
+
+    function waitIce(pc) {
+      return new Promise((resolve) => {
+        if (pc.iceGatheringState === "complete") return resolve();
+        const t = setTimeout(resolve, 3000);
+        pc.addEventListener("icegatheringstatechange", () => {
+          if (pc.iceGatheringState === "complete") {
+            clearTimeout(t);
+            resolve();
+          }
+        });
+      });
+    }
+
+    async function connect(el) {
+      const i = slotIndex(el);
+      const err = el.querySelector(".err");
+      err.textContent = "";
+      err.className = "err";
+      if (peers[i]) {
+        err.textContent = "Ô này đang Connect. Hangup trước.";
+        return;
+      }
+      try {
+        const cap = await (await fetch("/cameras/webrtc/status")).json();
+        if (cap.count >= cap.max) {
+          err.textContent = "409 tối đa " + cap.max + " session. Hangup ô khác trước.";
+          return;
+        }
+      } catch (e) {}
+      const id = el.querySelector(".cam").value;
+      const mode = el.querySelector(".mode").value;
+      const video = el.querySelector("video");
+      const pc = new RTCPeerConnection({ iceServers: iceServers });
+      pc.addTransceiver("video", { direction: "recvonly" });
+      pc.ontrack = (ev) => {
+        video.srcObject = ev.streams[0] || new MediaStream([ev.track]);
+        video.onloadedmetadata = () => sizeCanvas(el);
+      };
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      await waitIce(pc);
+      try {
+        const res = await fetch("/cameras/" + id + "/webrtc/" + mode + "/whep", {
+          method: "POST",
+          headers: { "Content-Type": "application/sdp", Accept: "application/sdp" },
+          body: pc.localDescription.sdp,
+        });
+        const text = await res.text();
+        const loc = res.headers.get("Location") || "";
+        const sidFromLoc = loc.split("/").filter(Boolean).pop() || "";
+        let body = {};
+        const ct = (res.headers.get("content-type") || "").toLowerCase();
+        if (!ct.includes("application/sdp")) {
+          try { body = JSON.parse(text); } catch (e2) { body = { error: text }; }
+        }
+        if (res.status === 409) {
+          err.textContent = "409 tối đa 4 session. Hangup ô khác trước.";
+          pc.close();
+          refreshCap();
+          return;
+        }
+        const sid = sidFromLoc || body.session_id || "";
+        peers[i] = { pc: pc, cameraId: id, sessionId: sid, mode: mode, poll: null };
+        if (res.status === 201 && ct.includes("application/sdp")) {
+          await pc.setRemoteDescription({ type: "answer", sdp: text });
+          if (mode === "detect") peers[i].poll = startMetaPoll(el, id);
+          else peers[i].poll = startPreviewLag(el, pc);
+          refreshCap();
+          return;
+        }
+        if (!res.ok) {
+          err.textContent = res.status + " " + (body.error || text) +
+            (sid ? " session=" + sid : "");
+        }
+      } catch (e) {
+        pc.close();
+        peers[i] = null;
+        err.textContent = String(e);
+      }
+    }
+
+    async function hangup(el) {
+      const i = slotIndex(el);
+      const st = peers[i];
+      peers[i] = null;
+      if (st && st.poll) clearInterval(st.poll);
+      if (st && st.sessionId) {
+        try {
+          await fetch(
+            "/cameras/" + st.cameraId + "/webrtc/sessions/" + st.sessionId,
+            { method: "DELETE" }
+          );
+        } catch (e) {}
+      }
+      if (st && st.pc) st.pc.close();
+      const v = el.querySelector("video");
+      if (v.srcObject) {
+        v.srcObject.getTracks().forEach((t) => t.stop());
+        v.srcObject = null;
+      }
+      const c = el.querySelector("canvas");
+      c.getContext("2d").clearRect(0, 0, c.width, c.height);
+      el.querySelector(".err").textContent = "";
+      el.querySelector(".err").className = "err";
+      refreshCap();
+    }
+
+    grid.addEventListener("click", (ev) => {
+      const slotEl = ev.target.closest(".slot");
+      if (!slotEl) return;
+      if (ev.target.classList.contains("go")) connect(slotEl);
+      if (ev.target.classList.contains("stop")) hangup(slotEl);
+    });
+
+    window.addEventListener("pagehide", () => {
+      document.querySelectorAll(".slot").forEach((el) => hangup(el));
+    });
+  </script>
+</body>
+</html>

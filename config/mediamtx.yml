@@ -1,0 +1,27 @@
+# MediaMTX — chạy cạnh FastAPI: mediamtx.exe config/mediamtx.yml
+# Tải: https://github.com/bluenviron/mediamtx/releases (Windows amd64)
+# F4: RTSP passthrough → WebRTC, không transcode.
+
+logLevel: info
+
+api: yes
+apiAddress: 127.0.0.1:9997
+
+rtsp: no
+rtmp: no
+hls: no
+srt: no
+moq: no
+
+webrtc: yes
+webrtcAddress: :8890
+webrtcEncryption: no
+webrtcAllowOrigins: ["*"]
+webrtcICEServers2: []
+webrtcLocalUDPAddress: :8190
+
+pathDefaults:
+  sourceOnDemand: yes
+  rtspTransport: tcp
+
+paths: {}

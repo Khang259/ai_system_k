@@ -4,6 +4,7 @@ import queue
 import numpy as np
 import torch
 from infrastructure.vision.annexb_pipe import pull_aus
+from infrastructure.vision.cuda_decode_pool import get_decode_stream
 from infrastructure.vision.gpu_frame import decoded_frame_to_rgb
 from utils.setup_log import setup_logger
 
@@ -11,7 +12,6 @@ logger = setup_logger("gpu_video_decoder", "logs/gpu_decoder/log")
 
 
 def _submit_au(decoder, nvc, au):
-    # PacketData.bsl_data = pointer (int), bsl = size. Buffer must live until Decode returns.
     buf = np.frombuffer(au, dtype=np.uint8).copy()
     pkt = nvc.PacketData()
     pkt.bsl_data = int(buf.ctypes.data)
@@ -26,10 +26,12 @@ def _submit_au(decoder, nvc, au):
 class GPUVideoDecoder:
     """FFmpeg demux (-c:v copy) → Annex-B → NVDEC in-process → tensor CUDA."""
 
-    def __init__(self, rtsp_url, width=640, height=480):
+    def __init__(self, rtsp_url, width=640, height=480, camera_index=0):
         self.rtsp_url = rtsp_url
         self.width = width
         self.height = height
+        self.camera_index = camera_index
+        self.decode_stream = None
         self.queue = queue.Queue(maxsize=3)
         self.process = None
         self.thread = None
@@ -63,7 +65,7 @@ class GPUVideoDecoder:
                 stdin=subprocess.DEVNULL,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                bufsize=64 * 1024,
+                bufsize=128 * 1024,  # PHƯƠNG ÁN C: Tăng từ 64KB → 128KB cho mock video
             )
             self.running = True
             self._opened = True
@@ -91,15 +93,16 @@ class GPUVideoDecoder:
             import PyNvVideoCodec as nvc
 
             torch.cuda.init()
+            self.decode_stream = get_decode_stream(self.camera_index)
             decoder = nvc.CreateDecoder(
                 gpuid=0,
                 codec=nvc.cudaVideoCodec.H264,
                 usedevicememory=True,
-                maxwidth=1920,
-                maxheight=1080,
+                maxwidth=max(self.width, 640),
+                maxheight=max(self.height, 480),
                 latency=nvc.DisplayDecodeLatencyType.LOW,
             )
-            logger.info(f"NVDEC session open {self.rtsp_url}")
+            logger.info(f"NVDEC session open {self.rtsp_url} decode_stream={self.camera_index}")
             stdout = self.process.stdout if self.process else None
 
             while self.running and stdout is not None:
@@ -110,15 +113,18 @@ class GPUVideoDecoder:
                 aus, buf = pull_aus(buf)
                 for au in aus:
                     for decoded in _submit_au(decoder, nvc, au):
-                        frame = decoded_frame_to_rgb(
-                            decoded, self.height, self.width, self.height, self.width
-                        )
+                        # Queue đầy → bỏ NV12, không convert (giảm SM / backpressure)
                         if self.queue.full():
-                            try:
-                                self.queue.get_nowait()
-                            except queue.Empty:
-                                pass
-                        self.queue.put(frame)
+                            continue
+                        frame, event = decoded_frame_to_rgb(
+                            decoded,
+                            self.height,
+                            self.width,
+                            self.height,
+                            self.width,
+                            stream=self.decode_stream,
+                        )
+                        self.queue.put((frame, event))
                         if first_frame:
                             self._ready.set()
                             first_frame = False
@@ -143,10 +149,11 @@ class GPUVideoDecoder:
 
     def read(self):
         if not self.isOpened():
-            return False, None
+            return False, None, None
         if not self.queue.empty():
-            return True, self.queue.get()
-        return False, None
+            frame, event = self.queue.get()
+            return True, frame, event
+        return False, None, None
 
     def release(self):
         self.running = False

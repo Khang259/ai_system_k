@@ -80,6 +80,10 @@ class RuntimeService:
             batch_timeout=settings.INFERENCE_BATCH_TIMEOUT,
             num_streams=settings.INFERENCE_NUM_STREAMS,
             initial_paused=True,
+            use_preallocated_queue=settings.INFERENCE_USE_PREALLOCATED_QUEUE,
+            height=settings.MODEL_HEIGHT,
+            width=settings.MODEL_WIDTH,
+            enable_profiler=settings.ENABLE_TORCH_PROFILER,
         )
         inference_eng.start()
 

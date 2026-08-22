@@ -22,6 +22,15 @@ class NullCameraRuntime:
     def get_status(self) -> Dict[str, Any]:
         return {"total": 0, "enabled": 0, "alive": 0, "streaming": 0, "cameras": []}
 
+    def get_preview_jpeg(self, camera_id: int, detect: bool):
+        return None, "Runtime not started", 503
+
+    def get_preview_meta(self, camera_id: int):
+        return None, "Runtime not started", 503
+
+    def get_rtsp_url(self, camera_id: int):
+        return None
+
 
 class NullInference:
     def is_ready(self) -> bool:
@@ -174,3 +183,4 @@ class NullNodeRepo:
 
     async def delete_by_node_id(self, node_id):
         return False
+

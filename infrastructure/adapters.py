@@ -25,6 +25,15 @@ class CameraRuntimeAdapter:
     def get_status(self) -> Dict[str, Any]:
         return self._mgr.get_status()
 
+    def get_preview_jpeg(self, camera_id: int, detect: bool):
+        return self._mgr.get_preview_jpeg(camera_id, detect)
+
+    def get_preview_meta(self, camera_id: int):
+        return self._mgr.get_preview_meta(camera_id)
+
+    def get_rtsp_url(self, camera_id: int):
+        return self._mgr.get_rtsp_url(camera_id)
+
 
 class InferenceAdapter:
     def __init__(self, engine) -> None:

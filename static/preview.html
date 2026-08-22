@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Kortek preview (JPEG bước 1)</title>
+  <style>
+    body { font-family: sans-serif; margin: 16px; background: #111; color: #eee; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1280px; }
+    .slot { background: #1c1c1c; padding: 8px; }
+    .slot img { width: 100%; background: #000; min-height: 180px; }
+    label { display: block; margin: 4px 0; }
+    .hint { color: #aaa; font-size: 13px; max-width: 1280px; }
+    .err { color: #f66; font-size: 12px; min-height: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>Preview JPEG (bước 1)</h1>
+  <p class="hint">
+    Cần <code>POST /cameras/start-all</code> trước. 409 = cam tắt hoặc chưa RTSP — không phải trùng URL.
+    Tối đa 4 ô. Swagger: GET <code>/cameras/{id}/preview</code>.
+  </p>
+  <div class="grid" id="grid"></div>
+  <script>
+    const MAX = 4;
+    const blobs = [];
+
+    function slot(i) {
+      const wrap = document.createElement("div");
+      wrap.className = "slot";
+      wrap.innerHTML =
+        '<label>camera_id <input type="number" value="' + (i + 1) + '" min="1" /></label>' +
+        '<label><input type="checkbox" class="detect" /> detect (ROI + bbox)</label>' +
+        '<label><input type="checkbox" class="on" /> bật</label>' +
+        '<img alt="preview" />' +
+        '<div class="err"></div>';
+      blobs[i] = null;
+      return wrap;
+    }
+    const grid = document.getElementById("grid");
+    for (let i = 0; i < MAX; i++) grid.appendChild(slot(i));
+
+    async function pull(el, i) {
+      const err = el.querySelector(".err");
+      const img = el.querySelector("img");
+      const id = el.querySelector('input[type="number"]').value;
+      const detect = el.querySelector(".detect").checked;
+      const path = detect
+        ? "/cameras/" + id + "/preview/detect"
+        : "/cameras/" + id + "/preview";
+      try {
+        const res = await fetch(path, { headers: { Accept: "image/jpeg" } });
+        if (!res.ok) {
+          err.textContent = res.status + " " + (await res.text());
+          return;
+        }
+        err.textContent = "";
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        img.src = url;
+        if (blobs[i]) URL.revokeObjectURL(blobs[i]);
+        blobs[i] = url;
+      } catch (e) {
+        err.textContent = String(e);
+      }
+    }
+
+    function tick() {
+      grid.querySelectorAll(".slot").forEach((el, i) => {
+        if (!el.querySelector(".on").checked) return;
+        pull(el, i);
+      });
+    }
+    setInterval(tick, 800);
+  </script>
+</body>
+</html>

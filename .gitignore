@@ -20,3 +20,13 @@ logs/
 
 # Data
 .env
+
+# MediaMTX binary
+bin/mediamtx
+bin/mediamtx.exe
+
+# Local benchmarks & GPU profiling artifacts
+benchmarks/
+profiling/
+
+docs/

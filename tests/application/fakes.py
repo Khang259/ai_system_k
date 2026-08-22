@@ -60,6 +60,31 @@ class FakeCameraRuntime:
             "cameras": self.cameras,
         }
 
+    def get_preview_jpeg(self, camera_id: int, detect: bool):
+        if getattr(self, "preview_missing", False):
+            return None, "Camera not found", 404
+        if getattr(self, "preview_offline", False):
+            return None, "Camera not streaming", 409
+        jpeg = getattr(self, "preview_jpeg", None)
+        if jpeg is None:
+            return None, "No preview yet", 503
+        return jpeg, None, 200
+
+    def get_preview_meta(self, camera_id: int):
+        if getattr(self, "preview_missing", False):
+            return None, "Camera not found", 404
+        if getattr(self, "preview_offline", False):
+            return None, "Camera not streaming", 409
+        meta = getattr(self, "preview_meta", None)
+        if meta is None:
+            return None, "No preview meta yet", 503
+        return meta, None, 200
+
+    def get_rtsp_url(self, camera_id: int):
+        if getattr(self, "rtsp_missing", False):
+            return None
+        return getattr(self, "rtsp_url", None) or "rtsp://127.0.0.1/cam"
+
 
 class FakeInference:
     def __init__(
@@ -291,3 +316,4 @@ class FakeRuntimeControl:
         self.reloads += 1
         self.running = True
         return self.status()
+

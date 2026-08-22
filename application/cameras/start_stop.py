@@ -38,7 +38,8 @@ class StartAllCameras:
 
         self._cameras.start_all()
 
-        deadline = time.monotonic() + self._wait_stream_sec
+        wait_sec = self._wait_stream_sec
+        deadline = time.monotonic() + wait_sec
         status: Dict[str, Any] = self._cameras.get_status()
         while time.monotonic() < deadline:
             status = self._cameras.get_status()

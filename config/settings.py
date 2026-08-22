@@ -26,25 +26,48 @@ class Settings(BaseSettings):
 
     # ── AI Inference ──────────────────────────────────────────
     MODEL_PATH: str              = "models/model_test.engine"
+    MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
+    MODEL_WIDTH: int             = 640  # engine W
     THRESHOLD_DETECT: float      = 0.4
     THRESHOLD_COVERAGE: float    = 0.5
     INFERENCE_MAX_QUEUE_SIZE: int  = 500
-    INFERENCE_MAX_BATCH_SIZE: int  = 32
-    INFERENCE_BATCH_TIMEOUT: float = 1.0
-    INFERENCE_NUM_STREAMS: int     = 3
+    INFERENCE_MIN_BATCH_SIZE: int  = 1   # TRT profile min — 1 camera / dev
+    INFERENCE_OPT_BATCH_SIZE: int  = 8   # TRT profile opt
+    INFERENCE_MAX_BATCH_SIZE: int  = 32  # TRT profile max — prod
+    INFERENCE_BATCH_TIMEOUT: float = 0.3
+    INFERENCE_NUM_STREAMS: int     = 2   # D: N TRT context (mỗi cái 1 stream + I/O). <1.15x → đặt 1
+    DECODE_STREAM_POOL_SIZE: int   = 8   # C: pool decode, round-robin camera
+    INFERENCE_USE_PREALLOCATED_QUEUE: bool = True  # Use pre-allocated ring buffer queue
     USE_GPU_DECODE: bool           = True
     START_WAIT_MODEL_SEC: float    = 30.0  # start-all chờ model load
-    START_WAIT_STREAM_SEC: float   = 15.0  # start-all chờ ≥1 camera có frame
+    START_WAIT_STREAM_SEC: float   = 45.0  # start-all chờ ≥1 camera có frame
+    DECODE_WAIT_FIRST_FRAME_SEC: float = 30.0  # NVDEC chờ frame đầu tiên
 
     # ── Snapshot ──────────────────────────────────────────────
     ENABLE_SNAPSHOTS: bool  = False
     SNAPSHOT_DIR: str       = "snapshots"
     SNAPSHOT_QUALITY: int   = 85   # JPEG quality — reduced from 95 to save disk
 
+    # ── Preview JPEG (Swagger / bước 1; WebRTC sau) ───────────
+    PREVIEW_JPEG_QUALITY: int    = 80
+    PREVIEW_INTERVAL_SEC: float  = 0.2   # encode tối đa ~5 fps khi đang watch
+    PREVIEW_WATCH_SEC: float     = 15.0  # GET gia hạn watch
+    PREVIEW_WAIT_SEC: float      = 2.0   # GET chờ frame đầu
+    WEBRTC_MAX_SESSIONS: int     = 4     # F3: grid 2×2
+    WEBRTC_STUN_URL: str         = ""    # F7: trống = LAN; vd stun:stun.l.google.com:19302
+    WEBRTC_TURN_URL: str         = ""    # F7: trống = không TURN
+    WEBRTC_TURN_USER: str        = ""
+    WEBRTC_TURN_PASS: str        = ""
+    MEDIAMTX_BIN: str            = ""    # trống: which + bin/mediamtx.exe
+    MEDIAMTX_YML: str            = "config/mediamtx.yml"
+    MEDIAMTX_API_URL: str        = "http://127.0.0.1:9997"
+    MEDIAMTX_WEBRTC_URL: str     = "http://127.0.0.1:8890"
+
     # ── State Machine Timers (override domain.settings defaults) ─
     START_READY_AFTER_SEC: int  = 30   # start node phải giữ state=True ít nhất 30s
     END_READY_AFTER_SEC: int    = 60   # end node phải giữ state=False ít nhất 60s
     END_FLAG_RESET_AFTER_SEC: int = 30  # end có hàng lại khi đang flag → reset pair
+    ENABLE_TORCH_PROFILER: bool  = False # PyTorch Profiler — ghi trace.json sau N batches
     EMPTY_DEADLINE_SEC: int     = 15   # chờ ghép double tối đa 15s trước khi gửi empty
 
     model_config = SettingsConfigDict(

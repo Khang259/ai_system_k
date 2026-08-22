@@ -8,10 +8,14 @@ VISION_FILES = (
     "detection.py",
     "gpu_video_decoder.py",
     "gpu_frame.py",
+    "cuda_decode_pool.py",
     "annexb_pipe.py",
     "inference_engine.py",
+    "trt_yolo_engine.py",
     "camera_processor.py",
     "camera_manager.py",
+    "preview_store.py",
+    "preview_draw.py",
     "__init__.py",
 )
 

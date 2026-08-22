@@ -1,7 +1,9 @@
 import threading
 import queue
-from utils.setup_log import setup_logger
+from config.settings import settings
 from infrastructure.vision.camera_processor import CameraProcessor
+from infrastructure.vision.preview_store import PreviewStore
+from utils.setup_log import setup_logger
 
 logger = setup_logger("camera_manager", "logs/camera_manager/log")
 
@@ -30,6 +32,13 @@ class CameraManager:
         self._enabled_lock = threading.Lock()
         self.latest_frames = {}
         self._node_id_to_cam = {}
+        self._by_public_id = {}
+        self.preview_store = PreviewStore()
+        self._rtsp_by_id = {}
+        for cam in cameras_config or []:
+            cid = cam.get("cameraId")
+            if cid is not None:
+                self._rtsp_by_id[int(cid)] = self._get_cam_url(cam)
         self._build_node_id_to_cam()
 
     def _get_cam_url(self, cam: dict) -> str:
@@ -106,8 +115,13 @@ class CameraManager:
                 camera_index=i,
                 latest_frames_ref=self.latest_frames,
                 api_client=self.api_client,
+                public_camera_id=cam.get("cameraId"),
+                preview_store=self.preview_store,
             )
             self.threads.append(thread)
+            public_id = cam.get("cameraId")
+            if public_id is not None:
+                self._by_public_id[int(public_id)] = thread
             thread.start()
 
         logger.info(f"All {len(self.threads)} camera threads started")
@@ -148,6 +162,50 @@ class CameraManager:
             for i in range(len(self.enabled)):
                 self.enabled[i] = False
         logger.info("All cameras disabled")
+
+    def get_rtsp_url(self, camera_id: int):
+        url = (self._rtsp_by_id.get(int(camera_id)) or "").strip()
+        return url or None
+
+    def get_preview_jpeg(self, camera_id: int, detect: bool):
+        """(jpeg_bytes|None, error|None, http_status)."""
+        cam = int(camera_id)
+        thread = self._by_public_id.get(cam)
+        if thread is None:
+            return None, "Camera not found", 404
+        if not thread._is_enabled():
+            return None, "Camera disabled. POST /cameras/start-all first.", 409
+        if not getattr(thread, "streaming", False):
+            err = getattr(thread, "last_error", None) or "waiting for RTSP"
+            return None, f"Camera not streaming: {err}", 409
+
+        self.preview_store.watch(cam, settings.PREVIEW_WATCH_SEC)
+        jpeg = self.preview_store.get_wait(
+            cam, detect=detect, timeout=settings.PREVIEW_WAIT_SEC
+        )
+        if jpeg is None:
+            return None, "No preview yet", 503
+        return jpeg, None, 200
+
+    def get_preview_meta(self, camera_id: int):
+        """(meta dict|None, error|None, http_status). F5 canvas overlay."""
+        cam = int(camera_id)
+        thread = self._by_public_id.get(cam)
+        if thread is None:
+            return None, "Camera not found", 404
+        if not thread._is_enabled():
+            return None, "Camera disabled. POST /cameras/start-all first.", 409
+        if not getattr(thread, "streaming", False):
+            err = getattr(thread, "last_error", None) or "waiting for RTSP"
+            return None, f"Camera not streaming: {err}", 409
+
+        self.preview_store.watch(cam, settings.PREVIEW_WATCH_SEC)
+        meta = self.preview_store.get_wait_meta(
+            cam, timeout=settings.PREVIEW_WAIT_SEC
+        )
+        if meta is None:
+            return None, "No preview meta yet", 503
+        return meta, None, 200
 
     def get_cam_id_for_node(self, node_id: str):
         info = self._node_id_to_cam.get(node_id)
