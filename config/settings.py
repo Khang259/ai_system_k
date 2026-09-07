@@ -1,11 +1,16 @@
 """
 Centralized configuration — loaded from .env via pydantic-settings.
 Replaces both settings.py and config.py in the original codebase.
+
+State-machine timers: SSOT runtime. Default lấy từ domain.settings;
+đổi lúc chạy qua .env. RuntimeService inject vào NodeState.
 """
 from pathlib import Path
 from typing import Optional
 from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+import domain.settings as domain_defaults
 
 
 class Settings(BaseSettings):
@@ -23,6 +28,9 @@ class Settings(BaseSettings):
     END_POINT_EMPTY: str  = "end_10001546"
     ICS_RETRY_TIMES: int  = 3
     ICS_RETRY_DELAY: float = 1.0  # seconds between retries
+    ICS_PROCESS_SINGLE: str = "SingleGroupAE5"
+    ICS_PROCESS_EMPTY: str  = "SEGroupAE"
+    ICS_PROCESS_DOUBLE: str = "DoubleGroupAE"
 
     # ── AI Inference ──────────────────────────────────────────
     MODEL_PATH: str              = "models/model_test.engine"
@@ -63,10 +71,10 @@ class Settings(BaseSettings):
     MEDIAMTX_API_URL: str        = "http://127.0.0.1:9997"
     MEDIAMTX_WEBRTC_URL: str     = "http://127.0.0.1:8890"
 
-    # ── State Machine Timers (override domain.settings defaults) ─
-    START_READY_AFTER_SEC: int  = 30   # start node phải giữ state=True ít nhất 30s
-    END_READY_AFTER_SEC: int    = 60   # end node phải giữ state=False ít nhất 60s
-    END_FLAG_RESET_AFTER_SEC: int = 30  # end có hàng lại khi đang flag → reset pair
+    # ── State Machine Timers (SSOT runtime; default = domain.settings) ─
+    START_READY_AFTER_SEC: int = domain_defaults.START_READY_AFTER_SEC
+    END_READY_AFTER_SEC: int = domain_defaults.END_READY_AFTER_SEC
+    END_FLAG_RESET_AFTER_SEC: int = domain_defaults.END_FLAG_RESET_AFTER_SEC
     ENABLE_TORCH_PROFILER: bool  = False # PyTorch Profiler — ghi trace.json sau N batches
     EMPTY_DEADLINE_SEC: int     = 15   # chờ ghép double tối đa 15s trước khi gửi empty
 

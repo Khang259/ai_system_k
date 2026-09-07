@@ -1,7 +1,7 @@
 """Null / unbound runtime ports — used before RuntimeService.start()."""
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Sequence, Set
+from typing import Any, Dict, Optional, Sequence, Set
 
 from domain.reset_policy import ResetResult
 
@@ -118,11 +118,6 @@ class NullRuntimeControl:
 
     async def reload(self) -> Dict[str, Any]:
         return {"running": False}
-
-
-class NullZonePairs:
-    def get_pairs(self, zone: str) -> List:
-        return []
 
 
 class NullCameraConfigRepo:

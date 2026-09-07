@@ -11,7 +11,6 @@ from application.null_ports import (
     NullNodeStateStore,
     NullPairsRepo,
     NullRuntimeControl,
-    NullZonePairs,
 )
 from application.state.update_detection import UpdateDetection
 from application.state.toggle_flag import ToggleFlag
@@ -62,7 +61,6 @@ class AppContainer:
         self.pairs_repo = NullPairsRepo()
         self.nodes_repo = NullNodeRepo()
         self.runtime_control = NullRuntimeControl()
-        self.zone_pairs = NullZonePairs()
         self.dispatch_gateway = NullDispatchGateway()
         from config.settings import settings
 
@@ -78,13 +76,10 @@ class AppContainer:
         self.webrtc_gateway = gateway
         self._wire()
 
-    def bind_repos(self, camera_repo, pairs_repo, node_repo, zone_pairs) -> None:
-        from infrastructure.adapters import ZonePairsAdapter
-
+    def bind_repos(self, camera_repo, pairs_repo, node_repo) -> None:
         self.camera_configs = camera_repo
         self.pairs_repo = pairs_repo
         self.nodes_repo = node_repo
-        self.zone_pairs = ZonePairsAdapter(zone_pairs)
         self._wire()
 
     def bind_dispatch_gateway(self, gateway) -> None:
@@ -128,7 +123,7 @@ class AppContainer:
         self.toggle_flag = ToggleFlag(state)
         self.reset_flags = ResetFlagsByOrder(state)
         self.get_all_points = GetAllPoints(state)
-        self.get_zone_state = GetZoneState(state, self.zone_pairs)
+        self.get_zone_state = GetZoneState(state, self.nodes_repo)
 
         from config.settings import settings
 

@@ -21,7 +21,8 @@ def calculate_coverage_batch(detection_boxes, roi_box, device='cuda'):
     else:
         detection_boxes = detection_boxes.to(device)
     
-    if detection_boxes.shape[1] > 4: #TODO: check the meaning of 4
+    # YOLO boxes: (N,4)=xyxy hoặc (N,6)=xyxy+conf+cls — coverage chỉ cần 4 cột đầu
+    if detection_boxes.shape[1] > 4:
         det_boxes = detection_boxes[:, :4]
     else:
         det_boxes = detection_boxes

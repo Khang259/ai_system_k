@@ -1,8 +1,12 @@
 """
 Domain constants — pure Python, no pydantic / env / frameworks.
 
-config/settings.py may override these via composition root when constructing
-NodeState (Phase 1 facade / later Runtime start).
+File này CHỈ dùng cho:
+- default khi tạo NodeState / hàm domain không truyền kwargs
+- unit test domain (không load .env)
+
+KHÔNG dùng để vận hành production. Giá trị runtime = config/settings.py
+(+ .env), inject bởi RuntimeService khi construct NodeState.
 """
 
 # Node must keep detection state long enough before entering ready lists

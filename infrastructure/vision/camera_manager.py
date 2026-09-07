@@ -25,7 +25,10 @@ class CameraManager:
         self.camera_zones = camera_zones or []
         self.api_client = api_client
         if not self.camera_zones and cameras_config:
-            self.camera_zones = ["AE5"] * len(cameras_config)
+            self.camera_zones = [
+                str(cam.get("zone_id") or cam.get("area") or "").upper()
+                for cam in cameras_config
+            ]
 
         self.threads = []
         self.enabled = [False] * len(cameras_config)

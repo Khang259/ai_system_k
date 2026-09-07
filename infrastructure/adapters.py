@@ -1,7 +1,7 @@
 """Runtime adapters — bọc vision runtime + NodeState. Persistence repos implement Port trực tiếp."""
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Sequence, Set
+from typing import Any, Dict, Optional, Sequence, Set
 
 from domain.reset_policy import ResetResult, reset_flags_by_order
 
@@ -120,14 +120,6 @@ class NodeStateAdapter:
 
     def process_ends(self) -> None:
         self._sm.process_ends()
-
-
-class ZonePairsAdapter:
-    def __init__(self, by_zone: Dict[str, List]) -> None:
-        self._by_zone = by_zone
-
-    def get_pairs(self, zone: str) -> List:
-        return self._by_zone.get(zone.upper(), [])
 
 
 class RuntimeControlAdapter:

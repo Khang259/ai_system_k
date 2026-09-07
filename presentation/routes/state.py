@@ -34,4 +34,4 @@ async def get_all_points() -> Dict[str, Any]:
 
 @router.get("/state/zone/{zone}")
 async def get_zone_state(zone: str) -> Dict[str, Any]:
-    return to_http(container.get_zone_state.execute(zone))
+    return to_http(await container.get_zone_state.execute(zone))

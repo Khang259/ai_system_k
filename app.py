@@ -14,7 +14,6 @@ from infrastructure.persistence.db import connect, disconnect
 from infrastructure.persistence.camera_repository import camera_repository
 from infrastructure.persistence.pairs_repository import pairs_repository
 from infrastructure.persistence.node_repository import node_repository
-from config.pairs import VALIDATE_PAIRS_BY_ZONE
 from application.runtime.runtime_service import runtime_service
 from application.container import container
 from infrastructure.webrtc import MediaMtxGateway
@@ -35,7 +34,6 @@ async def lifespan(app: FastAPI):
         camera_repository,
         pairs_repository,
         node_repository,
-        VALIDATE_PAIRS_BY_ZONE,
     )
     start_mediamtx(
         settings.MEDIAMTX_BIN,

@@ -284,14 +284,6 @@ class FakeNodeRepo:
         return self.rows.pop(node_id, None) is not None
 
 
-class FakeZonePairs:
-    def __init__(self, mapping=None) -> None:
-        self.mapping = mapping or {}
-
-    def get_pairs(self, zone: str):
-        return self.mapping.get(zone.upper(), [])
-
-
 class FakeRuntimeControl:
     def __init__(self) -> None:
         self.running = False

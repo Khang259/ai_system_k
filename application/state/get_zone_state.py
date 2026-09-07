@@ -1,18 +1,18 @@
 from application.result import UseCaseResult
-from application.ports import NodeStateStore, ZonePairsLookup
+from application.ports import NodeRepositoryPort, NodeStateStore
 
 
 class GetZoneState:
-    def __init__(self, state: NodeStateStore, zones: ZonePairsLookup) -> None:
+    def __init__(self, state: NodeStateStore, nodes: NodeRepositoryPort) -> None:
         self._state = state
-        self._zones = zones
+        self._nodes = nodes
 
-    def execute(self, zone: str) -> UseCaseResult:
+    async def execute(self, zone: str) -> UseCaseResult:
         if not self._state.is_ready():
             return UseCaseResult.fail("State manager not initialized")
 
-        zone_pairs = self._zones.get_pairs(zone)
-        node_ids = {nid for pair in zone_pairs for nid in pair}
+        docs = await self._nodes.get_by_zone(zone.upper())
+        node_ids = {d["node_id"] for d in docs if d.get("node_id")}
         if not node_ids:
             return UseCaseResult.fail("Zone not found")
 

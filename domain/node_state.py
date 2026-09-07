@@ -1,8 +1,8 @@
 """
 Domain node state — ready lists, flags, order mapping.
 
-Pure Python. Timing thresholds come from domain.settings (defaults)
-or injected by composition root (config override).
+Pure Python. Timer kwargs default = domain.settings (test / no inject).
+Production: RuntimeService inject từ config.settings (.env thắng).
 """
 from __future__ import annotations
 
