@@ -176,12 +176,16 @@ class FakeNodeStateStore:
 
 
 class FakeDispatchGateway:
+    """Fake for testing dispatch — always returns `ok` for send()."""
     def __init__(self, ok: bool = True) -> None:
         self.ok = ok
+        self.success = ok  # alias for tests
         self.sent: List[Dict[str, Any]] = []
+        self.sent_count = 0  # count how many payloads sent
 
     def send(self, payload: Dict[str, Any]) -> bool:
         self.sent.append(payload)
+        self.sent_count += 1
         return self.ok
 
 

@@ -11,6 +11,7 @@ from typing import Any, Dict, Optional
 from config.settings import settings
 from domain.node_state import NodeState
 from infrastructure.dispatch.pair_manager import PairManager, SingleDispatch
+from application.dispatch.dispatch_service import DispatchService
 from infrastructure.storage.snapshot_fs import SnapshotFsStore
 from infrastructure.vision.camera_manager import CameraManager
 from infrastructure.vision.inference_engine import InferenceEngine
@@ -67,7 +68,8 @@ class RuntimeService:
         pair_mgr = PairManager(
             state_manager=sm,
             validate_pairs=validate_pairs,
-            strategy=SingleDispatch(ics_gateway),
+            strategy=SingleDispatch(DispatchService(ics_gateway)),
+            dispatch_service=DispatchService(ics_gateway),
             snapshot_manager=snapshot_store,
             on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(node_id),
         )

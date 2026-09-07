@@ -178,7 +178,5 @@ class AppContainer:
         self.get_runtime_status = GetRuntimeStatus(self.runtime_control)
         self.reload_runtime = ReloadRuntime(self.runtime_control)
 
-        self.run_dispatch_cycle = RunDispatchCycle(state, self.dispatch_gateway)
-
 
 container = AppContainer()
