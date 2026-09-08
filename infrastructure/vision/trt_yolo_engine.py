@@ -76,7 +76,11 @@ class TrtExecSlot:
         ok = self.context.execute_async_v3(stream_handle=stream.cuda_stream)
         if not ok:
             raise RuntimeError("execute_async_v3 failed")
-        return stream.record_event(), batch_size
+        # enable_timing=True để consumer đo được elapsed_time (GPU time).
+        # Event không bật timing → elapsed_time trả CUDA invalid resource handle.
+        done = torch.cuda.Event(enable_timing=True)
+        done.record(stream)
+        return done, batch_size
 
     def nms_ready(self, batch_size, conf=None, max_det=15):
         """Pack output end2end (B,300,6) → list[Tensor (K,6)]. Không gọi NMS CPU."""

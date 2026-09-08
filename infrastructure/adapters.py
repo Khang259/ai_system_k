@@ -118,8 +118,8 @@ class NodeStateAdapter:
     def process_starts(self) -> None:
         self._sm.process_starts()
 
-    def process_ends(self) -> None:
-        self._sm.process_ends()
+    def process_ends(self, warn=None) -> None:
+        self._sm.process_ends(warn=warn)
 
 
 class RuntimeControlAdapter:

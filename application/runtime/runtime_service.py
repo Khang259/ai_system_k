@@ -10,6 +10,7 @@ from typing import Any, Dict, Optional
 
 from config.settings import settings
 from domain.node_state import NodeState
+from infrastructure.adapters import NodeStateAdapter
 from infrastructure.dispatch.pair_manager import PairManager, SingleDispatch
 from application.dispatch.dispatch_service import DispatchService
 from infrastructure.storage.snapshot_fs import SnapshotFsStore
@@ -65,8 +66,11 @@ class RuntimeService:
         )
         container.bind_dispatch_gateway(ics_gateway)
 
+        # PairManager gọi DispatchService (application layer) → phải là port
+        # NodeStateStore, không phải NodeState thô. Camera vẫn dùng sm trực tiếp
+        # vì cần get_state_nodes() của domain.
         pair_mgr = PairManager(
-            state_manager=sm,
+            state_manager=NodeStateAdapter(sm),
             validate_pairs=validate_pairs,
             strategy=SingleDispatch(DispatchService(ics_gateway)),
             dispatch_service=DispatchService(ics_gateway),

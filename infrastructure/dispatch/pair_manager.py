@@ -129,7 +129,7 @@ class PairManager:
         for pair in self.validate_pairs:
             if len(pair) == 1:
                 start_empty = pair[0]
-                if start_empty in self.state_manager.ready_start_list:
+                if start_empty in self.state_manager.ready_starts():
                     if not any(start_empty == item[0] for item in self.pending_empty_queue):
                         self.pending_empty_queue.append(
                             (start_empty, now + settings.EMPTY_DEADLINE_SEC)
