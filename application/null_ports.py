@@ -106,6 +106,16 @@ class NullDispatchGateway:
         return False
 
 
+class NullDbHealth:
+    async def ping(self) -> bool:
+        return False
+
+
+class NullWebrtcRunner:
+    def status(self) -> Dict[str, Any]:
+        return {"alive": False, "owned": False, "watchdog": False}
+
+
 class NullRuntimeControl:
     async def start(self) -> Dict[str, Any]:
         return {"running": False}

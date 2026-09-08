@@ -17,7 +17,10 @@ def decoded_frame_to_rgb(frame, src_h, src_w, dst_h, dst_w, stream=None):
     """
     Zero-copy DLPack rồi convert + resize trên GPU.
     clone() để decoder tái sử dụng surface không ghi đè frame trong queue.
-    Không synchronize — trả CUDA event để inference wait_event.
+
+    Không synchronize — LUÔN trả CUDA event để consumer wait_event.
+    stream=None → dùng current stream; event vẫn được record vì convert
+    là việc GPU bất đồng bộ, thiếu event là consumer đọc VRAM chưa ghi xong.
     """
     def _convert():
         tensor = torch.from_dlpack(frame)
@@ -32,12 +35,12 @@ def decoded_frame_to_rgb(frame, src_h, src_w, dst_h, dst_w, stream=None):
             ).squeeze(0)
         return rgb.clamp(0, 255).to(torch.uint8).contiguous().clone()
 
-    if stream is not None:
-        with torch.cuda.stream(stream):
-            out = _convert()
-            event = stream.record_event()
-        return out, event
-    return _convert(), None
+    if stream is None:
+        stream = torch.cuda.current_stream()
+    with torch.cuda.stream(stream):
+        out = _convert()
+        event = stream.record_event()
+    return out, event
 
 
 def _as_rgb_chw(tensor, src_h, src_w):

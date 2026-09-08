@@ -313,3 +313,20 @@ class FakeRuntimeControl:
         self.running = True
         return self.status()
 
+
+class FakeDbHealth:
+    def __init__(self, ok: bool = True) -> None:
+        self.ok = ok
+
+    async def ping(self) -> bool:
+        return self.ok
+
+
+class FakeWebrtcRunner:
+    def __init__(self, alive: bool = True, owned: bool = True) -> None:
+        self.alive = alive
+        self.owned = owned
+
+    def status(self):
+        return {"alive": self.alive, "owned": self.owned, "watchdog": True}
+

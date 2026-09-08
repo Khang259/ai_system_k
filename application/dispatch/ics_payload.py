@@ -1,4 +1,4 @@
-"""ICS JSON payload builders — một nguồn cho PairManager + RunDispatchCycle."""
+"""ICS JSON payload builders — một nguồn cho DispatchService."""
 from __future__ import annotations
 
 from datetime import datetime

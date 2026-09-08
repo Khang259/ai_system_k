@@ -5,12 +5,14 @@ from application.scan_session import ScanSession
 from application.null_ports import (
     NullCameraConfigRepo,
     NullCameraRuntime,
+    NullDbHealth,
     NullDispatchGateway,
     NullInference,
     NullNodeRepo,
     NullNodeStateStore,
     NullPairsRepo,
     NullRuntimeControl,
+    NullWebrtcRunner,
 )
 from application.state.update_detection import UpdateDetection
 from application.state.toggle_flag import ToggleFlag
@@ -48,7 +50,7 @@ from application.nodes.crud import (
 from application.nodes.camera_nodes import DisableCameraNodes, EnableCameraNodes
 from application.pairs.crud import GetPairsByZone, SetPairEnabled, CreatePair, DeletePair
 from application.runtime.control import StartRuntime, StopRuntime, GetRuntimeStatus, ReloadRuntime
-from application.dispatch.run_cycle import RunDispatchCycle
+from application.runtime.health import GetHealth
 
 
 class AppContainer:
@@ -62,6 +64,8 @@ class AppContainer:
         self.nodes_repo = NullNodeRepo()
         self.runtime_control = NullRuntimeControl()
         self.dispatch_gateway = NullDispatchGateway()
+        self.db_health = NullDbHealth()
+        self.webrtc_runner = NullWebrtcRunner()
         from config.settings import settings
 
         self.webrtc_sessions = WebrtcSessionRegistry(
@@ -72,8 +76,14 @@ class AppContainer:
         self.webrtc_gateway = NullWebrtcGateway()
         self._wire()
 
-    def bind_webrtc(self, gateway) -> None:
+    def bind_webrtc(self, gateway, runner=None) -> None:
         self.webrtc_gateway = gateway
+        if runner is not None:
+            self.webrtc_runner = runner
+        self._wire()
+
+    def bind_db_health(self, db_health) -> None:
+        self.db_health = db_health
         self._wire()
 
     def bind_repos(self, camera_repo, pairs_repo, node_repo) -> None:
@@ -177,6 +187,9 @@ class AppContainer:
         self.stop_runtime = StopRuntime(self.runtime_control)
         self.get_runtime_status = GetRuntimeStatus(self.runtime_control)
         self.reload_runtime = ReloadRuntime(self.runtime_control)
+        self.get_health = GetHealth(
+            self.db_health, self.runtime_control, self.webrtc_runner
+        )
 
 
 container = AppContainer()

@@ -169,6 +169,8 @@ class InferenceEngine(threading.Thread):
         self._model_ready = threading.Event()
         self._load_done = threading.Event()
         self._load_error = None
+        # Frame vào batch mà thiếu CUDA event → không đồng bộ được, chỉ đếm + log
+        self._missing_event_count = 0
 
     def pause(self) -> None:
         self._paused.set()
@@ -311,6 +313,15 @@ class InferenceEngine(threading.Thread):
             for ev in ready_events:
                 if ev is not None:
                     stream.wait_event(ev)
+                else:
+                    # Producer không record event → không có gì để đợi.
+                    # Log throttle vì đây là hot path.
+                    self._missing_event_count += 1
+                    if self._missing_event_count % 100 == 1:
+                        logger.warning(
+                            f"Frame thiếu decode_event (lần {self._missing_event_count}) "
+                            "— nguy cơ đọc VRAM khi convert chưa ghi xong"
+                        )
 
             with record_function(f"trt_copy_batch_s{slot_idx}"):
                 batch_size = self.engine.copy_batch(slot_idx, frames_batch)

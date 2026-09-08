@@ -69,6 +69,8 @@ class Settings(BaseSettings):
     MEDIAMTX_YML: str            = "config/mediamtx.yml"
     MEDIAMTX_API_URL: str        = "http://127.0.0.1:9997"
     MEDIAMTX_WEBRTC_URL: str     = "http://127.0.0.1:8890"
+    MEDIAMTX_WATCHDOG_SEC: float = 10.0  # chu kỳ probe API; 0 = tắt watchdog
+    MEDIAMTX_MAX_RESTARTS: int   = 5     # restart liên tiếp tối đa trước khi bỏ cuộc
 
     # ── State Machine Timers (SSOT runtime; default = domain.settings) ─
     START_READY_AFTER_SEC: int = domain_defaults.START_READY_AFTER_SEC

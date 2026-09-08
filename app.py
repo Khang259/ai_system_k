@@ -17,7 +17,8 @@ from infrastructure.persistence.node_repository import node_repository
 from application.runtime.runtime_service import runtime_service
 from application.container import container
 from infrastructure.webrtc import MediaMtxGateway
-from infrastructure.webrtc.mediamtx_runner import start_mediamtx, stop_mediamtx
+from infrastructure.webrtc.mediamtx_runner import MediaMtxRunner
+from infrastructure.persistence.db_health import MongoHealthAdapter
 
 from presentation.routes.cameras import router as cameras_router
 from presentation.routes.state   import router as state_router
@@ -35,13 +36,19 @@ async def lifespan(app: FastAPI):
         pairs_repository,
         node_repository,
     )
-    start_mediamtx(
+    container.bind_db_health(MongoHealthAdapter())
+
+    mediamtx = MediaMtxRunner(
         settings.MEDIAMTX_BIN,
         settings.MEDIAMTX_YML,
         api_url=settings.MEDIAMTX_API_URL,
+        watchdog_sec=settings.MEDIAMTX_WATCHDOG_SEC,
+        max_restarts=settings.MEDIAMTX_MAX_RESTARTS,
     )
+    mediamtx.start()
     container.bind_webrtc(
-        MediaMtxGateway(settings.MEDIAMTX_API_URL, settings.MEDIAMTX_WEBRTC_URL)
+        MediaMtxGateway(settings.MEDIAMTX_API_URL, settings.MEDIAMTX_WEBRTC_URL),
+        runner=mediamtx,
     )
     from application.cameras.webrtc_ice import ice_servers_for_mediamtx
 
@@ -50,7 +57,7 @@ async def lifespan(app: FastAPI):
     yield
     # Shutdown
     runtime_service.stop()
-    stop_mediamtx()
+    mediamtx.stop()
     await disconnect()
 
 
