@@ -14,14 +14,12 @@ class CameraManager:
         cameras_config,
         state_manager,
         inference_engine,
-        snapshot_manager=None,
         camera_zones=None,
         api_client=None,
     ):
         self.cameras_config = cameras_config
         self.state_manager = state_manager
         self.inference_engine = inference_engine
-        self.snapshot_manager = snapshot_manager
         self.camera_zones = camera_zones or []
         self.api_client = api_client
         if not self.camera_zones and cameras_config:
@@ -113,7 +111,6 @@ class CameraManager:
                 self.inference_engine,
                 result_queue,
                 cam_id,
-                snapshot_manager=self.snapshot_manager,
                 enabled_ref=self.enabled,
                 camera_index=i,
                 latest_frames_ref=self.latest_frames,
@@ -131,6 +128,8 @@ class CameraManager:
 
     def stop(self):
         logger.info("Stopping all camera threads...")
+        # Clear latest frames khi stop để không giữ tensor GPU cũ
+        self.latest_frames.clear()
         for thread in self.threads:
             if thread.is_alive():
                 thread.running = False
@@ -238,4 +237,41 @@ class CameraManager:
             "enabled": enabled_count,
             "streaming": streaming_count,
             "cameras": cameras,
+        }
+
+    def capture_for_node(self, node_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Lấy frame + metadata mới nhất cho snapshot (implement FrameProvider).
+        
+        Returns dict với frame (CUDA), event, detections, rois, detection_ts, cam_id
+        hoặc None nếu node không tìm thấy hoặc camera chưa có frame.
+        """
+        # Tìm camera từ node_id
+        info = self._node_id_to_cam.get(node_id)
+        if info is None:
+            return None
+        
+        cam_id, cam_index = info
+        
+        # Lấy frame + event từ latest_frames (đọc một lần vào local variable)
+        frame_data = self.latest_frames.get(cam_id)
+        if frame_data is None:
+            return None
+        
+        frame, event = frame_data
+        
+        # Lấy metadata từ thread
+        if cam_index >= len(self.threads):
+            return None
+        
+        thread = self.threads[cam_index]
+        meta = thread.get_latest_capture()
+        if meta is None:
+            return None
+        
+        # Gộp frame + event + metadata
+        return {
+            "frame": frame,
+            "event": event,
+            **meta,
         }

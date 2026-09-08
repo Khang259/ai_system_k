@@ -48,6 +48,11 @@ class DispatchService:
         failed = []
 
         for start_point, end_point in pairs:
+            # Chốt frame TRƯỚC khi gửi ICS (nếu có snapshot)
+            capture = None
+            if snapshot_manager:
+                capture = snapshot_manager.capture_pair(start_point, end_point)
+            
             payload = build_single_payload(start_point, end_point)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
@@ -57,8 +62,11 @@ class DispatchService:
             )
 
             if success:
+                # Ghi file SAU khi ICS thành công
                 if snapshot_manager:
-                    snapshot_manager.save_pair_snapshots(start_point, end_point, order_id)
+                    snapshot_manager.save_pair_snapshots(
+                        capture, start_point, end_point, order_id
+                    )
                 state_manager.set_pair_used(start_point, end_point, order_id, empty_car=False)
                 if on_dispatch_success:
                     on_dispatch_success(start_point)
@@ -100,8 +108,9 @@ class DispatchService:
             )
 
             if success:
-                if snapshot_manager:
-                    snapshot_manager.save_pair_snapshots(start_empty, end_point_empty, order_id)
+                # TODO: Implement capture_pair cho empty strategy khi bật
+                # if snapshot_manager:
+                #     snapshot_manager.save_pair_snapshots(...)
                 state_manager.set_pair_used(start_empty, end_point_empty, order_id, empty_car=True)
                 sent.append({"start": start_empty, "end": end_point_empty, "orderId": order_id})
             else:
@@ -143,8 +152,9 @@ class DispatchService:
                 logger.debug(f"[DOUBLE→EMPTY flush] ({start_empty}) orderId={order_id}")
                 
                 if success:
-                    if snapshot_manager:
-                        snapshot_manager.save_pair_snapshots(start_empty, end_point_empty, order_id)
+                    # TODO: Implement capture_pair cho empty flush khi bật
+                    # if snapshot_manager:
+                    #     snapshot_manager.save_pair_snapshots(...)
                     state_manager.set_pair_used(start_empty, end_point_empty, order_id, empty_car=True)
                     sent.append({"start": start_empty, "end": end_point_empty, "orderId": order_id})
                 else:
@@ -165,8 +175,9 @@ class DispatchService:
             )
 
             if success:
-                if snapshot_manager:
-                    snapshot_manager.save_pair_snapshots(start_point, end_point, order_id)
+                # TODO: Implement capture_pair cho double strategy khi bật
+                # if snapshot_manager:
+                #     snapshot_manager.save_pair_snapshots(...)
                 state_manager.set_pair_used(start_point, end_point, order_id, empty_car=False)
                 state_manager.set_pair_used(start_empty, end_point_empty, order_id, empty_car=True)
                 if on_dispatch_success:
@@ -199,8 +210,9 @@ class DispatchService:
             logger.debug(f"[DOUBLE→SINGLE overflow] ({start_point},{end_point})")
             
             if success:
-                if snapshot_manager:
-                    snapshot_manager.save_pair_snapshots(start_point, end_point, order_id)
+                # TODO: Implement capture_pair cho overflow single khi bật
+                # if snapshot_manager:
+                #     snapshot_manager.save_pair_snapshots(...)
                 state_manager.set_pair_used(start_point, end_point, order_id, empty_car=False)
                 if on_dispatch_success:
                     on_dispatch_success(start_point)

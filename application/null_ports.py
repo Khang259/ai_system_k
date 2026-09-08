@@ -116,6 +116,11 @@ class NullWebrtcRunner:
         return {"alive": False, "owned": False, "watchdog": False}
 
 
+class NullFrameProvider:
+    def capture_for_node(self, node_id: str) -> Optional[Dict[str, Any]]:
+        return None
+
+
 class NullRuntimeControl:
     async def start(self) -> Dict[str, Any]:
         return {"running": False}

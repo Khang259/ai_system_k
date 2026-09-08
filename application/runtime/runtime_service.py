@@ -52,32 +52,12 @@ class RuntimeService:
             end_flag_reset_after_sec=settings.END_FLAG_RESET_AFTER_SEC,
         )
 
-        snapshot_store = None
-        if settings.ENABLE_SNAPSHOTS:
-            snapshot_store = SnapshotFsStore(
-                snapshot_dir=settings.SNAPSHOT_DIR,
-                quality=settings.SNAPSHOT_QUALITY,
-            )
-
         ics_gateway = HttpDispatchGateway(
             ics_url=settings.ICS_URL,
             retry=settings.ICS_RETRY_TIMES,
             delay=settings.ICS_RETRY_DELAY,
         )
         container.bind_dispatch_gateway(ics_gateway)
-
-        # PairManager gọi DispatchService (application layer) → phải là port
-        # NodeStateStore, không phải NodeState thô. Camera vẫn dùng sm trực tiếp
-        # vì cần get_state_nodes() của domain.
-        pair_mgr = PairManager(
-            state_manager=NodeStateAdapter(sm),
-            validate_pairs=validate_pairs,
-            strategy=SingleDispatch(DispatchService(ics_gateway)),
-            dispatch_service=DispatchService(ics_gateway),
-            snapshot_manager=snapshot_store,
-            on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(node_id),
-        )
-        pair_mgr.start()
 
         inference_eng = InferenceEngine(
             model_path=settings.MODEL_PATH,
@@ -93,13 +73,35 @@ class RuntimeService:
         )
         inference_eng.start()
 
+        # CameraManager trước — nó implement FrameProvider cho snapshot
         cam_mgr = CameraManager(
             cameras_config=cameras,
             state_manager=sm,
             inference_engine=inference_eng,
-            snapshot_manager=snapshot_store,
         )
         cam_mgr.start()
+
+        # SnapshotFsStore cần frame_provider (CameraManager)
+        snapshot_store = None
+        if settings.ENABLE_SNAPSHOTS:
+            snapshot_store = SnapshotFsStore(
+                frame_provider=cam_mgr,
+                snapshot_dir=settings.SNAPSHOT_DIR,
+                quality=settings.SNAPSHOT_QUALITY,
+            )
+
+        # PairManager gọi DispatchService (application layer) → phải là port
+        # NodeStateStore, không phải NodeState thô. Camera vẫn dùng sm trực tiếp
+        # vì cần get_state_nodes() của domain.
+        pair_mgr = PairManager(
+            state_manager=NodeStateAdapter(sm),
+            validate_pairs=validate_pairs,
+            strategy=SingleDispatch(DispatchService(ics_gateway)),
+            dispatch_service=DispatchService(ics_gateway),
+            snapshot_manager=snapshot_store,
+            on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(node_id),
+        )
+        pair_mgr.start()
 
         self._components = {
             "state_manager": sm,

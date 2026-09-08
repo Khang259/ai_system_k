@@ -98,3 +98,27 @@ class DbHealthPort(Protocol):
 class WebrtcRunnerPort(Protocol):
     """Trạng thái MediaMTX process + watchdog."""
     def status(self) -> Dict[str, Any]: ...
+
+
+class FrameProvider(Protocol):
+    """
+    Cung cấp frame + metadata mới nhất cho snapshot.
+    
+    CameraManager implement, inject vào SnapshotFsStore.
+    """
+    def capture_for_node(self, node_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Lấy frame + detection mới nhất cho node.
+        
+        Returns dict:
+            {
+                "frame": torch.Tensor (CUDA),
+                "event": torch.cuda.Event hoặc None,
+                "detections": torch.Tensor hoặc None,
+                "rois": list,
+                "detection_ts": float,
+                "cam_id": str
+            }
+        hoặc None nếu node không tìm thấy hoặc camera chưa có frame.
+        """
+        ...

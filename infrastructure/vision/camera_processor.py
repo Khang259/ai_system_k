@@ -25,7 +25,6 @@ class CameraProcessor(threading.Thread):
         inference_engine,
         result_queue,
         cam_id,
-        snapshot_manager=None,
         enabled_ref=None,
         camera_index=0,
         latest_frames_ref=None,
@@ -40,7 +39,6 @@ class CameraProcessor(threading.Thread):
         self.inference_engine = inference_engine
         self.result_queue = result_queue
         self.cam_id = cam_id
-        self.snapshot_manager = snapshot_manager
         self.enabled_ref = enabled_ref if enabled_ref is not None else []
         self.camera_index = camera_index
         self.latest_frames_ref = latest_frames_ref if latest_frames_ref is not None else {}
@@ -107,7 +105,7 @@ class CameraProcessor(threading.Thread):
         except Exception as e:
             logger.warning(f"Preview encode failed {self.cam_id}: {e}")
     
-    def _process_rois_async(self, detections, rois_snapshot, frame_snapshot, cam_id):
+    def _process_rois_async(self, detections, rois_snapshot, cam_id):
         """
         Xử lý ROI trong background thread - KHÔNG BLOCK camera thread.
 
@@ -115,7 +113,6 @@ class CameraProcessor(threading.Thread):
             detections: GPU tensor (N,6) từ nms_ready — giữ trên GPU, không
                 round-trip qua CPU vì has_object_in_rois_batch tính trên GPU
             rois_snapshot: list of ROI dicts (copy từ self.rois)
-            frame_snapshot: numpy array frame copy (cho snapshot)
             cam_id: camera ID
         """
         try:
@@ -128,10 +125,6 @@ class CameraProcessor(threading.Thread):
                     self.api_client.post_detection(cam_id, node_id, has_obj, coverage)
                 elif self.state_manager:
                     self.state_manager.get_state_nodes(node_id, has_obj)
-                
-                # Snapshot nếu có object
-                if self.snapshot_manager is not None and frame_snapshot is not None:
-                    self.snapshot_manager.update_frame(node_id, frame_snapshot)
             
         except Exception as e:
             logger.error(f"Async ROI processing error cam {cam_id}: {e}")
@@ -203,12 +196,9 @@ class CameraProcessor(threading.Thread):
                     time.sleep(0.005)
                 continue
 
-            # PHƯƠNG ÁN E: Comment out latest_frames_ref copy (không được dùng, tốn CPU)
-            # if self.latest_frames_ref is not None and not getattr(frame, "is_cuda", False):
-            #     try:
-            #         self.latest_frames_ref[self.cam_id] = frame.copy()
-            #     except Exception:
-            #         pass
+            # Lưu frame + event mới nhất cho snapshot (tham chiếu GPU, không copy)
+            if self.latest_frames_ref is not None:
+                self.latest_frames_ref[self.cam_id] = (frame, decode_event)
 
             # PHƯƠNG ÁN B: Push frame ngay, không đợi kết quả inference
             # QUEUE SHARDING: Truyền camera_index để route vào đúng shard
@@ -258,11 +248,6 @@ class CameraProcessor(threading.Thread):
                 # Giữ nguyên GPU tensor — has_object_in_rois_batch tính trên GPU.
                 # Không cần copy phòng vệ: nms_ready trả tensor mới (boolean
                 # indexing luôn cấp bộ nhớ riêng) nên batch sau không ghi đè.
-
-                # Copy frame cho snapshot (nếu cần)
-                frame_snapshot = None
-                if self.snapshot_manager is not None and not getattr(frame, "is_cuda", False):
-                    frame_snapshot = frame.copy()
                 
                 # Snapshot rois list để tránh concurrent modification
                 rois_snapshot = list(self.rois)
@@ -273,7 +258,6 @@ class CameraProcessor(threading.Thread):
                     self._process_rois_async,
                     detections,
                     rois_snapshot,
-                    frame_snapshot,
                     self.cam_id
                 )
                 # ✅ KHÔNG GỌI future.result() → camera thread tiếp tục ngay!
@@ -315,3 +299,19 @@ class CameraProcessor(threading.Thread):
             logger.info(f"ROI executor shutdown for {self.cam_id}")
         except Exception as e:
             logger.warning(f"ROI executor shutdown error {self.cam_id}: {e}")
+
+    def get_latest_capture(self) -> Optional[Dict[str, Any]]:
+        """
+        Trả về frame + metadata mới nhất cho snapshot.
+        
+        Gọi từ dispatch thread, không block camera thread.
+        """
+        if self._last_detections is None:
+            return None
+        
+        return {
+            "detections": self._last_detections,
+            "detection_ts": self._last_detections_ts,
+            "rois": list(self.rois),  # copy để tránh concurrent modification
+            "cam_id": self.cam_id,
+        }
