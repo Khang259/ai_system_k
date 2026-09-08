@@ -107,25 +107,18 @@ class CameraProcessor(threading.Thread):
         except Exception as e:
             logger.warning(f"Preview encode failed {self.cam_id}: {e}")
     
-    def _process_rois_async(self, detections_data, rois_snapshot, frame_snapshot, cam_id):
+    def _process_rois_async(self, detections, rois_snapshot, frame_snapshot, cam_id):
         """
         Xử lý ROI trong background thread - KHÔNG BLOCK camera thread.
-        
+
         Args:
-            detections_data: tuple (boxes, metadata) hoặc GPU tensor
+            detections: GPU tensor (N,6) từ nms_ready — giữ trên GPU, không
+                round-trip qua CPU vì has_object_in_rois_batch tính trên GPU
             rois_snapshot: list of ROI dicts (copy từ self.rois)
             frame_snapshot: numpy array frame copy (cho snapshot)
             cam_id: camera ID
         """
         try:
-            # Reconstruct detections tensor nếu cần
-            if isinstance(detections_data, tuple):
-                import torch
-                boxes, metadata = detections_data
-                detections = torch.tensor(boxes, device='cuda')
-            else:
-                detections = detections_data
-            
             # Batch ROI check - chạy trong background, không block camera thread
             roi_results = has_object_in_rois_batch(detections, rois_snapshot, use_gpu=True)
             
@@ -262,15 +255,10 @@ class CameraProcessor(threading.Thread):
             if detections is not None and len(self.rois) > 0:
                 t_roi_start = time.monotonic()
                 
-                # Prepare data cho async processing (tránh race condition)
-                import torch
-                if isinstance(detections, torch.Tensor):
-                    # Clone tensor về CPU để thread pool xử lý
-                    detections_cpu = detections.cpu().numpy()
-                    detections_data = (detections_cpu, None)
-                else:
-                    detections_data = detections
-                
+                # Giữ nguyên GPU tensor — has_object_in_rois_batch tính trên GPU.
+                # Không cần copy phòng vệ: nms_ready trả tensor mới (boolean
+                # indexing luôn cấp bộ nhớ riêng) nên batch sau không ghi đè.
+
                 # Copy frame cho snapshot (nếu cần)
                 frame_snapshot = None
                 if self.snapshot_manager is not None and not getattr(frame, "is_cuda", False):
@@ -283,7 +271,7 @@ class CameraProcessor(threading.Thread):
                 self._pending_roi_jobs += 1
                 future = self.roi_executor.submit(
                     self._process_rois_async,
-                    detections_data,
+                    detections,
                     rois_snapshot,
                     frame_snapshot,
                     self.cam_id
