@@ -342,7 +342,7 @@ class InferenceEngine(threading.Thread):
             results = self.engine.nms_ready(
                 batch_info["slot_idx"],
                 batch_info["batch_size"],
-                conf=0.3,
+                conf=None,  # Dùng settings.THRESHOLD_DETECT
                 max_det=15,
             )
             self._distribute_results(results, batch_info["cam_ids"])

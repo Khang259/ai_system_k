@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     MODEL_PATH: str              = "models/model_test.engine"
     MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
     MODEL_WIDTH: int             = 640  # engine W
-    THRESHOLD_DETECT: float      = 0.4
+    THRESHOLD_DETECT: float      = 0.4  # NMS + ROI detect: loại bỏ detection confidence thấp
     THRESHOLD_COVERAGE: float    = 0.5
     INFERENCE_MAX_QUEUE_SIZE: int  = 500
     INFERENCE_MIN_BATCH_SIZE: int  = 1   # TRT profile min — 1 camera / dev
@@ -46,7 +46,6 @@ class Settings(BaseSettings):
     INFERENCE_NUM_STREAMS: int     = 2   # D: N TRT context (mỗi cái 1 stream + I/O). <1.15x → đặt 1
     DECODE_STREAM_POOL_SIZE: int   = 8   # C: pool decode, round-robin camera
     INFERENCE_USE_PREALLOCATED_QUEUE: bool = True  # Use pre-allocated ring buffer queue
-    USE_GPU_DECODE: bool           = True
     START_WAIT_MODEL_SEC: float    = 30.0  # start-all chờ model load
     START_WAIT_STREAM_SEC: float   = 45.0  # start-all chờ ≥1 camera có frame
     DECODE_WAIT_FIRST_FRAME_SEC: float = 30.0  # NVDEC chờ frame đầu tiên

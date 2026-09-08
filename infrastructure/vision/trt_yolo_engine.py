@@ -8,6 +8,7 @@ from pathlib import Path
 
 import torch
 
+from config.settings import settings
 from utils.setup_log import setup_logger
 
 logger = setup_logger("trt_yolo_engine", "logs/inference_engine/log")
@@ -77,8 +78,10 @@ class TrtExecSlot:
             raise RuntimeError("execute_async_v3 failed")
         return stream.record_event(), batch_size
 
-    def nms_ready(self, batch_size, conf=0.3, max_det=15):
+    def nms_ready(self, batch_size, conf=None, max_det=15):
         """Pack output end2end (B,300,6) → list[Tensor (K,6)]. Không gọi NMS CPU."""
+        if conf is None:
+            conf = settings.THRESHOLD_DETECT
         preds = self.output[:batch_size].float()
         results = []
         for i in range(batch_size):
@@ -164,5 +167,5 @@ class TrtYoloEngine:
     def infer_async(self, slot_idx, batch_size):
         return self.slots[slot_idx].infer_async(batch_size)
 
-    def nms_ready(self, slot_idx, batch_size, conf=0.3, max_det=15):
+    def nms_ready(self, slot_idx, batch_size, conf=None, max_det=15):
         return self.slots[slot_idx].nms_ready(batch_size, conf=conf, max_det=max_det)
