@@ -13,6 +13,16 @@ class WebhookPayload(BaseModel):
     status:  int
 
 
+class LoginPayload(BaseModel):
+    username: str
+    password: str
+
+
+class RefreshPayload(BaseModel):
+    # camelCase theo FE, không đổi sang snake_case
+    refreshToken: str
+
+
 class CameraConfigCreate(BaseModel):
     pass  # accepts any dict — validated at MongoDB level
     class Config:

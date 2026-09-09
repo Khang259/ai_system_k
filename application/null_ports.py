@@ -116,6 +116,60 @@ class NullWebrtcRunner:
         return {"alive": False, "owned": False, "watchdog": False}
 
 
+class NullUserRepo:
+    async def get_by_username(self, username):
+        return None
+
+    async def get_by_id(self, user_id):
+        return None
+
+
+class NullRefreshTokenStore:
+    async def save(self, user_id, token_hash, expires_at):
+        return None
+
+    async def find(self, token_hash):
+        return None
+
+    async def revoke_user(self, user_id):
+        return None
+
+
+class NullAuthAudit:
+    async def log_event(self, username, event, ip, user_agent=""):
+        return None
+
+    async def count_recent_failures(self, username, minutes):
+        return 0
+
+
+class NullPasswordHasher:
+    """Chưa bind auth → mọi lần verify đều thất bại (mặc định an toàn)."""
+
+    def hash(self, password: str) -> str:
+        return ""
+
+    def verify(self, password: str, hashed: str) -> bool:
+        return False
+
+    def dummy_hash(self) -> str:
+        return ""
+
+
+class NullTokenIssuer:
+    def issue_access(self, user):
+        return {"token": "", "expires_in": 0}
+
+    def decode_access(self, token):
+        return None
+
+    def new_refresh(self):
+        return {"raw": "", "hash": "", "expires_at": None}
+
+    def hash_refresh(self, raw: str) -> str:
+        return ""
+
+
 class NullFrameProvider:
     def capture_for_node(self, node_id: str) -> Optional[Dict[str, Any]]:
         return None

@@ -74,6 +74,15 @@ class AuditLogRepository(BaseRepository):
             limit=limit,
         )
 
+    async def count_failed_logins_for(self, user: str, since_minutes: int) -> int:
+        """Số lần đăng nhập sai của MỘT user trong cửa sổ vừa qua — rate limit."""
+        since = datetime.now(timezone.utc) - timedelta(minutes=since_minutes)
+        return await self.count({
+            "user": user,
+            "event": "login_failed",
+            "created_at": {"$gte": since},
+        })
+
     async def get_failed_logins(self, since_minutes: int = 30) -> List[Dict]:
         since = datetime.now(timezone.utc) - timedelta(minutes=since_minutes)
         return await self.find_many(

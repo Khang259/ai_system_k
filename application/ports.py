@@ -4,6 +4,7 @@ Infrastructure / tests implement các Protocol này.
 """
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Protocol, Sequence, Set
 
 from domain.reset_policy import ResetResult
@@ -98,6 +99,47 @@ class DbHealthPort(Protocol):
 class WebrtcRunnerPort(Protocol):
     """Trạng thái MediaMTX process + watchdog."""
     def status(self) -> Dict[str, Any]: ...
+
+
+class UserRepositoryPort(Protocol):
+    async def get_by_username(self, username: str) -> Optional[Dict[str, Any]]: ...
+    async def get_by_id(self, user_id: str) -> Optional[Dict[str, Any]]: ...
+
+
+class RefreshTokenStore(Protocol):
+    """
+    Lưu refresh token đã hash — không lưu bản thô.
+
+    Single session: `save` xoá phiên cũ của user, nên đăng nhập máy mới đẩy
+    máy cũ ra.
+    """
+    async def save(self, user_id: str, token_hash: str, expires_at: datetime) -> None: ...
+    async def find(self, token_hash: str) -> Optional[Dict[str, Any]]: ...
+    async def revoke_user(self, user_id: str) -> None: ...
+
+
+class PasswordHasher(Protocol):
+    def hash(self, password: str) -> str: ...
+    def verify(self, password: str, hashed: str) -> bool: ...
+    def dummy_hash(self) -> str:
+        """Hash giả để verify vẫn chạy khi username không tồn tại (chống dò user)."""
+        ...
+
+
+class TokenIssuer(Protocol):
+    """Phát access token (JWT) + refresh token (chuỗi ngẫu nhiên)."""
+    def issue_access(self, user: Dict[str, Any]) -> Dict[str, Any]: ...
+    def decode_access(self, token: str) -> Optional[Dict[str, Any]]: ...
+    def new_refresh(self) -> Dict[str, Any]: ...
+    def hash_refresh(self, raw: str) -> str: ...
+
+
+class AuthAuditPort(Protocol):
+    """Ghi sự kiện đăng nhập + đếm số lần sai để chặn dò mật khẩu."""
+    async def log_event(
+        self, username: str, event: str, ip: str, user_agent: str = ""
+    ) -> None: ...
+    async def count_recent_failures(self, username: str, minutes: int) -> int: ...
 
 
 class FrameProvider(Protocol):

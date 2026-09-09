@@ -55,6 +55,20 @@ class Settings(BaseSettings):
     SNAPSHOT_DIR: str       = "snapshots"
     SNAPSHOT_QUALITY: int   = 85   # JPEG quality — reduced from 95 to save disk
 
+    # ── Auth (short session + refresh token) ──────────────────
+    # Để trống = sinh secret ngẫu nhiên mỗi lần khởi động → token cũ mất hiệu
+    # lực sau restart. Tiện cho dev, PHẢI set trong .env cho production.
+    JWT_SECRET: str            = ""
+    JWT_ALGORITHM: str         = "HS256"
+    ACCESS_TOKEN_TTL_MIN: int  = 15   # ngắn: không revoke được nên đừng để dài
+    REFRESH_TOKEN_TTL_DAYS: int = 7
+    LOGIN_MAX_FAILED: int      = 5    # số lần sai liên tiếp trước khi khoá
+    LOGIN_LOCKOUT_MIN: int     = 15   # cửa sổ đếm số lần sai; 0 = tắt rate limit
+
+    # ── Log retention ─────────────────────────────────────────
+    LOG_KEEP_DAYS: int              = 5        # giữ N ngày gần nhất, kể cả hôm nay
+    LOG_CLEANUP_INTERVAL_SEC: float = 86400.0  # chu kỳ dọn; 0 = tắt
+
     # ── Preview JPEG (Swagger / bước 1; WebRTC sau) ───────────
     PREVIEW_JPEG_QUALITY: int    = 80
     PREVIEW_INTERVAL_SEC: float  = 0.2   # encode tối đa ~5 fps khi đang watch

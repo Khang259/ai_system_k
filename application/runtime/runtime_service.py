@@ -59,57 +59,63 @@ class RuntimeService:
         )
         container.bind_dispatch_gateway(ics_gateway)
 
-        inference_eng = InferenceEngine(
-            model_path=settings.MODEL_PATH,
-            max_queue_size=settings.INFERENCE_MAX_QUEUE_SIZE,
-            max_batch_size=settings.INFERENCE_MAX_BATCH_SIZE,
-            batch_timeout=settings.INFERENCE_BATCH_TIMEOUT,
-            num_streams=settings.INFERENCE_NUM_STREAMS,
-            initial_paused=True,
-            use_preallocated_queue=settings.INFERENCE_USE_PREALLOCATED_QUEUE,
-            height=settings.MODEL_HEIGHT,
-            width=settings.MODEL_WIDTH,
-            enable_profiler=settings.ENABLE_TORCH_PROFILER,
-        )
-        inference_eng.start()
-
-        # CameraManager trước — nó implement FrameProvider cho snapshot
-        cam_mgr = CameraManager(
-            cameras_config=cameras,
-            state_manager=sm,
-            inference_engine=inference_eng,
-        )
-        cam_mgr.start()
-
-        # SnapshotFsStore cần frame_provider (CameraManager)
-        snapshot_store = None
-        if settings.ENABLE_SNAPSHOTS:
-            snapshot_store = SnapshotFsStore(
-                frame_provider=cam_mgr,
-                snapshot_dir=settings.SNAPSHOT_DIR,
-                quality=settings.SNAPSHOT_QUALITY,
+        # Ghi từng component vào _components NGAY sau khi start, không gom lại
+        # ở cuối: nếu bước sau nổ thì nhánh except mới dọn được thứ đã kịp chạy.
+        # Gom ở cuối thì thread + VRAM rò rỉ, và reload sẽ tạo InferenceEngine
+        # thứ hai chiếm thêm VRAM.
+        self._components = {"state_manager": sm}
+        try:
+            inference_eng = InferenceEngine(
+                model_path=settings.MODEL_PATH,
+                max_queue_size=settings.INFERENCE_MAX_QUEUE_SIZE,
+                max_batch_size=settings.INFERENCE_MAX_BATCH_SIZE,
+                batch_timeout=settings.INFERENCE_BATCH_TIMEOUT,
+                num_streams=settings.INFERENCE_NUM_STREAMS,
+                initial_paused=True,
+                use_preallocated_queue=settings.INFERENCE_USE_PREALLOCATED_QUEUE,
+                height=settings.MODEL_HEIGHT,
+                width=settings.MODEL_WIDTH,
+                enable_profiler=settings.ENABLE_TORCH_PROFILER,
             )
+            self._components["inference_engine"] = inference_eng
+            inference_eng.start()
 
-        # PairManager gọi DispatchService (application layer) → phải là port
-        # NodeStateStore, không phải NodeState thô. Camera vẫn dùng sm trực tiếp
-        # vì cần get_state_nodes() của domain.
-        pair_mgr = PairManager(
-            state_manager=NodeStateAdapter(sm),
-            validate_pairs=validate_pairs,
-            strategy=SingleDispatch(DispatchService(ics_gateway)),
-            dispatch_service=DispatchService(ics_gateway),
-            snapshot_manager=snapshot_store,
-            on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(node_id),
-        )
-        pair_mgr.start()
+            # CameraManager trước — nó implement FrameProvider cho snapshot
+            cam_mgr = CameraManager(
+                cameras_config=cameras,
+                state_manager=sm,
+                inference_engine=inference_eng,
+            )
+            self._components["camera_manager"] = cam_mgr
+            cam_mgr.start()
 
-        self._components = {
-            "state_manager": sm,
-            "pair_manager": pair_mgr,
-            "snapshot_manager": snapshot_store,
-            "inference_engine": inference_eng,
-            "camera_manager": cam_mgr,
-        }
+            # SnapshotFsStore cần frame_provider (CameraManager)
+            snapshot_store = None
+            if settings.ENABLE_SNAPSHOTS:
+                snapshot_store = SnapshotFsStore(
+                    frame_provider=cam_mgr,
+                    snapshot_dir=settings.SNAPSHOT_DIR,
+                    quality=settings.SNAPSHOT_QUALITY,
+                )
+            self._components["snapshot_manager"] = snapshot_store
+
+            # PairManager gọi DispatchService (application layer) → phải là port
+            # NodeStateStore, không phải NodeState thô. Camera vẫn dùng sm trực tiếp
+            # vì cần get_state_nodes() của domain.
+            pair_mgr = PairManager(
+                state_manager=NodeStateAdapter(sm),
+                validate_pairs=validate_pairs,
+                strategy=SingleDispatch(DispatchService(ics_gateway)),
+                dispatch_service=DispatchService(ics_gateway),
+                snapshot_manager=snapshot_store,
+                on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(node_id),
+            )
+            self._components["pair_manager"] = pair_mgr
+            pair_mgr.start()
+        except Exception:
+            logger.error("Runtime start thất bại — dọn component đã khởi động", exc_info=True)
+            self._stop_components()
+            raise
 
         container.bind_runtime(cam_mgr, inference_eng, sm, runtime_control=self)
 
@@ -119,10 +125,8 @@ class RuntimeService:
         logger.info(f"Runtime started — cameras={len(cameras)}, pairs={len(validate_pairs)}")
         return self.status()
 
-    def stop(self) -> Dict[str, Any]:
-        if not self._running:
-            return self.status()
-
+    def _stop_components(self) -> None:
+        """Dừng theo thứ tự ngược lúc start. Dùng cho cả stop() và rollback."""
         for name in ["pair_manager", "camera_manager", "inference_engine"]:
             comp = self._components.get(name)
             if comp:
@@ -130,10 +134,15 @@ class RuntimeService:
                     comp.stop()
                 except Exception as e:
                     logger.warning(f"Error stopping {name}: {e}")
+        self._components = {}
 
+    def stop(self) -> Dict[str, Any]:
+        if not self._running:
+            return self.status()
+
+        self._stop_components()
         container.unbind_runtime()
 
-        self._components = {}
         self._running = False
         logger.info("Runtime stopped")
         return self.status()

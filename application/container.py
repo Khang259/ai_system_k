@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from application.scan_session import ScanSession
 from application.null_ports import (
+    NullAuthAudit,
     NullCameraConfigRepo,
     NullCameraRuntime,
     NullDbHealth,
@@ -11,9 +12,14 @@ from application.null_ports import (
     NullNodeRepo,
     NullNodeStateStore,
     NullPairsRepo,
+    NullPasswordHasher,
+    NullRefreshTokenStore,
     NullRuntimeControl,
+    NullTokenIssuer,
+    NullUserRepo,
     NullWebrtcRunner,
 )
+from application.auth.session import GetMe, Login, Logout, RefreshSession
 from application.state.update_detection import UpdateDetection
 from application.state.toggle_flag import ToggleFlag
 from application.state.reset_flags import ResetFlagsByOrder
@@ -66,6 +72,11 @@ class AppContainer:
         self.dispatch_gateway = NullDispatchGateway()
         self.db_health = NullDbHealth()
         self.webrtc_runner = NullWebrtcRunner()
+        self.users = NullUserRepo()
+        self.refresh_tokens = NullRefreshTokenStore()
+        self.auth_audit = NullAuthAudit()
+        self.password_hasher = NullPasswordHasher()
+        self.token_issuer = NullTokenIssuer()
         from config.settings import settings
 
         self.webrtc_sessions = WebrtcSessionRegistry(
@@ -84,6 +95,25 @@ class AppContainer:
 
     def bind_db_health(self, db_health) -> None:
         self.db_health = db_health
+        self._wire()
+
+    def bind_runtime_control(self, runtime_control) -> None:
+        """
+        Bind riêng phần điều khiển, không kèm camera/inference.
+
+        Cần thiết để `/runtime/status` và `/runtime/reload` vẫn dùng được khi
+        runtime khởi động thất bại — nếu không thì chúng trỏ vào port rỗng và
+        người vận hành buộc phải restart app mới thử lại được.
+        """
+        self.runtime_control = runtime_control
+        self._wire()
+
+    def bind_auth(self, users, refresh_tokens, audit, hasher, token_issuer) -> None:
+        self.users = users
+        self.refresh_tokens = refresh_tokens
+        self.auth_audit = audit
+        self.password_hasher = hasher
+        self.token_issuer = token_issuer
         self._wire()
 
     def bind_repos(self, camera_repo, pairs_repo, node_repo) -> None:
@@ -190,6 +220,21 @@ class AppContainer:
         self.get_health = GetHealth(
             self.db_health, self.runtime_control, self.webrtc_runner
         )
+
+        self.login = Login(
+            self.users,
+            self.token_issuer,
+            self.refresh_tokens,
+            self.password_hasher,
+            self.auth_audit,
+            max_failed=settings.LOGIN_MAX_FAILED,
+            lockout_min=settings.LOGIN_LOCKOUT_MIN,
+        )
+        self.logout = Logout(self.refresh_tokens, self.auth_audit)
+        self.refresh_session = RefreshSession(
+            self.refresh_tokens, self.users, self.token_issuer
+        )
+        self.get_me = GetMe(self.users)
 
 
 container = AppContainer()
