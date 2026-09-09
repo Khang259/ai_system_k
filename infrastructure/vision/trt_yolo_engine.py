@@ -51,11 +51,14 @@ class TrtExecSlot:
         n = min(len(frames_batch), self.fixed_batch)
         for i, frame in enumerate(frames_batch[:n]):
             if not isinstance(frame, torch.Tensor):
-                frame = torch.from_numpy(frame).to(self.device)
+                raise TypeError(
+                    f"copy_batch cần torch.Tensor trên GPU, nhận "
+                    f"{type(frame).__name__} — decoder phải trả CUDA tensor"
+                )
+            # Phân nhánh theo dtype, KHÔNG theo giá trị: frame.max() ép sync
+            # GPU→CPU mỗi frame trong hot path. NVDEC luôn trả uint8.
             if frame.dtype == torch.uint8:
                 src = frame.float().div_(255.0)
-            elif frame.max() > 1.5:
-                src = frame.div_(255.0)
             else:
                 src = frame.float()
             if self.input.dtype == torch.float16:

@@ -29,4 +29,8 @@ bin/mediamtx.exe
 benchmarks/
 profiling/
 
+# Model backups — binary nặng, không đưa vào git
+*.bak
+*.bak_eng
+
 docs/

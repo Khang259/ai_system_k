@@ -2,7 +2,9 @@ import threading
 import time
 import queue
 from concurrent.futures import ThreadPoolExecutor
-from infrastructure.vision.detection import has_object_in_roi, has_object_in_rois_batch
+from typing import Any, Dict, Optional
+
+from infrastructure.vision.detection import has_object_in_rois_batch
 from infrastructure.vision.preview_draw import (
     draw_overlay,
     encode_jpeg,
@@ -117,7 +119,7 @@ class CameraProcessor(threading.Thread):
         """
         try:
             # Batch ROI check - chạy trong background, không block camera thread
-            roi_results = has_object_in_rois_batch(detections, rois_snapshot, use_gpu=True)
+            roi_results = has_object_in_rois_batch(detections, rois_snapshot)
             
             # Post detection results
             for has_obj, coverage, node_id in roi_results:

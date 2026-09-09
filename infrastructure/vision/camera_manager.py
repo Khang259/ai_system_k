@@ -1,5 +1,7 @@
 import threading
 import queue
+from typing import Any, Dict, Optional
+
 from config.settings import settings
 from infrastructure.vision.camera_processor import CameraProcessor
 from infrastructure.vision.preview_store import PreviewStore
