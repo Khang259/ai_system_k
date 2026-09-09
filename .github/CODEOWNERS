@@ -1,0 +1,37 @@
+# Phân định vùng sở hữu code — GitHub tự gán reviewer theo đường dẫn.
+#
+# Cú pháp: <đường dẫn>  <@user hoặc @org/team>
+# Dòng KHỚP SAU CÙNG thắng, nên quy tắc chung đặt trên, ngoại lệ đặt dưới.
+#
+# ⚠️ Chưa điền người thật — thay @Khang259 bằng đúng user/team GitHub rồi bỏ
+# ghi chú này. GitHub bỏ qua owner không có quyền truy cập repo.
+
+# Mặc định
+*                               @Khang259
+
+# ── Vùng AI / Vision (GPU, TensorRT, NVDEC) ──────────────────
+# Sửa ở đây cần người hiểu CUDA stream, event, và vòng lặp camera
+/infrastructure/vision/         @Khang259
+/infrastructure/dispatch/       @Khang259
+/infrastructure/storage/snapshot_fs.py  @Khang259
+/benchmarks/                    @Khang259
+/models/                        @Khang259
+
+# ── Vùng Web / API ───────────────────────────────────────────
+/presentation/                  @Khang259
+/application/auth/              @Khang259
+/application/cameras_config/    @Khang259
+/application/nodes/             @Khang259
+/application/pairs/             @Khang259
+/infrastructure/auth/           @Khang259
+/infrastructure/persistence/    @Khang259
+
+# ── Vùng chung — hai bên đụng nhau, cần cả hai review ────────
+# `container.py` là chỗ AI và Web gặp nhau: mọi port mới đều đi qua đây.
+# `ports.py` là hợp đồng giữa hai vùng; `domain/` là nghiệp vụ dùng chung.
+/application/container.py       @Khang259
+/application/ports.py           @Khang259
+/application/null_ports.py      @Khang259
+/application/runtime/           @Khang259
+/domain/                        @Khang259
+/config/settings.py             @Khang259
