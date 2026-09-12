@@ -96,19 +96,51 @@ class RuntimeService:
                     frame_provider=cam_mgr,
                     snapshot_dir=settings.SNAPSHOT_DIR,
                     quality=settings.SNAPSHOT_QUALITY,
+                    indexer=container.snapshot_indexer,
                 )
             self._components["snapshot_manager"] = snapshot_store
 
-            # PairManager gọi DispatchService (application layer) → phải là port
-            # NodeStateStore, không phải NodeState thô. Camera vẫn dùng sm trực tiếp
-            # vì cần get_state_nodes() của domain.
+            state_adapter = NodeStateAdapter(
+                sm, lock_sync=container.node_lock_sync
+            )
+            # Hydrate lock từ Mongo (user + system) sau restart
+            try:
+                locked_docs = await container.nodes_repo.list_with_lock()
+            except Exception:
+                logger.warning(
+                    "Không hydrate lock từ Mongo (DB chưa sẵn / repo null)",
+                    exc_info=True,
+                )
+                locked_docs = []
+            for doc in locked_docs:
+                raw = doc.get("lock") if isinstance(doc.get("lock"), dict) else {}
+                nid = doc.get("node_id")
+                if not nid:
+                    continue
+                state_adapter.apply_persisted_lock(
+                    nid,
+                    user=bool(raw.get("user")),
+                    system=bool(raw.get("system")),
+                    order_id=raw.get("orderId"),
+                )
+
+            dispatch_svc = DispatchService(ics_gateway)
+
+            def _on_dispatch_failed(start, end, order_id):
+                container.notification_publisher.publish_dispatch_failed(
+                    start, end, order_id
+                )
+
             pair_mgr = PairManager(
-                state_manager=NodeStateAdapter(sm),
+                state_manager=state_adapter,
                 validate_pairs=validate_pairs,
-                strategy=SingleDispatch(DispatchService(ics_gateway)),
-                dispatch_service=DispatchService(ics_gateway),
+                strategy=SingleDispatch(dispatch_svc),
+                dispatch_service=dispatch_svc,
                 snapshot_manager=snapshot_store,
-                on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(node_id),
+                on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(
+                    node_id
+                ),
+                on_dispatch_failed=_on_dispatch_failed,
             )
             self._components["pair_manager"] = pair_mgr
             pair_mgr.start()
@@ -117,7 +149,9 @@ class RuntimeService:
             self._stop_components()
             raise
 
-        container.bind_runtime(cam_mgr, inference_eng, sm, runtime_control=self)
+        container.bind_runtime(
+            cam_mgr, inference_eng, state_adapter, runtime_control=self
+        )
 
         self._running = True
         self._started_at = time.time()

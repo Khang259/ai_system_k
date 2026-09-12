@@ -51,6 +51,26 @@ class FakeCameraRuntime:
         self.zone_calls.append((zone, on))
         self.enabled = 1 if on else 0
 
+    def set_camera_enabled_by_id(self, camera_id: int, on: bool) -> bool:
+        self.zone_calls.append(("cam", camera_id, on))
+        for cam in self.cameras:
+            if cam.get("cameraId") == camera_id:
+                cam["enabled"] = on
+                if not on:
+                    cam["streaming"] = False
+                return True
+        # Cho phép sync khi runtime có camera nhưng list trống
+        self.cameras.append(
+            {
+                "cameraId": camera_id,
+                "cam_id": f"cam_{camera_id}",
+                "enabled": on,
+                "streaming": False,
+                "error": None,
+            }
+        )
+        return True
+
     def get_status(self) -> Dict[str, Any]:
         return {
             "total": self.total,
@@ -139,16 +159,13 @@ class FakeNodeStateStore:
     def has_node(self, node_id: str) -> bool:
         return node_id in self._ns.points
 
-    def toggle_flag(self, node_id: str) -> Optional[bool]:
-        return self._ns.toggle_flag(node_id)
-
     def discard_from_ready(self, node_id: str) -> None:
         self._ns.discard_from_ready(node_id)
 
     def get_detected_start_nodes(self) -> Set[str]:
         return self._ns.get_detected_start_nodes()
 
-    def snapshot_points(self) -> Dict[str, Dict[str, bool]]:
+    def snapshot_points(self) -> Dict[str, Dict[str, Any]]:
         return self._ns.snapshot_points()
 
     def apply_reset(self, order_id: str, status: int) -> ResetResult:
@@ -174,6 +191,16 @@ class FakeNodeStateStore:
     def process_ends(self) -> None:
         self._ns.process_ends()
 
+    def apply_persisted_lock(self, node_id, *, user=False, system=False, order_id=None):
+        self._ns.apply_persisted_lock(
+            node_id, user=user, system=system, order_id=order_id
+        )
+
+    def clear_system_by_order_id(self, order_id: str):
+        return self._ns.clear_system_by_order_id(order_id)
+
+    def lock_view(self, node_id: str):
+        return self._ns.lock_view(node_id)
 
 class FakeDispatchGateway:
     """Fake for testing dispatch — always returns `ok` for send()."""
@@ -200,6 +227,9 @@ class FakeCameraConfigRepo:
     async def get_by_area(self, area: str):
         return [v for v in self.items.values() if v.get("zone_id") == area.upper()]
 
+    async def get_by_id(self, camera_id):
+        return self.items.get(camera_id)
+
     async def create(self, doc):
         cid = doc.get("cameraId", self._seq)
         self._seq += 1
@@ -215,6 +245,28 @@ class FakeCameraConfigRepo:
     async def delete_by_camera_id(self, camera_id):
         return self.items.pop(camera_id, None) is not None
 
+    async def set_enabled(self, camera_id, enabled):
+        return await self.update_by_camera_id(camera_id, {"enabled": enabled})
+
+    async def upsert_roi(self, camera_id, node_id, roi_doc):
+        if camera_id not in self.items:
+            return False
+        cam = self.items[camera_id]
+        rois = dict(cam.get("rois") or {})
+        rois[node_id] = roi_doc
+        cam["rois"] = rois
+        return True
+
+    async def delete_roi(self, camera_id, node_id):
+        if camera_id not in self.items:
+            return False
+        rois = dict(self.items[camera_id].get("rois") or {})
+        if node_id not in rois:
+            return False
+        del rois[node_id]
+        self.items[camera_id]["rois"] = rois
+        return True
+
 
 class FakePairsRepo:
     def __init__(self) -> None:
@@ -222,6 +274,9 @@ class FakePairsRepo:
 
     async def get_by_zone(self, zone_id: str):
         return [r for r in self.rows if r.get("zone_id") == zone_id.upper()]
+
+    async def list_all(self):
+        return list(self.rows)
 
     async def set_enabled(self, start_point, end_point, enabled):
         for r in self.rows:
@@ -251,6 +306,9 @@ class FakeNodeRepo:
     def __init__(self) -> None:
         self.rows: Dict[str, Dict[str, Any]] = {}
 
+    async def get_all(self):
+        return list(self.rows.values())
+
     async def get_by_zone(self, zone_id: str):
         return [r for r in self.rows.values() if r.get("zone_id") == zone_id.upper()]
 
@@ -265,6 +323,52 @@ class FakeNodeRepo:
             return False
         self.rows[node_id]["enabled"] = enabled
         return True
+
+    async def set_maintenance(self, node_id: str, under: bool, reason):
+        if node_id not in self.rows:
+            return False
+        self.rows[node_id]["is_under_maintenance"] = under
+        self.rows[node_id]["maintenance_reason"] = reason or ""
+        return True
+
+    async def set_lock(self, node_id: str, *, user=None, system=None, order_id=None):
+        if node_id not in self.rows:
+            return False
+        prev = self.rows[node_id].get("lock") if isinstance(
+            self.rows[node_id].get("lock"), dict
+        ) else {}
+        lock = {
+            "user": bool(prev.get("user", False)),
+            "system": bool(prev.get("system", False)),
+            "orderId": prev.get("orderId"),
+        }
+        if user is not None:
+            lock["user"] = bool(user)
+        if system is not None:
+            lock["system"] = bool(system)
+            if not system:
+                lock["orderId"] = None
+            elif order_id is not None:
+                lock["orderId"] = order_id
+        self.rows[node_id]["lock"] = lock
+        return True
+
+    async def clear_system_lock_by_order(self, order_id: str):
+        cleared = []
+        for nid, row in list(self.rows.items()):
+            lock = row.get("lock") if isinstance(row.get("lock"), dict) else {}
+            if lock.get("system") and lock.get("orderId") == order_id:
+                await self.set_lock(nid, system=False)
+                cleared.append(nid)
+        return cleared
+
+    async def list_with_lock(self):
+        out = []
+        for row in self.rows.values():
+            lock = row.get("lock") if isinstance(row.get("lock"), dict) else {}
+            if lock.get("user") or lock.get("system"):
+                out.append(row)
+        return out
 
     async def set_camera_nodes_enabled(self, camera_id: int, enabled: bool):
         n = 0
@@ -286,6 +390,14 @@ class FakeNodeRepo:
 
     async def delete_by_node_id(self, node_id: str):
         return self.rows.pop(node_id, None) is not None
+
+
+class FakeZoneRepo:
+    def __init__(self) -> None:
+        self.rows: List[Dict[str, Any]] = []
+
+    async def get_all(self):
+        return list(self.rows)
 
 
 class FakeRuntimeControl:

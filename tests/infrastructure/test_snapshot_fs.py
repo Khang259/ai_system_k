@@ -64,12 +64,16 @@ class _FakeFrameProvider:
         }
 
 
-def _store(tmp_path, frames):
+def _store(tmp_path, frames, indexer=None):
     from infrastructure.storage.snapshot_fs import SnapshotFsStore
 
     provider = _FakeFrameProvider(frames)
-    return SnapshotFsStore(provider, snapshot_dir=str(tmp_path), quality=80), provider
-
+    return (
+        SnapshotFsStore(
+            provider, snapshot_dir=str(tmp_path), quality=80, indexer=indexer
+        ),
+        provider,
+    )
 
 @needs_cv2
 def test_capture_pair_returns_none_when_no_camera(tmp_path):
@@ -160,3 +164,31 @@ def test_save_pair_snapshots_start_only_when_end_missing(tmp_path):
         Path(path_a.replace(".jpg", ".json")).read_text(encoding="utf-8")
     )
     assert meta["end"] is None
+
+
+@needs_cv2
+def test_save_pair_snapshots_calls_indexer(tmp_path):
+    import numpy as np
+
+    class _Idx:
+        def __init__(self):
+            self.calls = []
+
+        def record(self, **kwargs):
+            self.calls.append(kwargs)
+
+    idx = _Idx()
+    frames = {
+        "start_1": np.zeros((4, 4, 3), dtype=np.uint8),
+        "end_1": np.ones((4, 4, 3), dtype=np.uint8) * 255,
+    }
+    store, _ = _store(tmp_path, frames, indexer=idx)
+    capture = store.capture_pair("start_1", "end_1")
+
+    with patch("infrastructure.storage.snapshot_fs.cv2.imwrite", return_value=True):
+        path, _ = store.save_pair_snapshots(capture, "start_1", "end_1", "ord-9")
+
+    assert len(idx.calls) == 2
+    assert {c["node_id"] for c in idx.calls} == {"start_1", "end_1"}
+    assert all(c["order_id"] == "ord-9" for c in idx.calls)
+    assert all(c["image_path"] == path for c in idx.calls)

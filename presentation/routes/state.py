@@ -16,12 +16,8 @@ async def post_detection(payload: DetectionPayload) -> Dict[str, Any]:
 
 @router.post("/delete-flag")
 async def delete_flag(payload: WebhookPayload) -> Dict[str, Any]:
+    """Webhook ICS — gỡ system lock theo orderId (RAM + Mongo)."""
     return to_http(container.reset_flags.execute(payload.orderId, payload.status))
-
-
-@router.post("/state/flag/{node_id}")
-async def toggle_flag(node_id: str) -> Dict[str, Any]:
-    return to_http(container.toggle_flag.execute(node_id))
 
 
 @router.get("/state/points")

@@ -3,14 +3,19 @@ from __future__ import annotations
 
 from application.scan_session import ScanSession
 from application.null_ports import (
+    NullActionAudit,
     NullAuthAudit,
     NullCameraConfigRepo,
     NullCameraRuntime,
     NullDbHealth,
     NullDispatchGateway,
     NullInference,
+    NullMapStateStore,
+    NullMapVersionStore,
     NullNodeRepo,
     NullNodeStateStore,
+    NullNotificationStore,
+    NullPagedLogStore,
     NullPairsRepo,
     NullPasswordHasher,
     NullRefreshTokenStore,
@@ -18,10 +23,37 @@ from application.null_ports import (
     NullTokenIssuer,
     NullUserRepo,
     NullWebrtcRunner,
+    NullZoneRepo,
 )
 from application.auth.session import GetMe, Login, Logout, RefreshSession
+from application.fe_api import (
+    CreateRoi,
+    DeleteRoi,
+    DownloadMapZip,
+    GetAuditLogs,
+    GetCameras,
+    GetCompress,
+    GetNodes,
+    GetNodePairs,
+    GetNotifications,
+    GetRois,
+    GetSnapshotImage,
+    GetSystemActionLogs,
+    GetUserActionLogs,
+    GetZones,
+    ImportMap,
+    ListMapVersions,
+    MarkAllNotificationsRead,
+    MarkNotificationRead,
+    SetActiveMap,
+    SetCameraStatus,
+    SetLock,
+    SetMaintenance,
+    Unlock,
+    UpdateRoi,
+)
+from application.fe_api.poll import GetPollSnapshot
 from application.state.update_detection import UpdateDetection
-from application.state.toggle_flag import ToggleFlag
 from application.state.reset_flags import ResetFlagsByOrder
 from application.state.get_all_points import GetAllPoints
 from application.state.get_zone_state import GetZoneState
@@ -68,6 +100,7 @@ class AppContainer:
         self.camera_configs = NullCameraConfigRepo()
         self.pairs_repo = NullPairsRepo()
         self.nodes_repo = NullNodeRepo()
+        self.zones_repo = NullZoneRepo()
         self.runtime_control = NullRuntimeControl()
         self.dispatch_gateway = NullDispatchGateway()
         self.db_health = NullDbHealth()
@@ -75,8 +108,24 @@ class AppContainer:
         self.users = NullUserRepo()
         self.refresh_tokens = NullRefreshTokenStore()
         self.auth_audit = NullAuthAudit()
+        self.action_audit = NullActionAudit()
         self.password_hasher = NullPasswordHasher()
         self.token_issuer = NullTokenIssuer()
+        self.audit_logs = NullPagedLogStore()
+        self.action_logs = NullPagedLogStore()
+        self.dispatch_logs = NullPagedLogStore()
+        self.notifications = NullNotificationStore()
+        from infrastructure.auth.notification_publisher import NullNotificationPublisher
+
+        self.notification_publisher = NullNotificationPublisher()
+        from infrastructure.persistence.node_lock_sync import NullNodeLockSync
+        from infrastructure.storage.snapshot_indexer import NullSnapshotIndexer
+
+        self.snapshot_indexer = NullSnapshotIndexer()
+        self.node_lock_sync = NullNodeLockSync()
+        self.map_versions = NullMapVersionStore()
+        self.map_state = NullMapStateStore()
+        self.map_zip_store = None
         from config.settings import settings
 
         self.webrtc_sessions = WebrtcSessionRegistry(
@@ -116,10 +165,51 @@ class AppContainer:
         self.token_issuer = token_issuer
         self._wire()
 
-    def bind_repos(self, camera_repo, pairs_repo, node_repo) -> None:
+    def bind_action_audit(self, action_audit) -> None:
+        self.action_audit = action_audit
+        self._wire()
+
+    def bind_log_stores(
+        self, audit_logs, action_logs, dispatch_logs, notifications
+    ) -> None:
+        from infrastructure.auth.notification_publisher import NotificationPublisher
+
+        self.audit_logs = audit_logs
+        self.action_logs = action_logs
+        self.dispatch_logs = dispatch_logs
+        self.notifications = notifications
+        self.notification_publisher = NotificationPublisher(notifications)
+        self._wire()
+
+    def bind_event_loop(self, loop) -> None:
+        """Gắn asyncio loop để publisher/indexer/lock ghi Mongo từ thread PairManager."""
+        self.notification_publisher.bind_loop(loop)
+        self.snapshot_indexer.bind_loop(loop)
+        self.node_lock_sync.bind_loop(loop)
+
+    def bind_snapshot_indexer(self, repo) -> None:
+        from infrastructure.storage.snapshot_indexer import SnapshotIndexer
+
+        self.snapshot_indexer = SnapshotIndexer(repo)
+        # loop gắn lại ở bind_event_loop (gọi sau trong lifespan)
+
+    def bind_node_lock_sync(self, repo) -> None:
+        from infrastructure.persistence.node_lock_sync import NodeLockSync
+
+        self.node_lock_sync = NodeLockSync(repo)
+
+    def bind_map(self, versions, state, zip_store) -> None:
+        self.map_versions = versions
+        self.map_state = state
+        self.map_zip_store = zip_store
+        self._wire()
+
+    def bind_repos(self, camera_repo, pairs_repo, node_repo, zone_repo=None) -> None:
         self.camera_configs = camera_repo
         self.pairs_repo = pairs_repo
         self.nodes_repo = node_repo
+        if zone_repo is not None:
+            self.zones_repo = zone_repo
         self._wire()
 
     def bind_dispatch_gateway(self, gateway) -> None:
@@ -135,7 +225,12 @@ class AppContainer:
 
         self.cameras = CameraRuntimeAdapter(camera_manager)
         self.inference = InferenceAdapter(inference_engine)
-        self.state = NodeStateAdapter(state_manager)
+        if isinstance(state_manager, NodeStateAdapter):
+            self.state = state_manager
+        else:
+            self.state = NodeStateAdapter(
+                state_manager, lock_sync=self.node_lock_sync
+            )
         self.runtime_control = runtime_control
         self._wire()
 
@@ -160,7 +255,6 @@ class AppContainer:
         state = self.state
 
         self.update_detection = UpdateDetection(state)
-        self.toggle_flag = ToggleFlag(state)
         self.reset_flags = ResetFlagsByOrder(state)
         self.get_all_points = GetAllPoints(state)
         self.get_zone_state = GetZoneState(state, self.nodes_repo)
@@ -235,6 +329,81 @@ class AppContainer:
             self.refresh_tokens, self.users, self.token_issuer
         )
         self.get_me = GetMe(self.users)
+
+        res = f"{settings.MODEL_WIDTH}x{settings.MODEL_HEIGHT}"
+        self.get_cameras_v1 = GetCameras(
+            self.camera_configs, self.nodes_repo, cams, res
+        )
+        self.get_rois_v1 = GetRois(
+            self.camera_configs,
+            self.nodes_repo,
+            settings.MODEL_WIDTH,
+            settings.MODEL_HEIGHT,
+        )
+        self.set_camera_status_v1 = SetCameraStatus(self.camera_configs, cams)
+        self.create_roi_v1 = CreateRoi(
+            self.camera_configs,
+            self.nodes_repo,
+            settings.MODEL_WIDTH,
+            settings.MODEL_HEIGHT,
+        )
+        self.update_roi_v1 = UpdateRoi(
+            self.camera_configs,
+            self.nodes_repo,
+            settings.MODEL_WIDTH,
+            settings.MODEL_HEIGHT,
+        )
+        self.delete_roi_v1 = DeleteRoi(
+            self.camera_configs,
+            self.nodes_repo,
+            settings.MODEL_WIDTH,
+            settings.MODEL_HEIGHT,
+        )
+        self.get_nodes_v1 = GetNodes(self.nodes_repo)
+        self.set_maintenance_v1 = SetMaintenance(self.nodes_repo, state)
+        self.set_lock_v1 = SetLock(self.nodes_repo, state)
+        self.unlock_v1 = Unlock(self.nodes_repo, state)
+        self.get_zones_v1 = GetZones(
+            self.zones_repo, self.camera_configs, self.nodes_repo, cams
+        )
+        self.get_node_pairs_v1 = GetNodePairs(self.pairs_repo, self.nodes_repo)
+
+        self.get_audit_logs_v1 = GetAuditLogs(self.audit_logs)
+        self.get_user_action_logs_v1 = GetUserActionLogs(self.action_logs)
+        self.get_system_action_logs_v1 = GetSystemActionLogs(self.dispatch_logs)
+        self.get_notifications_v1 = GetNotifications(self.notifications)
+        self.mark_notification_read_v1 = MarkNotificationRead(self.notifications)
+        self.mark_all_notifications_read_v1 = MarkAllNotificationsRead(
+            self.notifications
+        )
+        self.get_snapshot_image_v1 = GetSnapshotImage(settings.SNAPSHOT_DIR)
+
+        from infrastructure.storage.map_zip_store import MapZipStore
+
+        zip_store = self.map_zip_store or MapZipStore(settings.MAP_STORAGE_DIR)
+        self.map_zip_store = zip_store
+        self.import_map_v1 = ImportMap(
+            self.map_versions,
+            self.map_state,
+            zip_store,
+            keep=settings.MAP_VERSION_KEEP,
+            max_upload_mb=settings.MAP_MAX_UPLOAD_MB,
+        )
+        self.list_map_versions_v1 = ListMapVersions(self.map_versions, self.map_state)
+        self.set_active_map_v1 = SetActiveMap(self.map_versions, self.map_state)
+        self.get_compress_v1 = GetCompress(
+            self.map_versions, self.map_state, zip_store
+        )
+        self.download_map_zip_v1 = DownloadMapZip(
+            self.map_versions, self.map_state, zip_store
+        )
+        self.get_poll_snapshot_v1 = GetPollSnapshot(
+            self.get_cameras_v1,
+            self.get_zones_v1,
+            self.notifications,
+            self.map_state,
+            recommended_interval_sec=2.0,
+        )
 
 
 container = AppContainer()

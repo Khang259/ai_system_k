@@ -27,16 +27,21 @@ def test_dispatch_service_single_fail():
     gw.success = False
     gw.ok = False  # Need to set ok too
     store = FakeNodeStateStore()
-    
+    seen = []
+
     service = DispatchService(gw)
     sent, failed = service.dispatch_single(
         [("start_2", "end_2")],
         store,
+        on_dispatch_failed=lambda s, e, oid: seen.append((s, e, oid)),
     )
-    
+
     assert len(sent) == 0
     assert len(failed) == 1
     assert failed[0]["start"] == "start_2"
+    assert len(seen) == 1
+    assert seen[0][0] == "start_2"
+    assert seen[0][1] == "end_2"
 
 
 def test_dispatch_service_build_pairs():

@@ -11,7 +11,11 @@ class PairsRepository(BaseRepository):
         super().__init__("pairs")
 
     async def get_all(self) -> List[Dict]:
+        """Runtime: chỉ pair enabled. FE dùng `list_all` để thấy cả disabled."""
         return await self.find_many({"enabled": True})
+
+    async def list_all(self) -> List[Dict]:
+        return await self.find_many({})
 
     async def get_by_zone(self, zone_id: str) -> List[Dict[str, Any]]:
         return await self.find_many({"zone_id": zone_id.upper()})

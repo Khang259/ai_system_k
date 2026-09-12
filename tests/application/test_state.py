@@ -3,7 +3,6 @@ import asyncio
 
 from domain.models import ResetStatus
 from application.state.update_detection import UpdateDetection
-from application.state.toggle_flag import ToggleFlag
 from application.state.reset_flags import ResetFlagsByOrder
 from application.state.get_all_points import GetAllPoints
 from application.state.get_zone_state import GetZoneState
@@ -25,16 +24,15 @@ def test_update_detection_ok_and_not_ready():
     assert not uc2.execute("start_1", True).success
 
 
-def test_toggle_flag_ok_and_missing():
+def test_user_lock_blocks_ready_semantics():
     store = FakeNodeStateStore()
     store.update_detection("start_1", True)
-    uc = ToggleFlag(store)
-    result = uc.execute("start_1")
-    assert result.success
-    assert result.data["flag"] is True
+    store.apply_persisted_lock("start_1", user=True)
+    assert store.lock_view("start_1")["user"] is True
+    assert store._ns.points["start_1"]["flag"] is True
 
-    missing = uc.execute("no_such")
-    assert not missing.success
+    store.apply_persisted_lock("start_1", user=False)
+    assert store.lock_view("start_1")["user"] is False
 
 
 def test_reset_flags_completed_and_empty():

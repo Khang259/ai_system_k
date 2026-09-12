@@ -55,6 +55,11 @@ class Settings(BaseSettings):
     SNAPSHOT_DIR: str       = "snapshots"
     SNAPSHOT_QUALITY: int   = 85   # JPEG quality — reduced from 95 to save disk
 
+    # ── Map zip (global versions) ─────────────────────────────
+    MAP_STORAGE_DIR: str      = "data/maps"
+    MAP_VERSION_KEEP: int     = 5     # giữ tối đa N bản; import vượt → xoá bản cũ nhất
+    MAP_MAX_UPLOAD_MB: int    = 100
+
     # ── Auth (short session + refresh token) ──────────────────
     # Để trống = sinh secret ngẫu nhiên mỗi lần khởi động → token cũ mất hiệu
     # lực sau restart. Tiện cho dev, PHẢI set trong .env cho production.
@@ -62,8 +67,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str         = "HS256"
     ACCESS_TOKEN_TTL_MIN: int  = 15   # ngắn: không revoke được nên đừng để dài
     REFRESH_TOKEN_TTL_DAYS: int = 7
-    LOGIN_MAX_FAILED: int      = 5    # số lần sai liên tiếp trước khi khoá
-    LOGIN_LOCKOUT_MIN: int     = 15   # cửa sổ đếm số lần sai; 0 = tắt rate limit
+    LOGIN_MAX_FAILED: int      = 10    # số lần sai liên tiếp trước khi khoá
+    LOGIN_LOCKOUT_MIN: int     = 5   # cửa sổ đếm số lần sai; 0 = tắt rate limit
 
     # ── Log retention ─────────────────────────────────────────
     LOG_KEEP_DAYS: int              = 5        # giữ N ngày gần nhất, kể cả hôm nay

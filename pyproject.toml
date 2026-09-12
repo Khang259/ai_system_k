@@ -16,6 +16,7 @@ dependencies = [
     "onnxslim==0.1.96",
     "opencv-python==4.10.0.84",
     "pillow==10.4.0",
+    "python-multipart>=0.0.9",
     "pydantic==2.8.0",
     "pydantic-settings==2.4.0",
     "pymongo==4.8.0",

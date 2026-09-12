@@ -1,6 +1,7 @@
 """
 Application factory — creates and configures FastAPI app.
 """
+import asyncio
 from contextlib import asynccontextmanager
 from functools import partial
 
@@ -24,16 +25,42 @@ from infrastructure.webrtc.mediamtx_runner import MediaMtxRunner
 from infrastructure.persistence.db_health import MongoHealthAdapter
 from infrastructure.persistence.user_repository import user_repository
 from infrastructure.persistence.refresh_token_repository import refresh_token_repository
+from infrastructure.persistence.zone_repository import zone_repository
+from infrastructure.persistence.log_repositories import (
+    action_log_repository,
+    audit_log_repository,
+)
+from infrastructure.persistence.dispatch_log_repository import dispatch_log_repository
+from infrastructure.persistence.notification_repository import notification_repository
+from infrastructure.persistence.snapshot_repository import snapshot_repository
+from infrastructure.persistence.map_repository import (
+    map_state_repository,
+    map_version_repository,
+)
+from infrastructure.storage.map_zip_store import MapZipStore
 from infrastructure.auth import (
     AuthAuditAdapter,
     BcryptHasher,
     JwtTokenService,
     ensure_auth_indexes,
 )
+from infrastructure.auth.action_audit_adapter import ActionAuditAdapter
 from infrastructure.storage.retention import RetentionRunner, purge_old_logs
 from utils.setup_log import setup_logger
 
-from presentation.routes.v1 import auth_router
+from presentation.routes.v1 import (
+    auth_router,
+    cameras_v1_router,
+    dispatch_v1_router,
+    logs_v1_router,
+    maps_v1_router,
+    nodes_v1_router,
+    notifications_v1_router,
+    poll_v1_router,
+    snapshots_v1_router,
+    system_v1_router,
+    zones_v1_router,
+)
 from presentation.routes.cameras import router as cameras_router
 from presentation.routes.state   import router as state_router
 from presentation.routes.runtime import router as runtime_router
@@ -51,6 +78,7 @@ async def lifespan(app: FastAPI):
         camera_repository,
         pairs_repository,
         node_repository,
+        zone_repository,
     )
     container.bind_db_health(MongoHealthAdapter())
 
@@ -66,6 +94,21 @@ async def lifespan(app: FastAPI):
             access_ttl_min=settings.ACCESS_TOKEN_TTL_MIN,
             refresh_ttl_days=settings.REFRESH_TOKEN_TTL_DAYS,
         ),
+    )
+    container.bind_action_audit(ActionAuditAdapter())
+    container.bind_log_stores(
+        audit_log_repository,
+        action_log_repository,
+        dispatch_log_repository,
+        notification_repository,
+    )
+    container.bind_snapshot_indexer(snapshot_repository)
+    container.bind_node_lock_sync(node_repository)
+    container.bind_event_loop(asyncio.get_running_loop())
+    container.bind_map(
+        map_version_repository,
+        map_state_repository,
+        MapZipStore(settings.MAP_STORAGE_DIR),
     )
 
     retention = RetentionRunner(
@@ -135,6 +178,16 @@ def create_app() -> FastAPI:
         return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
     app.include_router(auth_router)
+    app.include_router(cameras_v1_router)
+    app.include_router(zones_v1_router)
+    app.include_router(system_v1_router)
+    app.include_router(nodes_v1_router)
+    app.include_router(dispatch_v1_router)
+    app.include_router(logs_v1_router)
+    app.include_router(notifications_v1_router)
+    app.include_router(snapshots_v1_router)
+    app.include_router(maps_v1_router)
+    app.include_router(poll_v1_router)
     app.include_router(cameras_router)
     app.include_router(state_router)
     app.include_router(runtime_router)

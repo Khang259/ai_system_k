@@ -149,6 +149,15 @@ class CameraManager:
             if 0 <= index < len(self.enabled):
                 self.enabled[index] = on
 
+    def set_camera_enabled_by_id(self, camera_id: int, on: bool) -> bool:
+        """Bật/tắt theo cameraId Mongo. False nếu camera không có trong runtime."""
+        cam = int(camera_id)
+        for i, cfg in enumerate(self.cameras_config or []):
+            if cfg.get("cameraId") == cam:
+                self.set_camera_enabled(i, on)
+                return True
+        return False
+
     def set_zone_enabled(self, zone: str, on: bool):
         with self._enabled_lock:
             for i, z in enumerate(self.camera_zones):
@@ -225,9 +234,13 @@ class CameraManager:
             streaming = bool(getattr(thread, "streaming", False))
             if streaming:
                 streaming_count += 1
+            public_id = getattr(thread, "public_camera_id", None)
+            if public_id is None and i < len(self.cameras_config or []):
+                public_id = (self.cameras_config or [])[i].get("cameraId")
             cameras.append(
                 {
                     "cam_id": getattr(thread, "cam_id", f"cam_{i}"),
+                    "cameraId": public_id,
                     "enabled": enabled_copy[i] if i < len(enabled_copy) else False,
                     "streaming": streaming,
                     "error": getattr(thread, "last_error", None),

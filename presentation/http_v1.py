@@ -12,6 +12,7 @@ from __future__ import annotations
 from typing import Any, Dict, List
 
 from fastapi import HTTPException
+from fastapi.responses import Response
 
 from application.result import UseCaseResult
 
@@ -25,6 +26,15 @@ def data_or_error(result: UseCaseResult, fail_status: int = 400) -> Dict[str, An
     """
     if result.success:
         return result.data
+
+    status = int(result.data.get("http_status") or fail_status)
+    raise HTTPException(status_code=status, detail=result.error or "Request failed")
+
+
+def jpeg_or_error(result: UseCaseResult, fail_status: int = 400) -> Response:
+    """JPEG binary khi thành công; HTTPException (→ `{"message"}`) khi lỗi."""
+    if result.success:
+        return Response(content=result.data["jpeg"], media_type="image/jpeg")
 
     status = int(result.data.get("http_status") or fail_status)
     raise HTTPException(status_code=status, detail=result.error or "Request failed")
