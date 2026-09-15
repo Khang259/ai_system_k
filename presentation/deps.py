@@ -6,11 +6,15 @@ Chỉ nhóm này bắt token (chốt 2026-09-09). Route cũ giữ mở để web
 """
 from __future__ import annotations
 
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 from fastapi import Depends, HTTPException, Request
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from application.container import container
+
+# auto_error=False → tự raise message tiếng Việt; đồng thời hiện Authorize trên /docs
+_bearer = HTTPBearer(auto_error=False)
 
 
 def client_info(request: Request) -> Tuple[str, str]:
@@ -20,22 +24,22 @@ def client_info(request: Request) -> Tuple[str, str]:
     return ip, request.headers.get("User-Agent") or ""
 
 
-def _bearer_token(request: Request) -> str:
-    header = request.headers.get("Authorization") or ""
-    scheme, _, token = header.partition(" ")
-    if scheme.lower() != "bearer" or not token.strip():
+def _bearer_token(
+    creds: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
+) -> str:
+    if creds is None or not (creds.credentials or "").strip():
         raise HTTPException(status_code=401, detail="Thiếu Bearer token")
-    return token.strip()
+    return creds.credentials.strip()
 
 
-def current_user(request: Request) -> Dict[str, Any]:
+def current_user(token: str = Depends(_bearer_token)) -> Dict[str, Any]:
     """
     Giải mã access token, không truy vấn Mongo.
 
     Đổi lại: quyền vừa bị sửa chỉ có hiệu lực sau khi token cũ hết hạn (tối đa
     ACCESS_TOKEN_TTL_MIN). Đó là cái giá của việc không tra DB mỗi request.
     """
-    claims = container.token_issuer.decode_access(_bearer_token(request))
+    claims = container.token_issuer.decode_access(token)
     if claims is None:
         raise HTTPException(status_code=401, detail="Token không hợp lệ hoặc đã hết hạn")
 

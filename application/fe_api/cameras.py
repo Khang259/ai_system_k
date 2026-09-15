@@ -213,41 +213,83 @@ class CreateRoi(_RoiWriteBase):
 
 
 class UpdateRoi(_RoiWriteBase):
-    async def execute(
-        self,
-        box: List[Any],
-        camera_id: Optional[int] = None,
-        node_id: Optional[str] = None,
-        roi_id: Optional[str] = None,
-    ) -> UseCaseResult:
-        err = validate_box(box, self._ref_w, self._ref_h)
-        if err:
-            return UseCaseResult.fail(err, http_status=400)
-        camera_id, node_id, fail = await self._resolve(camera_id, node_id, roi_id)
-        if fail:
-            return fail
-        cam = await self._cameras.get_by_id(camera_id)
-        if not cam:
-            return UseCaseResult.fail(f"Camera {camera_id} not found", http_status=404)
-        rois = cam.get("rois") or {}
-        if node_id not in rois:
-            return UseCaseResult.fail("ROI không tồn tại", http_status=404)
-        node = await self._nodes.get_by_id(node_id)
-        ntype = (node or {}).get("node_type") or (
-            "start" if node_id.startswith("start_") else "end"
-        )
-        doc = self._roi_doc(box, ntype)
-        await self._cameras.upsert_roi(camera_id, node_id, doc)
-        item = roi_item(
-            camera_id,
-            node_id,
-            doc,
-            label=node_label(ntype, (node or {}).get("priority", 0)),
-            kind=ntype,
-            ref_width=self._ref_w,
-            ref_height=self._ref_h,
-        )
-        return UseCaseResult.ok(**item)
+    """Cập nhật một hoặc nhiều ROI. Validate hết rồi mới ghi (fail-fast trước write)."""
+
+    async def execute(self, items: List[Dict[str, Any]]) -> UseCaseResult:
+        if not items:
+            return UseCaseResult.fail("Cần ít nhất 1 ROI trong items", http_status=400)
+
+        prepared: List[Dict[str, Any]] = []
+        # Cache camera doc theo id để tránh đọc Mongo lặp trong 1 batch
+        cam_cache: Dict[int, Dict[str, Any]] = {}
+
+        for i, raw in enumerate(items):
+            box = raw.get("box")
+            err = validate_box(box or [], self._ref_w, self._ref_h)
+            if err:
+                return UseCaseResult.fail(f"items[{i}]: {err}", http_status=400)
+
+            camera_id, node_id, fail = await self._resolve(
+                raw.get("cameraId") if raw.get("cameraId") is not None else raw.get("camera_id"),
+                raw.get("nodeId") or raw.get("node_id"),
+                raw.get("id") or raw.get("roi_id"),
+            )
+            if fail:
+                return UseCaseResult.fail(
+                    f"items[{i}]: {fail.error}",
+                    http_status=int(fail.data.get("http_status") or 400),
+                )
+
+            if camera_id not in cam_cache:
+                cam = await self._cameras.get_by_id(camera_id)
+                if not cam:
+                    return UseCaseResult.fail(
+                        f"items[{i}]: Camera {camera_id} not found",
+                        http_status=404,
+                    )
+                cam_cache[camera_id] = cam
+            rois = cam_cache[camera_id].get("rois") or {}
+            if node_id not in rois:
+                return UseCaseResult.fail(
+                    f"items[{i}]: ROI không tồn tại ({camera_id}:{node_id})",
+                    http_status=404,
+                )
+
+            node = await self._nodes.get_by_id(node_id)
+            ntype = (node or {}).get("node_type") or (
+                "start" if node_id.startswith("start_") else "end"
+            )
+            doc = self._roi_doc(list(box), ntype)
+            prepared.append(
+                {
+                    "camera_id": camera_id,
+                    "node_id": node_id,
+                    "doc": doc,
+                    "ntype": ntype,
+                    "priority": (node or {}).get("priority", 0),
+                }
+            )
+
+        out: List[Dict[str, Any]] = []
+        for row in prepared:
+            await self._cameras.upsert_roi(row["camera_id"], row["node_id"], row["doc"])
+            # Đồng bộ cache local nếu batch còn item cùng camera
+            cam = cam_cache[row["camera_id"]]
+            rois = dict(cam.get("rois") or {})
+            rois[row["node_id"]] = row["doc"]
+            cam["rois"] = rois
+            out.append(
+                roi_item(
+                    row["camera_id"],
+                    row["node_id"],
+                    row["doc"],
+                    label=node_label(row["ntype"], row["priority"]),
+                    kind=row["ntype"],
+                    ref_width=self._ref_w,
+                    ref_height=self._ref_h,
+                )
+            )
+        return UseCaseResult.ok(items=out)
 
 
 class DeleteRoi(_RoiWriteBase):

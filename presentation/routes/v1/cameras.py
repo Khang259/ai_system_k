@@ -121,23 +121,19 @@ async def create_roi(
     return data_or_error(result)
 
 
-@router.post("/update_roi", summary="Cập nhật box ROI")
+@router.patch("/update_roi", summary="Cập nhật box ROI (batch qua items[])")
 async def update_roi(
     payload: UpdateRoiPayload,
     request: Request,
     user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
 ) -> Dict[str, Any]:
-    result = await container.update_roi_v1.execute(
-        box=payload.box,
-        camera_id=payload.cameraId,
-        node_id=payload.nodeId,
-        roi_id=payload.id,
-    )
+    items = [item.model_dump() for item in (payload.items or [])]
+    result = await container.update_roi_v1.execute(items)
     await _audit(
         request,
         user,
         "update_roi",
-        payload.model_dump(),
+        {"items": items},
         200 if result.success else int(result.data.get("http_status") or 400),
     )
     return data_or_error(result)

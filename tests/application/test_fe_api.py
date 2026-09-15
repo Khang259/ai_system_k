@@ -131,13 +131,41 @@ def test_get_rois_and_crud():
     assert created.data["id"] == "1:end_10000760"
     assert cams.items[1]["rois"]["end_10000760"]["ref_width"] == 640
 
+    # Single (1 phần tử trong items) — tương thích cũ
     updated = _run(
         UpdateRoi(cams, nodes, 640, 480).execute(
-            box=[11, 22, 33, 44], roi_id="1:end_10000760"
+            [{"box": [11, 22, 33, 44], "id": "1:end_10000760"}]
         )
     )
     assert updated.success
-    assert updated.data["box"] == [11.0, 22.0, 33.0, 44.0]
+    assert updated.data["items"][0]["box"] == [11.0, 22.0, 33.0, 44.0]
+
+    # Batch — cập nhật 2 ROI cùng lúc
+    batch = _run(
+        UpdateRoi(cams, nodes, 640, 480).execute(
+            [
+                {"id": "1:start_10000060", "box": [1, 2, 3, 4]},
+                {"cameraId": 1, "nodeId": "end_10000760", "box": [5, 6, 7, 8]},
+            ]
+        )
+    )
+    assert batch.success
+    assert len(batch.data["items"]) == 2
+    assert cams.items[1]["rois"]["start_10000060"]["roi"] == [1.0, 2.0, 3.0, 4.0]
+    assert cams.items[1]["rois"]["end_10000760"]["roi"] == [5.0, 6.0, 7.0, 8.0]
+
+    # Batch fail trước khi ghi nếu 1 item không tồn tại
+    bad = _run(
+        UpdateRoi(cams, nodes, 640, 480).execute(
+            [
+                {"id": "1:start_10000060", "box": [9, 9, 9, 9]},
+                {"id": "1:missing_node", "box": [1, 1, 1, 1]},
+            ]
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 404
+    assert cams.items[1]["rois"]["start_10000060"]["roi"] == [1.0, 2.0, 3.0, 4.0]
 
     deleted = _run(DeleteRoi(cams, nodes, 640, 480).execute(roi_id="1:end_10000760"))
     assert deleted.success

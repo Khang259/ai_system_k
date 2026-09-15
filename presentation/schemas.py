@@ -1,5 +1,5 @@
 """Request/Response schemas — Pydantic models for API layer."""
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from typing import Any, List, Optional
 
 
@@ -38,11 +38,40 @@ class CreateRoiPayload(BaseModel):
     box: List[float] = Field(..., min_length=4, max_length=4)
 
 
-class UpdateRoiPayload(BaseModel):
+class UpdateRoiItemPayload(BaseModel):
+    """Một ROI trong batch update."""
     box: List[float] = Field(..., min_length=4, max_length=4)
     id: Optional[str] = None
     cameraId: Optional[int] = None
     nodeId: Optional[str] = None
+
+
+class UpdateRoiPayload(BaseModel):
+    """
+    Batch: `{ "items": [ { id|cameraId+nodeId, box }, ... ] }`.
+    Single (tương thích cũ): `{ "id", "box" }` hoặc `{ cameraId, nodeId, box }`.
+    """
+    items: Optional[List[UpdateRoiItemPayload]] = Field(None, min_length=1)
+    box: Optional[List[float]] = Field(None, min_length=4, max_length=4)
+    id: Optional[str] = None
+    cameraId: Optional[int] = None
+    nodeId: Optional[str] = None
+
+    @model_validator(mode="after")
+    def normalize_items(self) -> "UpdateRoiPayload":
+        if self.items:
+            return self
+        if self.box is not None:
+            self.items = [
+                UpdateRoiItemPayload(
+                    box=self.box,
+                    id=self.id,
+                    cameraId=self.cameraId,
+                    nodeId=self.nodeId,
+                )
+            ]
+            return self
+        raise ValueError("Cần items[] hoặc (box + id|cameraId+nodeId)")
 
 
 class DeleteRoiPayload(BaseModel):
