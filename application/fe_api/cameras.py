@@ -10,10 +10,19 @@ from application.fe_api.mappers import (
     roi_item,
     validate_box,
 )
+from application.fe_api.sync_rules import (
+    cascade_delete_node,
+    cascade_delete_pairs_for_node,
+    require_inference_paused,
+    set_pairs_enabled_for_nodes,
+)
 from application.ports import (
     CameraConfigRepository,
     CameraRuntime,
+    InferencePort,
     NodeRepositoryPort,
+    NodeStateStore,
+    PairsRepositoryPort,
 )
 from application.result import UseCaseResult
 
@@ -111,22 +120,327 @@ class GetRois:
 
 
 class SetCameraStatus:
+    """
+    Bật/tắt camera + cascade nodes + pairs cùng camera.
+    Cần inference paused khi runtime đang chạy.
+    """
+
     def __init__(
         self,
         cameras: CameraConfigRepository,
+        nodes: NodeRepositoryPort,
+        pairs: PairsRepositoryPort,
         runtime: CameraRuntime,
+        inference: InferencePort,
+        state: NodeStateStore,
     ) -> None:
         self._cameras = cameras
+        self._nodes = nodes
+        self._pairs = pairs
         self._runtime = runtime
+        self._inference = inference
+        self._state = state
 
     async def execute(self, camera_id: int, enabled: bool) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
         doc = await self._cameras.get_by_id(camera_id)
         if not doc:
             return UseCaseResult.fail(f"Camera {camera_id} not found", http_status=404)
+
         await self._cameras.set_enabled(camera_id, enabled)
         if self._runtime.is_ready():
             self._runtime.set_camera_enabled_by_id(camera_id, enabled)
-        return UseCaseResult.ok(cameraId=camera_id, enabled=enabled)
+
+        owned = await self._nodes.get_by_camera(camera_id)
+        node_ids = {str(n.get("node_id")) for n in owned if n.get("node_id")}
+        nodes_updated = 0
+        for nid in node_ids:
+            if await self._nodes.set_enabled(nid, enabled):
+                nodes_updated += 1
+            if not enabled and self._state.is_ready():
+                self._state.discard_from_ready(nid)
+
+        pairs_updated = await set_pairs_enabled_for_nodes(
+            self._pairs, node_ids, enabled
+        )
+        return UseCaseResult.ok(
+            cameraId=camera_id,
+            enabled=enabled,
+            nodesUpdated=nodes_updated,
+            pairsUpdated=pairs_updated,
+        )
+
+
+class UpdateCamera:
+    """
+    Partial update name / RTSP / zone / observedNodeIds.
+
+    Cây SSOT: cameras → nodes → pairs.
+    Gỡ node khỏi observedNodeIds → cascade xóa pair + ROI + node.
+    Node đã thuộc camera khác → 409.
+    """
+
+    def __init__(
+        self,
+        cameras: CameraConfigRepository,
+        nodes: NodeRepositoryPort,
+        pairs: PairsRepositoryPort,
+        runtime: CameraRuntime,
+        inference: InferencePort,
+        state: NodeStateStore,
+        resolution: str,
+    ) -> None:
+        self._cameras = cameras
+        self._nodes = nodes
+        self._pairs = pairs
+        self._runtime = runtime
+        self._inference = inference
+        self._state = state
+        self._resolution = resolution
+
+    @staticmethod
+    def _kind_from_node_id(node_id: str) -> Optional[str]:
+        if node_id.startswith("start_"):
+            return "start"
+        if node_id.startswith("end_"):
+            return "end"
+        return None
+
+    async def execute(
+        self,
+        camera_id: int,
+        *,
+        name: Optional[str] = None,
+        rtsp_url: Optional[str] = None,
+        zone: Optional[str] = None,
+        observed_node_ids: Optional[List[str]] = None,
+    ) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
+
+        if (
+            name is None
+            and rtsp_url is None
+            and zone is None
+            and observed_node_ids is None
+        ):
+            return UseCaseResult.fail(
+                "Cần ít nhất một field: name, rtspUrl, zone, observedNodeIds",
+                http_status=400,
+            )
+
+        doc = await self._cameras.get_by_id(camera_id)
+        if not doc:
+            return UseCaseResult.fail(f"Camera {camera_id} not found", http_status=404)
+
+        patch: Dict[str, Any] = {}
+        if name is not None:
+            name_s = str(name).strip()
+            if not name_s:
+                return UseCaseResult.fail("name không được rỗng", http_status=400)
+            patch["name"] = name_s
+        if rtsp_url is not None:
+            url_s = str(rtsp_url).strip()
+            if not url_s:
+                return UseCaseResult.fail("rtspUrl không được rỗng", http_status=400)
+            patch["url"] = url_s
+        if zone is not None:
+            zone_s = str(zone).strip().upper()
+            if not zone_s:
+                return UseCaseResult.fail("zone không được rỗng", http_status=400)
+            patch["zone_id"] = zone_s
+
+        desired_ids: Optional[List[str]] = None
+        if observed_node_ids is not None:
+            seen = set()
+            desired_ids = []
+            for raw in observed_node_ids:
+                nid = str(raw or "").strip()
+                if not nid or nid in seen:
+                    continue
+                seen.add(nid)
+                desired_ids.append(nid)
+            for nid in desired_ids:
+                if self._kind_from_node_id(nid) is None:
+                    return UseCaseResult.fail(
+                        f"nodeId '{nid}' phải bắt đầu bằng start_ hoặc end_",
+                        http_status=400,
+                    )
+
+        old_url = (doc.get("url") or "").strip()
+        url_changed = "url" in patch and patch["url"] != old_url
+
+        if patch:
+            await self._cameras.update_by_camera_id(camera_id, patch)
+
+        nodes_updated = 0
+        if "zone_id" in patch:
+            nodes_updated = await self._nodes.set_zone_by_camera(
+                camera_id, patch["zone_id"]
+            )
+
+        observed_assigned = 0
+        observed_removed = 0
+        observed_created = 0
+        pairs_deleted: List[str] = []
+        if desired_ids is not None:
+            fresh_zone = str(
+                patch.get("zone_id") or (doc.get("zone_id") or "")
+            ).strip().upper()
+            if not fresh_zone:
+                return UseCaseResult.fail(
+                    "Camera chưa có zone — không tạo/gán được node",
+                    http_status=400,
+                )
+
+            current = await self._nodes.get_by_camera(camera_id)
+            current_ids = {
+                str(n.get("node_id"))
+                for n in current
+                if n.get("node_id")
+            }
+            desired_set = set(desired_ids)
+
+            for nid in desired_ids:
+                existing = await self._nodes.get_by_id(nid)
+                if existing is None:
+                    ntype = self._kind_from_node_id(nid)
+                    assert ntype is not None
+                    await self._nodes.create(
+                        {
+                            "node_id": nid,
+                            "node_type": ntype,
+                            "zone_id": fresh_zone,
+                            "camera_id": int(camera_id),
+                            "priority": 999,
+                            "enabled": True,
+                            "is_under_maintenance": False,
+                            "maintenance_reason": "",
+                            "lock": {
+                                "user": False,
+                                "system": False,
+                                "orderId": None,
+                            },
+                        }
+                    )
+                    observed_created += 1
+                else:
+                    other = existing.get("camera_id")
+                    if other is not None and int(other) != int(camera_id):
+                        return UseCaseResult.fail(
+                            f"Node {nid} đang thuộc camera {other} "
+                            "(1 node chỉ gắn 1 camera)",
+                            http_status=409,
+                        )
+                    await self._nodes.update_by_node_id(
+                        nid,
+                        {
+                            "camera_id": int(camera_id),
+                            "zone_id": fresh_zone,
+                        },
+                    )
+                observed_assigned += 1
+
+            for nid in current_ids - desired_set:
+                stats = await cascade_delete_node(
+                    nodes=self._nodes,
+                    cameras=self._cameras,
+                    pairs=self._pairs,
+                    state=self._state,
+                    node_id=nid,
+                )
+                if stats["deleted"]:
+                    observed_removed += 1
+                    pairs_deleted.extend(stats["pairsDeleted"])
+
+        fresh = await self._cameras.get_by_id(camera_id) or {**doc, **patch}
+        nodes = await self._nodes.get_by_camera(camera_id)
+        runtime_row = None
+        if self._runtime.is_ready():
+            for row in self._runtime.get_status().get("cameras") or []:
+                if row.get("cameraId") == camera_id:
+                    runtime_row = row
+                    break
+
+        item = {
+            "cameraId": camera_id,
+            "name": fresh.get("name") or f"Camera {camera_id}",
+            "rtspUrl": fresh.get("url") or "",
+            "zone": fresh.get("zone_id") or "",
+            "status": camera_status(bool(fresh.get("enabled", True)), runtime_row),
+            "resolution": self._resolution,
+            "mapPosition": fresh.get("mapPosition") or fresh.get("map_position"),
+            "observedNodeIds": [n.get("node_id") for n in nodes if n.get("node_id")],
+            "enabled": bool(fresh.get("enabled", True)),
+            "error": (runtime_row or {}).get("error"),
+            "requiresRestart": bool(url_changed and self._runtime.is_ready()),
+            "nodesZoneUpdated": nodes_updated,
+            "observedAssigned": observed_assigned,
+            "observedRemoved": observed_removed,
+            "observedCreated": observed_created,
+            "pairsDeleted": pairs_deleted,
+            "observedUnassigned": observed_removed,
+        }
+        return UseCaseResult.ok(**item)
+
+
+class DeleteCamera:
+    """Xóa camera + cascade mọi node thuộc camera (kèm pair + ROI)."""
+
+    def __init__(
+        self,
+        cameras: CameraConfigRepository,
+        nodes: NodeRepositoryPort,
+        pairs: PairsRepositoryPort,
+        inference: InferencePort,
+        state: NodeStateStore,
+    ) -> None:
+        self._cameras = cameras
+        self._nodes = nodes
+        self._pairs = pairs
+        self._inference = inference
+        self._state = state
+
+    async def execute(self, camera_id: int) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
+        doc = await self._cameras.get_by_id(camera_id)
+        if not doc:
+            return UseCaseResult.fail(f"Camera {camera_id} not found", http_status=404)
+
+        owned = await self._nodes.get_by_camera(camera_id)
+        nodes_deleted: List[str] = []
+        pairs_deleted: List[str] = []
+        for n in owned:
+            nid = n.get("node_id")
+            if not nid:
+                continue
+            stats = await cascade_delete_node(
+                nodes=self._nodes,
+                cameras=self._cameras,
+                pairs=self._pairs,
+                state=self._state,
+                node_id=str(nid),
+            )
+            if stats["deleted"]:
+                nodes_deleted.append(str(nid))
+                pairs_deleted.extend(stats["pairsDeleted"])
+
+        ok = await self._cameras.delete_by_camera_id(camera_id)
+        if not ok:
+            return UseCaseResult.fail(
+                f"Không xóa được camera {camera_id}", http_status=500
+            )
+        return UseCaseResult.ok(
+            cameraId=camera_id,
+            deleted=True,
+            nodesDeleted=nodes_deleted,
+            pairsDeleted=pairs_deleted,
+        )
 
 
 class _RoiWriteBase:
@@ -136,11 +450,15 @@ class _RoiWriteBase:
         nodes: NodeRepositoryPort,
         ref_width: int,
         ref_height: int,
+        inference: InferencePort,
+        pairs: Optional[PairsRepositoryPort] = None,
     ) -> None:
         self._cameras = cameras
         self._nodes = nodes
         self._ref_w = ref_width
         self._ref_h = ref_height
+        self._inference = inference
+        self._pairs = pairs
 
     async def _resolve(
         self,
@@ -179,6 +497,9 @@ class CreateRoi(_RoiWriteBase):
         node_id: str,
         box: List[Any],
     ) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
         err = validate_box(box, self._ref_w, self._ref_h)
         if err:
             return UseCaseResult.fail(err, http_status=400)
@@ -188,6 +509,12 @@ class CreateRoi(_RoiWriteBase):
         node = await self._nodes.get_by_id(node_id)
         if not node:
             return UseCaseResult.fail(f"Node {node_id} not found", http_status=404)
+        other = node.get("camera_id")
+        if other is None or int(other) != int(camera_id):
+            return UseCaseResult.fail(
+                f"Node {node_id} phải nằm trong observedNodeIds của camera {camera_id}",
+                http_status=400,
+            )
         ntype = node.get("node_type") or (
             "start" if node_id.startswith("start_") else "end"
         )
@@ -195,7 +522,6 @@ class CreateRoi(_RoiWriteBase):
             camera_id, node_id, self._roi_doc(box, ntype)
         )
         if not ok:
-            # matched nhưng giá trị giống hệt → modified_count=0; vẫn coi là thành công
             cam2 = await self._cameras.get_by_id(camera_id)
             rois = (cam2 or {}).get("rois") or {}
             if node_id not in rois:
@@ -216,11 +542,13 @@ class UpdateRoi(_RoiWriteBase):
     """Cập nhật một hoặc nhiều ROI. Validate hết rồi mới ghi (fail-fast trước write)."""
 
     async def execute(self, items: List[Dict[str, Any]]) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
         if not items:
             return UseCaseResult.fail("Cần ít nhất 1 ROI trong items", http_status=400)
 
         prepared: List[Dict[str, Any]] = []
-        # Cache camera doc theo id để tránh đọc Mongo lặp trong 1 batch
         cam_cache: Dict[int, Dict[str, Any]] = {}
 
         for i, raw in enumerate(items):
@@ -273,7 +601,6 @@ class UpdateRoi(_RoiWriteBase):
         out: List[Dict[str, Any]] = []
         for row in prepared:
             await self._cameras.upsert_roi(row["camera_id"], row["node_id"], row["doc"])
-            # Đồng bộ cache local nếu batch còn item cùng camera
             cam = cam_cache[row["camera_id"]]
             rois = dict(cam.get("rois") or {})
             rois[row["node_id"]] = row["doc"]
@@ -299,6 +626,9 @@ class DeleteRoi(_RoiWriteBase):
         node_id: Optional[str] = None,
         roi_id: Optional[str] = None,
     ) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
         camera_id, node_id, fail = await self._resolve(camera_id, node_id, roi_id)
         if fail:
             return fail
@@ -308,5 +638,12 @@ class DeleteRoi(_RoiWriteBase):
         rois = cam.get("rois") or {}
         if node_id not in rois:
             return UseCaseResult.fail("ROI không tồn tại", http_status=404)
+        pairs_deleted: List[str] = []
+        if self._pairs is not None:
+            pairs_deleted = await cascade_delete_pairs_for_node(self._pairs, node_id)
         await self._cameras.delete_roi(camera_id, node_id)
-        return UseCaseResult.ok(id=f"{camera_id}:{node_id}", deleted=True)
+        return UseCaseResult.ok(
+            id=f"{camera_id}:{node_id}",
+            deleted=True,
+            pairsDeleted=pairs_deleted,
+        )

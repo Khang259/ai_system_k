@@ -26,7 +26,7 @@ async def get_zones(
 
 @router.post(
     "/start_zone",
-    summary="Bật camera thuộc zone (RAM) — alias của POST /cameras/{zone}/start-all",
+    summary="Bật camera thuộc zone (RAM)",
     responses={
         401: {"description": "Thiếu / sai token"},
         403: {"description": "Thiếu zone.control"},
@@ -45,7 +45,7 @@ def start_zone(
 
 @router.post(
     "/stop_zone",
-    summary="Tắt camera thuộc zone (RAM) — alias của POST /cameras/{zone}/stop-all",
+    summary="Tắt camera thuộc zone (RAM)",
     responses={
         401: {"description": "Thiếu / sai token"},
         403: {"description": "Thiếu zone.control"},

@@ -2,6 +2,7 @@
 Polling snapshot — một GET gộp trạng thái để FE poll + snapshot lúc vào app/reconnect.
 
 Không thay SSE; giảm số round-trip so với gọi lần lượt get_cameras + get_zones + …
+`include=nodes` thêm khối runtime RAM (detected / isReady / lock).
 """
 from __future__ import annotations
 
@@ -29,6 +30,10 @@ class _MapState(Protocol):
     async def get_active_version_id(self) -> Optional[str]: ...
 
 
+class _RuntimeNodesUC(Protocol):
+    def execute(self) -> UseCaseResult: ...
+
+
 def compute_etag(payload: Dict[str, Any]) -> str:
     raw = json.dumps(payload, sort_keys=True, default=str, separators=(",", ":"))
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
@@ -38,7 +43,7 @@ class GetPollSnapshot:
     """
     Trả trạng thái hiện tại (snapshot) cho chu kỳ poll.
 
-    `include`: tập con cameras|zones|notifications|map — mặc định tất cả.
+    `include`: cameras|zones|notifications|map|nodes — mặc định tất cả.
     """
 
     def __init__(
@@ -47,12 +52,14 @@ class GetPollSnapshot:
         get_zones: _ZonesUC,
         notifications: _NotifStore,
         map_state: _MapState,
+        get_runtime_nodes: Optional[_RuntimeNodesUC] = None,
         recommended_interval_sec: float = 3.0,
     ) -> None:
         self._cameras = get_cameras
         self._zones = get_zones
         self._notifications = notifications
         self._map_state = map_state
+        self._runtime_nodes = get_runtime_nodes
         self._interval = recommended_interval_sec
 
     async def execute(
@@ -61,7 +68,7 @@ class GetPollSnapshot:
         *,
         include: Optional[Set[str]] = None,
     ) -> UseCaseResult:
-        parts = include or {"cameras", "zones", "notifications", "map"}
+        parts = include or {"cameras", "zones", "notifications", "map", "nodes"}
         body: Dict[str, Any] = {
             "serverTime": datetime.now(timezone.utc).isoformat(),
             "pollIntervalSec": self._interval,
@@ -106,6 +113,19 @@ class GetPollSnapshot:
         if "map" in parts:
             active = await self._map_state.get_active_version_id()
             body["map"] = {"activeVersionId": active}
+
+        if "nodes" in parts:
+            if self._runtime_nodes is None:
+                body["nodes"] = {"runtimeReady": False, "items": []}
+            else:
+                rt = self._runtime_nodes.execute()
+                if rt.success:
+                    body["nodes"] = {
+                        "runtimeReady": bool(rt.data.get("runtimeReady")),
+                        "items": list(rt.data.get("items") or []),
+                    }
+                else:
+                    body["nodes"] = {"runtimeReady": False, "items": []}
 
         # ETag không gồm serverTime / pollIntervalSec (đổi mỗi lần → vô dụng)
         stable = {k: v for k, v in body.items() if k not in ("serverTime", "pollIntervalSec")}

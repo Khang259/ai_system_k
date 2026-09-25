@@ -247,7 +247,16 @@ class NullPairsRepo:
     async def delete(self, start_point, end_point):
         return False
 
+    async def find_by_key(self, start_point, end_point):
+        return None
+
+    async def update_by_key(self, start_point, end_point, data):
+        return False
+
     async def get_as_tuples(self):
+        return []
+
+    async def list_containing_node(self, node_id):
         return []
 
 
@@ -282,7 +291,13 @@ class NullNodeRepo:
     async def set_camera_nodes_enabled(self, camera_id, enabled):
         return 0
 
+    async def set_zone_by_camera(self, camera_id, zone_id):
+        return 0
+
     async def update_priority(self, node_id, priority):
+        return False
+
+    async def update_by_node_id(self, node_id, data):
         return False
 
     async def create(self, doc):

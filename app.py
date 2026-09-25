@@ -51,21 +51,20 @@ from utils.setup_log import setup_logger
 from presentation.routes.v1 import (
     auth_router,
     cameras_v1_router,
-    dispatch_v1_router,
     logs_v1_router,
     maps_v1_router,
     nodes_v1_router,
+    pairs_v1_router,
     notifications_v1_router,
     poll_v1_router,
+    runtime_v1_router,
     snapshots_v1_router,
     system_v1_router,
     zones_v1_router,
 )
 from presentation.routes.cameras import router as cameras_router
-from presentation.routes.state   import router as state_router
+from presentation.routes.state import router as state_router
 from presentation.routes.runtime import router as runtime_router
-from presentation.routes.nodes   import router as nodes_router
-from presentation.routes.pairs   import router as pairs_router
 
 logger = setup_logger("app", "logs/app/log")
 
@@ -133,7 +132,7 @@ async def lifespan(app: FastAPI):
 
     container.webrtc_gateway.apply_ice_servers(ice_servers_for_mediamtx())
 
-    # Bind trước khi start: nếu start lỗi thì /runtime/reload vẫn gọi được
+    # Bind trước khi start: nếu start lỗi thì /api/v1/runtime/reload vẫn gọi được
     container.bind_runtime_control(runtime_service)
     try:
         await runtime_service.start()
@@ -141,7 +140,7 @@ async def lifespan(app: FastAPI):
         # GPU / model / camera lỗi không được làm sập cả app — nhóm CRUD và
         # auth không cần runtime. Container giữ Null ports nên các use case
         # runtime trả "not ready" thay vì nổ, `/health` trả 503 degraded.
-        # Sửa xong gọi POST /runtime/reload, không cần restart.
+        # Sửa xong gọi POST /api/v1/runtime/reload, không cần restart.
         logger.error(f"Runtime không khởi động được, API chạy degraded: {e}", exc_info=True)
 
     yield
@@ -172,8 +171,8 @@ def create_app() -> FastAPI:
         """
         FE mong lỗi dạng `{"message": ...}`, còn FastAPI trả `{"detail": ...}`.
 
-        Áp cho cả app: route cũ tự tạo JSONResponse nên không bị ảnh hưởng, chỉ
-        lỗi do framework sinh (404/405) và HTTPException của nhóm /api/v1 đi qua đây.
+        Áp cho cả app: route WebRTC/state tự tạo JSONResponse nên không bị ảnh
+        hưởng; lỗi framework (404/405) và HTTPException `/api/v1` đi qua đây.
         """
         return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
@@ -181,18 +180,18 @@ def create_app() -> FastAPI:
     app.include_router(cameras_v1_router)
     app.include_router(zones_v1_router)
     app.include_router(system_v1_router)
+    app.include_router(runtime_v1_router)
     app.include_router(nodes_v1_router)
-    app.include_router(dispatch_v1_router)
+    app.include_router(pairs_v1_router)
     app.include_router(logs_v1_router)
     app.include_router(notifications_v1_router)
     app.include_router(snapshots_v1_router)
     app.include_router(maps_v1_router)
     app.include_router(poll_v1_router)
+    # Ngoài /api/v1: WebRTC + preview (FE), /delete-flag (ICS), /health (ops)
     app.include_router(cameras_router)
     app.include_router(state_router)
     app.include_router(runtime_router)
-    app.include_router(nodes_router)
-    app.include_router(pairs_router)
 
     static_dir = Path(__file__).parent / "static"
     if static_dir.is_dir():

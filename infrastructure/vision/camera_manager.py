@@ -17,13 +17,11 @@ class CameraManager:
         state_manager,
         inference_engine,
         camera_zones=None,
-        api_client=None,
     ):
         self.cameras_config = cameras_config
         self.state_manager = state_manager
         self.inference_engine = inference_engine
         self.camera_zones = camera_zones or []
-        self.api_client = api_client
         if not self.camera_zones and cameras_config:
             self.camera_zones = [
                 str(cam.get("zone_id") or cam.get("area") or "").upper()
@@ -116,7 +114,6 @@ class CameraManager:
                 enabled_ref=self.enabled,
                 camera_index=i,
                 latest_frames_ref=self.latest_frames,
-                api_client=self.api_client,
                 public_camera_id=cam.get("cameraId"),
                 preview_store=self.preview_store,
             )
@@ -187,7 +184,7 @@ class CameraManager:
         if thread is None:
             return None, "Camera not found", 404
         if not thread._is_enabled():
-            return None, "Camera disabled. POST /cameras/start-all first.", 409
+            return None, "Camera disabled. POST /api/v1/system/start_all first.", 409
         if not getattr(thread, "streaming", False):
             err = getattr(thread, "last_error", None) or "waiting for RTSP"
             return None, f"Camera not streaming: {err}", 409
@@ -207,7 +204,7 @@ class CameraManager:
         if thread is None:
             return None, "Camera not found", 404
         if not thread._is_enabled():
-            return None, "Camera disabled. POST /cameras/start-all first.", 409
+            return None, "Camera disabled. POST /api/v1/system/start_all first.", 409
         if not getattr(thread, "streaming", False):
             err = getattr(thread, "last_error", None) or "waiting for RTSP"
             return None, f"Camera not streaming: {err}", 409

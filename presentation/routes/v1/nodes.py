@@ -6,12 +6,37 @@ from typing import Any, Dict, Optional
 from fastapi import APIRouter, Depends, Query, Request
 
 from application.container import container
-from domain.permissions import NODE_MAINTENANCE, NODE_READ
-from presentation.deps import client_info, require_permission
+from domain.permissions import CAMERA_WRITE, NODE_MAINTENANCE, NODE_READ
+from presentation.deps import client_info, current_user, require_permission
 from presentation.http_v1 import data_or_error
-from presentation.schemas import SetLockPayload, SetMaintenancePayload, UnlockPayload
+from presentation.schemas import (
+    DeleteNodePayload,
+    SetLockPayload,
+    SetMaintenancePayload,
+    UnlockByOrderPayload,
+    UnlockPayload,
+    UpdateNodePayload,
+)
 
 router = APIRouter(prefix="/api/v1/nodes", tags=["nodes-v1"])
+
+
+@router.get(
+    "/get_runtime_state",
+    summary="Snapshot runtime node (detected / isReady / lock) từ RAM",
+    responses={
+        200: {"description": "runtimeReady + items (rỗng nếu runtime chưa sẵn — không 500)"},
+        401: {"description": "Thiếu / sai token"},
+    },
+)
+def get_runtime_state(
+    _user: Dict[str, Any] = Depends(current_user),
+) -> Dict[str, Any]:
+    """
+    Tất cả node trong RAM; FE tự filter theo zone/camera.
+    Runtime chưa bind → `{ runtimeReady: false, items: [] }` (HTTP 200).
+    """
+    return data_or_error(container.get_node_runtime_state_v1.execute())
 
 
 @router.get(
@@ -23,6 +48,58 @@ async def get_nodes(
     _user: Dict[str, Any] = Depends(require_permission(NODE_READ)),
 ) -> Dict[str, Any]:
     return data_or_error(await container.get_nodes_v1.execute(zoneId))
+
+
+@router.patch(
+    "/update_node",
+    summary="Sửa priority / enabled / zoneId (không đổi cameraId)",
+)
+async def update_node(
+    payload: UpdateNodePayload,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
+) -> Dict[str, Any]:
+    result = await container.update_node_v1.execute(
+        payload.nodeId,
+        priority=payload.priority,
+        enabled=payload.enabled,
+        zone_id=payload.zoneId,
+        camera_id=payload.cameraId,
+    )
+    ip, _ = client_info(request)
+    await container.action_audit.log(
+        user=user.get("username") or "",
+        role=user.get("role") or "",
+        action="update_node",
+        endpoint=str(request.url.path),
+        payload=payload.model_dump(exclude_none=True),
+        ip=ip,
+        status=200 if result.success else int(result.data.get("http_status") or 400),
+    )
+    return data_or_error(result)
+
+
+@router.post(
+    "/delete_node",
+    summary="Xóa node + cascade pair + ROI (cần inference pause)",
+)
+async def delete_node(
+    payload: DeleteNodePayload,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
+) -> Dict[str, Any]:
+    result = await container.delete_node_v1.execute(payload.nodeId)
+    ip, _ = client_info(request)
+    await container.action_audit.log(
+        user=user.get("username") or "",
+        role=user.get("role") or "",
+        action="delete_node",
+        endpoint=str(request.url.path),
+        payload=payload.model_dump(),
+        ip=ip,
+        status=200 if result.success else int(result.data.get("http_status") or 400),
+    )
+    return data_or_error(result)
 
 
 @router.post(
@@ -92,6 +169,36 @@ async def unlock(
         user=user.get("username") or "",
         role=user.get("role") or "",
         action="unlock",
+        endpoint=str(request.url.path),
+        payload=payload.model_dump(),
+        ip=ip,
+        status=200 if result.success else int(result.data.get("http_status") or 400),
+    )
+    return data_or_error(result)
+
+
+@router.post(
+    "/unlock_by_order",
+    summary="Gỡ system lock theo orderId — webhook external / ICS (không Bearer)",
+    responses={
+        200: {"description": "Đã reset theo status 3|23"},
+        400: {"description": "orderId không tìm thấy / status không hợp lệ / runtime chưa sẵn"},
+    },
+)
+async def unlock_by_order(
+    payload: UnlockByOrderPayload,
+    request: Request,
+) -> Dict[str, Any]:
+    """
+    Server ngoài (ICS/AMR) force-reset lệnh theo orderId — không JWT.
+    Cùng policy webhook POST /delete-flag (ResetFlagsByOrder).
+    """
+    result = container.reset_flags.execute(payload.orderId, payload.status)
+    ip, _ = client_info(request)
+    await container.action_audit.log(
+        user="external",
+        role="",
+        action="unlock_by_order",
         endpoint=str(request.url.path),
         payload=payload.model_dump(),
         ip=ip,

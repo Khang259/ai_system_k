@@ -16,8 +16,9 @@
 <body>
   <h1>Preview JPEG (bước 1)</h1>
   <p class="hint">
-    Cần <code>POST /cameras/start-all</code> trước. 409 = cam tắt hoặc chưa RTSP — không phải trùng URL.
-    Tối đa 4 ô. Swagger: GET <code>/cameras/{id}/preview</code>.
+    Cần <code>POST /api/v1/system/start_all</code> trước. 409 = cam tắt hoặc chưa RTSP.
+    Tối đa 4 ô. Demo ops: GET <code>/cameras/{id}/preview/detect</code>.
+    FE production dùng WebRTC + <code>preview/meta</code> (xem fe-api-webrtc.md).
   </p>
   <div class="grid" id="grid"></div>
   <script>

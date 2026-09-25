@@ -122,8 +122,19 @@ class NodeRepository(BaseRepository):
         )
         return result.modified_count
 
+    async def set_zone_by_camera(self, camera_id: int, zone_id: str) -> int:
+        """Cascade zone khi đổi zone camera."""
+        result = await self._col().update_many(
+            {"camera_id": camera_id},
+            {"$set": {"zone_id": zone_id.upper()}},
+        )
+        return result.modified_count
+
     async def update_priority(self, node_id: str, priority: int) -> bool:
         return await self.update_one({"node_id": node_id}, {"priority": priority})
+
+    async def update_by_node_id(self, node_id: str, data: Dict[str, Any]) -> bool:
+        return await self.update_one({"node_id": node_id}, data)
 
     async def delete_by_node_id(self, node_id: str) -> bool:
         return await self.delete_one({"node_id": node_id})

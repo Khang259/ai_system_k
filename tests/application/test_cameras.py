@@ -4,7 +4,6 @@ import asyncio
 from application.scan_session import ScanSession
 from application.cameras.start_stop import StartAllCameras, StopAllCameras
 from application.cameras.zone import StartZoneCameras, StopZoneCameras
-from application.cameras.get_status import GetCameraStatus
 from application.cameras.confirm_ready import ConfirmReady
 from application.cameras.pause_scan import PauseScan
 from application.cameras.on_dispatch_success import OnDispatchSuccess
@@ -99,16 +98,6 @@ def test_pause_scan():
     assert result.success
     assert inf.paused
     assert not scan.get().active
-
-
-def test_get_camera_status_includes_batch():
-    cams = FakeCameraRuntime()
-    scan = ScanSession()
-    scan.start(["a", "b"])
-    result = GetCameraStatus(cams, scan).execute()
-    assert result.success
-    assert result.data["enabled"] == 1
-    assert result.data["batch"]["snapshot_size"] == 2
 
 
 def test_on_dispatch_success_auto_pause_and_new_nodes():

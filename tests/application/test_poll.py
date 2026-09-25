@@ -56,6 +56,8 @@ def test_poll_snapshot_shape_and_stable_etag():
     assert a.data["zones"]["items"][0]["isRunning"] is True
     assert a.data["notifications"]["unreadCount"] == 0
     assert a.data["map"]["activeVersionId"] == "v1"
+    assert a.data["nodes"]["runtimeReady"] is False
+    assert a.data["nodes"]["items"] == []
     assert a.data["etag"] == b.data["etag"]
     assert a.data["serverTime"] != ""  # may equal if same second — etag ignores it
 

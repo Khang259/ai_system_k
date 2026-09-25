@@ -15,7 +15,7 @@ router = APIRouter(prefix="/api/v1/poll", tags=["poll-v1"])
 def _parse_include(raw: Optional[str]) -> Optional[Set[str]]:
     if not raw or not raw.strip():
         return None
-    allowed = {"cameras", "zones", "notifications", "map"}
+    allowed = {"cameras", "zones", "notifications", "map", "nodes"}
     parts = {p.strip() for p in raw.split(",") if p.strip()}
     return parts & allowed or None
 
@@ -32,7 +32,7 @@ async def get_snapshot(
     response: Response,
     include: Optional[str] = Query(
         None,
-        description="cameras,zones,notifications,map — bỏ trống = tất cả",
+        description="cameras,zones,notifications,map,nodes — bỏ trống = tất cả",
     ),
     if_none_match: Optional[str] = Header(None, alias="If-None-Match"),
     user: Dict[str, Any] = Depends(current_user),
@@ -40,8 +40,9 @@ async def get_snapshot(
     """
     Pattern FE:
     1) Vào app / focus lại → gọi ngay (snapshot).
-    2) Poll theo `pollIntervalSec` (gợi ý ~3s).
+    2) Poll theo `pollIntervalSec` (gợi ý ~2–3s) nếu chưa dùng SSE runtime.
     3) Gửi `If-None-Match: <etag>` → 304 nếu không đổi (tiết kiệm JSON).
+    4) `include=nodes` → khối runtime RAM (detected / isReady / lock).
     """
     result = await container.get_poll_snapshot_v1.execute(
         user["user_id"],

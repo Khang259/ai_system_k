@@ -64,6 +64,7 @@ class NodeState:
         self.pair_mapping: Dict[str, str] = {}
         # {orderId: [(start_point, end_point, empty_car), ...]}
         self.order_mapping: Dict[str, List[OrderPair]] = {}
+        self._on_change = None
 
     def get_state_nodes(self, node_id: str, state: bool, frame=None) -> None:
         current = self.points[node_id]
@@ -84,22 +85,29 @@ class NodeState:
             current["time"] = now
             if state:
                 self.ready_end_list.discard(node_id)
+        self._emit(node_id)
 
     def process_starts(self) -> None:
         current_time = self._time()
+        became: List[str] = []
         for node_id, data in list(self.points.items()):
             if not node_id.startswith("start_"):
                 continue
             if data["state"] and not _is_blocked(data):
                 existed_time = current_time - data["time"]
                 if existed_time > self.start_ready_after_sec:
+                    if node_id not in self.ready_start_list:
+                        became.append(node_id)
                     self.ready_start_list.add(node_id)
+        if became:
+            self._emit(*became)
 
     def process_ends(self, warn=None) -> List[str]:
         """
         Returns: node_id vừa mất system-lock do timeout (để sync Mongo).
         """
         cleared_system: List[str] = []
+        ready_changed: List[str] = []
         current_time = self._time()
         for node_id, data in list(self.points.items()):
             if not node_id.startswith("end_"):
@@ -109,6 +117,8 @@ class NodeState:
                 if not _is_blocked(data):
                     existed_time = current_time - data["time"]
                     if existed_time > self.end_ready_after_sec:
+                        if node_id not in self.ready_end_list:
+                            ready_changed.append(node_id)
                         self.ready_end_list.add(node_id)
                 continue
 
@@ -124,13 +134,17 @@ class NodeState:
                             self.clear_system_lock(node_id, start_point)
                         )
                         del self.pair_mapping[node_id]
+                        ready_changed.extend([node_id, start_point])
                     else:
                         if warn:
                             warn(
                                 f"No start_point found in pair_mapping for {node_id}"
                             )
                         cleared_system.extend(self.clear_system_lock(node_id))
+                        ready_changed.append(node_id)
 
+        if ready_changed:
+            self._emit(*ready_changed)
         return cleared_system
 
     def set_pair_used(
@@ -149,6 +163,7 @@ class NodeState:
         self.pair_mapping[end_point] = start_point
         pairs = self.order_mapping.setdefault(order_id, [])
         pairs.append((start_point, end_point, empty_car))
+        self._emit(start_point, end_point)
 
     def set_user_lock(self, node_id: str, enabled: bool) -> bool:
         """User lock. Tắt lock → reset timer (chờ lại ready)."""
@@ -215,6 +230,7 @@ class NodeState:
     def discard_from_ready(self, node_id: str) -> None:
         self.ready_start_list.discard(node_id)
         self.ready_end_list.discard(node_id)
+        self._emit(node_id)
 
     def get_detected_start_nodes(self) -> Set[str]:
         return {
@@ -223,10 +239,28 @@ class NodeState:
             if nid.startswith("start_") and data.get("state") is True
         }
 
+    def set_change_listener(self, fn) -> None:
+        """fn(node_id) — gọi khi detected / ready / lock đổi (cho SSE hub)."""
+        self._on_change = fn
+
+    def _emit(self, *node_ids: str) -> None:
+        cb = getattr(self, "_on_change", None)
+        if not cb:
+            return
+        for nid in node_ids:
+            if nid:
+                try:
+                    cb(nid)
+                except Exception:
+                    pass
+
     def snapshot_points(self) -> Dict[str, Dict[str, Any]]:
+        ready = self.ready_start_list | self.ready_end_list
         return {
             nid: {
                 "state": bool(data["state"]),
+                "detected": bool(data["state"]),
+                "isReady": nid in ready,
                 "flag": bool(data["flag"]),
                 "lock": {
                     "user": bool(data.get("lock_user")),

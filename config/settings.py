@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     MONGODB_DB: str = "db_kortek"
 
     # ── AMR / ICS ─────────────────────────────────────────────
-    ICS_URL: str          = "http://192.168.1.30:7000/ics/taskOrder/addTask"
+    ICS_URL: str          = "http://192.168.1.4:7000/ics/taskOrder/addTask"
     END_POINT_EMPTY: str  = "end_10001546"
     ICS_RETRY_TIMES: int  = 3
     ICS_RETRY_DELAY: float = 1.0  # seconds between retries
@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
     MODEL_WIDTH: int             = 640  # engine W
     THRESHOLD_DETECT: float      = 0.4  # NMS + ROI detect: loại bỏ detection confidence thấp
-    THRESHOLD_COVERAGE: float    = 0.5
+    THRESHOLD_COVERAGE: float    = 0.7
     INFERENCE_MAX_QUEUE_SIZE: int  = 500
     INFERENCE_MIN_BATCH_SIZE: int  = 1   # TRT profile min — 1 camera / dev
     INFERENCE_OPT_BATCH_SIZE: int  = 8   # TRT profile opt

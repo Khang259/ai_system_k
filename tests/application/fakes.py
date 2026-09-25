@@ -298,8 +298,28 @@ class FakePairsRepo:
         ]
         return len(self.rows) < before
 
+    async def find_by_key(self, start_point, end_point):
+        for r in self.rows:
+            if r["start_point"] == start_point and r.get("end_point") == end_point:
+                return dict(r)
+        return None
+
+    async def update_by_key(self, start_point, end_point, data):
+        for r in self.rows:
+            if r["start_point"] == start_point and r.get("end_point") == end_point:
+                r.update(data)
+                return True
+        return False
+
     async def get_as_tuples(self):
         return [(r["start_point"], r.get("end_point")) for r in self.rows]
+
+    async def list_containing_node(self, node_id: str):
+        return [
+            r
+            for r in self.rows
+            if r.get("start_point") == node_id or r.get("end_point") == node_id
+        ]
 
 
 class FakeNodeRepo:
@@ -378,10 +398,25 @@ class FakeNodeRepo:
                 n += 1
         return n
 
+    async def set_zone_by_camera(self, camera_id: int, zone_id: str):
+        n = 0
+        z = zone_id.upper()
+        for r in self.rows.values():
+            if r.get("camera_id") == camera_id:
+                r["zone_id"] = z
+                n += 1
+        return n
+
     async def update_priority(self, node_id: str, priority: int):
         if node_id not in self.rows:
             return False
         self.rows[node_id]["priority"] = priority
+        return True
+
+    async def update_by_node_id(self, node_id: str, data: Dict[str, Any]):
+        if node_id not in self.rows:
+            return False
+        self.rows[node_id].update(data)
         return True
 
     async def create(self, doc):

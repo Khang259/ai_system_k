@@ -5,7 +5,7 @@ Khác `presentation/http.py` ở hai điểm: lỗi trả **HTTP status thật**
 `{"message": ...}` thay vì 200 kèm `{"success": false}`, và thành công trả
 **data trần** không bọc `success`.
 
-Nhóm route cũ giữ nguyên `http.py`, không đổi dòng nào.
+Route ngoài `/api/v1` (WebRTC, `/delete-flag`, `/health`) giữ `http.py`.
 """
 from __future__ import annotations
 

@@ -10,8 +10,8 @@ KHÔNG dùng để vận hành production. Giá trị runtime = config/settings.
 """
 
 # Node must keep detection state long enough before entering ready lists
-START_READY_AFTER_SEC = 30
-END_READY_AFTER_SEC = 60
+START_READY_AFTER_SEC = 10
+END_READY_AFTER_SEC = 10
 
 # End node có hàng trở lại trong khi đang flag → reset pair sau N giây
 END_FLAG_RESET_AFTER_SEC = 30

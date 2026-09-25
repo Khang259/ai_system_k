@@ -16,7 +16,7 @@ router = APIRouter(prefix="/api/v1/system", tags=["system-v1"])
 
 @router.get(
     "/get_health",
-    summary="Health Mongo + runtime (+ MediaMTX report) — alias chuẩn /api/v1 của GET /health",
+    summary="Health Mongo + runtime (+ MediaMTX report)",
     responses={
         200: {"description": "status=ok"},
         503: {"description": "status=degraded — vẫn trả mongo/runtime/webrtc trong body"},
@@ -38,7 +38,7 @@ async def get_health(
 
 @router.post(
     "/start_all",
-    summary="Bật mọi camera — alias của POST /cameras/start-all",
+    summary="Bật mọi camera",
     responses={
         401: {"description": "Thiếu / sai token"},
         403: {"description": "Thiếu system.control (thường chỉ admin)"},
@@ -56,7 +56,7 @@ async def start_all(
 
 @router.post(
     "/stop_all",
-    summary="Tắt mọi camera — alias của POST /cameras/stop-all",
+    summary="Tắt mọi camera",
     responses={
         401: {"description": "Thiếu / sai token"},
         403: {"description": "Thiếu system.control (thường chỉ admin)"},

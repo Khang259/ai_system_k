@@ -12,6 +12,7 @@ CAMERA_READ = "camera.read"
 CAMERA_WRITE = "camera.write"
 NODE_READ = "node.read"
 NODE_MAINTENANCE = "node.maintenance"
+PAIR_READ = "pair.read"
 PAIR_WRITE = "pair.write"
 ZONE_CONTROL = "zone.control"
 SYSTEM_CONTROL = "system.control"
@@ -24,6 +25,7 @@ ALL_PERMISSIONS = [
     CAMERA_WRITE,
     NODE_READ,
     NODE_MAINTENANCE,
+    PAIR_READ,
     PAIR_WRITE,
     ZONE_CONTROL,
     SYSTEM_CONTROL,
@@ -40,6 +42,8 @@ ROLE_PERMISSIONS = {
         CAMERA_WRITE,
         NODE_READ,
         NODE_MAINTENANCE,
+        PAIR_READ,
+        PAIR_WRITE,
         ZONE_CONTROL,
         LOGS_READ,
         MAP_READ,
@@ -47,6 +51,7 @@ ROLE_PERMISSIONS = {
     "viewer": [
         CAMERA_READ,
         NODE_READ,
+        PAIR_READ,
         LOGS_READ,
         MAP_READ,
     ],

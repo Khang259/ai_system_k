@@ -12,8 +12,10 @@ from presentation.deps import client_info, require_permission
 from presentation.http_v1 import data_or_error, jpeg_or_error
 from presentation.schemas import (
     CreateRoiPayload,
+    DeleteCameraPayload,
     DeleteRoiPayload,
     SetCameraStatusPayload,
+    UpdateCameraPayload,
     UpdateRoiPayload,
 )
 
@@ -52,7 +54,7 @@ async def get_cameras(
 @router.get(
     "/get_snapshot",
     response_class=Response,
-    summary="JPEG frame infer 640×480 — alias của GET /cameras/{id}/preview",
+    summary="JPEG frame infer 640×480",
     responses={
         200: {"content": {"image/jpeg": {}}},
         401: {"description": "Thiếu / sai token"},
@@ -82,7 +84,7 @@ async def get_rois(
 
 @router.post(
     "/set_camera_status",
-    summary="Bật/tắt camera (Mongo + RAM runtime nếu đang chạy)",
+    summary="Bật/tắt camera + cascade enabled trên nodes/pairs (cần inference pause)",
 )
 async def set_camera_status(
     payload: SetCameraStatusPayload,
@@ -102,7 +104,53 @@ async def set_camera_status(
     return data_or_error(result)
 
 
-@router.post("/create_roi", summary="Tạo / ghi đè ROI cho node trên camera")
+@router.patch(
+    "/update_camera",
+    summary="Sửa name / RTSP / zone / observedNodeIds — cascade xóa node/pair khi gỡ",
+)
+async def update_camera(
+    payload: UpdateCameraPayload,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
+) -> Dict[str, Any]:
+    result = await container.update_camera_v1.execute(
+        payload.cameraId,
+        name=payload.name,
+        rtsp_url=payload.rtspUrl,
+        zone=payload.zone,
+        observed_node_ids=payload.observedNodeIds,
+    )
+    await _audit(
+        request,
+        user,
+        "update_camera",
+        payload.model_dump(exclude_none=True),
+        200 if result.success else int(result.data.get("http_status") or 400),
+    )
+    return data_or_error(result)
+
+
+@router.post(
+    "/delete_camera",
+    summary="Xóa camera + cascade nodes + pairs + ROI",
+)
+async def delete_camera(
+    payload: DeleteCameraPayload,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
+) -> Dict[str, Any]:
+    result = await container.delete_camera_v1.execute(payload.cameraId)
+    await _audit(
+        request,
+        user,
+        "delete_camera",
+        payload.model_dump(),
+        200 if result.success else int(result.data.get("http_status") or 400),
+    )
+    return data_or_error(result)
+
+
+@router.post("/create_roi", summary="Tạo / ghi đè ROI — node phải thuộc observedNodeIds")
 async def create_roi(
     payload: CreateRoiPayload,
     request: Request,

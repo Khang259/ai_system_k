@@ -23,7 +23,7 @@ class ConfirmReady:
         enabled = int(self._cameras.get_status().get("enabled", 0))
         if enabled == 0:
             return UseCaseResult.fail(
-                "No cameras enabled. Call POST /cameras/start-all first."
+                "No cameras enabled. Call POST /api/v1/system/start_all first."
             )
 
         detected = self._state.get_detected_start_nodes() if self._state.is_ready() else set()

@@ -146,8 +146,6 @@ class InferenceEngine(threading.Thread):
                 f"Using {self.num_shards} sharded ring-ref queues "
                 f"({shard_size} slots each, {max_queue_size} total)"
             )
-            # Backward compatibility: shared_queue points to first shard
-            self.shared_queue = self.shared_queues[0]
         else:
             shard_size = max(1, max_queue_size // self.num_shards)
             self.shared_queues = [
@@ -157,7 +155,6 @@ class InferenceEngine(threading.Thread):
                 f"Using {self.num_shards} sharded standard queues "
                 f"({shard_size} slots each)"
             )
-            self.shared_queue = self.shared_queues[0]
 
         self.result_queues = {}
         self.pending_batches = deque(maxlen=self.num_streams * 2)

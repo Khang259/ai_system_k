@@ -1,14 +1,19 @@
 """
 Dependency xác thực cho nhóm `/api/v1`.
 
-Chỉ nhóm này bắt token (chốt 2026-09-09). Route cũ giữ mở để webhook ICS
-(`/delete-flag`) và thiết bị đẩy detection (`/detections`) không bị chặn.
+Chỉ nhóm này bắt token (chốt 2026-09-09). Ngoài `/api/v1` vẫn mở:
+- WebRTC + preview meta (contract FE, không Bearer)
+- Webhook ICS `POST /delete-flag`
+- `GET /health` (ops / probe)
+
+EventSource (SSE) không gửi Authorization header → dùng `current_user_sse`
+(cho phép `?access_token=`). Các API CRUD khác (kể cả unlock_by_order) chỉ Bearer.
 """
 from __future__ import annotations
 
 from typing import Any, Dict, Optional, Tuple
 
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException, Query, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from application.container import container
@@ -24,31 +29,53 @@ def client_info(request: Request) -> Tuple[str, str]:
     return ip, request.headers.get("User-Agent") or ""
 
 
-def _bearer_token(
-    creds: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
-) -> str:
-    if creds is None or not (creds.credentials or "").strip():
-        raise HTTPException(status_code=401, detail="Thiếu Bearer token")
-    return creds.credentials.strip()
-
-
-def current_user(token: str = Depends(_bearer_token)) -> Dict[str, Any]:
-    """
-    Giải mã access token, không truy vấn Mongo.
-
-    Đổi lại: quyền vừa bị sửa chỉ có hiệu lực sau khi token cũ hết hạn (tối đa
-    ACCESS_TOKEN_TTL_MIN). Đó là cái giá của việc không tra DB mỗi request.
-    """
+def _claims_from_token(token: str) -> Dict[str, Any]:
     claims = container.token_issuer.decode_access(token)
     if claims is None:
         raise HTTPException(status_code=401, detail="Token không hợp lệ hoặc đã hết hạn")
-
     return {
         "user_id": claims.get("sub", ""),
         "username": claims.get("username", ""),
         "role": claims.get("role", ""),
         "permissions": list(claims.get("permissions") or []),
     }
+
+
+def _bearer_token(
+    creds: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
+) -> str:
+    if creds is not None and (creds.credentials or "").strip():
+        return creds.credentials.strip()
+    raise HTTPException(status_code=401, detail="Thiếu Bearer token")
+
+
+def _sse_token(
+    creds: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
+    access_token: Optional[str] = Query(
+        None,
+        description="JWT khi EventSource không gửi Authorization header",
+    ),
+) -> str:
+    if creds is not None and (creds.credentials or "").strip():
+        return creds.credentials.strip()
+    if access_token and access_token.strip():
+        return access_token.strip()
+    raise HTTPException(status_code=401, detail="Thiếu Bearer token")
+
+
+def current_user(token: str = Depends(_bearer_token)) -> Dict[str, Any]:
+    """
+    Giải mã access token từ Authorization Bearer — không query `access_token`.
+
+    Đổi quyền chỉ có hiệu lực sau khi token cũ hết hạn (tối đa
+    ACCESS_TOKEN_TTL_MIN). Đó là cái giá của việc không tra DB mỗi request.
+    """
+    return _claims_from_token(token)
+
+
+def current_user_sse(token: str = Depends(_sse_token)) -> Dict[str, Any]:
+    """Auth cho SSE: Bearer hoặc `?access_token=`."""
+    return _claims_from_token(token)
 
 
 def require_permission(permission: str):

@@ -1,13 +1,13 @@
-"""Camera routes — presentation maps use case results to HTTP."""
+"""Camera routes ngoài `/api/v1` — WebRTC + preview (contract FE GIỮ_FE / GIỮ_ops)."""
 from typing import Any, Dict, Union
 
-from fastapi import APIRouter, Body, Path, Request, Response
+from fastapi import APIRouter, Path, Request, Response
 from fastapi.responses import JSONResponse
 
 from application.cameras.webrtc_ice import ice_servers_for_browser
 from application.container import container
 from application.result import UseCaseResult
-from presentation.http import to_http, to_http_or_data, to_http_status
+from presentation.http import to_http_or_data
 
 router = APIRouter(prefix="/cameras", tags=["cameras"])
 
@@ -38,59 +38,6 @@ async def webrtc_ice() -> Dict[str, Any]:
     return {"iceServers": ice_servers_for_browser()}
 
 
-@router.post("/start-all")
-async def start_all_cameras():
-    return to_http_status(await container.start_all_cameras.execute())
-
-
-@router.post("/stop-all")
-async def stop_all_cameras() -> Dict[str, Any]:
-    return to_http(container.stop_all_cameras.execute())
-
-
-@router.post("/{zone}/start-all")
-async def start_zone_cameras(zone: str) -> Dict[str, Any]:
-    return to_http(container.start_zone_cameras.execute(zone))
-
-
-@router.post("/{zone}/stop-all")
-async def stop_zone_cameras(zone: str) -> Dict[str, Any]:
-    return to_http(container.stop_zone_cameras.execute(zone))
-
-
-@router.get("/status")
-async def get_camera_status() -> Dict[str, Any]:
-    return to_http_or_data(container.get_camera_status.execute())
-
-
-@router.get("/config")
-async def get_all_configs() -> Dict[str, Any]:
-    return to_http(await container.list_camera_configs.execute())
-
-
-@router.get("/config/area/{area}")
-async def get_configs_by_area(area: str) -> Dict[str, Any]:
-    return to_http(await container.list_camera_configs_by_area.execute(area))
-
-
-@router.post("/config")
-async def create_config(doc: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
-    return to_http(await container.create_camera_config.execute(doc))
-
-
-@router.put("/config/{camera_id}")
-async def update_config(
-    camera_id: int = Path(...),
-    data: Dict[str, Any] = Body(...),
-) -> Dict[str, Any]:
-    return to_http(await container.update_camera_config.execute(camera_id, data))
-
-
-@router.delete("/config/{camera_id}")
-async def delete_config(camera_id: int = Path(...)) -> Dict[str, Any]:
-    return to_http(await container.delete_camera_config.execute(camera_id))
-
-
 @router.get(
     "/{camera_id}/preview/meta",
     summary="JSON ROI + dets + ts (F5 canvas, không gian 640×480)",
@@ -108,6 +55,7 @@ async def preview_meta(camera_id: int = Path(...)):
 @router.get(
     "/{camera_id}/preview/detect",
     response_class=Response,
+    summary="JPEG đã vẽ ROI + bbox — demo/ops (FE production không gọi)",
     responses={
         200: {"content": {"image/jpeg": {}}},
         404: {"description": "Camera not found"},
@@ -116,23 +64,7 @@ async def preview_meta(camera_id: int = Path(...)):
     },
 )
 async def preview_detect(camera_id: int = Path(...)):
-    """JPEG đã vẽ ROI + bbox + cls/conf. Swagger Try it out hiện ảnh."""
     return _jpeg_or_error(container.get_camera_preview.execute(camera_id, detect=True))
-
-
-@router.get(
-    "/{camera_id}/preview",
-    response_class=Response,
-    responses={
-        200: {"content": {"image/jpeg": {}}},
-        404: {"description": "Camera not found"},
-        409: {"description": "Camera not streaming"},
-        503: {"description": "No frame yet"},
-    },
-)
-async def preview_raw(camera_id: int = Path(...)):
-    """JPEG frame infer (640×480 stretch). Chưa passthrough RTSP gốc."""
-    return _jpeg_or_error(container.get_camera_preview.execute(camera_id, detect=False))
 
 
 @router.post(
@@ -175,7 +107,6 @@ async def whep_detect(camera_id: int, request: Request):
     },
 )
 async def whep_hangup(camera_id: int, session_id: str):
-    """DELETE /cameras/{camera_id}/webrtc/sessions/{session_id}"""
     result = container.delete_webrtc_session.execute(camera_id, session_id)
     if result.success:
         return result.to_http()
