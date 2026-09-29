@@ -3,13 +3,21 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Depends, Path, Query, Request
 from fastapi.responses import Response
 
+from application.cameras import ice_servers_for_browser
 from application.container import container
 from domain.permissions import CAMERA_READ, CAMERA_WRITE
-from presentation.deps import client_info, require_permission
-from presentation.http_v1 import data_or_error, jpeg_or_error
+from presentation.deps import require_permission
+from presentation.http_v1 import audited_or_error, data_or_error, jpeg_or_error, sdp_or_error
+from presentation.openapi_responses import (
+    JPEG_SNAPSHOT,
+    PREVIEW_META,
+    WHEP_CONNECT,
+    WHEP_DETECT,
+    WHEP_HANGUP,
+)
 from presentation.schemas import (
     CreateRoiPayload,
     DeleteCameraPayload,
@@ -19,25 +27,95 @@ from presentation.schemas import (
     UpdateRoiPayload,
 )
 
-router = APIRouter(prefix="/api/v1/cameras", tags=["cameras-v1"])
+router = APIRouter()
 
 
-async def _audit(
+@router.get(
+    "/webrtc/status",
+    summary="Slot grid WebRTC 2×2: count / max",
+)
+async def webrtc_status(
+    _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),
+) -> Dict[str, Any]:
+    return data_or_error(container.get_webrtc_grid.execute())
+
+
+@router.get(
+    "/webrtc/ice",
+    summary="ICE servers cho RTCPeerConnection",
+)
+async def webrtc_ice(
+    _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),
+) -> Dict[str, Any]:
+    return {"iceServers": ice_servers_for_browser()}
+
+
+@router.get(
+    "/{camera_id}/preview/meta",
+    summary="JSON ROI + dets + ts (F5 canvas, không gian 640×480)",
+    responses=PREVIEW_META,
+)
+async def preview_meta(
+    camera_id: int = Path(...),
+    _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),
+) -> Dict[str, Any]:
+    return data_or_error(
+        container.get_camera_preview_meta.execute(camera_id),
+        fail_status=503,
+    )
+
+
+@router.post(
+    "/{camera_id}/webrtc/preview/whep",
+    summary="WHEP preview (SDP offer → answer khi MediaMTX sẵn sàng)",
+    responses=WHEP_CONNECT,
+)
+async def whep_preview(
+    camera_id: int,
     request: Request,
-    user: Dict[str, Any],
-    action: str,
-    payload: Dict[str, Any],
-    status: int,
-) -> None:
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or user.get("user_id") or "",
-        role=user.get("role") or "",
-        action=action,
-        endpoint=str(request.url.path),
-        payload=payload,
-        ip=ip,
-        status=status,
+    _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),
+) -> Response:
+    offer = (await request.body()).decode("utf-8", errors="replace")
+    result = container.offer_webrtc.execute(camera_id, "preview", offer)
+    sid = (result.data or {}).get("session_id") or ""
+    return sdp_or_error(
+        result,
+        location=f"/api/v1/cameras/{camera_id}/webrtc/sessions/{sid}",
+    )
+
+
+@router.post(
+    "/{camera_id}/webrtc/detect/whep",
+    summary="WHEP detect — video giống preview; overlay = GET .../preview/meta",
+    responses=WHEP_DETECT,
+)
+async def whep_detect(
+    camera_id: int,
+    request: Request,
+    _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),
+) -> Response:
+    offer = (await request.body()).decode("utf-8", errors="replace")
+    result = container.offer_webrtc.execute(camera_id, "detect", offer)
+    sid = (result.data or {}).get("session_id") or ""
+    return sdp_or_error(
+        result,
+        location=f"/api/v1/cameras/{camera_id}/webrtc/sessions/{sid}",
+    )
+
+
+@router.delete(
+    "/{camera_id}/webrtc/sessions/{session_id}",
+    summary="Hangup WebRTC — giải phóng slot (+ MediaMTX subscriber)",
+    responses=WHEP_HANGUP,
+)
+async def whep_hangup(
+    camera_id: int,
+    session_id: str,
+    _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),
+) -> Dict[str, Any]:
+    return data_or_error(
+        container.delete_webrtc_session.execute(camera_id, session_id),
+        fail_status=404,
     )
 
 
@@ -55,14 +133,7 @@ async def get_cameras(
     "/get_snapshot",
     response_class=Response,
     summary="JPEG frame infer 640×480",
-    responses={
-        200: {"content": {"image/jpeg": {}}},
-        401: {"description": "Thiếu / sai token"},
-        403: {"description": "Thiếu camera.read"},
-        404: {"description": "Camera không tồn tại"},
-        409: {"description": "Camera chưa streaming"},
-        503: {"description": "Runtime chưa sẵn sàng / chưa có frame"},
-    },
+    responses=JPEG_SNAPSHOT,
 )
 def get_snapshot(
     cameraId: int = Query(..., description="Id camera trong Mongo"),
@@ -94,14 +165,9 @@ async def set_camera_status(
     result = await container.set_camera_status_v1.execute(
         payload.cameraId, payload.enabled
     )
-    await _audit(
-        request,
-        user,
-        "set_camera_status",
-        payload.model_dump(),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "set_camera_status", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.patch(
@@ -120,14 +186,9 @@ async def update_camera(
         zone=payload.zone,
         observed_node_ids=payload.observedNodeIds,
     )
-    await _audit(
-        request,
-        user,
-        "update_camera",
-        payload.model_dump(exclude_none=True),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "update_camera", payload.model_dump(exclude_none=True)
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -140,14 +201,9 @@ async def delete_camera(
     user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
 ) -> Dict[str, Any]:
     result = await container.delete_camera_v1.execute(payload.cameraId)
-    await _audit(
-        request,
-        user,
-        "delete_camera",
-        payload.model_dump(),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "delete_camera", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.post("/create_roi", summary="Tạo / ghi đè ROI — node phải thuộc observedNodeIds")
@@ -159,14 +215,9 @@ async def create_roi(
     result = await container.create_roi_v1.execute(
         payload.cameraId, payload.nodeId, payload.box
     )
-    await _audit(
-        request,
-        user,
-        "create_roi",
-        payload.model_dump(),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "create_roi", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.patch("/update_roi", summary="Cập nhật box ROI (batch qua items[])")
@@ -177,14 +228,9 @@ async def update_roi(
 ) -> Dict[str, Any]:
     items = [item.model_dump() for item in (payload.items or [])]
     result = await container.update_roi_v1.execute(items)
-    await _audit(
-        request,
-        user,
-        "update_roi",
-        {"items": items},
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "update_roi", {"items": items}
     )
-    return data_or_error(result)
 
 
 @router.post("/delete_roi", summary="Xoá ROI khỏi camera doc")
@@ -198,11 +244,6 @@ async def delete_roi(
         node_id=payload.nodeId,
         roi_id=payload.id,
     )
-    await _audit(
-        request,
-        user,
-        "delete_roi",
-        payload.model_dump(),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "delete_roi", payload.model_dump()
     )
-    return data_or_error(result)

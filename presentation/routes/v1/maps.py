@@ -9,27 +9,14 @@ from pydantic import BaseModel
 
 from application.container import container
 from domain.permissions import MAP_READ, MAP_WRITE
-from presentation.deps import client_info, require_permission
-from presentation.http_v1 import data_or_error
+from presentation.deps import require_permission
+from presentation.http_v1 import audited_or_error, data_or_error
 
-router = APIRouter(prefix="/api/v1/maps", tags=["maps-v1"])
+router = APIRouter()
 
 
 class SetActiveMapPayload(BaseModel):
     versionId: str
-
-
-async def _audit(request: Request, user: Dict[str, Any], action: str, payload: dict, status: int):
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or "",
-        role=user.get("role") or "",
-        action=action,
-        endpoint=str(request.url.path),
-        payload=payload,
-        ip=ip,
-        status=status,
-    )
 
 
 @router.post(
@@ -45,14 +32,13 @@ async def import_map(
     result = await container.import_map_v1.execute(
         data, file.filename or "map.zip", user.get("username") or ""
     )
-    await _audit(
+    return await audited_or_error(
+        result,
         request,
         user,
         "import_map",
         {"filename": file.filename, "bytes": len(data)},
-        200 if result.success else int(result.data.get("http_status") or 400),
     )
-    return data_or_error(result)
 
 
 @router.get("/list_map_versions", summary="Danh sách version (mới nhất trước)")
@@ -69,14 +55,9 @@ async def set_active_map(
     user: Dict[str, Any] = Depends(require_permission(MAP_WRITE)),
 ) -> Dict[str, Any]:
     result = await container.set_active_map_v1.execute(payload.versionId)
-    await _audit(
-        request,
-        user,
-        "set_active_map",
-        payload.model_dump(),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "set_active_map", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.get(

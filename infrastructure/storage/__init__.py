@@ -1,1 +1,9 @@
-"""Storage adapters — snapshot_fs, map_zip_store, … (import trực tiếp module cần dùng)."""
+"""Storage adapters — map zip, retention, snapshots on disk."""
+from infrastructure.storage.map_zip_store import MapZipStore
+from infrastructure.storage.retention import RetentionRunner, purge_old_logs
+
+__all__ = [
+    "MapZipStore",
+    "RetentionRunner",
+    "purge_old_logs",
+]

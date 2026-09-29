@@ -7,8 +7,8 @@ from fastapi import APIRouter, Depends, Query, Request
 
 from application.container import container
 from domain.permissions import PAIR_READ, PAIR_WRITE
-from presentation.deps import client_info, require_permission
-from presentation.http_v1 import data_or_error
+from presentation.deps import require_permission
+from presentation.http_v1 import audited_or_error, data_or_error
 from presentation.schemas import (
     CreatePairPayload,
     DeletePairPayload,
@@ -16,26 +16,7 @@ from presentation.schemas import (
     UpdatePairPayload,
 )
 
-router = APIRouter(prefix="/api/v1/pairs", tags=["pairs-v1"])
-
-
-async def _audit(
-    request: Request,
-    user: Dict[str, Any],
-    action: str,
-    payload: Dict[str, Any],
-    status: int,
-) -> None:
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or user.get("user_id") or "",
-        role=user.get("role") or "",
-        action=action,
-        endpoint=str(request.url.path),
-        payload=payload,
-        ip=ip,
-        status=status,
-    )
+router = APIRouter()
 
 
 @router.get(
@@ -67,14 +48,9 @@ async def create_pair(
         auto_dispatch=payload.autoDispatch,
         name=payload.name,
     )
-    await _audit(
-        request,
-        user,
-        "create_pair",
-        payload.model_dump(),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "create_pair", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.patch(
@@ -96,14 +72,9 @@ async def update_pair(
         auto_dispatch=payload.autoDispatch,
         name=payload.name,
     )
-    await _audit(
-        request,
-        user,
-        "update_pair",
-        payload.model_dump(exclude_none=True),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "update_pair", payload.model_dump(exclude_none=True)
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -120,14 +91,9 @@ async def delete_pair(
         start_node_id=payload.startNodeId,
         end_node_id=payload.endNodeId,
     )
-    await _audit(
-        request,
-        user,
-        "delete_pair",
-        payload.model_dump(exclude_none=True),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "delete_pair", payload.model_dump(exclude_none=True)
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -145,11 +111,6 @@ async def set_pair_enabled(
         start_node_id=payload.startNodeId,
         end_node_id=payload.endNodeId,
     )
-    await _audit(
-        request,
-        user,
-        "set_pair_enabled",
-        payload.model_dump(exclude_none=True),
-        200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "set_pair_enabled", payload.model_dump(exclude_none=True)
     )
-    return data_or_error(result)

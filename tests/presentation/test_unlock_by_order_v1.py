@@ -42,7 +42,7 @@ def _client(monkeypatch, reset_result: UseCaseResult):
     async def as_message(request, exc):
         return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
-    app.include_router(nodes_v1_router)
+    app.include_router(nodes_v1_router, prefix="/api/v1/nodes", tags=["nodes-v1"])
     return TestClient(app), reset, audit
 
 

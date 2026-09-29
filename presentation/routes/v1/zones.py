@@ -9,9 +9,10 @@ from application.container import container
 from domain.permissions import CAMERA_READ, ZONE_CONTROL
 from presentation.deps import require_permission
 from presentation.http_v1 import data_or_error
+from presentation.openapi_responses import ZONE_START_STOP
 from presentation.schemas import ZoneControlPayload
 
-router = APIRouter(prefix="/api/v1/zones", tags=["zones-v1"])
+router = APIRouter()
 
 
 @router.get(
@@ -27,11 +28,7 @@ async def get_zones(
 @router.post(
     "/start_zone",
     summary="Bật camera thuộc zone (RAM)",
-    responses={
-        401: {"description": "Thiếu / sai token"},
-        403: {"description": "Thiếu zone.control"},
-        503: {"description": "Runtime chưa khởi động"},
-    },
+    responses=ZONE_START_STOP,
 )
 def start_zone(
     payload: ZoneControlPayload,
@@ -46,11 +43,7 @@ def start_zone(
 @router.post(
     "/stop_zone",
     summary="Tắt camera thuộc zone (RAM)",
-    responses={
-        401: {"description": "Thiếu / sai token"},
-        403: {"description": "Thiếu zone.control"},
-        503: {"description": "Runtime chưa khởi động"},
-    },
+    responses=ZONE_START_STOP,
 )
 def stop_zone(
     payload: ZoneControlPayload,

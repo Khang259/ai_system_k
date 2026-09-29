@@ -7,8 +7,9 @@ from fastapi import APIRouter, Depends, Query, Request
 
 from application.container import container
 from domain.permissions import CAMERA_WRITE, NODE_MAINTENANCE, NODE_READ
-from presentation.deps import client_info, current_user, require_permission
-from presentation.http_v1 import data_or_error
+from presentation.deps import current_user, require_permission
+from presentation.http_v1 import audited_or_error, data_or_error
+from presentation.openapi_responses import RUNTIME_STATE, UNLOCK_BY_ORDER
 from presentation.schemas import (
     DeleteNodePayload,
     SetLockPayload,
@@ -18,16 +19,13 @@ from presentation.schemas import (
     UpdateNodePayload,
 )
 
-router = APIRouter(prefix="/api/v1/nodes", tags=["nodes-v1"])
+router = APIRouter()
 
 
 @router.get(
     "/get_runtime_state",
     summary="Snapshot runtime node (detected / isReady / lock) từ RAM",
-    responses={
-        200: {"description": "runtimeReady + items (rỗng nếu runtime chưa sẵn — không 500)"},
-        401: {"description": "Thiếu / sai token"},
-    },
+    responses=RUNTIME_STATE,
 )
 def get_runtime_state(
     _user: Dict[str, Any] = Depends(current_user),
@@ -66,17 +64,9 @@ async def update_node(
         zone_id=payload.zoneId,
         camera_id=payload.cameraId,
     )
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or "",
-        role=user.get("role") or "",
-        action="update_node",
-        endpoint=str(request.url.path),
-        payload=payload.model_dump(exclude_none=True),
-        ip=ip,
-        status=200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "update_node", payload.model_dump(exclude_none=True)
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -89,17 +79,9 @@ async def delete_node(
     user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
 ) -> Dict[str, Any]:
     result = await container.delete_node_v1.execute(payload.nodeId)
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or "",
-        role=user.get("role") or "",
-        action="delete_node",
-        endpoint=str(request.url.path),
-        payload=payload.model_dump(),
-        ip=ip,
-        status=200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "delete_node", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -116,17 +98,9 @@ async def set_maintenance(
         payload.isUnderMaintenance,
         payload.maintenanceReason,
     )
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or "",
-        role=user.get("role") or "",
-        action="set_maintenance",
-        endpoint=str(request.url.path),
-        payload=payload.model_dump(),
-        ip=ip,
-        status=200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "set_maintenance", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -139,17 +113,9 @@ async def set_lock(
     user: Dict[str, Any] = Depends(require_permission(NODE_MAINTENANCE)),
 ) -> Dict[str, Any]:
     result = await container.set_lock_v1.execute(payload.nodeId, user=payload.user)
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or "",
-        role=user.get("role") or "",
-        action="set_lock",
-        endpoint=str(request.url.path),
-        payload=payload.model_dump(),
-        ip=ip,
-        status=200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "set_lock", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.post(
@@ -164,26 +130,15 @@ async def unlock(
     result = await container.unlock_v1.execute(
         payload.nodeId, user=payload.user, system=payload.system
     )
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user=user.get("username") or "",
-        role=user.get("role") or "",
-        action="unlock",
-        endpoint=str(request.url.path),
-        payload=payload.model_dump(),
-        ip=ip,
-        status=200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result, request, user, "unlock", payload.model_dump()
     )
-    return data_or_error(result)
 
 
 @router.post(
     "/unlock_by_order",
     summary="Gỡ system lock theo orderId — webhook external / ICS (không Bearer)",
-    responses={
-        200: {"description": "Đã reset theo status 3|23"},
-        400: {"description": "orderId không tìm thấy / status không hợp lệ / runtime chưa sẵn"},
-    },
+    responses=UNLOCK_BY_ORDER,
 )
 async def unlock_by_order(
     payload: UnlockByOrderPayload,
@@ -191,17 +146,15 @@ async def unlock_by_order(
 ) -> Dict[str, Any]:
     """
     Server ngoài (ICS/AMR) force-reset lệnh theo orderId — không JWT.
-    Cùng policy webhook POST /delete-flag (ResetFlagsByOrder).
+    Dùng ResetFlagsByOrder (status 3|23).
     """
     result = container.reset_flags.execute(payload.orderId, payload.status)
-    ip, _ = client_info(request)
-    await container.action_audit.log(
-        user="external",
-        role="",
-        action="unlock_by_order",
-        endpoint=str(request.url.path),
-        payload=payload.model_dump(),
-        ip=ip,
-        status=200 if result.success else int(result.data.get("http_status") or 400),
+    return await audited_or_error(
+        result,
+        request,
+        None,
+        "unlock_by_order",
+        payload.model_dump(),
+        audit_user="external",
+        audit_role="",
     )
-    return data_or_error(result)

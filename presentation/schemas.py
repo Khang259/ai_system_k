@@ -3,11 +3,6 @@ from pydantic import BaseModel, Field, model_validator
 from typing import Any, List, Optional
 
 
-class WebhookPayload(BaseModel):
-    orderId: str
-    status:  int
-
-
 class LoginPayload(BaseModel):
     username: str
     password: str
@@ -182,7 +177,7 @@ class UnlockPayload(BaseModel):
 
 
 class UnlockByOrderPayload(BaseModel):
-    """FE/operator — cùng policy webhook ICS POST /delete-flag."""
+    """External/ICS — reset system lock theo orderId (status 3|23)."""
 
     orderId: str
     status: int  # 3 = COMPLETED (toàn bộ), 23 = EMPTY_DONE (chỉ empty)

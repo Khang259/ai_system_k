@@ -65,7 +65,7 @@ class GPUVideoDecoder:
                 stdin=subprocess.DEVNULL,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                bufsize=128 * 1024,  # PHƯƠNG ÁN C: Tăng từ 64KB → 128KB cho mock video
+                bufsize=128 * 1024,
             )
             self.running = True
             self._opened = True

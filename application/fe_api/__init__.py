@@ -41,6 +41,7 @@ from application.fe_api.pairs import (
     UpdatePairFe,
 )
 from application.fe_api.runtime_nodes import GetNodeRuntimeState
+from application.fe_api.poll import GetPollSnapshot
 from application.fe_api.zones import GetZones
 
 __all__ = [
@@ -54,6 +55,7 @@ __all__ = [
     "DeleteRoi",
     "GetNodes",
     "GetNodeRuntimeState",
+    "GetPollSnapshot",
     "UpdateNode",
     "DeleteNode",
     "SetMaintenance",

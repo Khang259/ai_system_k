@@ -82,9 +82,9 @@ def _client(monkeypatch, preview=None, start_zone=None, stop_zone=None,
     async def as_message(request, exc):
         return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
-    app.include_router(cameras_v1_router)
-    app.include_router(zones_v1_router)
-    app.include_router(system_v1_router)
+    app.include_router(cameras_v1_router, prefix="/api/v1/cameras", tags=["cameras-v1"])
+    app.include_router(zones_v1_router, prefix="/api/v1/zones", tags=["zones-v1"])
+    app.include_router(system_v1_router, prefix="/api/v1/system", tags=["system-v1"])
 
     return TestClient(app), svc, {
         "preview": preview_uc,

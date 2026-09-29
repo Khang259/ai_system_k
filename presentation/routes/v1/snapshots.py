@@ -11,7 +11,7 @@ from domain.permissions import LOGS_READ
 from presentation.deps import require_permission
 from presentation.http_v1 import jpeg_or_error
 
-router = APIRouter(prefix="/api/v1/snapshots", tags=["snapshots-v1"])
+router = APIRouter()
 
 
 @router.get(

@@ -10,24 +10,23 @@ from application.container import container
 from domain.permissions import SYSTEM_CONTROL
 from presentation.deps import current_user, require_permission
 from presentation.http_v1 import data_or_error
+from presentation.openapi_responses import (
+    HEALTH,
+    SYSTEM_START_ALL,
+    SYSTEM_STOP_ALL,
+)
 
-router = APIRouter(prefix="/api/v1/system", tags=["system-v1"])
+router = APIRouter()
 
 
 @router.get(
     "/get_health",
     summary="Health Mongo + runtime (+ MediaMTX report)",
-    responses={
-        200: {"description": "status=ok"},
-        503: {"description": "status=degraded — vẫn trả mongo/runtime/webrtc trong body"},
-    },
+    responses=HEALTH,
 )
 async def get_health(
     _user: Dict[str, Any] = Depends(current_user),
 ):
-    """
-    Cần Bearer (cùng nhóm /api/v1). Body luôn có field health; lỗi = HTTP 503 + message.
-    """
     result = await container.get_health.execute()
     if result.success:
         return result.data
@@ -39,11 +38,7 @@ async def get_health(
 @router.post(
     "/start_all",
     summary="Bật mọi camera",
-    responses={
-        401: {"description": "Thiếu / sai token"},
-        403: {"description": "Thiếu system.control (thường chỉ admin)"},
-        503: {"description": "Runtime / model chưa sẵn sàng, hoặc không camera nào streaming"},
-    },
+    responses=SYSTEM_START_ALL,
 )
 async def start_all(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
@@ -57,11 +52,7 @@ async def start_all(
 @router.post(
     "/stop_all",
     summary="Tắt mọi camera",
-    responses={
-        401: {"description": "Thiếu / sai token"},
-        403: {"description": "Thiếu system.control (thường chỉ admin)"},
-        503: {"description": "Runtime chưa khởi động"},
-    },
+    responses=SYSTEM_STOP_ALL,
 )
 def stop_all(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),

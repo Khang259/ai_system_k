@@ -1,13 +1,11 @@
 """
 Dependency xác thực cho nhóm `/api/v1`.
 
-Chỉ nhóm này bắt token (chốt 2026-09-09). Ngoài `/api/v1` vẫn mở:
-- WebRTC + preview meta (contract FE, không Bearer)
-- Webhook ICS `POST /delete-flag`
-- `GET /health` (ops / probe)
+Chỉ nhóm này bắt token (chốt 2026-09-09). Ngoại lệ không Bearer:
+- `POST /api/v1/nodes/unlock_by_order` (webhook ICS/AMR)
 
 EventSource (SSE) không gửi Authorization header → dùng `current_user_sse`
-(cho phép `?access_token=`). Các API CRUD khác (kể cả unlock_by_order) chỉ Bearer.
+(cho phép `?access_token=`). Các API CRUD khác chỉ Bearer.
 """
 from __future__ import annotations
 

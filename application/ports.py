@@ -143,7 +143,7 @@ class RuntimeControl(Protocol):
 
 
 class DbHealthPort(Protocol):
-    """Ping database — dùng cho /health."""
+    """Ping database — dùng cho health check."""
     async def ping(self) -> bool: ...
 
 

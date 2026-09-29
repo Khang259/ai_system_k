@@ -1,7 +1,58 @@
 """Composition root — wire ports into use cases. Singleton module-level `container`."""
 from __future__ import annotations
 
-from application.scan_session import ScanSession
+from application.auth import GetMe, Login, Logout, RefreshSession
+from application.cameras import (
+    ConfirmReady,
+    DeleteWebrtcSession,
+    GetCameraPreview,
+    GetCameraPreviewMeta,
+    GetWebrtcGrid,
+    OfferWebrtc,
+    OnDispatchSuccess,
+    PauseScan,
+    StartAllCameras,
+    StartZoneCameras,
+    StopAllCameras,
+    StopZoneCameras,
+    WebrtcSessionRegistry,
+)
+from application.fe_api import (
+    CreatePairFe,
+    CreateRoi,
+    DeleteCamera,
+    DeleteNode,
+    DeletePairFe,
+    DeleteRoi,
+    DownloadMapZip,
+    GetAuditLogs,
+    GetCameras,
+    GetCompress,
+    GetNodePairs,
+    GetNodeRuntimeState,
+    GetNodes,
+    GetNotifications,
+    GetPollSnapshot,
+    GetRois,
+    GetSnapshotImage,
+    GetSystemActionLogs,
+    GetUserActionLogs,
+    GetZones,
+    ImportMap,
+    ListMapVersions,
+    MarkAllNotificationsRead,
+    MarkNotificationRead,
+    SetActiveMap,
+    SetCameraStatus,
+    SetLock,
+    SetMaintenance,
+    SetPairEnabledFe,
+    Unlock,
+    UpdateCamera,
+    UpdateNode,
+    UpdatePairFe,
+    UpdateRoi,
+)
 from application.null_ports import (
     NullActionAudit,
     NullAuthAudit,
@@ -25,59 +76,16 @@ from application.null_ports import (
     NullWebrtcRunner,
     NullZoneRepo,
 )
-from application.auth.session import GetMe, Login, Logout, RefreshSession
-from application.fe_api import (
-    CreateRoi,
-    DeleteCamera,
-    DeleteNode,
-    DeleteRoi,
-    DownloadMapZip,
-    GetAuditLogs,
-    GetCameras,
-    GetCompress,
-    GetNodes,
-    GetNodePairs,
-    CreatePairFe,
-    UpdatePairFe,
-    DeletePairFe,
-    SetPairEnabledFe,
-    GetNotifications,
-    GetRois,
-    GetSnapshotImage,
-    GetSystemActionLogs,
-    GetUserActionLogs,
-    GetZones,
-    ImportMap,
-    ListMapVersions,
-    MarkAllNotificationsRead,
-    MarkNotificationRead,
-    SetActiveMap,
-    SetCameraStatus,
-    SetLock,
-    SetMaintenance,
-    Unlock,
-    UpdateCamera,
-    UpdateNode,
-    UpdateRoi,
+from application.runtime import (
+    GetHealth,
+    GetRuntimeStatus,
+    ReloadRuntime,
+    RuntimeStateHub,
+    StartRuntime,
+    StopRuntime,
 )
-from application.fe_api.poll import GetPollSnapshot
-from application.fe_api.runtime_nodes import GetNodeRuntimeState
-from application.runtime.runtime_state_hub import RuntimeStateHub
+from application.scan_session import ScanSession
 from application.state.reset_flags import ResetFlagsByOrder
-from application.cameras.start_stop import StartAllCameras, StopAllCameras
-from application.cameras.zone import StartZoneCameras, StopZoneCameras
-from application.cameras.preview import GetCameraPreview, GetCameraPreviewMeta
-from application.cameras.webrtc_sessions import WebrtcSessionRegistry
-from application.cameras.webrtc_signaling import (
-    DeleteWebrtcSession,
-    GetWebrtcGrid,
-    OfferWebrtc,
-)
-from application.cameras.confirm_ready import ConfirmReady
-from application.cameras.pause_scan import PauseScan
-from application.cameras.on_dispatch_success import OnDispatchSuccess
-from application.runtime.control import StartRuntime, StopRuntime, GetRuntimeStatus, ReloadRuntime
-from application.runtime.health import GetHealth
 
 
 class AppContainer:

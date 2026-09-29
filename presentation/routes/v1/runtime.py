@@ -13,8 +13,9 @@ from application.container import container
 from domain.permissions import SYSTEM_CONTROL
 from presentation.deps import current_user, current_user_sse, require_permission
 from presentation.http_v1 import data_or_error
+from presentation.openapi_responses import CONFIRM_READY, SSE_EVENTS
 
-router = APIRouter(prefix="/api/v1/runtime", tags=["runtime-v1"])
+router = APIRouter()
 
 _SSE_HEADERS = {
     "Cache-Control": "no-cache",
@@ -49,11 +50,7 @@ async def reload_runtime(
 @router.post(
     "/confirm-ready",
     summary="Bật inference / bắt đầu scan",
-    responses={
-        401: {"description": "Thiếu / sai token"},
-        403: {"description": "Thiếu system.control"},
-        400: {"description": "Runtime chưa sẵn sàng / chưa start camera"},
-    },
+    responses=CONFIRM_READY,
 )
 def confirm_ready(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
@@ -74,19 +71,11 @@ def pause_scan(
 @router.get(
     "/events",
     summary="SSE runtime node — event node.runtime (detected / isReady / lock)",
-    responses={
-        200: {"description": "text/event-stream"},
-        401: {"description": "Thiếu / sai token (header Bearer hoặc ?access_token=)"},
-    },
+    responses=SSE_EVENTS,
 )
 async def runtime_events(
     _user: Dict[str, Any] = Depends(current_user_sse),
 ) -> StreamingResponse:
-    """
-    FE: snapshot trước (GET get_runtime_state / poll include=nodes), rồi mở EventSource.
-    Auth EventSource: `?access_token=<jwt>` (trình duyệt không gửi Authorization).
-    Heartbeat: event `ping` mỗi ~15s khi không có delta.
-    """
     hub = container.runtime_state_hub
 
     async def _stream() -> AsyncIterator[str]:

@@ -8,8 +8,9 @@ from fastapi import APIRouter, Depends, Header, Query, Response
 from application.container import container
 from presentation.deps import current_user
 from presentation.http_v1 import data_or_error
+from presentation.openapi_responses import POLL_SNAPSHOT
 
-router = APIRouter(prefix="/api/v1/poll", tags=["poll-v1"])
+router = APIRouter()
 
 
 def _parse_include(raw: Optional[str]) -> Optional[Set[str]]:
@@ -23,10 +24,7 @@ def _parse_include(raw: Optional[str]) -> Optional[Set[str]]:
 @router.get(
     "/get_snapshot",
     summary="Snapshot trạng thái để FE poll / tải lại khi vào app hoặc reconnect",
-    responses={
-        200: {"description": "Trạng thái hiện tại + etag + pollIntervalSec"},
-        304: {"description": "Không đổi so với If-None-Match"},
-    },
+    responses=POLL_SNAPSHOT,
 )
 async def get_snapshot(
     response: Response,

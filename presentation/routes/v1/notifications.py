@@ -11,7 +11,7 @@ from domain.permissions import LOGS_READ
 from presentation.deps import current_user, require_permission
 from presentation.http_v1 import data_or_error
 
-router = APIRouter(prefix="/api/v1/notifications", tags=["notifications-v1"])
+router = APIRouter()
 
 
 class MarkReadPayload(BaseModel):

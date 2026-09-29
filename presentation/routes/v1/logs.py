@@ -10,7 +10,7 @@ from domain.permissions import LOGS_READ
 from presentation.deps import require_permission
 from presentation.http_v1 import data_or_error
 
-router = APIRouter(prefix="/api/v1/logs", tags=["logs-v1"])
+router = APIRouter()
 
 
 @router.get("/get_audit_logs", summary="Nhật ký đăng nhập / sự kiện auth")

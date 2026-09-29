@@ -35,8 +35,8 @@ def _client(monkeypatch, *, store=None):
     async def as_message(request, exc):
         return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
-    app.include_router(nodes_v1_router)
-    app.include_router(runtime_v1_router)
+    app.include_router(nodes_v1_router, prefix="/api/v1/nodes", tags=["nodes-v1"])
+    app.include_router(runtime_v1_router, prefix="/api/v1/runtime", tags=["runtime-v1"])
     return TestClient(app), svc
 
 
