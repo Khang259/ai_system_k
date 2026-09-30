@@ -17,7 +17,7 @@ router = APIRouter()
 
 @router.get(
     "/get_zones",
-    summary="Danh sách zone + isRunning (RAM) / isConfigEnabled (Mongo)",
+    summary="Danh sách zone + isRunning/isStreaming (RAM) / isConfigEnabled (Mongo)",
 )
 async def get_zones(
     _user: Dict[str, Any] = Depends(require_permission(CAMERA_READ)),

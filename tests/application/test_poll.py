@@ -34,6 +34,7 @@ class _Zones:
                 {
                     "id": "AE5",
                     "isRunning": True,
+                    "isStreaming": False,
                     "isConfigEnabled": True,
                     "cameraCount": 1,
                     "nodeCount": 2,
@@ -54,6 +55,7 @@ def test_poll_snapshot_shape_and_stable_etag():
     assert a.data["pollIntervalSec"] == 3
     assert a.data["cameras"]["items"][0]["status"] == "streaming"
     assert a.data["zones"]["items"][0]["isRunning"] is True
+    assert a.data["zones"]["items"][0]["isStreaming"] is False
     assert a.data["notifications"]["unreadCount"] == 0
     assert a.data["map"]["activeVersionId"] == "v1"
     assert a.data["nodes"]["runtimeReady"] is False

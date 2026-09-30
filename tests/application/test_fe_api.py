@@ -294,8 +294,27 @@ def test_get_zones_is_running():
     z = result.data["items"][0]
     assert z["id"] == "AE5"
     assert z["isRunning"] is True
+    assert z["isStreaming"] is True
     assert z["cameraCount"] == 1
     assert z["nodeCount"] == 2
+
+
+def test_get_zones_enabled_without_streaming():
+    """start_all fail RTSP: công tắc bật nhưng chưa có frame."""
+    cams, nodes, zones, _, runtime = _seed()
+    runtime.cameras = [
+        {
+            "cameraId": 1,
+            "cam_id": "cam_0",
+            "enabled": True,
+            "streaming": False,
+            "error": "Timeout waiting for first frame",
+        }
+    ]
+    result = _run(GetZones(zones, cams, nodes, runtime).execute())
+    z = result.data["items"][0]
+    assert z["isRunning"] is True
+    assert z["isStreaming"] is False
 
 
 def test_get_node_pairs_blocked_by_maintenance():
