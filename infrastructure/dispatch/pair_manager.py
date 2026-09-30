@@ -11,8 +11,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, List, Optional, Tuple
 
 from config.settings import settings
-from application.dispatch.dispatch_service import DispatchService
-from application.ports import DispatchGateway
+from application.dispatch.dispatch_service import DispatchService, OnDispatchFailedFn
 from utils.setup_log import setup_logger
 
 logger = setup_logger("pair_manager", "logs/pair_manager/log")
@@ -34,6 +33,7 @@ class DispatchStrategy(ABC):
         state_manager,
         snapshot_manager=None,
         on_dispatch_success: Optional[OnDispatchSuccessFn] = None,
+        on_dispatch_failed: Optional[OnDispatchFailedFn] = None,
     ) -> None:
         ...
 
@@ -48,12 +48,14 @@ class SingleDispatch(DispatchStrategy):
         state_manager,
         snapshot_manager=None,
         on_dispatch_success=None,
+        on_dispatch_failed=None,
     ):
         self._service.dispatch_single(
             pairs,
             state_manager,
             snapshot_manager=snapshot_manager,
             on_dispatch_success=on_dispatch_success,
+            on_dispatch_failed=on_dispatch_failed,
         )
 
 
@@ -67,6 +69,7 @@ class EmptyDispatch(DispatchStrategy):
         state_manager,
         snapshot_manager=None,
         on_dispatch_success=None,
+        on_dispatch_failed=None,
     ):
         now = time.time()
         self._service.dispatch_empty(
@@ -75,6 +78,7 @@ class EmptyDispatch(DispatchStrategy):
             now,
             state_manager,
             snapshot_manager=snapshot_manager,
+            on_dispatch_failed=on_dispatch_failed,
         )
 
 
@@ -88,6 +92,7 @@ class DoubleDispatch(DispatchStrategy):
         state_manager,
         snapshot_manager=None,
         on_dispatch_success=None,
+        on_dispatch_failed=None,
     ):
         now = time.time()
         self._service.dispatch_double(
@@ -98,6 +103,7 @@ class DoubleDispatch(DispatchStrategy):
             state_manager,
             snapshot_manager=snapshot_manager,
             on_dispatch_success=on_dispatch_success,
+            on_dispatch_failed=on_dispatch_failed,
         )
 
 
@@ -110,6 +116,7 @@ class PairManager:
         dispatch_service: DispatchService,
         snapshot_manager=None,
         on_dispatch_success: Optional[OnDispatchSuccessFn] = None,
+        on_dispatch_failed: Optional[OnDispatchFailedFn] = None,
     ):
         self.state_manager = state_manager
         self.validate_pairs = validate_pairs
@@ -117,6 +124,7 @@ class PairManager:
         self.dispatch_service = dispatch_service
         self.snapshot_manager = snapshot_manager
         self.on_dispatch_success = on_dispatch_success
+        self.on_dispatch_failed = on_dispatch_failed
         self.pending_empty_queue = []
         self.running = False
         self.thread = None
@@ -169,6 +177,7 @@ class PairManager:
                     state_manager=self.state_manager,
                     snapshot_manager=self.snapshot_manager,
                     on_dispatch_success=self.on_dispatch_success,
+                    on_dispatch_failed=self.on_dispatch_failed,
                 )
                 time.sleep(1)
             except Exception as e:

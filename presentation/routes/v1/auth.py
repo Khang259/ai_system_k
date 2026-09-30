@@ -8,19 +8,16 @@ from fastapi import APIRouter, Depends, Request, Response
 from application.container import container
 from presentation.deps import client_info, current_user
 from presentation.http_v1 import data_or_error
+from presentation.openapi_responses import LOGIN, REFRESH_TOKEN
 from presentation.schemas import LoginPayload, RefreshPayload
 
-router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
+router = APIRouter()
 
 
 @router.post(
     "/login",
     summary="Đăng nhập — trả access token (ngắn hạn) + refresh token",
-    responses={
-        401: {"description": "Sai username hoặc mật khẩu"},
-        403: {"description": "Tài khoản bị vô hiệu hoá"},
-        429: {"description": "Quá nhiều lần sai — tạm khoá"},
-    },
+    responses=LOGIN,
 )
 async def login(payload: LoginPayload, request: Request) -> Dict[str, Any]:
     ip, user_agent = client_info(request)
@@ -52,7 +49,7 @@ async def get_me(user: Dict[str, Any] = Depends(current_user)) -> Dict[str, Any]
 @router.post(
     "/refresh_token",
     summary="Gia hạn phiên — cấp cặp token mới, token cũ hết hiệu lực ngay",
-    responses={401: {"description": "Refresh token sai / hết hạn / tài khoản bị tắt"}},
+    responses=REFRESH_TOKEN,
 )
 async def refresh_token(payload: RefreshPayload) -> Dict[str, Any]:
     return data_or_error(await container.refresh_session.execute(payload.refreshToken))

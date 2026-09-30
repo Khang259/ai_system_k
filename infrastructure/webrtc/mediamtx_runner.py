@@ -196,7 +196,7 @@ class MediaMtxRunner:
             self._spawn()
             backoff = min(backoff * 2, _BACKOFF_CAP_SEC)
 
-    # ── status cho /health ───────────────────────────────────
+    # ── status cho health check ───────────────────────────────
     def status(self) -> Dict[str, Any]:
         alive = self._probe()
         return {

@@ -4,7 +4,7 @@ Base repository — CRUD chung cho tất cả collections.
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from infrastructure.persistence.db import get_collection
 
@@ -14,10 +14,13 @@ def _now() -> datetime:
 
 
 def _serialize(doc: Dict) -> Dict:
-    """Convert ObjectId → str để trả về JSON."""
-    if doc and "_id" in doc:
-        doc["_id"] = str(doc["_id"])
-    return doc
+    """ObjectId → field `id` (str) để FE dùng làm React key."""
+    if not doc:
+        return doc
+    out = dict(doc)
+    if "_id" in out:
+        out["id"] = str(out.pop("_id"))
+    return out
 
 
 class BaseRepository:
@@ -43,6 +46,29 @@ class BaseRepository:
         if limit:
             cursor = cursor.limit(limit)
         return await cursor.to_list(length=None)
+
+    async def find_page(
+        self,
+        query: Dict,
+        page: int = 1,
+        page_size: int = 20,
+        sort: Optional[List] = None,
+    ) -> Tuple[List[Dict], int]:
+        """
+        Phân trang page-based. Giữ `_id` rồi đổi thành `id` qua `_serialize`.
+
+        `find_many` / `find_one` vẫn bỏ `_id` để không phá code cũ.
+        """
+        page = max(1, int(page))
+        page_size = max(1, min(int(page_size), 100))
+        skip = (page - 1) * page_size
+        total = await self.count(query)
+        cursor = self._col().find(query)
+        if sort:
+            cursor = cursor.sort(sort)
+        cursor = cursor.skip(skip).limit(page_size)
+        docs = await cursor.to_list(length=page_size)
+        return [_serialize(d) for d in docs], total
 
     async def insert_one(self, doc: Dict) -> str:
         doc["created_at"] = _now()

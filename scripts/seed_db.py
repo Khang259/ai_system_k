@@ -26,39 +26,47 @@ def generate_camera_docs(n: int) -> list[dict]:
     - rois: dict (giữ nguyên ROI mẫu từ schema thật)
     - created_at: datetime
     """
-    # ROI mẫu — giữ nguyên structure từ schema thật
-    sample_rois = {
+    # ROI chỉ gắn cam 1 (start) / cam 2 (end) — tránh clone ROI → nhiều cam ghi đè node
+    rois_cam1 = {
         "start_10000060": {
             "roi": [80, 120, 140, 90],
             "start": True,
-            "end": False
+            "end": False,
         },
         "start_10000059": {
             "roi": [240, 120, 140, 90],
             "start": True,
-            "end": False
+            "end": False,
         },
-        "end_10000760": {
+    }
+    rois_cam2 = {
+        "end_10000061": {
             "roi": [80, 280, 140, 90],
             "start": False,
-            "end": True
+            "end": True,
         },
-        "end_10000761": {
+        "end_10000062": {
             "roi": [240, 280, 140, 90],
             "start": False,
-            "end": True
-        }
+            "end": True,
+        },
     }
 
     docs = []
     for i in range(1, n + 1):
+        if i == 1:
+            rois = rois_cam1
+        elif i == 2:
+            rois = rois_cam2
+        else:
+            rois = {}
         doc = {
             "cameraId":   i,
             "name":       f"MOCK-CAM-{i:03d} — stress test",
             "url":        f"rtsp://{RTSP_HOST}:{RTSP_PORT}/cam_{i}",
             "zone_id":    ZONE_ID,
             "enabled":    True,
-            "rois":       sample_rois,
+            "rois":       rois,
             "created_at": datetime.now(timezone.utc),
         }
         docs.append(doc)

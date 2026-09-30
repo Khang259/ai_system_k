@@ -20,6 +20,8 @@ from utils.setup_log import setup_logger
 logger = setup_logger("dispatch_service", "logs/dispatch/log")
 
 OnDispatchSuccessFn = Callable[[str], None]
+# start, end, order_id | None
+OnDispatchFailedFn = Callable[[str, str, Optional[str]], None]
 
 
 class DispatchService:
@@ -32,12 +34,27 @@ class DispatchService:
     def __init__(self, gateway: DispatchGateway) -> None:
         self._gateway = gateway
 
+    @staticmethod
+    def _emit_failed(
+        on_dispatch_failed: Optional[OnDispatchFailedFn],
+        start: str,
+        end: str,
+        order_id: Optional[str] = None,
+    ) -> None:
+        if not on_dispatch_failed:
+            return
+        try:
+            on_dispatch_failed(start, end, order_id)
+        except Exception:
+            logger.exception("on_dispatch_failed callback lỗi")
+
     def dispatch_single(
         self,
         pairs: List[Tuple[str, str]],
         state_manager,
         snapshot_manager=None,
         on_dispatch_success: Optional[OnDispatchSuccessFn] = None,
+        on_dispatch_failed: Optional[OnDispatchFailedFn] = None,
     ) -> Tuple[List, List]:
         """
         Single strategy: 1 start → 1 end.
@@ -73,7 +90,8 @@ class DispatchService:
                 sent.append({"start": start_point, "end": end_point, "orderId": order_id})
             else:
                 logger.error(f"[SINGLE] Failed: ({start_point}, {end_point})")
-                failed.append({"start": start_point, "end": end_point})
+                failed.append({"start": start_point, "end": end_point, "orderId": order_id})
+                self._emit_failed(on_dispatch_failed, start_point, end_point, order_id)
 
         return sent, failed
 
@@ -84,6 +102,7 @@ class DispatchService:
         now: float,
         state_manager,
         snapshot_manager=None,
+        on_dispatch_failed: Optional[OnDispatchFailedFn] = None,
     ) -> Tuple[List, List]:
         """
         Empty strategy: start_empty → END_POINT_EMPTY cố định.
@@ -115,7 +134,12 @@ class DispatchService:
                 sent.append({"start": start_empty, "end": end_point_empty, "orderId": order_id})
             else:
                 logger.error(f"[EMPTY] Failed: ({start_empty}, {end_point_empty})")
-                failed.append({"start": start_empty, "end": end_point_empty})
+                failed.append(
+                    {"start": start_empty, "end": end_point_empty, "orderId": order_id}
+                )
+                self._emit_failed(
+                    on_dispatch_failed, start_empty, end_point_empty, order_id
+                )
 
             pending_empty_queue.pop(0)
 
@@ -130,6 +154,7 @@ class DispatchService:
         state_manager,
         snapshot_manager=None,
         on_dispatch_success: Optional[OnDispatchSuccessFn] = None,
+        on_dispatch_failed: Optional[OnDispatchFailedFn] = None,
     ) -> Tuple[List, List]:
         """
         Double strategy: ghép normal + empty → 1 lệnh double.
@@ -159,7 +184,12 @@ class DispatchService:
                     sent.append({"start": start_empty, "end": end_point_empty, "orderId": order_id})
                 else:
                     logger.error(f"[DOUBLE] Empty flush failed: {start_empty}")
-                    failed.append({"start": start_empty, "end": end_point_empty})
+                    failed.append(
+                        {"start": start_empty, "end": end_point_empty, "orderId": order_id}
+                    )
+                    self._emit_failed(
+                        on_dispatch_failed, start_empty, end_point_empty, order_id
+                    )
                 
                 pending_empty_queue.pop(0)
                 continue
@@ -195,8 +225,10 @@ class DispatchService:
                 failed.append({
                     "start": start_point,
                     "end": end_point,
-                    "start_empty": start_empty
+                    "start_empty": start_empty,
+                    "orderId": order_id,
                 })
+                self._emit_failed(on_dispatch_failed, start_point, end_point, order_id)
 
             pending_empty_queue.pop(0)
             normal_idx += 1
@@ -219,7 +251,8 @@ class DispatchService:
                 sent.append({"start": start_point, "end": end_point, "orderId": order_id})
             else:
                 logger.error(f"[DOUBLE→SINGLE] Failed: ({start_point}, {end_point})")
-                failed.append({"start": start_point, "end": end_point})
+                failed.append({"start": start_point, "end": end_point, "orderId": order_id})
+                self._emit_failed(on_dispatch_failed, start_point, end_point, order_id)
 
         return sent, failed
 

@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     MONGODB_DB: str = "db_kortek"
 
     # ── AMR / ICS ─────────────────────────────────────────────
-    ICS_URL: str          = "http://192.168.1.30:7000/ics/taskOrder/addTask"
+    ICS_URL: str          = "http://192.168.1.4:7000/ics/taskOrder/addTask"
     END_POINT_EMPTY: str  = "end_10001546"
     ICS_RETRY_TIMES: int  = 3
     ICS_RETRY_DELAY: float = 1.0  # seconds between retries
@@ -37,7 +37,7 @@ class Settings(BaseSettings):
     MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
     MODEL_WIDTH: int             = 640  # engine W
     THRESHOLD_DETECT: float      = 0.4  # NMS + ROI detect: loại bỏ detection confidence thấp
-    THRESHOLD_COVERAGE: float    = 0.5
+    THRESHOLD_COVERAGE: float    = 0.7
     INFERENCE_MAX_QUEUE_SIZE: int  = 500
     INFERENCE_MIN_BATCH_SIZE: int  = 1   # TRT profile min — 1 camera / dev
     INFERENCE_OPT_BATCH_SIZE: int  = 8   # TRT profile opt
@@ -55,6 +55,11 @@ class Settings(BaseSettings):
     SNAPSHOT_DIR: str       = "snapshots"
     SNAPSHOT_QUALITY: int   = 85   # JPEG quality — reduced from 95 to save disk
 
+    # ── Map zip (global versions) ─────────────────────────────
+    MAP_STORAGE_DIR: str      = "data/maps"
+    MAP_VERSION_KEEP: int     = 5     # giữ tối đa N bản; import vượt → xoá bản cũ nhất
+    MAP_MAX_UPLOAD_MB: int    = 100
+
     # ── Auth (short session + refresh token) ──────────────────
     # Để trống = sinh secret ngẫu nhiên mỗi lần khởi động → token cũ mất hiệu
     # lực sau restart. Tiện cho dev, PHẢI set trong .env cho production.
@@ -62,8 +67,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str         = "HS256"
     ACCESS_TOKEN_TTL_MIN: int  = 15   # ngắn: không revoke được nên đừng để dài
     REFRESH_TOKEN_TTL_DAYS: int = 7
-    LOGIN_MAX_FAILED: int      = 5    # số lần sai liên tiếp trước khi khoá
-    LOGIN_LOCKOUT_MIN: int     = 15   # cửa sổ đếm số lần sai; 0 = tắt rate limit
+    LOGIN_MAX_FAILED: int      = 10    # số lần sai liên tiếp trước khi khoá
+    LOGIN_LOCKOUT_MIN: int     = 5   # cửa sổ đếm số lần sai; 0 = tắt rate limit
 
     # ── Log retention ─────────────────────────────────────────
     LOG_KEEP_DAYS: int              = 5        # giữ N ngày gần nhất, kể cả hôm nay

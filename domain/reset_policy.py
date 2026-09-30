@@ -48,8 +48,11 @@ def reset_flags_by_order(state: Any, order_id: str, status: int) -> ResetResult:
 
 
 def _clear_pair(state: Any, start: str, end: str) -> None:
-    state.points[start]["flag"] = False
-    state.points[end]["flag"] = False
+    if hasattr(state, "clear_system_lock"):
+        state.clear_system_lock(start, end)
+    else:
+        state.points[start]["flag"] = False
+        state.points[end]["flag"] = False
     state.ready_start_list.discard(start)
     state.ready_end_list.discard(end)
     state.pair_mapping.pop(end, None)

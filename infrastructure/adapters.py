@@ -1,7 +1,7 @@
 """Runtime adapters — bọc vision runtime + NodeState. Persistence repos implement Port trực tiếp."""
 from __future__ import annotations
 
-from typing import Any, Dict, Optional, Sequence, Set
+from typing import Any, Dict, List, Optional, Sequence, Set
 
 from domain.reset_policy import ResetResult, reset_flags_by_order
 
@@ -21,6 +21,9 @@ class CameraRuntimeAdapter:
 
     def set_zone_enabled(self, zone: str, on: bool) -> None:
         self._mgr.set_zone_enabled(zone, on)
+
+    def set_camera_enabled_by_id(self, camera_id: int, on: bool) -> bool:
+        return bool(self._mgr.set_camera_enabled_by_id(camera_id, on))
 
     def get_status(self) -> Dict[str, Any]:
         return self._mgr.get_status()
@@ -74,8 +77,13 @@ class InferenceAdapter:
 
 
 class NodeStateAdapter:
-    def __init__(self, node_state) -> None:
+    """
+    Bọc NodeState + optional NodeLockSync (Mongo field `lock`).
+    """
+
+    def __init__(self, node_state, lock_sync=None) -> None:
         self._sm = node_state
+        self._lock_sync = lock_sync
 
     def is_ready(self) -> bool:
         return self._sm is not None
@@ -86,20 +94,20 @@ class NodeStateAdapter:
     def has_node(self, node_id: str) -> bool:
         return node_id in self._sm.points
 
-    def toggle_flag(self, node_id: str) -> Optional[bool]:
-        return self._sm.toggle_flag(node_id)
-
     def discard_from_ready(self, node_id: str) -> None:
         self._sm.discard_from_ready(node_id)
 
     def get_detected_start_nodes(self) -> Set[str]:
         return self._sm.get_detected_start_nodes()
 
-    def snapshot_points(self) -> Dict[str, Dict[str, bool]]:
+    def snapshot_points(self) -> Dict[str, Dict[str, Any]]:
         return self._sm.snapshot_points()
 
     def apply_reset(self, order_id: str, status: int) -> ResetResult:
-        return reset_flags_by_order(self._sm, order_id, status)
+        result = reset_flags_by_order(self._sm, order_id, status)
+        if result.success and self._lock_sync:
+            self._lock_sync.clear_system_by_order(order_id)
+        return result
 
     def ready_starts(self) -> Set[str]:
         return set(self._sm.ready_start_list)
@@ -114,12 +122,43 @@ class NodeStateAdapter:
         self, start_point: str, end_point: str, order_id: str, empty_car: bool = False
     ) -> None:
         self._sm.set_pair_used(start_point, end_point, order_id, empty_car=empty_car)
+        if self._lock_sync:
+            self._lock_sync.set_system_pair(start_point, end_point, order_id)
 
     def process_starts(self) -> None:
         self._sm.process_starts()
 
     def process_ends(self, warn=None) -> None:
-        self._sm.process_ends(warn=warn)
+        cleared = self._sm.process_ends(warn=warn)
+        if cleared and self._lock_sync:
+            self._lock_sync.clear_system(cleared)
+
+    def set_user_lock(self, node_id: str, enabled: bool) -> bool:
+        out = self._sm.set_user_lock(node_id, enabled)
+        if self._lock_sync:
+            self._lock_sync.set_user(node_id, enabled)
+        return out
+
+    def clear_system_lock(self, *node_ids: str) -> None:
+        cleared = self._sm.clear_system_lock(*node_ids)
+        if cleared and self._lock_sync:
+            self._lock_sync.clear_system(cleared)
+
+    def clear_system_by_order_id(self, order_id: str) -> List[str]:
+        cleared = self._sm.clear_system_by_order_id(order_id)
+        if cleared and self._lock_sync:
+            self._lock_sync.clear_system_by_order(order_id)
+        return cleared
+
+    def apply_persisted_lock(
+        self, node_id: str, *, user: bool = False, system: bool = False, order_id=None
+    ) -> None:
+        self._sm.apply_persisted_lock(
+            node_id, user=user, system=system, order_id=order_id
+        )
+
+    def lock_view(self, node_id: str) -> Dict[str, Any]:
+        return self._sm.lock_view(node_id)
 
 
 class RuntimeControlAdapter:

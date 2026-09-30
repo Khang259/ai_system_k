@@ -5,7 +5,7 @@ _MODES = frozenset({"preview", "detect"})
 
 
 class OfferWebrtc:
-    """WHEP POST. preview|detect + MediaMTX → SDP 201. Detect overlay = GET /preview/meta."""
+    """WHEP POST. preview|detect + MediaMTX → SDP 201. Detect overlay = GET .../preview/meta."""
 
     def __init__(self, registry: WebrtcSessionRegistry, cameras=None, gateway=None) -> None:
         self._registry = registry

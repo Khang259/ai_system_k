@@ -12,20 +12,26 @@ CAMERA_READ = "camera.read"
 CAMERA_WRITE = "camera.write"
 NODE_READ = "node.read"
 NODE_MAINTENANCE = "node.maintenance"
+PAIR_READ = "pair.read"
 PAIR_WRITE = "pair.write"
 ZONE_CONTROL = "zone.control"
 SYSTEM_CONTROL = "system.control"
 LOGS_READ = "logs.read"
+MAP_READ = "map.read"
+MAP_WRITE = "map.write"
 
 ALL_PERMISSIONS = [
     CAMERA_READ,
     CAMERA_WRITE,
     NODE_READ,
     NODE_MAINTENANCE,
+    PAIR_READ,
     PAIR_WRITE,
     ZONE_CONTROL,
     SYSTEM_CONTROL,
     LOGS_READ,
+    MAP_READ,
+    MAP_WRITE,
 ]
 
 # Chưa có `node.command`: gửi lệnh thủ công đang hoãn (xem docs/api-fe-integration.md)
@@ -36,13 +42,18 @@ ROLE_PERMISSIONS = {
         CAMERA_WRITE,
         NODE_READ,
         NODE_MAINTENANCE,
+        PAIR_READ,
+        PAIR_WRITE,
         ZONE_CONTROL,
         LOGS_READ,
+        MAP_READ,
     ],
     "viewer": [
         CAMERA_READ,
         NODE_READ,
+        PAIR_READ,
         LOGS_READ,
+        MAP_READ,
     ],
 }
 

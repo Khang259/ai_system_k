@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from infrastructure.persistence.base_repository import BaseRepository
+from infrastructure.persistence.base_repository import BaseRepository, _now
 
 
 class CameraRepository(BaseRepository):
@@ -41,11 +41,36 @@ class CameraRepository(BaseRepository):
         )
         return result.modified_count
 
-    async def update_roi(self, camera_id: int, node_id: str, bbox: list) -> bool:
+    async def upsert_roi(
+        self, camera_id: int, node_id: str, roi_doc: Dict[str, Any]
+    ) -> bool:
+        """Lưu ROI dạng object `{roi, start, end, ref_width, ref_height}`."""
         return await self.update_one(
             {"cameraId": camera_id},
-            {f"rois.{node_id}": bbox},
+            {f"rois.{node_id}": roi_doc},
         )
+
+    async def update_roi(self, camera_id: int, node_id: str, bbox: list) -> bool:
+        """Tương thích cũ — ưu tiên `upsert_roi` cho API v1."""
+        return await self.upsert_roi(
+            camera_id,
+            node_id,
+            {
+                "roi": list(bbox),
+                "start": str(node_id).startswith("start_"),
+                "end": str(node_id).startswith("end_"),
+            },
+        )
+
+    async def delete_roi(self, camera_id: int, node_id: str) -> bool:
+        result = await self._col().update_one(
+            {"cameraId": camera_id},
+            {
+                "$unset": {f"rois.{node_id}": ""},
+                "$set": {"updated_at": _now()},
+            },
+        )
+        return result.matched_count > 0
 
 
 camera_repository = CameraRepository()

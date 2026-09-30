@@ -30,7 +30,6 @@ class CameraProcessor(threading.Thread):
         enabled_ref=None,
         camera_index=0,
         latest_frames_ref=None,
-        api_client=None,
         public_camera_id=None,
         preview_store=None,
     ):
@@ -44,7 +43,6 @@ class CameraProcessor(threading.Thread):
         self.enabled_ref = enabled_ref if enabled_ref is not None else []
         self.camera_index = camera_index
         self.latest_frames_ref = latest_frames_ref if latest_frames_ref is not None else {}
-        self.api_client = api_client
         self.public_camera_id = public_camera_id
         self.preview_store = preview_store
         self._last_preview_ts = 0.0
@@ -121,11 +119,9 @@ class CameraProcessor(threading.Thread):
             # Batch ROI check - chạy trong background, không block camera thread
             roi_results = has_object_in_rois_batch(detections, rois_snapshot)
             
-            # Post detection results
+            # Post detection results vào NodeState (in-process)
             for has_obj, coverage, node_id in roi_results:
-                if self.api_client:
-                    self.api_client.post_detection(cam_id, node_id, has_obj, coverage)
-                elif self.state_manager:
+                if self.state_manager:
                     self.state_manager.get_state_nodes(node_id, has_obj)
             
         except Exception as e:

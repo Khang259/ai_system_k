@@ -1,19 +1,19 @@
 """
 Vỏ HTTP cho nhóm /api/v1 — chuẩn frontend.
 
-Khác `presentation/http.py` ở hai điểm: lỗi trả **HTTP status thật** kèm
-`{"message": ...}` thay vì 200 kèm `{"success": false}`, và thành công trả
-**data trần** không bọc `success`.
-
-Nhóm route cũ giữ nguyên `http.py`, không đổi dòng nào.
+Lỗi trả HTTP status thật kèm `{"message": ...}`; thành công trả data trần
+(không bọc `success`).
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from fastapi import HTTPException
+from fastapi import HTTPException, Request
+from fastapi.responses import Response
 
+from application.container import container
 from application.result import UseCaseResult
+from presentation.deps import client_info
 
 
 def data_or_error(result: UseCaseResult, fail_status: int = 400) -> Dict[str, Any]:
@@ -25,6 +25,70 @@ def data_or_error(result: UseCaseResult, fail_status: int = 400) -> Dict[str, An
     """
     if result.success:
         return result.data
+
+    status = int(result.data.get("http_status") or fail_status)
+    raise HTTPException(status_code=status, detail=result.error or "Request failed")
+
+
+async def audited_or_error(
+    result: UseCaseResult,
+    request: Request,
+    user: Optional[Dict[str, Any]],
+    action: str,
+    payload: Dict[str, Any],
+    *,
+    fail_status: int = 400,
+    audit_user: Optional[str] = None,
+    audit_role: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Ghi user-action log rồi map result → HTTP (thin route: execute → return).
+
+    `audit_user` / `audit_role` ghi đè khi không có JWT (vd. unlock_by_order → external).
+    """
+    status = 200 if result.success else int(result.data.get("http_status") or fail_status)
+    ip, _ = client_info(request)
+    if audit_user is not None:
+        uname, role = audit_user, audit_role or ""
+    else:
+        u = user or {}
+        uname = u.get("username") or u.get("user_id") or ""
+        role = u.get("role") or ""
+    await container.action_audit.log(
+        user=uname,
+        role=role,
+        action=action,
+        endpoint=str(request.url.path),
+        payload=payload,
+        ip=ip,
+        status=status,
+    )
+    return data_or_error(result, fail_status=fail_status)
+
+
+def jpeg_or_error(result: UseCaseResult, fail_status: int = 400) -> Response:
+    """JPEG binary khi thành công; HTTPException (→ `{"message"}`) khi lỗi."""
+    if result.success:
+        return Response(content=result.data["jpeg"], media_type="image/jpeg")
+
+    status = int(result.data.get("http_status") or fail_status)
+    raise HTTPException(status_code=status, detail=result.error or "Request failed")
+
+
+def sdp_or_error(
+    result: UseCaseResult,
+    *,
+    location: str,
+    fail_status: int = 503,
+) -> Response:
+    """WHEP: 201 + application/sdp + Location; lỗi → HTTPException + message."""
+    if result.success:
+        return Response(
+            content=result.data["sdp"],
+            media_type="application/sdp",
+            status_code=201,
+            headers={"Location": location},
+        )
 
     status = int(result.data.get("http_status") or fail_status)
     raise HTTPException(status_code=status, detail=result.error or "Request failed")

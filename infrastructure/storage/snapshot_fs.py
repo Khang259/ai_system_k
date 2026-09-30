@@ -28,6 +28,7 @@ class SnapshotFsStore:
     Snapshot store với pull model: chốt frame từ FrameProvider lúc dispatch.
     
     Ghi overlay JPEG + JSON sidecar. Không giữ buffer frame, không retry sleep.
+    Optional: `indexer` ghi metadata Mongo (basename file) sau khi ghi đĩa thành công.
     """
     
     def __init__(
@@ -35,10 +36,12 @@ class SnapshotFsStore:
         frame_provider,
         snapshot_dir: str = "snapshots",
         quality: int = 95,
+        indexer=None,
     ):
         self.frame_provider = frame_provider
         self.snapshot_dir = snapshot_dir
         self.quality = max(0, min(int(quality), 100))
+        self.indexer = indexer
         self._lock = threading.Lock()
         self._count = 0
 
@@ -46,6 +49,35 @@ class SnapshotFsStore:
         logger.info(
             f"SnapshotFsStore initialized - dir: {self.snapshot_dir}, quality: {self.quality}"
         )
+
+    def _index_saved(
+        self,
+        order_id: str,
+        path: str,
+        *,
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+        start_zone: str = "",
+        end_zone: str = "",
+    ) -> None:
+        if not self.indexer or not path:
+            return
+        if start_point:
+            self.indexer.record(
+                order_id=order_id,
+                node_id=start_point,
+                node_type="start",
+                zone_id=start_zone,
+                image_path=path,
+            )
+        if end_point:
+            self.indexer.record(
+                order_id=order_id,
+                node_id=end_point,
+                node_type="end",
+                zone_id=end_zone,
+                image_path=path,
+            )
 
     def capture_pair(
         self, start_point: str, end_point: str
@@ -180,7 +212,12 @@ class SnapshotFsStore:
                             f,
                             indent=2,
                         )
-                    
+                    self._index_saved(
+                        order_id,
+                        path,
+                        start_point=start_point,
+                        end_point=end_point,
+                    )
                     return path, path
                 else:
                     logger.error(f"Failed to write snapshot: {path}")
@@ -205,7 +242,9 @@ class SnapshotFsStore:
                             f,
                             indent=2,
                         )
-                    
+                    self._index_saved(
+                        order_id, path, start_point=start_point
+                    )
                     return path, None
                 else:
                     logger.error(f"Failed to write snapshot: {path}")
@@ -230,7 +269,7 @@ class SnapshotFsStore:
                             f,
                             indent=2,
                         )
-                    
+                    self._index_saved(order_id, path, end_point=end_point)
                     return None, path
                 else:
                     logger.error(f"Failed to write snapshot: {path}")

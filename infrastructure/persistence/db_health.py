@@ -1,4 +1,4 @@
-"""Mongo ping adapter cho /health."""
+"""Mongo ping adapter cho health check."""
 from __future__ import annotations
 
 from infrastructure.persistence.db import get_db
