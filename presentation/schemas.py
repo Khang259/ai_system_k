@@ -31,6 +31,13 @@ class UpdateCameraPayload(BaseModel):
     observedNodeIds: Optional[List[str]] = None
 
 
+class CreateCameraPayload(BaseModel):
+    name: str
+    rtspUrl: str
+    zone: Optional[str] = None
+    observedNodeIds: Optional[List[str]] = None
+
+
 class DeleteCameraPayload(BaseModel):
     cameraId: int
 

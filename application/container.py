@@ -18,6 +18,7 @@ from application.cameras import (
     WebrtcSessionRegistry,
 )
 from application.fe_api import (
+    CreateCamera,
     CreatePairFe,
     CreateRoi,
     DeleteCamera,
@@ -342,6 +343,13 @@ class AppContainer:
             cams,
             inf,
             state,
+        )
+        self.create_camera_v1 = CreateCamera(
+            self.camera_configs,
+            self.nodes_repo,
+            cams,
+            inf,
+            res,
         )
         self.update_camera_v1 = UpdateCamera(
             self.camera_configs,

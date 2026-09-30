@@ -173,6 +173,205 @@ class SetCameraStatus:
         )
 
 
+def _kind_from_node_id(node_id: str) -> Optional[str]:
+    if node_id.startswith("start_"):
+        return "start"
+    if node_id.startswith("end_"):
+        return "end"
+    return None
+
+
+def _normalize_observed_ids(
+    observed_node_ids: Optional[List[str]],
+) -> tuple[Optional[List[str]], Optional[UseCaseResult]]:
+    if observed_node_ids is None:
+        return None, None
+    seen = set()
+    desired: List[str] = []
+    for raw in observed_node_ids:
+        nid = str(raw or "").strip()
+        if not nid or nid in seen:
+            continue
+        seen.add(nid)
+        desired.append(nid)
+    for nid in desired:
+        if _kind_from_node_id(nid) is None:
+            return None, UseCaseResult.fail(
+                f"nodeId '{nid}' phải bắt đầu bằng start_ hoặc end_",
+                http_status=400,
+            )
+    return desired, None
+
+
+async def _reject_duplicate_rtsp(
+    cameras: CameraConfigRepository,
+    rtsp_url: str,
+    *,
+    exclude_camera_id: Optional[int] = None,
+    existing: Optional[List[Dict[str, Any]]] = None,
+) -> Optional[UseCaseResult]:
+    """rtspUrl phải unique giữa cameras → 409 nếu trùng."""
+    url = rtsp_url.strip()
+    docs = existing if existing is not None else await cameras.get_all()
+    for doc in docs:
+        cid = doc.get("cameraId")
+        if cid is None:
+            continue
+        if exclude_camera_id is not None and int(cid) == int(exclude_camera_id):
+            continue
+        if (doc.get("url") or "").strip() == url:
+            return UseCaseResult.fail(
+                f"rtspUrl đã dùng bởi camera {int(cid)}",
+                http_status=409,
+            )
+    return None
+
+
+class CreateCamera:
+    """
+    Tạo camera mới — auto cameraId = max(existing)+1.
+
+    observedNodeIds cần zone (create/gán node).
+    Node thuộc camera khác → 409.
+    """
+
+    def __init__(
+        self,
+        cameras: CameraConfigRepository,
+        nodes: NodeRepositoryPort,
+        runtime: CameraRuntime,
+        inference: InferencePort,
+        resolution: str,
+    ) -> None:
+        self._cameras = cameras
+        self._nodes = nodes
+        self._runtime = runtime
+        self._inference = inference
+        self._resolution = resolution
+
+    async def execute(
+        self,
+        *,
+        name: str,
+        rtsp_url: str,
+        zone: Optional[str] = None,
+        observed_node_ids: Optional[List[str]] = None,
+    ) -> UseCaseResult:
+        gate = require_inference_paused(self._inference)
+        if gate:
+            return gate
+
+        name_s = str(name or "").strip()
+        if not name_s:
+            return UseCaseResult.fail("name không được rỗng", http_status=400)
+        url_s = str(rtsp_url or "").strip()
+        if not url_s:
+            return UseCaseResult.fail("rtspUrl không được rỗng", http_status=400)
+
+        zone_s = ""
+        if zone is not None:
+            zone_s = str(zone).strip().upper()
+            if not zone_s:
+                return UseCaseResult.fail("zone không được rỗng", http_status=400)
+
+        desired_ids, fail = _normalize_observed_ids(observed_node_ids)
+        if fail:
+            return fail
+        if desired_ids and not zone_s:
+            return UseCaseResult.fail(
+                "Cần zone khi gán observedNodeIds",
+                http_status=400,
+            )
+
+        existing = await self._cameras.get_all()
+        dup = await _reject_duplicate_rtsp(
+            self._cameras, url_s, existing=existing
+        )
+        if dup:
+            return dup
+        next_id = (
+            max((int(d.get("cameraId") or 0) for d in existing), default=0) + 1
+        )
+
+        to_create: List[str] = []
+        to_assign: List[str] = []
+        if desired_ids:
+            for nid in desired_ids:
+                existing_node = await self._nodes.get_by_id(nid)
+                if existing_node is None:
+                    to_create.append(nid)
+                    continue
+                other = existing_node.get("camera_id")
+                if other is not None and int(other) != int(next_id):
+                    return UseCaseResult.fail(
+                        f"Node {nid} đang thuộc camera {other} "
+                        "(1 node chỉ gắn 1 camera)",
+                        http_status=409,
+                    )
+                to_assign.append(nid)
+
+        doc: Dict[str, Any] = {
+            "cameraId": next_id,
+            "name": name_s,
+            "url": url_s,
+            "zone_id": zone_s,
+            "enabled": True,
+            "rois": {},
+        }
+        await self._cameras.create(doc)
+
+        observed_created = 0
+        for nid in to_create:
+            ntype = _kind_from_node_id(nid)
+            assert ntype is not None
+            await self._nodes.create(
+                {
+                    "node_id": nid,
+                    "node_type": ntype,
+                    "zone_id": zone_s,
+                    "camera_id": int(next_id),
+                    "priority": 999,
+                    "enabled": True,
+                    "is_under_maintenance": False,
+                    "maintenance_reason": "",
+                    "lock": {
+                        "user": False,
+                        "system": False,
+                        "orderId": None,
+                    },
+                }
+            )
+            observed_created += 1
+
+        for nid in to_assign:
+            await self._nodes.update_by_node_id(
+                nid,
+                {
+                    "camera_id": int(next_id),
+                    "zone_id": zone_s,
+                },
+            )
+
+        observed_assigned = observed_created + len(to_assign)
+
+        nodes = await self._nodes.get_by_camera(next_id)
+        return UseCaseResult.ok(
+            cameraId=next_id,
+            name=name_s,
+            rtspUrl=url_s,
+            zone=zone_s,
+            status="offline",
+            resolution=self._resolution,
+            mapPosition=None,
+            observedNodeIds=[n.get("node_id") for n in nodes if n.get("node_id")],
+            enabled=True,
+            error=None,
+            requiresRestart=bool(self._runtime.is_ready()),
+            observedAssigned=observed_assigned,
+            observedCreated=observed_created,
+        )
+
+
 class UpdateCamera:
     """
     Partial update name / RTSP / zone / observedNodeIds.
@@ -199,14 +398,6 @@ class UpdateCamera:
         self._inference = inference
         self._state = state
         self._resolution = resolution
-
-    @staticmethod
-    def _kind_from_node_id(node_id: str) -> Optional[str]:
-        if node_id.startswith("start_"):
-            return "start"
-        if node_id.startswith("end_"):
-            return "end"
-        return None
 
     async def execute(
         self,
@@ -253,25 +444,20 @@ class UpdateCamera:
                 return UseCaseResult.fail("zone không được rỗng", http_status=400)
             patch["zone_id"] = zone_s
 
-        desired_ids: Optional[List[str]] = None
-        if observed_node_ids is not None:
-            seen = set()
-            desired_ids = []
-            for raw in observed_node_ids:
-                nid = str(raw or "").strip()
-                if not nid or nid in seen:
-                    continue
-                seen.add(nid)
-                desired_ids.append(nid)
-            for nid in desired_ids:
-                if self._kind_from_node_id(nid) is None:
-                    return UseCaseResult.fail(
-                        f"nodeId '{nid}' phải bắt đầu bằng start_ hoặc end_",
-                        http_status=400,
-                    )
+        desired_ids, obs_fail = _normalize_observed_ids(observed_node_ids)
+        if obs_fail:
+            return obs_fail
 
         old_url = (doc.get("url") or "").strip()
         url_changed = "url" in patch and patch["url"] != old_url
+        if url_changed:
+            dup = await _reject_duplicate_rtsp(
+                self._cameras,
+                patch["url"],
+                exclude_camera_id=camera_id,
+            )
+            if dup:
+                return dup
 
         if patch:
             await self._cameras.update_by_camera_id(camera_id, patch)
@@ -307,7 +493,7 @@ class UpdateCamera:
             for nid in desired_ids:
                 existing = await self._nodes.get_by_id(nid)
                 if existing is None:
-                    ntype = self._kind_from_node_id(nid)
+                    ntype = _kind_from_node_id(nid)
                     assert ntype is not None
                     await self._nodes.create(
                         {

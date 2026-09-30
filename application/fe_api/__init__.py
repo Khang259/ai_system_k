@@ -1,5 +1,6 @@
 """FE-facing use cases for /api/v1."""
 from application.fe_api.cameras import (
+    CreateCamera,
     CreateRoi,
     DeleteCamera,
     DeleteRoi,
@@ -48,6 +49,7 @@ __all__ = [
     "GetCameras",
     "GetRois",
     "SetCameraStatus",
+    "CreateCamera",
     "UpdateCamera",
     "DeleteCamera",
     "CreateRoi",

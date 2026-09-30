@@ -4,6 +4,7 @@ from __future__ import annotations
 import asyncio
 
 from application.fe_api.cameras import (
+    CreateCamera,
     CreateRoi,
     DeleteCamera,
     DeleteRoi,
@@ -485,6 +486,135 @@ def test_delete_camera_cascades():
         "start_10000060",
         "end_10000760",
     }
+
+
+def test_create_camera_minimal():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    runtime = FakeCameraRuntime(ready=False)
+    result = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="AE5-CAM-06",
+            rtsp_url="rtsp://host/stream",
+        )
+    )
+    assert result.success
+    assert result.data["cameraId"] == 1
+    assert result.data["name"] == "AE5-CAM-06"
+    assert result.data["rtspUrl"] == "rtsp://host/stream"
+    assert result.data["zone"] == ""
+    assert result.data["observedNodeIds"] == []
+    assert result.data["requiresRestart"] is False
+    assert cams.items[1]["url"] == "rtsp://host/stream"
+
+
+def test_create_camera_with_zone_and_nodes():
+    cams, nodes, _, _, runtime = _seed()
+    result = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="AE5-CAM-06",
+            rtsp_url="rtsp://host/stream",
+            zone="ae5",
+            observed_node_ids=["start_10000099"],
+        )
+    )
+    assert result.success
+    assert result.data["cameraId"] == 2
+    assert result.data["zone"] == "AE5"
+    assert result.data["observedCreated"] == 1
+    assert result.data["observedNodeIds"] == ["start_10000099"]
+    assert result.data["requiresRestart"] is True
+    assert nodes.rows["start_10000099"]["camera_id"] == 2
+
+
+def test_create_camera_rejects_node_without_zone():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    bad = _run(
+        CreateCamera(
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "640x480"
+        ).execute(
+            name="CAM",
+            rtsp_url="rtsp://x",
+            observed_node_ids=["start_1"],
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 400
+    assert cams.items == {}
+
+
+def test_create_camera_rejects_owned_node():
+    cams, nodes, _, _, runtime = _seed()
+    bad = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="CAM",
+            rtsp_url="rtsp://x",
+            zone="AE5",
+            observed_node_ids=["start_10000060"],
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert 2 not in cams.items
+
+
+def test_create_camera_blocked_when_inference_running():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    bad = _run(
+        CreateCamera(
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(paused=False), "640x480"
+        ).execute(name="CAM", rtsp_url="rtsp://x")
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+
+
+def test_create_camera_rejects_duplicate_rtsp():
+    cams, nodes, _, _, runtime = _seed()
+    bad = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="DUP",
+            rtsp_url="rtsp://x",
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert "camera 1" in (bad.error or "")
+    assert 2 not in cams.items
+
+
+def test_update_camera_rejects_duplicate_rtsp():
+    cams, nodes, _, pairs, runtime = _seed()
+    cams.items[2] = {
+        "cameraId": 2,
+        "name": "CAM-02",
+        "url": "rtsp://other",
+        "zone_id": "AE5",
+        "enabled": True,
+        "rois": {},
+    }
+    bad = _run(
+        _update_camera(cams, nodes, pairs, runtime).execute(
+            2, rtsp_url="rtsp://x"
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert cams.items[2]["url"] == "rtsp://other"
+
+
+def test_update_camera_allows_same_rtsp_on_self():
+    cams, nodes, _, pairs, runtime = _seed()
+    ok = _run(
+        _update_camera(cams, nodes, pairs, runtime).execute(
+            1, rtsp_url="rtsp://x", name="CAM-01-renamed"
+        )
+    )
+    assert ok.success
+    assert ok.data["rtspUrl"] == "rtsp://x"
+    assert ok.data["name"] == "CAM-01-renamed"
 
 
 def test_update_node_rejects_camera_id_change():
