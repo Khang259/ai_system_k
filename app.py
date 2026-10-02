@@ -18,6 +18,7 @@ from infrastructure.auth import (
     AuthAuditAdapter,
     BcryptHasher,
     JwtTokenService,
+    SystemActionAuditAdapter,
     ensure_auth_indexes,
 )
 from infrastructure.persistence import (
@@ -87,6 +88,7 @@ async def lifespan(app: FastAPI):
         ),
     )
     container.bind_action_audit(ActionAuditAdapter())
+    container.bind_system_action_audit(SystemActionAuditAdapter())
     container.bind_log_stores(
         audit_log_repository,
         action_log_repository,

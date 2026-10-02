@@ -22,7 +22,6 @@ from application.fe_api import (
     CreatePairFe,
     CreateRoi,
     DeleteCamera,
-    DeleteNode,
     DeletePairFe,
     DeleteRoi,
     DownloadMapZip,
@@ -56,6 +55,7 @@ from application.fe_api import (
 )
 from application.null_ports import (
     NullActionAudit,
+    NullSystemActionAudit,
     NullAuthAudit,
     NullCameraConfigRepo,
     NullCameraRuntime,
@@ -107,6 +107,7 @@ class AppContainer:
         self.refresh_tokens = NullRefreshTokenStore()
         self.auth_audit = NullAuthAudit()
         self.action_audit = NullActionAudit()
+        self.system_action_audit = NullSystemActionAudit()
         self.password_hasher = NullPasswordHasher()
         self.token_issuer = NullTokenIssuer()
         self.audit_logs = NullPagedLogStore()
@@ -168,6 +169,10 @@ class AppContainer:
         self.action_audit = action_audit
         self._wire()
 
+    def bind_system_action_audit(self, system_action_audit) -> None:
+        self.system_action_audit = system_action_audit
+        self._wire()
+
     def bind_log_stores(
         self, audit_logs, action_logs, dispatch_logs, notifications
     ) -> None:
@@ -181,10 +186,11 @@ class AppContainer:
         self._wire()
 
     def bind_event_loop(self, loop) -> None:
-        """Gắn asyncio loop để publisher/indexer/lock ghi Mongo từ thread PairManager."""
+        """Gắn asyncio loop để publisher/indexer/lock/audit ghi Mongo từ thread PairManager."""
         self.notification_publisher.bind_loop(loop)
         self.snapshot_indexer.bind_loop(loop)
         self.node_lock_sync.bind_loop(loop)
+        self.system_action_audit.bind_loop(loop)
 
     def bind_snapshot_indexer(self, repo) -> None:
         from infrastructure.storage.snapshot_indexer import SnapshotIndexer
@@ -391,9 +397,6 @@ class AppContainer:
         )
         self.get_nodes_v1 = GetNodes(self.nodes_repo)
         self.update_node_v1 = UpdateNode(self.nodes_repo)
-        self.delete_node_v1 = DeleteNode(
-            self.nodes_repo, self.camera_configs, self.pairs_repo, state, inf
-        )
         self.set_maintenance_v1 = SetMaintenance(self.nodes_repo, state)
         self.set_lock_v1 = SetLock(self.nodes_repo, state)
         self.unlock_v1 = Unlock(self.nodes_repo, state)

@@ -8,14 +8,13 @@ from fastapi import APIRouter, Depends, Query, Request
 from application.container import container
 from domain.permissions import CAMERA_WRITE, NODE_MAINTENANCE, NODE_READ
 from presentation.deps import current_user, require_permission
-from presentation.http_v1 import audited_or_error, data_or_error
-from presentation.openapi_responses import RUNTIME_STATE, UNLOCK_BY_ORDER
+from presentation.http_v1 import audited_or_error, data_or_error, system_audited_or_error
+from presentation.openapi_responses import RUNTIME_STATE, UNLOCK_BY_SYSTEM
 from presentation.schemas import (
-    DeleteNodePayload,
     SetLockPayload,
     SetMaintenancePayload,
-    UnlockByOrderPayload,
-    UnlockPayload,
+    UnlockBySystemPayload,
+    UnlockByUserPayload,
     UpdateNodePayload,
 )
 
@@ -39,7 +38,7 @@ def get_runtime_state(
 
 @router.get(
     "/get_nodes",
-    summary="Danh sách node — lọc tùy chọn theo zoneId",
+    summary="Danh sách node — lọc tùy chọn theo zoneId (mirror từ camera)",
 )
 async def get_nodes(
     zoneId: Optional[str] = Query(None),
@@ -50,7 +49,7 @@ async def get_nodes(
 
 @router.patch(
     "/update_node",
-    summary="Sửa priority / enabled / zoneId (không đổi cameraId)",
+    summary="Sửa priority / enabled (không đổi cameraId / zoneId)",
 )
 async def update_node(
     payload: UpdateNodePayload,
@@ -66,21 +65,6 @@ async def update_node(
     )
     return await audited_or_error(
         result, request, user, "update_node", payload.model_dump(exclude_none=True)
-    )
-
-
-@router.post(
-    "/delete_node",
-    summary="Xóa node + cascade pair + ROI (cần inference pause)",
-)
-async def delete_node(
-    payload: DeleteNodePayload,
-    request: Request,
-    user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
-) -> Dict[str, Any]:
-    result = await container.delete_node_v1.execute(payload.nodeId)
-    return await audited_or_error(
-        result, request, user, "delete_node", payload.model_dump()
     )
 
 
@@ -119,42 +103,35 @@ async def set_lock(
 
 
 @router.post(
-    "/unlock",
-    summary="Gỡ user và/hoặc system lock trên node",
+    "/unlock_by_user",
+    summary="Operator gỡ lock.user + lock.system trên một node (JWT)",
 )
-async def unlock(
-    payload: UnlockPayload,
+async def unlock_by_user(
+    payload: UnlockByUserPayload,
     request: Request,
     user: Dict[str, Any] = Depends(require_permission(NODE_MAINTENANCE)),
 ) -> Dict[str, Any]:
-    result = await container.unlock_v1.execute(
-        payload.nodeId, user=payload.user, system=payload.system
-    )
+    result = await container.unlock_v1.execute(payload.nodeId)
     return await audited_or_error(
-        result, request, user, "unlock", payload.model_dump()
+        result, request, user, "unlock_by_user", payload.model_dump()
     )
 
 
 @router.post(
-    "/unlock_by_order",
+    "/unlock_by_system",
     summary="Gỡ system lock theo orderId — webhook external / ICS (không Bearer)",
-    responses=UNLOCK_BY_ORDER,
+    responses=UNLOCK_BY_SYSTEM,
 )
-async def unlock_by_order(
-    payload: UnlockByOrderPayload,
+async def unlock_by_system(
+    payload: UnlockBySystemPayload,
     request: Request,
 ) -> Dict[str, Any]:
-    """
-    Server ngoài (ICS/AMR) force-reset lệnh theo orderId — không JWT.
-    Dùng ResetFlagsByOrder (status 3|23).
-    """
+    """ICS/AMR force-reset theo orderId — không JWT. Log → get_system_action_logs."""
     result = container.reset_flags.execute(payload.orderId, payload.status)
-    return await audited_or_error(
+    return await system_audited_or_error(
         result,
         request,
-        None,
-        "unlock_by_order",
+        "unlock_by_system",
         payload.model_dump(),
-        audit_user="external",
-        audit_role="",
+        order_id=payload.orderId,
     )

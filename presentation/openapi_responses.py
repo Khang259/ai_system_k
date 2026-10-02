@@ -113,7 +113,7 @@ RUNTIME_STATE = {
     200: _desc("runtimeReady + items (rỗng nếu runtime chưa sẵn — không 500)"),
 }
 
-UNLOCK_BY_ORDER = merge(
+UNLOCK_BY_SYSTEM = merge(
     {200: _desc("Đã reset theo status 3|23")},
     {
         400: _desc(

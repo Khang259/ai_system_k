@@ -93,7 +93,7 @@ class GetUserActionLogs:
 
 
 class GetSystemActionLogs:
-    """Ưu tiên `dispatch_logs` — gần với tiến trình ICS / lệnh hệ thống."""
+    """`dispatch_logs` — outbound ICS (success/fail) + webhook hệ thống (unlock_by_system…)."""
 
     def __init__(self, store: PagedLogStore) -> None:
         self._store = store

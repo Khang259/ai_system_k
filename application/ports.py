@@ -90,6 +90,38 @@ class ActionAuditPort(Protocol):
     ) -> None: ...
 
 
+class SystemActionAuditPort(Protocol):
+    """Ghi sự kiện hệ thống → dispatch_logs (get_system_action_logs)."""
+
+    async def log(
+        self,
+        *,
+        action: str,
+        order_id: Optional[str],
+        endpoint: str,
+        payload: Dict[str, Any],
+        status: int,
+        result: Optional[Dict[str, Any]] = None,
+        error: Optional[str] = None,
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+    ) -> None: ...
+
+    def bind_loop(self, loop) -> None: ...
+
+    def log_outbound(
+        self,
+        *,
+        action: str = "dispatch",
+        order_id: Optional[str],
+        payload: Dict[str, Any],
+        success: bool,
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+        error: Optional[str] = None,
+    ) -> None: ...
+
+
 class CameraRuntime(Protocol):
     def is_ready(self) -> bool: ...
     def start_all(self) -> None: ...

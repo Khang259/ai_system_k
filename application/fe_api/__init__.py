@@ -27,7 +27,6 @@ from application.fe_api.logs import (
     MarkNotificationRead,
 )
 from application.fe_api.nodes import (
-    DeleteNode,
     GetNodes,
     SetLock,
     SetMaintenance,
@@ -59,7 +58,6 @@ __all__ = [
     "GetNodeRuntimeState",
     "GetPollSnapshot",
     "UpdateNode",
-    "DeleteNode",
     "SetMaintenance",
     "SetLock",
     "Unlock",

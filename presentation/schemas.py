@@ -97,20 +97,17 @@ class SetMaintenancePayload(BaseModel):
 
 
 class UpdateNodePayload(BaseModel):
+    """Partial — priority / enabled. Không đổi cameraId / zoneId (SSOT camera)."""
     nodeId: str
     priority: Optional[int] = None
     enabled: Optional[bool] = None
-    zoneId: Optional[str] = None
-    cameraId: Optional[int] = None
-
-
-class DeleteNodePayload(BaseModel):
-    nodeId: str
+    zoneId: Optional[str] = None  # gửi → 400 (cấm)
+    cameraId: Optional[int] = None  # gửi → 400 (cấm)
 
 
 class CreatePairPayload(BaseModel):
+    """Pair xuyên zone — không còn zoneId."""
     startNodeId: str
-    zoneId: str
     pairType: str = "normal"
     endNodeId: Optional[str] = None
     enabled: bool = True
@@ -119,11 +116,11 @@ class CreatePairPayload(BaseModel):
 
 
 class UpdatePairPayload(BaseModel):
-    """Partial update — ít nhất một field ngoài id."""
+    """Partial update — ít nhất một field ngoài id. Không hỗ trợ zoneId."""
     id: str
     startNodeId: Optional[str] = None
     endNodeId: Optional[str] = None
-    zoneId: Optional[str] = None
+    zoneId: Optional[str] = None  # gửi → 400 (cấm)
     pairType: Optional[str] = None
     enabled: Optional[bool] = None
     autoDispatch: Optional[bool] = None
@@ -177,17 +174,21 @@ class SetLockPayload(BaseModel):
     user: bool = True
 
 
-class UnlockPayload(BaseModel):
+class UnlockByUserPayload(BaseModel):
+    """Operator gỡ cả lock.user + lock.system trên một node."""
+
     nodeId: str
-    user: bool = False
-    system: bool = False
 
 
-class UnlockByOrderPayload(BaseModel):
+class UnlockBySystemPayload(BaseModel):
     """External/ICS — reset system lock theo orderId (status 3|23)."""
 
     orderId: str
     status: int  # 3 = COMPLETED (toàn bộ), 23 = EMPTY_DONE (chỉ empty)
+
+
+# Alias tên schema cũ (nếu code khác còn import)
+UnlockByOrderPayload = UnlockBySystemPayload
 
 
 class CameraConfigCreate(BaseModel):

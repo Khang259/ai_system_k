@@ -6,7 +6,7 @@ Test gọi trực tiếp không cần mock thread.
 """
 from __future__ import annotations
 
-from typing import Callable, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from application.dispatch.ics_payload import (
     build_double_payload,
@@ -22,6 +22,8 @@ logger = setup_logger("dispatch_service", "logs/dispatch/log")
 OnDispatchSuccessFn = Callable[[str], None]
 # start, end, order_id | None
 OnDispatchFailedFn = Callable[[str, str, Optional[str]], None]
+# Sync audit → dispatch_logs (success + fail)
+OnIcsAuditFn = Callable[..., None]
 
 
 class DispatchService:
@@ -31,8 +33,37 @@ class DispatchService:
     Không biết thread/sleep. Infrastructure (PairManager) lo runtime loop.
     """
 
-    def __init__(self, gateway: DispatchGateway) -> None:
+    def __init__(
+        self,
+        gateway: DispatchGateway,
+        on_ics_audit: Optional[OnIcsAuditFn] = None,
+    ) -> None:
         self._gateway = gateway
+        self._on_ics_audit = on_ics_audit
+
+    def _audit_outbound(
+        self,
+        *,
+        payload: Dict[str, Any],
+        success: bool,
+        start: str,
+        end: str,
+        order_id: Optional[str],
+    ) -> None:
+        if not self._on_ics_audit:
+            return
+        try:
+            self._on_ics_audit(
+                action="dispatch",
+                order_id=order_id,
+                payload=payload,
+                success=success,
+                start_point=start,
+                end_point=end,
+                error=None if success else "ICS request failed",
+            )
+        except Exception:
+            logger.exception("on_ics_audit callback lỗi")
 
     @staticmethod
     def _emit_failed(
@@ -73,6 +104,13 @@ class DispatchService:
             payload = build_single_payload(start_point, end_point)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_point,
+                end=end_point,
+                order_id=order_id,
+            )
             
             logger.debug(
                 f"[SINGLE] ({start_point} → {end_point}) orderId={order_id} success={success}"
@@ -121,6 +159,13 @@ class DispatchService:
             payload = build_empty_payload(start_empty, end_point_empty)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_empty,
+                end=end_point_empty,
+                order_id=order_id,
+            )
             
             logger.debug(
                 f"[EMPTY] ({start_empty} → {end_point_empty}) orderId={order_id} success={success}"
@@ -174,6 +219,13 @@ class DispatchService:
                 payload = build_empty_payload(start_empty, end_point_empty)
                 order_id = payload.get("orderId")
                 success = self._gateway.send(payload)
+                self._audit_outbound(
+                    payload=payload,
+                    success=success,
+                    start=start_empty,
+                    end=end_point_empty,
+                    order_id=order_id,
+                )
                 logger.debug(f"[DOUBLE→EMPTY flush] ({start_empty}) orderId={order_id}")
                 
                 if success:
@@ -199,6 +251,13 @@ class DispatchService:
             payload = build_double_payload(start_point, end_point, start_empty, end_point_empty)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_point,
+                end=end_point,
+                order_id=order_id,
+            )
             
             logger.debug(
                 f"[DOUBLE] ({start_point},{end_point})+({start_empty},{end_point_empty}) orderId={order_id}"
@@ -239,6 +298,13 @@ class DispatchService:
             payload = build_single_payload(start_point, end_point)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_point,
+                end=end_point,
+                order_id=order_id,
+            )
             logger.debug(f"[DOUBLE→SINGLE overflow] ({start_point},{end_point})")
             
             if success:

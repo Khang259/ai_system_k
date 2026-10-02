@@ -73,12 +73,12 @@ def test_access_token_query_rejected_on_runtime_state(monkeypatch):
 
 
 def test_openapi_access_token_only_on_sse(monkeypatch):
-    """Query access_token chỉ xuất hiện trên SSE events, không trên unlock_by_order."""
+    """Query access_token chỉ xuất hiện trên SSE events, không trên unlock_by_system."""
     http, _ = _client(monkeypatch)
     spec = http.get("/openapi.json").json()
     paths = spec["paths"]
 
-    unlock_params = paths["/api/v1/nodes/unlock_by_order"]["post"].get("parameters") or []
+    unlock_params = paths["/api/v1/nodes/unlock_by_system"]["post"].get("parameters") or []
     assert not any(p.get("name") == "access_token" for p in unlock_params)
 
     state_params = paths["/api/v1/nodes/get_runtime_state"]["get"].get("parameters") or []

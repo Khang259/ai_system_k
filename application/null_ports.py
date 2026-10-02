@@ -156,6 +156,39 @@ class NullActionAudit:
         return None
 
 
+class NullSystemActionAudit:
+    def bind_loop(self, loop) -> None:
+        return None
+
+    async def log(
+        self,
+        *,
+        action,
+        order_id,
+        endpoint,
+        payload,
+        status,
+        result=None,
+        error=None,
+        start_point=None,
+        end_point=None,
+    ):
+        return None
+
+    def log_outbound(
+        self,
+        *,
+        action="dispatch",
+        order_id=None,
+        payload=None,
+        success=False,
+        start_point=None,
+        end_point=None,
+        error=None,
+    ) -> None:
+        return None
+
+
 class NullPasswordHasher:
     """Chưa bind auth → mọi lần verify đều thất bại (mặc định an toàn)."""
 

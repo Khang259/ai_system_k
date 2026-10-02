@@ -124,12 +124,10 @@ class RuntimeService:
                     order_id=raw.get("orderId"),
                 )
 
-            dispatch_svc = DispatchService(ics_gateway)
-
-            def _on_dispatch_failed(start, end, order_id):
-                container.notification_publisher.publish_dispatch_failed(
-                    start, end, order_id
-                )
+            dispatch_svc = DispatchService(
+                ics_gateway,
+                on_ics_audit=container.system_action_audit.log_outbound,
+            )
 
             pair_mgr = PairManager(
                 state_manager=state_adapter,
@@ -140,7 +138,6 @@ class RuntimeService:
                 on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(
                     node_id
                 ),
-                on_dispatch_failed=_on_dispatch_failed,
             )
             self._components["pair_manager"] = pair_mgr
             pair_mgr.start()

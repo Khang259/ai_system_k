@@ -1,16 +1,10 @@
-"""Node use cases cho /api/v1 — list + maintenance + lock + CRUD."""
+"""Node use cases cho /api/v1 — list + maintenance + lock + update (không xóa / không đổi zone)."""
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from application.fe_api.mappers import node_label
-from application.ports import (
-    CameraConfigRepository,
-    InferencePort,
-    NodeRepositoryPort,
-    NodeStateStore,
-    PairsRepositoryPort,
-)
+from application.ports import NodeRepositoryPort, NodeStateStore
 from application.result import UseCaseResult
 
 
@@ -105,7 +99,7 @@ class SetLock:
             return UseCaseResult.fail(f"Node {node_id} not found", http_status=404)
         if not user:
             return UseCaseResult.fail(
-                "Dùng /unlock để tắt lock (user/system)", http_status=400
+                "Dùng /unlock_by_user để tắt lock (user/system)", http_status=400
             )
         await self._repo.set_lock(node_id, user=True)
         fresh = await self._repo.get_by_id(node_id) or {}
@@ -121,14 +115,14 @@ class SetLock:
 
 
 class Unlock:
-    """Gỡ user và/hoặc system lock trên một node."""
+    """Gỡ user và/hoặc system lock trên một node. Mặc định gỡ cả hai."""
 
     def __init__(self, repo: NodeRepositoryPort, state: NodeStateStore) -> None:
         self._repo = repo
         self._state = state
 
     async def execute(
-        self, node_id: str, *, user: bool = False, system: bool = False
+        self, node_id: str, *, user: bool = True, system: bool = True
     ) -> UseCaseResult:
         if not user and not system:
             return UseCaseResult.fail(
@@ -158,7 +152,11 @@ class Unlock:
 
 
 class UpdateNode:
-    """Partial update priority / enabled / zoneId. Không đổi nodeId hay cameraId."""
+    """
+    Partial update priority / enabled.
+    Không đổi nodeId, cameraId, zoneId — zone chỉ ghi từ camera (SSOT).
+    Xóa node: PATCH cameras/update_camera + observedNodeIds (replace-set).
+    """
 
     def __init__(self, nodes: NodeRepositoryPort) -> None:
         self._nodes = nodes
@@ -174,11 +172,17 @@ class UpdateNode:
     ) -> UseCaseResult:
         if camera_id is not None:
             return UseCaseResult.fail(
-                "Không hỗ trợ đổi cameraId qua update_node", http_status=400
+                "Không hỗ trợ đổi cameraId qua update_node — dùng update_camera.observedNodeIds",
+                http_status=400,
             )
-        if priority is None and enabled is None and zone_id is None:
+        if zone_id is not None:
             return UseCaseResult.fail(
-                "Cần ít nhất một field: priority, enabled, zoneId", http_status=400
+                "Không hỗ trợ đổi zoneId qua update_node — zone kế thừa từ camera (update_camera.zone)",
+                http_status=400,
+            )
+        if priority is None and enabled is None:
+            return UseCaseResult.fail(
+                "Cần ít nhất một field: priority, enabled", http_status=400
             )
 
         node = await self._nodes.get_by_id(node_id)
@@ -192,62 +196,7 @@ class UpdateNode:
             patch["priority"] = int(priority)
         if enabled is not None:
             patch["enabled"] = bool(enabled)
-        if zone_id is not None:
-            z = str(zone_id).strip().upper()
-            if not z:
-                return UseCaseResult.fail("zoneId không được rỗng", http_status=400)
-            patch["zone_id"] = z
 
         await self._nodes.update_by_node_id(node_id, patch)
         fresh = await self._nodes.get_by_id(node_id) or {**node, **patch}
         return UseCaseResult.ok(**_node_item(fresh))
-
-
-class DeleteNode:
-    """
-    Xóa node + cascade pair + ROI trên camera.
-    Cần inference paused khi runtime đang chạy.
-    """
-
-    def __init__(
-        self,
-        nodes: NodeRepositoryPort,
-        cameras: CameraConfigRepository,
-        pairs: PairsRepositoryPort,
-        state: NodeStateStore,
-        inference: InferencePort,
-    ) -> None:
-        self._nodes = nodes
-        self._cameras = cameras
-        self._pairs = pairs
-        self._state = state
-        self._inference = inference
-
-    async def execute(self, node_id: str) -> UseCaseResult:
-        from application.fe_api.sync_rules import (
-            cascade_delete_node,
-            require_inference_paused,
-        )
-
-        gate = require_inference_paused(self._inference)
-        if gate:
-            return gate
-
-        nid = (node_id or "").strip()
-        node = await self._nodes.get_by_id(nid)
-        if not node:
-            return UseCaseResult.fail(f"Node {nid} not found", http_status=404)
-
-        stats = await cascade_delete_node(
-            nodes=self._nodes,
-            cameras=self._cameras,
-            pairs=self._pairs,
-            state=self._state,
-            node_id=nid,
-        )
-        return UseCaseResult.ok(
-            nodeId=nid,
-            deleted=True,
-            roiDeleted=stats["roiDeleted"],
-            pairsDeleted=stats["pairsDeleted"],
-        )

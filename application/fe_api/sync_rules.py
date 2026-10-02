@@ -1,4 +1,8 @@
-"""Luật sync cameras → nodes → pairs (camera SSOT identity)."""
+"""Luật sync cameras → nodes → pairs (camera SSOT identity).
+
+Xóa node: cascade_delete_node — caller là UpdateCamera (observed replace-set)
+hoặc DeleteCamera. Không còn route delete_node.
+"""
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Set
