@@ -185,6 +185,7 @@ async def create_camera(
         rtsp_url=payload.rtspUrl,
         zone=payload.zone,
         observed_node_ids=payload.observedNodeIds,
+        node_priorities=payload.nodePriorities,
     )
     return await audited_or_error(
         result, request, user, "create_camera", payload.model_dump(exclude_none=True)
@@ -206,6 +207,7 @@ async def update_camera(
         rtsp_url=payload.rtspUrl,
         zone=payload.zone,
         observed_node_ids=payload.observedNodeIds,
+        node_priorities=payload.nodePriorities,
     )
     return await audited_or_error(
         result, request, user, "update_camera", payload.model_dump(exclude_none=True)

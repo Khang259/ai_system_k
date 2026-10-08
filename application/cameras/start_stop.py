@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 from application.result import UseCaseResult
 from application.ports import CameraRuntime, InferencePort
 from application.scan_session import ScanSession
+from infrastructure.sandbox.smoke_trail import emit
 
 
 class StartAllCameras:
@@ -44,7 +45,15 @@ class StartAllCameras:
         while time.monotonic() < deadline:
             status = self._cameras.get_status()
             if int(status.get("streaming", 0)) >= 1:
-                return self._ok(status)
+                result = self._ok(status)
+                emit(
+                    "api",
+                    "start_all",
+                    enabled=int(status.get("enabled", 0)),
+                    streaming=int(status.get("streaming", 0)),
+                    hint="Camera bật — inference vẫn pause; bước tiếp theo: start-scan",
+                )
+                return result
             await asyncio.sleep(0.2)
 
         payload = self._status_payload(status)

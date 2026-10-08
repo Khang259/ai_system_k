@@ -31,6 +31,22 @@ def test_dispatch_service_single_success():
     assert audits[0]["action"] == "dispatch"
 
 
+def test_dispatch_service_single_success_calls_on_task_created():
+    created = []
+    service = DispatchService(FakeDispatchGateway(), on_task_created=created.append)
+    sent, _ = service.dispatch_single([("start_1", "end_1")], FakeNodeStateStore())
+
+    assert created == [sent[0]["orderId"]]
+
+
+def test_dispatch_service_single_fail_skips_on_task_created():
+    created = []
+    service = DispatchService(FakeDispatchGateway(ok=False), on_task_created=created.append)
+    service.dispatch_single([("start_1", "end_1")], FakeNodeStateStore())
+
+    assert created == []
+
+
 def test_dispatch_service_single_fail():
     gw = FakeDispatchGateway()
     gw.success = False

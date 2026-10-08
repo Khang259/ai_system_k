@@ -1,6 +1,6 @@
 """Request/Response schemas — Pydantic models for API layer."""
 from pydantic import BaseModel, Field, model_validator
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class LoginPayload(BaseModel):
@@ -22,6 +22,15 @@ class SetCameraStatusPayload(BaseModel):
     enabled: bool
 
 
+class CreateCameraPayload(BaseModel):
+    name: str
+    rtspUrl: str
+    zone: Optional[str] = None
+    observedNodeIds: Optional[List[str]] = None
+    # start mới tạo: bắt buộc có key trong map này
+    nodePriorities: Optional[Dict[str, int]] = None
+
+
 class UpdateCameraPayload(BaseModel):
     """Partial update — ít nhất một trong name / rtspUrl / zone / observedNodeIds."""
     cameraId: int
@@ -29,13 +38,7 @@ class UpdateCameraPayload(BaseModel):
     rtspUrl: Optional[str] = None
     zone: Optional[str] = None
     observedNodeIds: Optional[List[str]] = None
-
-
-class CreateCameraPayload(BaseModel):
-    name: str
-    rtspUrl: str
-    zone: Optional[str] = None
-    observedNodeIds: Optional[List[str]] = None
+    nodePriorities: Optional[Dict[str, int]] = None
 
 
 class DeleteCameraPayload(BaseModel):
@@ -180,15 +183,24 @@ class UnlockByUserPayload(BaseModel):
     nodeId: str
 
 
-class UnlockBySystemPayload(BaseModel):
-    """External/ICS — reset system lock theo orderId (status 3|23)."""
+class SandboxNodeStatePayload(BaseModel):
+    """Sandbox — state mong muốn tại ROI (start: có hàng; end: có hàng = chưa trống)."""
+
+    nodeId: str
+    detected: bool
+
+
+class OrderStatusWebhookPayload(BaseModel):
+    """
+    External/ICS — webhook task status (body phẳng như ICS thật).
+    Chỉ bắt buộc orderId + status; field thừa (deviceCode, qrContent…) được bỏ qua.
+    """
 
     orderId: str
-    status: int  # 3 = COMPLETED (toàn bộ), 23 = EMPTY_DONE (chỉ empty)
+    status: int  # task status ICS: 3 | 6 | 9 | 23 | …
 
-
-# Alias tên schema cũ (nếu code khác còn import)
-UnlockByOrderPayload = UnlockBySystemPayload
+    class Config:
+        extra = "allow"
 
 
 class CameraConfigCreate(BaseModel):

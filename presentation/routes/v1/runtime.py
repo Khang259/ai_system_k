@@ -1,10 +1,7 @@
 """Runtime routes — `/api/v1/runtime/*` (+ SSE node.runtime)."""
 from __future__ import annotations
 
-import asyncio
-import json
-import queue
-from typing import Any, AsyncIterator, Dict
+from typing import Any, Dict
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
@@ -13,15 +10,16 @@ from application.container import container
 from domain.permissions import SYSTEM_CONTROL
 from presentation.deps import current_user, current_user_sse, require_permission
 from presentation.http_v1 import data_or_error
-from presentation.openapi_responses import CONFIRM_READY, SSE_EVENTS
+from presentation.openapi_responses import (
+    CANCEL_BATCH,
+    CONFIRM_DISPATCH,
+    PENDING_PAIRS,
+    SSE_EVENTS,
+    START_SCAN,
+)
+from presentation.sse import sse_response
 
 router = APIRouter()
-
-_SSE_HEADERS = {
-    "Cache-Control": "no-cache",
-    "Connection": "keep-alive",
-    "X-Accel-Buffering": "no",
-}
 
 
 @router.get(
@@ -48,14 +46,47 @@ async def reload_runtime(
 
 
 @router.post(
-    "/confirm-ready",
-    summary="Bật inference / bắt đầu scan",
-    responses=CONFIRM_READY,
+    "/start-scan",
+    summary="Bật inference (detect) — chưa gửi ICS",
+    responses=START_SCAN,
 )
-def confirm_ready(
+def start_scan(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
 ) -> Dict[str, Any]:
-    return data_or_error(container.confirm_ready.execute())
+    return data_or_error(container.start_scan.execute())
+
+
+@router.post(
+    "/confirm-dispatch",
+    summary="Xác nhận batch start isReady → mở cổng gửi ICS",
+    responses=CONFIRM_DISPATCH,
+)
+def confirm_dispatch(
+    _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
+) -> Dict[str, Any]:
+    return data_or_error(container.confirm_dispatch.execute())
+
+
+@router.get(
+    "/get_pending_pairs",
+    summary="Xem trước batch / start ready / cặp sẽ gửi",
+    responses=PENDING_PAIRS,
+)
+def get_pending_pairs(
+    _user: Dict[str, Any] = Depends(current_user),
+) -> Dict[str, Any]:
+    return data_or_error(container.get_pending_pairs.execute())
+
+
+@router.post(
+    "/cancel-batch",
+    summary="Huỷ batch đang mở — inference vẫn chạy",
+    responses=CANCEL_BATCH,
+)
+def cancel_batch(
+    _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
+) -> Dict[str, Any]:
+    return data_or_error(container.cancel_batch.execute())
 
 
 @router.post(
@@ -76,24 +107,4 @@ def pause_scan(
 async def runtime_events(
     _user: Dict[str, Any] = Depends(current_user_sse),
 ) -> StreamingResponse:
-    hub = container.runtime_state_hub
-
-    async def _stream() -> AsyncIterator[str]:
-        q = hub.subscribe()
-        try:
-            while True:
-                try:
-                    item = await asyncio.to_thread(q.get, True, 15.0)
-                except queue.Empty:
-                    yield "event: ping\ndata: {}\n\n"
-                    continue
-                payload = json.dumps(item, ensure_ascii=False, separators=(",", ":"))
-                yield f"event: node.runtime\ndata: {payload}\n\n"
-        finally:
-            hub.unsubscribe(q)
-
-    return StreamingResponse(
-        _stream(),
-        media_type="text/event-stream",
-        headers=_SSE_HEADERS,
-    )
+    return sse_response(container.runtime_state_hub, lambda item: ("node.runtime", item))

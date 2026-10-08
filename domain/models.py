@@ -17,9 +17,21 @@ class DispatchType(str, Enum):
     DOUBLE = "double"      # 1 start + 1 start_empty → 2 end cùng lúc
 
 
-class ResetStatus(int, Enum):
-    COMPLETED      = 3   # AMR hoàn thành toàn bộ → reset tất cả flag
-    EMPTY_DONE     = 23  # AMR hoàn thành chuyến trống → chỉ reset empty
+class OrderStatus(int, Enum):
+    """
+    Task status của ICS — dùng chung cho webhook và getOrderList.OrderStatus.
+
+    3 = Canceled, 23 = Placed: cả hai đều gỡ lock + xóa order khỏi panel.
+    """
+    CANCELED = 3   # nhiệm vụ bị hủy → gỡ lock + xóa panel
+    RUNNING  = 6   # FE "inprogress"
+    ASSIGNED = 9   # gửi ICS thành công được coi là 9 — FE "issued"
+    PLACED   = 23  # đã đặt hàng xong → gỡ lock + xóa panel
+
+    @classmethod
+    def clears_order(cls, status: int) -> bool:
+        """Status kết thúc lệnh: gỡ node lock + xóa khỏi panel."""
+        return status in (cls.CANCELED, cls.PLACED)
 
 
 @dataclass

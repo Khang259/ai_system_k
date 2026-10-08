@@ -114,6 +114,11 @@ class NullDispatchGateway:
         return False
 
 
+class NullIcsOrderQuery:
+    def get_order_list(self, area_id: int):
+        raise RuntimeError("ICS order query chưa cấu hình")
+
+
 class NullDbHealth:
     async def ping(self) -> bool:
         return False
@@ -330,6 +335,9 @@ class NullNodeRepo:
     async def update_priority(self, node_id, priority):
         return False
 
+    async def find_start_by_zone_priority(self, zone_id, priority):
+        return None
+
     async def update_by_node_id(self, node_id, data):
         return False
 
@@ -348,6 +356,11 @@ class NullZoneRepo:
 class NullPagedLogStore:
     async def find_page(self, query, page=1, page_size=20, sort=None):
         return [], 0
+
+
+class NullSnapshotDocStore:
+    async def get_by_order(self, order_id):
+        return []
 
 
 class NullNotificationStore:

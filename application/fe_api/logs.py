@@ -10,6 +10,7 @@ from application.fe_api.log_mappers import (
     map_notification,
     map_user_action,
     parse_iso,
+    snapshot_image_url,
 )
 from application.result import UseCaseResult
 
@@ -93,7 +94,7 @@ class GetUserActionLogs:
 
 
 class GetSystemActionLogs:
-    """`dispatch_logs` — outbound ICS (success/fail) + webhook hệ thống (unlock_by_system…)."""
+    """`dispatch_logs` — outbound ICS (success/fail) + webhook hệ thống (unlock_by_order_status…)."""
 
     def __init__(self, store: PagedLogStore) -> None:
         self._store = store
@@ -161,6 +162,10 @@ class MarkAllNotificationsRead:
         return UseCaseResult.ok(updated=n)
 
 
+class SnapshotDocStore(Protocol):
+    async def get_by_order(self, order_id: str): ...
+
+
 class GetSnapshotImage:
     """Đọc JPEG trong SNAPSHOT_DIR — chỉ tên file, không path tuyệt đối."""
 
@@ -187,3 +192,38 @@ class GetSnapshotImage:
         data = path.read_bytes()
         media = "image/png" if name.lower().endswith(".png") else "image/jpeg"
         return UseCaseResult.ok(jpeg=data, media_type=media)
+
+
+class GetSnapshotsByOrder:
+    """
+    Meta snapshot theo orderId (Mongo `snapshots`) — FE lấy `imageUrl` rồi gọi get_image.
+    """
+
+    def __init__(self, store: SnapshotDocStore) -> None:
+        self._store = store
+
+    async def execute(self, order_id: str) -> UseCaseResult:
+        oid = (order_id or "").strip()
+        if not oid:
+            return UseCaseResult.fail("orderId bắt buộc", http_status=400)
+        docs = await self._store.get_by_order(oid)
+        items = []
+        for doc in docs or []:
+            filename = doc.get("image_path") or ""
+            items.append(
+                {
+                    "orderId": doc.get("order_id") or oid,
+                    "nodeId": doc.get("node_id"),
+                    "nodeType": doc.get("node_type"),
+                    "zoneId": doc.get("zone_id"),
+                    "imagePath": filename,
+                    "imageUrl": snapshot_image_url(filename),
+                    "decision": doc.get("decision") or "auto",
+                    "createdAt": (
+                        doc.get("created_at").isoformat()
+                        if hasattr(doc.get("created_at"), "isoformat")
+                        else doc.get("created_at")
+                    ),
+                }
+            )
+        return UseCaseResult.ok(orderId=oid, items=items)

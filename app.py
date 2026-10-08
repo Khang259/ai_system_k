@@ -39,6 +39,7 @@ from infrastructure.persistence import (
     user_repository,
     zone_repository,
 )
+from infrastructure.ics import HttpOrderQuery
 from infrastructure.storage import MapZipStore, RetentionRunner, purge_old_logs
 from infrastructure.webrtc import MediaMtxGateway, MediaMtxRunner
 from utils.setup_log import setup_logger
@@ -47,6 +48,8 @@ from presentation.openapi_responses import AUTH
 from presentation.routes.v1 import (
     auth_router,
     cameras_v1_router,
+    dispatch_v1_router,
+    external_server_v1_router,
     logs_v1_router,
     maps_v1_router,
     nodes_v1_router,
@@ -54,6 +57,7 @@ from presentation.routes.v1 import (
     pairs_v1_router,
     poll_v1_router,
     runtime_v1_router,
+    sandbox_v1_router,
     snapshots_v1_router,
     system_v1_router,
     zones_v1_router,
@@ -73,6 +77,7 @@ async def lifespan(app: FastAPI):
         zone_repository,
     )
     container.bind_db_health(MongoHealthAdapter())
+    container.bind_ics_order_query(HttpOrderQuery(settings.ICS_ORDER_LIST_URL))
 
     await ensure_auth_indexes()
     container.bind_auth(
@@ -181,5 +186,10 @@ def create_app() -> FastAPI:
     app.include_router(snapshots_v1_router, prefix="/api/v1/snapshots", tags=["snapshots-v1"], responses=AUTH)
     app.include_router(maps_v1_router, prefix="/api/v1/maps", tags=["maps-v1"], responses=AUTH)
     app.include_router(poll_v1_router, prefix="/api/v1/poll", tags=["poll-v1"], responses=AUTH)
+    app.include_router(dispatch_v1_router, prefix="/api/v1/dispatch", tags=["dispatch-v1"], responses=AUTH)
+    # Webhook external — không Bearer nên không gắn responses=AUTH
+    app.include_router(external_server_v1_router, prefix="/api/v1/external_server", tags=["external-server-v1"])
+    if settings.RUNTIME_MODE == "sandbox":
+        app.include_router(sandbox_v1_router, prefix="/api/v1/sandbox", tags=["sandbox-v1"], responses=AUTH)
 
     return app

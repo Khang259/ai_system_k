@@ -133,6 +133,18 @@ class NodeRepository(BaseRepository):
     async def update_priority(self, node_id: str, priority: int) -> bool:
         return await self.update_one({"node_id": node_id}, {"priority": priority})
 
+    async def find_start_by_zone_priority(
+        self, zone_id: str, priority: int
+    ) -> Optional[Dict]:
+        """Start trong zone đang giữ đúng priority (unique check)."""
+        return await self.find_one(
+            {
+                "zone_id": zone_id.upper(),
+                "node_type": "start",
+                "priority": int(priority),
+            }
+        )
+
     async def update_by_node_id(self, node_id: str, data: Dict[str, Any]) -> bool:
         return await self.update_one({"node_id": node_id}, data)
 

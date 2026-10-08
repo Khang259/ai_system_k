@@ -21,6 +21,7 @@ from application.fe_api.logs import (
     GetAuditLogs,
     GetNotifications,
     GetSnapshotImage,
+    GetSnapshotsByOrder,
     GetSystemActionLogs,
     GetUserActionLogs,
     MarkAllNotificationsRead,
@@ -79,4 +80,5 @@ __all__ = [
     "MarkNotificationRead",
     "MarkAllNotificationsRead",
     "GetSnapshotImage",
+    "GetSnapshotsByOrder",
 ]

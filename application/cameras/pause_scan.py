@@ -1,6 +1,7 @@
 from application.result import UseCaseResult
 from application.ports import InferencePort
 from application.scan_session import ScanSession
+from infrastructure.sandbox.smoke_trail import emit
 
 
 class PauseScan:
@@ -13,4 +14,9 @@ class PauseScan:
             return UseCaseResult.fail("System not initialized")
         self._inference.pause()
         self._scan.reset()
+        emit(
+            "api",
+            "pause_scan",
+            hint="Operator pause — inference dừng, batch huỷ; start-scan để chạy lại",
+        )
         return UseCaseResult.ok(message="Scanning paused")

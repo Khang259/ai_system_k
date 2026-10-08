@@ -1,5 +1,5 @@
 """
-Reset flags after AMR webhook (status 3 / 23).
+Reset flags after ICS webhook (task status 3 = Canceled, 23 = Placed).
 
 Works on any object with NodeState-like attributes:
 points, ready_start_list, ready_end_list, pair_mapping, order_mapping.
@@ -9,7 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, List, Optional, Sequence, Tuple
 
-from domain.models import ResetStatus
+from domain.models import OrderStatus
 
 OrderPair = Tuple[str, str, bool]
 
@@ -33,11 +33,8 @@ def reset_flags_by_order(state: Any, order_id: str, status: int) -> ResetResult:
             error=f"orderId {order_id} not found",
         )
 
-    if status == ResetStatus.COMPLETED or status == int(ResetStatus.COMPLETED):
+    if OrderStatus.clears_order(status):
         return _reset_all(state, order_id, pairs)
-
-    if status == ResetStatus.EMPTY_DONE or status == int(ResetStatus.EMPTY_DONE):
-        return _reset_empty(state, order_id, pairs)
 
     return ResetResult(
         success=False,
@@ -68,30 +65,6 @@ def _reset_all(state: Any, order_id: str, pairs: Sequence[OrderPair]) -> ResetRe
     return ResetResult(
         success=True,
         message=f"Flags reset for orderId {order_id}",
-        order_id=order_id,
-        reset_pairs=reset_pairs,
-    )
-
-
-def _reset_empty(state: Any, order_id: str, pairs: Sequence[OrderPair]) -> ResetResult:
-    remaining: List[OrderPair] = []
-    reset_pairs: List[List[str]] = []
-
-    for start, end, empty_car in pairs:
-        if empty_car:
-            _clear_pair(state, start, end)
-            reset_pairs.append([start, end])
-        else:
-            remaining.append((start, end, empty_car))
-
-    if remaining:
-        state.order_mapping[order_id] = remaining
-    else:
-        del state.order_mapping[order_id]
-
-    return ResetResult(
-        success=True,
-        message=f"Empty pairs reset for orderId {order_id}",
         order_id=order_id,
         reset_pairs=reset_pairs,
     )

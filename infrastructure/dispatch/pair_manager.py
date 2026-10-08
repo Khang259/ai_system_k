@@ -12,6 +12,7 @@ from typing import Callable, List, Optional, Tuple
 
 from config.settings import settings
 from application.dispatch.dispatch_service import DispatchService, OnDispatchFailedFn
+from domain.batch_policy import dispatchable_starts, locked_start_ids
 from utils.setup_log import setup_logger
 
 logger = setup_logger("pair_manager", "logs/pair_manager/log")
@@ -117,8 +118,10 @@ class PairManager:
         snapshot_manager=None,
         on_dispatch_success: Optional[OnDispatchSuccessFn] = None,
         on_dispatch_failed: Optional[OnDispatchFailedFn] = None,
+        dispatch_gate=None,
     ):
         self.state_manager = state_manager
+        self.dispatch_gate = dispatch_gate
         self.validate_pairs = validate_pairs
         self.strategy = strategy
         self.dispatch_service = dispatch_service
@@ -144,7 +147,13 @@ class PairManager:
                         )
 
         pairs = self.dispatch_service.build_pairs(self.state_manager)
-        
+        if self.dispatch_gate is not None:
+            ready = dispatchable_starts(
+                self.state_manager.ready_starts(), self.validate_pairs
+            )
+            locked = locked_start_ids(self.state_manager.snapshot_points())
+            pairs = self.dispatch_gate.filter(pairs, ready, locked_starts=locked)
+
         empty_list = [
             (pair[0],)
             for pair in self.validate_pairs

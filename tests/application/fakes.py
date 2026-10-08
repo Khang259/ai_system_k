@@ -413,6 +413,17 @@ class FakeNodeRepo:
         self.rows[node_id]["priority"] = priority
         return True
 
+    async def find_start_by_zone_priority(self, zone_id: str, priority: int):
+        z = zone_id.upper()
+        for row in self.rows.values():
+            if (
+                (row.get("node_type") or "").lower() == "start"
+                and str(row.get("zone_id") or "").upper() == z
+                and int(row.get("priority", -1)) == int(priority)
+            ):
+                return row
+        return None
+
     async def update_by_node_id(self, node_id: str, data: Dict[str, Any]):
         if node_id not in self.rows:
             return False

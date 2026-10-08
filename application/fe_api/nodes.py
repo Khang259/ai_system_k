@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict, Optional
 
 from application.fe_api.mappers import node_label
+from application.fe_api.priority_rules import ensure_start_priority_unique
 from application.ports import NodeRepositoryPort, NodeStateStore
 from application.result import UseCaseResult
 
@@ -193,6 +194,17 @@ class UpdateNode:
         if priority is not None:
             if priority < 0:
                 return UseCaseResult.fail("priority phải >= 0", http_status=400)
+            ntype = (node.get("node_type") or "").lower()
+            if ntype == "start":
+                zone = str(node.get("zone_id") or "").strip().upper()
+                conflict = await ensure_start_priority_unique(
+                    self._nodes,
+                    zone,
+                    int(priority),
+                    exclude_node_id=node_id,
+                )
+                if conflict:
+                    return conflict
             patch["priority"] = int(priority)
         if enabled is not None:
             patch["enabled"] = bool(enabled)

@@ -8,12 +8,11 @@ from fastapi import APIRouter, Depends, Query, Request
 from application.container import container
 from domain.permissions import CAMERA_WRITE, NODE_MAINTENANCE, NODE_READ
 from presentation.deps import current_user, require_permission
-from presentation.http_v1 import audited_or_error, data_or_error, system_audited_or_error
-from presentation.openapi_responses import RUNTIME_STATE, UNLOCK_BY_SYSTEM
+from presentation.http_v1 import audited_or_error, data_or_error
+from presentation.openapi_responses import RUNTIME_STATE
 from presentation.schemas import (
     SetLockPayload,
     SetMaintenancePayload,
-    UnlockBySystemPayload,
     UnlockByUserPayload,
     UpdateNodePayload,
 )
@@ -114,24 +113,4 @@ async def unlock_by_user(
     result = await container.unlock_v1.execute(payload.nodeId)
     return await audited_or_error(
         result, request, user, "unlock_by_user", payload.model_dump()
-    )
-
-
-@router.post(
-    "/unlock_by_system",
-    summary="Gỡ system lock theo orderId — webhook external / ICS (không Bearer)",
-    responses=UNLOCK_BY_SYSTEM,
-)
-async def unlock_by_system(
-    payload: UnlockBySystemPayload,
-    request: Request,
-) -> Dict[str, Any]:
-    """ICS/AMR force-reset theo orderId — không JWT. Log → get_system_action_logs."""
-    result = container.reset_flags.execute(payload.orderId, payload.status)
-    return await system_audited_or_error(
-        result,
-        request,
-        "unlock_by_system",
-        payload.model_dump(),
-        order_id=payload.orderId,
     )

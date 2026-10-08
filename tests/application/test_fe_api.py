@@ -399,6 +399,7 @@ def test_update_camera_auto_creates_missing_nodes():
                 "end_10000760",
                 "start_10000999",
             ],
+            node_priorities={"start_10000999": 2},
         )
     )
     assert result.success
@@ -406,6 +407,7 @@ def test_update_camera_auto_creates_missing_nodes():
     assert nodes.rows["start_10000999"]["camera_id"] == 1
     assert nodes.rows["start_10000999"]["node_type"] == "start"
     assert nodes.rows["start_10000999"]["zone_id"] == "AE5"
+    assert nodes.rows["start_10000999"]["priority"] == 2
     assert result.data["observedCreated"] == 1
     assert set(result.data["observedNodeIds"]) == {
         "start_10000060",
@@ -516,6 +518,7 @@ def test_create_camera_with_zone_and_nodes():
             rtsp_url="rtsp://host/stream",
             zone="ae5",
             observed_node_ids=["start_10000099"],
+            node_priorities={"start_10000099": 10},
         )
     )
     assert result.success
@@ -525,6 +528,60 @@ def test_create_camera_with_zone_and_nodes():
     assert result.data["observedNodeIds"] == ["start_10000099"]
     assert result.data["requiresRestart"] is True
     assert nodes.rows["start_10000099"]["camera_id"] == 2
+    assert nodes.rows["start_10000099"]["priority"] == 10
+
+
+def test_create_camera_start_requires_priority():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    bad = _run(
+        CreateCamera(
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "640x480"
+        ).execute(
+            name="CAM",
+            rtsp_url="rtsp://x",
+            zone="AE5",
+            observed_node_ids=["start_1"],
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 400
+    assert cams.items == {}
+
+
+def test_create_camera_rejects_duplicate_start_priority_in_zone():
+    cams, nodes, _, _, runtime = _seed()
+    # seed start đã priority=1 trong AE5
+    bad = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="CAM",
+            rtsp_url="rtsp://new",
+            zone="AE5",
+            observed_node_ids=["start_10000099"],
+            node_priorities={"start_10000099": 1},
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert 2 not in cams.items
+
+
+def test_update_node_rejects_duplicate_start_priority():
+    _, nodes, *_ = _seed()
+    nodes.rows["start_x"] = {
+        "node_id": "start_x",
+        "node_type": "start",
+        "zone_id": "AE5",
+        "camera_id": 1,
+        "priority": 5,
+        "enabled": True,
+        "lock": {"user": False, "system": False, "orderId": None},
+    }
+    from application.fe_api.nodes import UpdateNode
+
+    bad = _run(UpdateNode(nodes).execute("start_x", priority=1))
+    assert not bad.success
+    assert bad.data["http_status"] == 409
 
 
 def test_create_camera_rejects_node_without_zone():

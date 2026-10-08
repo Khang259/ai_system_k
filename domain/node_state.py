@@ -15,7 +15,6 @@ from collections import defaultdict
 from typing import Any, DefaultDict, Dict, List, Optional, Set, Tuple
 
 from domain.settings import (
-    END_FLAG_RESET_AFTER_SEC,
     END_READY_AFTER_SEC,
     START_READY_AFTER_SEC,
 )
@@ -39,13 +38,11 @@ class NodeState:
         *,
         start_ready_after_sec: int = START_READY_AFTER_SEC,
         end_ready_after_sec: int = END_READY_AFTER_SEC,
-        end_flag_reset_after_sec: int = END_FLAG_RESET_AFTER_SEC,
         time_fn=time.time,
     ):
         self.validate_pairs = validate_pairs
         self.start_ready_after_sec = start_ready_after_sec
         self.end_ready_after_sec = end_ready_after_sec
-        self.end_flag_reset_after_sec = end_flag_reset_after_sec
         self._time = time_fn
 
         self.points: DefaultDict[str, PointData] = defaultdict(
@@ -104,48 +101,27 @@ class NodeState:
 
     def process_ends(self, warn=None) -> List[str]:
         """
-        Returns: node_id vừa mất system-lock do timeout (để sync Mongo).
+        Đưa end trống đủ lâu vào ready_end_list.
+        Không tự gỡ system-lock — chỉ webhook (3|23) hoặc unlock API.
+
+        Returns: luôn [] (giữ chữ ký cũ cho adapter / PairManager).
         """
-        cleared_system: List[str] = []
         ready_changed: List[str] = []
         current_time = self._time()
         for node_id, data in list(self.points.items()):
             if not node_id.startswith("end_"):
                 continue
 
-            if not data["state"]:
-                if not _is_blocked(data):
-                    existed_time = current_time - data["time"]
-                    if existed_time > self.end_ready_after_sec:
-                        if node_id not in self.ready_end_list:
-                            ready_changed.append(node_id)
-                        self.ready_end_list.add(node_id)
-                continue
-
-            # End có hàng trở lại trong khi đang system-lock → timeout reset pair
-            if data.get("lock_system") or data.get("flag"):
+            if not data["state"] and not _is_blocked(data):
                 existed_time = current_time - data["time"]
-                if existed_time > self.end_flag_reset_after_sec:
-                    self.ready_end_list.discard(node_id)
-                    start_point = self.pair_mapping.get(node_id)
-                    if start_point:
-                        self.ready_start_list.discard(start_point)
-                        cleared_system.extend(
-                            self.clear_system_lock(node_id, start_point)
-                        )
-                        del self.pair_mapping[node_id]
-                        ready_changed.extend([node_id, start_point])
-                    else:
-                        if warn:
-                            warn(
-                                f"No start_point found in pair_mapping for {node_id}"
-                            )
-                        cleared_system.extend(self.clear_system_lock(node_id))
+                if existed_time > self.end_ready_after_sec:
+                    if node_id not in self.ready_end_list:
                         ready_changed.append(node_id)
+                    self.ready_end_list.add(node_id)
 
         if ready_changed:
             self._emit(*ready_changed)
-        return cleared_system
+        return []
 
     def set_pair_used(
         self,

@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from application.auth import GetMe, Login, Logout, RefreshSession
 from application.cameras import (
-    ConfirmReady,
+    CancelBatch,
+    ConfirmDispatch,
     DeleteWebrtcSession,
     GetCameraPreview,
     GetCameraPreviewMeta,
@@ -12,6 +13,7 @@ from application.cameras import (
     OnDispatchSuccess,
     PauseScan,
     StartAllCameras,
+    StartScan,
     StartZoneCameras,
     StopAllCameras,
     StopZoneCameras,
@@ -35,6 +37,7 @@ from application.fe_api import (
     GetPollSnapshot,
     GetRois,
     GetSnapshotImage,
+    GetSnapshotsByOrder,
     GetSystemActionLogs,
     GetUserActionLogs,
     GetZones,
@@ -53,6 +56,13 @@ from application.fe_api import (
     UpdatePairFe,
     UpdateRoi,
 )
+from application.dispatch.active_task_hub import ActiveTaskHub
+from application.dispatch.active_tasks import (
+    GetActiveTasks,
+    StartPriorityReader,
+    TrackDispatchedTask,
+    UnlockByOrderStatus,
+)
 from application.null_ports import (
     NullActionAudit,
     NullSystemActionAudit,
@@ -61,6 +71,7 @@ from application.null_ports import (
     NullCameraRuntime,
     NullDbHealth,
     NullDispatchGateway,
+    NullIcsOrderQuery,
     NullInference,
     NullMapStateStore,
     NullMapVersionStore,
@@ -72,6 +83,7 @@ from application.null_ports import (
     NullPasswordHasher,
     NullRefreshTokenStore,
     NullRuntimeControl,
+    NullSnapshotDocStore,
     NullTokenIssuer,
     NullUserRepo,
     NullWebrtcRunner,
@@ -85,6 +97,8 @@ from application.runtime import (
     StartRuntime,
     StopRuntime,
 )
+from application.dispatch.dispatch_gate import DispatchGate
+from application.dispatch.pending_pairs import GetPendingPairs
 from application.scan_session import ScanSession
 from application.state.reset_flags import ResetFlagsByOrder
 
@@ -92,6 +106,7 @@ from application.state.reset_flags import ResetFlagsByOrder
 class AppContainer:
     def __init__(self) -> None:
         self.scan_session = ScanSession()
+        self.dispatch_gate = DispatchGate(self.scan_session, self._runtime_meta)
         self.cameras = NullCameraRuntime()
         self.inference = NullInference()
         self.state = NullNodeStateStore()
@@ -101,6 +116,10 @@ class AppContainer:
         self.zones_repo = NullZoneRepo()
         self.runtime_control = NullRuntimeControl()
         self.dispatch_gateway = NullDispatchGateway()
+        self.ics_order_query = NullIcsOrderQuery()
+        self.active_task_hub = ActiveTaskHub()
+        # Priority start nạp lúc runtime start — rỗng khi runtime chưa chạy
+        self.start_meta = {}
         self.db_health = NullDbHealth()
         self.webrtc_runner = NullWebrtcRunner()
         self.users = NullUserRepo()
@@ -121,6 +140,7 @@ class AppContainer:
         from infrastructure.storage.snapshot_indexer import NullSnapshotIndexer
 
         self.snapshot_indexer = NullSnapshotIndexer()
+        self.snapshot_docs = NullSnapshotDocStore()
         self.node_lock_sync = NullNodeLockSync()
         self.map_versions = NullMapVersionStore()
         self.map_state = NullMapStateStore()
@@ -196,6 +216,8 @@ class AppContainer:
         from infrastructure.storage.snapshot_indexer import SnapshotIndexer
 
         self.snapshot_indexer = SnapshotIndexer(repo)
+        self.snapshot_docs = repo
+        self._wire()
         # loop gắn lại ở bind_event_loop (gọi sau trong lifespan)
 
     def bind_node_lock_sync(self, repo) -> None:
@@ -220,6 +242,16 @@ class AppContainer:
     def bind_dispatch_gateway(self, gateway) -> None:
         self.dispatch_gateway = gateway
         self._wire()
+
+    def bind_ics_order_query(self, order_query) -> None:
+        self.ics_order_query = order_query
+        self._wire()
+
+    def bind_start_meta(self, start_meta) -> None:
+        self.start_meta = dict(start_meta or {})
+
+    def _runtime_meta(self):
+        return self.start_meta
 
     def bind_runtime(self, camera_manager, inference_engine, state_manager, runtime_control) -> None:
         from infrastructure.adapters import (
@@ -253,6 +285,7 @@ class AppContainer:
         self.cameras = NullCameraRuntime()
         self.inference = NullInference()
         self.state = NullNodeStateStore()
+        self.start_meta = {}
         self._wire()
 
     def _domain_node_state(self):
@@ -275,15 +308,39 @@ class AppContainer:
         self.runtime_state_hub.bind_snapshot(lambda: {})
 
     def _wire(self) -> None:
+        from config.settings import settings
+
+        self._wire_dispatch_unlock(settings)
+        self._wire_cameras_runtime(settings)
+        self._wire_system_runtime()
+        self._wire_auth(settings)
+        self._wire_fe_cameras(settings)
+        self._wire_fe_nodes_pairs()
+        self._wire_fe_logs_maps(settings)
+        self._wire_poll()
+
+    def _wire_dispatch_unlock(self, settings) -> None:
+        state = self.state
+        self.reset_flags = ResetFlagsByOrder(state)
+        priorities = StartPriorityReader(self.nodes_repo, self._runtime_meta)
+        self.track_dispatched_task = TrackDispatchedTask(
+            self.active_task_hub, self._runtime_meta
+        )
+        self.get_active_tasks_v1 = GetActiveTasks(
+            self.ics_order_query,
+            self.active_task_hub,
+            priorities,
+            settings.ICS_AREA_ID,
+        )
+        self.unlock_by_order_status_v1 = UnlockByOrderStatus(
+            self.reset_flags, self.active_task_hub, priorities
+        )
+
+    def _wire_cameras_runtime(self, settings) -> None:
         scan = self.scan_session
         cams = self.cameras
         inf = self.inference
         state = self.state
-
-        self.reset_flags = ResetFlagsByOrder(state)
-
-        from config.settings import settings
-
         self.start_all_cameras = StartAllCameras(
             cams,
             inf,
@@ -305,10 +362,14 @@ class AppContainer:
             gateway=self.webrtc_gateway,
         )
         self.get_webrtc_grid = GetWebrtcGrid(self.webrtc_sessions)
-        self.confirm_ready = ConfirmReady(cams, inf, state, scan)
+        self.start_scan = StartScan(cams, inf)
+        self.confirm_dispatch = ConfirmDispatch(inf, state, scan, self._runtime_meta)
+        self.get_pending_pairs = GetPendingPairs(state, scan, self._runtime_meta)
+        self.cancel_batch = CancelBatch(scan)
         self.pause_scan = PauseScan(inf, scan)
-        self.on_dispatch_success = OnDispatchSuccess(inf, state, scan)
+        self.on_dispatch_success = OnDispatchSuccess(scan)
 
+    def _wire_system_runtime(self) -> None:
         self.start_runtime = StartRuntime(self.runtime_control)
         self.stop_runtime = StopRuntime(self.runtime_control)
         self.get_runtime_status = GetRuntimeStatus(self.runtime_control)
@@ -317,6 +378,7 @@ class AppContainer:
             self.db_health, self.runtime_control, self.webrtc_runner
         )
 
+    def _wire_auth(self, settings) -> None:
         self.login = Login(
             self.users,
             self.token_issuer,
@@ -332,6 +394,10 @@ class AppContainer:
         )
         self.get_me = GetMe(self.users)
 
+    def _wire_fe_cameras(self, settings) -> None:
+        cams = self.cameras
+        inf = self.inference
+        state = self.state
         res = f"{settings.MODEL_WIDTH}x{settings.MODEL_HEIGHT}"
         self.get_cameras_v1 = GetCameras(
             self.camera_configs, self.nodes_repo, cams, res
@@ -395,6 +461,11 @@ class AppContainer:
             inf,
             self.pairs_repo,
         )
+
+    def _wire_fe_nodes_pairs(self) -> None:
+        cams = self.cameras
+        inf = self.inference
+        state = self.state
         self.get_nodes_v1 = GetNodes(self.nodes_repo)
         self.update_node_v1 = UpdateNode(self.nodes_repo)
         self.set_maintenance_v1 = SetMaintenance(self.nodes_repo, state)
@@ -425,6 +496,7 @@ class AppContainer:
             self.pairs_repo, self.runtime_control, inf
         )
 
+    def _wire_fe_logs_maps(self, settings) -> None:
         self.get_audit_logs_v1 = GetAuditLogs(self.audit_logs)
         self.get_user_action_logs_v1 = GetUserActionLogs(self.action_logs)
         self.get_system_action_logs_v1 = GetSystemActionLogs(self.dispatch_logs)
@@ -434,6 +506,7 @@ class AppContainer:
             self.notifications
         )
         self.get_snapshot_image_v1 = GetSnapshotImage(settings.SNAPSHOT_DIR)
+        self.get_snapshots_by_order_v1 = GetSnapshotsByOrder(self.snapshot_docs)
 
         from infrastructure.storage.map_zip_store import MapZipStore
 
@@ -454,7 +527,9 @@ class AppContainer:
         self.download_map_zip_v1 = DownloadMapZip(
             self.map_versions, self.map_state, zip_store
         )
-        self.get_node_runtime_state_v1 = GetNodeRuntimeState(state)
+
+    def _wire_poll(self) -> None:
+        self.get_node_runtime_state_v1 = GetNodeRuntimeState(self.state)
         self.get_poll_snapshot_v1 = GetPollSnapshot(
             self.get_cameras_v1,
             self.get_zones_v1,

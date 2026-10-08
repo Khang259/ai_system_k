@@ -10,6 +10,7 @@ VISION_FILES = (
     "gpu_frame.py",
     "cuda_decode_pool.py",
     "annexb_pipe.py",
+    "frame_queue.py",
     "inference_engine.py",
     "trt_yolo_engine.py",
     "camera_processor.py",

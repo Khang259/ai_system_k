@@ -1,4 +1,3 @@
-from domain.models import ResetStatus
 from application.result import UseCaseResult
 from application.ports import NodeStateStore
 
@@ -13,10 +12,7 @@ class ResetFlagsByOrder:
 
         result = self._state.apply_reset(order_id, status)
         if result.success:
-            data = {"message": result.message, "orderId": result.order_id}
-            if status == ResetStatus.EMPTY_DONE or status == int(ResetStatus.EMPTY_DONE):
-                data["reset_pairs"] = result.reset_pairs
-            return UseCaseResult.ok(**data)
+            return UseCaseResult.ok(message=result.message, orderId=result.order_id)
 
         # Sau restart: order_mapping RAM trống nhưng Mongo/RAM hydrate còn system lock
         cleared = []

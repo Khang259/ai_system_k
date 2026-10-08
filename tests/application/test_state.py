@@ -1,5 +1,5 @@
 """Use case tests — state (fake NodeStateStore, no RTSP/model)."""
-from domain.models import ResetStatus
+from domain.models import OrderStatus
 from application.state.reset_flags import ResetFlagsByOrder
 from tests.application.fakes import FakeNodeStateStore
 
@@ -15,18 +15,12 @@ def test_user_lock_blocks_ready_semantics():
     assert store.lock_view("start_1")["user"] is False
 
 
-def test_reset_flags_completed_and_empty():
+def test_reset_flags_placed():
     store = FakeNodeStateStore()
     store.set_pair_used("start_1", "end_1", "ORD-1", empty_car=False)
-    store.set_pair_used("start_e", "end_e", "ORD-1", empty_car=True)
     uc = ResetFlagsByOrder(store)
 
-    empty = uc.execute("ORD-1", int(ResetStatus.EMPTY_DONE))
-    assert empty.success
-    assert empty.data["reset_pairs"] == [["start_e", "end_e"]]
-    assert store._ns.points["start_1"]["flag"] is True
-
-    all_reset = uc.execute("ORD-1", int(ResetStatus.COMPLETED))
-    assert all_reset.success
-    assert "reset_pairs" not in all_reset.data
+    result = uc.execute("ORD-1", int(OrderStatus.PLACED))
+    assert result.success
     assert "ORD-1" not in store._ns.order_mapping
+    assert store._ns.points["start_1"]["flag"] is False
