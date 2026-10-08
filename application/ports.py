@@ -67,6 +67,9 @@ class NodeRepositoryPort(Protocol):
     async def set_camera_nodes_enabled(self, camera_id: int, enabled: bool) -> int: ...
     async def set_zone_by_camera(self, camera_id: int, zone_id: str) -> int: ...
     async def update_priority(self, node_id: str, priority: int) -> bool: ...
+    async def find_start_by_zone_priority(
+        self, zone_id: str, priority: int
+    ) -> Optional[Dict[str, Any]]: ...
     async def update_by_node_id(self, node_id: str, data: Dict[str, Any]) -> bool: ...
     async def create(self, doc: Dict[str, Any]) -> str: ...
     async def delete_by_node_id(self, node_id: str) -> bool: ...
@@ -87,6 +90,38 @@ class ActionAuditPort(Protocol):
         payload: Dict[str, Any],
         ip: str,
         status: int,
+    ) -> None: ...
+
+
+class SystemActionAuditPort(Protocol):
+    """Ghi sự kiện hệ thống → dispatch_logs (get_system_action_logs)."""
+
+    async def log(
+        self,
+        *,
+        action: str,
+        order_id: Optional[str],
+        endpoint: str,
+        payload: Dict[str, Any],
+        status: int,
+        result: Optional[Dict[str, Any]] = None,
+        error: Optional[str] = None,
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+    ) -> None: ...
+
+    def bind_loop(self, loop) -> None: ...
+
+    def log_outbound(
+        self,
+        *,
+        action: str = "dispatch",
+        order_id: Optional[str],
+        payload: Dict[str, Any],
+        success: bool,
+        start_point: Optional[str] = None,
+        end_point: Optional[str] = None,
+        error: Optional[str] = None,
     ) -> None: ...
 
 
@@ -133,6 +168,11 @@ class NodeStateStore(Protocol):
 class DispatchGateway(Protocol):
     """Gửi payload ICS. Retry nằm trong HttpDispatchGateway."""
     def send(self, payload: Dict[str, Any]) -> bool: ...
+
+
+class IcsOrderQueryPort(Protocol):
+    """ICS getOrderList — trả `data.Tasks` (trang 1). Lỗi → raise."""
+    def get_order_list(self, area_id: int) -> List[Dict[str, Any]]: ...
 
 
 class RuntimeControl(Protocol):

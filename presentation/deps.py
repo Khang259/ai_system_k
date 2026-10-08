@@ -2,7 +2,7 @@
 Dependency xác thực cho nhóm `/api/v1`.
 
 Chỉ nhóm này bắt token (chốt 2026-09-09). Ngoại lệ không Bearer:
-- `POST /api/v1/nodes/unlock_by_order` (webhook ICS/AMR)
+- `POST /api/v1/external_server/unlock_by_order_status` (webhook ICS)
 
 EventSource (SSE) không gửi Authorization header → dùng `current_user_sse`
 (cho phép `?access_token=`). Các API CRUD khác chỉ Bearer.

@@ -93,7 +93,7 @@ def map_dispatch(doc: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "id": doc.get("id") or doc.get("order_id"),
         "orderId": doc.get("order_id"),
-        "action": "dispatch",
+        "action": doc.get("action") or "dispatch",
         "result": doc.get("status"),
         "errorMessage": doc.get("error_msg"),
         "startNodeId": doc.get("start_point"),
@@ -101,7 +101,8 @@ def map_dispatch(doc: Dict[str, Any]) -> Dict[str, Any]:
         "zoneId": doc.get("zone_id"),
         "durationMs": int(duration_sec * 1000) if isinstance(duration_sec, (int, float)) else None,
         "occurredAt": iso_utc(doc.get("dispatched_at") or doc.get("created_at")),
-        "externalSource": "ICS",
+        "externalSource": doc.get("external_source") or "ICS",
+        "endpoint": doc.get("endpoint"),
         "requestPayload": doc.get("request_payload"),
         "responsePayload": doc.get("response_payload"),
     }

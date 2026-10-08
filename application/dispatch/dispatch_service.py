@@ -6,7 +6,7 @@ Test gọi trực tiếp không cần mock thread.
 """
 from __future__ import annotations
 
-from typing import Callable, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from application.dispatch.ics_payload import (
     build_double_payload,
@@ -15,6 +15,7 @@ from application.dispatch.ics_payload import (
 )
 from application.ports import DispatchGateway
 from domain.dispatch.pairing import build_dispatch_pairs
+from domain.dispatch.priority import StartMetaMap
 from utils.setup_log import setup_logger
 
 logger = setup_logger("dispatch_service", "logs/dispatch/log")
@@ -22,6 +23,10 @@ logger = setup_logger("dispatch_service", "logs/dispatch/log")
 OnDispatchSuccessFn = Callable[[str], None]
 # start, end, order_id | None
 OnDispatchFailedFn = Callable[[str, str, Optional[str]], None]
+# Sync audit → dispatch_logs (success + fail)
+OnIcsAuditFn = Callable[..., None]
+# order_id — ICS nhận lệnh single → panel order đang chạy
+OnTaskCreatedFn = Callable[[str], None]
 
 
 class DispatchService:
@@ -31,8 +36,50 @@ class DispatchService:
     Không biết thread/sleep. Infrastructure (PairManager) lo runtime loop.
     """
 
-    def __init__(self, gateway: DispatchGateway) -> None:
+    def __init__(
+        self,
+        gateway: DispatchGateway,
+        on_ics_audit: Optional[OnIcsAuditFn] = None,
+        start_meta: Optional[StartMetaMap] = None,
+        on_task_created: Optional[OnTaskCreatedFn] = None,
+    ) -> None:
         self._gateway = gateway
+        self._on_ics_audit = on_ics_audit
+        self._on_task_created = on_task_created
+        # Hydrate lúc RuntimeService.start — đổi priority chỉ có hiệu lực sau restart
+        self._start_meta: dict = dict(start_meta or {})
+
+    def _audit_outbound(
+        self,
+        *,
+        payload: Dict[str, Any],
+        success: bool,
+        start: str,
+        end: str,
+        order_id: Optional[str],
+    ) -> None:
+        if not self._on_ics_audit:
+            return
+        try:
+            self._on_ics_audit(
+                action="dispatch",
+                order_id=order_id,
+                payload=payload,
+                success=success,
+                start_point=start,
+                end_point=end,
+                error=None if success else "ICS request failed",
+            )
+        except Exception:
+            logger.exception("on_ics_audit callback lỗi")
+
+    def _emit_task_created(self, order_id: Optional[str]) -> None:
+        if not self._on_task_created or not order_id:
+            return
+        try:
+            self._on_task_created(order_id)
+        except Exception:
+            logger.exception("on_task_created callback lỗi")
 
     @staticmethod
     def _emit_failed(
@@ -73,6 +120,13 @@ class DispatchService:
             payload = build_single_payload(start_point, end_point)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_point,
+                end=end_point,
+                order_id=order_id,
+            )
             
             logger.debug(
                 f"[SINGLE] ({start_point} → {end_point}) orderId={order_id} success={success}"
@@ -85,6 +139,7 @@ class DispatchService:
                         capture, start_point, end_point, order_id
                     )
                 state_manager.set_pair_used(start_point, end_point, order_id, empty_car=False)
+                self._emit_task_created(order_id)
                 if on_dispatch_success:
                     on_dispatch_success(start_point)
                 sent.append({"start": start_point, "end": end_point, "orderId": order_id})
@@ -121,6 +176,13 @@ class DispatchService:
             payload = build_empty_payload(start_empty, end_point_empty)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_empty,
+                end=end_point_empty,
+                order_id=order_id,
+            )
             
             logger.debug(
                 f"[EMPTY] ({start_empty} → {end_point_empty}) orderId={order_id} success={success}"
@@ -174,6 +236,13 @@ class DispatchService:
                 payload = build_empty_payload(start_empty, end_point_empty)
                 order_id = payload.get("orderId")
                 success = self._gateway.send(payload)
+                self._audit_outbound(
+                    payload=payload,
+                    success=success,
+                    start=start_empty,
+                    end=end_point_empty,
+                    order_id=order_id,
+                )
                 logger.debug(f"[DOUBLE→EMPTY flush] ({start_empty}) orderId={order_id}")
                 
                 if success:
@@ -199,6 +268,13 @@ class DispatchService:
             payload = build_double_payload(start_point, end_point, start_empty, end_point_empty)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_point,
+                end=end_point,
+                order_id=order_id,
+            )
             
             logger.debug(
                 f"[DOUBLE] ({start_point},{end_point})+({start_empty},{end_point_empty}) orderId={order_id}"
@@ -239,6 +315,13 @@ class DispatchService:
             payload = build_single_payload(start_point, end_point)
             order_id = payload.get("orderId")
             success = self._gateway.send(payload)
+            self._audit_outbound(
+                payload=payload,
+                success=success,
+                start=start_point,
+                end=end_point,
+                order_id=order_id,
+            )
             logger.debug(f"[DOUBLE→SINGLE overflow] ({start_point},{end_point})")
             
             if success:
@@ -260,9 +343,10 @@ class DispatchService:
         self,
         state_manager,
     ) -> List[Tuple[str, str]]:
-        """Helper: ghép cặp từ state manager."""
+        """Helper: ghép cặp từ state manager + Mongo priority map đã hydrate."""
         return build_dispatch_pairs(
             state_manager.ready_starts(),
             state_manager.ready_ends(),
             state_manager.get_validate_pairs(),
+            start_meta=self._start_meta,
         )

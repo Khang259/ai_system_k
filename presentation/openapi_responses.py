@@ -98,8 +98,25 @@ HEALTH = merge(
     {503: _desc("status=degraded — vẫn trả mongo/runtime/webrtc trong body")},
 )
 
-CONFIRM_READY = merge(
+START_SCAN = merge(
     {400: _desc("Runtime chưa sẵn sàng / chưa start camera")},
+)
+
+CONFIRM_DISPATCH = merge(
+    {200: _desc("batchSize + batchNodes (sort priority) — cổng gửi ICS mở")},
+    {400: _desc("Runtime chưa sẵn sàng")},
+    {409: _desc("Inference đang pause / batch trước chưa xong / chưa có start isReady")},
+)
+
+PENDING_PAIRS = {
+    200: _desc(
+        "batch + readyStarts + nextPairs + waitingFor + stuckNodes"
+    ),
+}
+
+CANCEL_BATCH = merge(
+    {200: _desc("Batch canceled — cổng đóng, inference vẫn chạy")},
+    {409: _desc("Không có batch đang chạy")},
 )
 
 SSE_EVENTS = merge(
@@ -113,13 +130,16 @@ RUNTIME_STATE = {
     200: _desc("runtimeReady + items (rỗng nếu runtime chưa sẵn — không 500)"),
 }
 
-UNLOCK_BY_ORDER = merge(
-    {200: _desc("Đã reset theo status 3|23")},
-    {
-        400: _desc(
-            "orderId không tìm thấy / status không hợp lệ / runtime chưa sẵn"
-        )
-    },
+UNLOCK_BY_ORDER_STATUS = merge(
+    {200: _desc("6/9 → cập nhật panel; 3|23 → gỡ lock + xóa khỏi panel; status khác → bỏ qua")},
+    {400: _desc("status 3|23 nhưng orderId không có lock / runtime chưa sẵn")},
+)
+
+# --- Dispatch ---
+
+ACTIVE_TASKS = merge(
+    {200: _desc("items order đang chạy (issued / inprogress), sort priorityStart")},
+    {502: _desc("ICS getOrderList lỗi / timeout / code != 1000")},
 )
 
 POLL_SNAPSHOT = merge(

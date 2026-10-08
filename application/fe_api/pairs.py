@@ -1,4 +1,4 @@
-"""Node pairs use cases cho /api/v1."""
+"""Node pairs use cases cho /api/v1 — pair xuyên zone; không lưu/filter zoneId."""
 from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Tuple
@@ -81,11 +81,8 @@ class GetNodePairs:
         self._pairs = pairs
         self._nodes = nodes
 
-    async def execute(self, zone_id: Optional[str] = None) -> UseCaseResult:
-        if zone_id:
-            docs = await self._pairs.get_by_zone(zone_id)
-        else:
-            docs = await self._pairs.list_all()
+    async def execute(self) -> UseCaseResult:
+        docs = await self._pairs.list_all()
 
         node_cache: Dict[str, Dict[str, Any]] = {}
 
@@ -135,7 +132,6 @@ class GetNodePairs:
                 {
                     "id": pair_id,
                     "name": name,
-                    "zoneId": doc.get("zone_id"),
                     "startNodeId": start,
                     "endNodeId": end,
                     "pairType": doc.get("pair_type"),
@@ -166,7 +162,6 @@ class CreatePairFe:
     async def execute(
         self,
         start_node_id: str,
-        zone_id: str,
         pair_type: str = "normal",
         end_node_id: Optional[str] = None,
         enabled: bool = True,
@@ -178,9 +173,6 @@ class CreatePairFe:
             return gate
 
         pair_type = (pair_type or "normal").lower().strip()
-        zone = (zone_id or "").upper().strip()
-        if not zone:
-            return UseCaseResult.fail("zoneId không được rỗng", http_status=400)
 
         err = await _validate_nodes_for_pair(
             self._nodes, self._cameras, start_node_id, end_node_id, pair_type
@@ -195,7 +187,6 @@ class CreatePairFe:
         doc: Dict[str, Any] = {
             "start_point": start_node_id,
             "end_point": end_key,
-            "zone_id": zone,
             "pair_type": pair_type,
             "enabled": enabled,
             "auto_dispatch": auto_dispatch,
@@ -209,7 +200,6 @@ class CreatePairFe:
             id=make_pair_id(start_node_id, end_key),
             startNodeId=start_node_id,
             endNodeId=end_key,
-            zoneId=zone,
             pairType=pair_type,
             enabled=enabled,
             autoDispatch=auto_dispatch,
@@ -247,6 +237,12 @@ class UpdatePairFe:
         if gate:
             return gate
 
+        if zone_id is not None:
+            return UseCaseResult.fail(
+                "Không hỗ trợ zoneId trên pair — pair được phép xuyên zone",
+                http_status=400,
+            )
+
         try:
             old_start, old_end = parse_pair_id(pair_id)
         except ValueError:
@@ -261,7 +257,6 @@ class UpdatePairFe:
             for v in (
                 start_node_id,
                 end_node_id,
-                zone_id,
                 pair_type,
                 enabled,
                 auto_dispatch,
@@ -302,11 +297,6 @@ class UpdatePairFe:
             "end_point": new_end,
             "pair_type": new_type,
         }
-        if zone_id is not None:
-            zone = zone_id.upper().strip()
-            if not zone:
-                return UseCaseResult.fail("zoneId không được rỗng", http_status=400)
-            updates["zone_id"] = zone
         if enabled is not None:
             updates["enabled"] = enabled
         if auto_dispatch is not None:
@@ -319,12 +309,10 @@ class UpdatePairFe:
             return UseCaseResult.fail("Pair không tồn tại", http_status=404)
 
         await self._runtime.reload()
-        final_zone = updates.get("zone_id", current.get("zone_id"))
         return UseCaseResult.ok(
             id=make_pair_id(new_start, new_end),
             startNodeId=new_start,
             endNodeId=new_end,
-            zoneId=final_zone,
             pairType=new_type,
             enabled=updates.get("enabled", current.get("enabled", True)),
             autoDispatch=updates.get(

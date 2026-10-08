@@ -166,3 +166,27 @@ def test_snapshot_image_safe_path(tmp_path):
     assert not bad.success
     missing = uc.execute("gone.jpg")
     assert missing.data["http_status"] == 404
+
+
+def test_snapshots_by_order():
+    from application.fe_api.logs import GetSnapshotsByOrder
+
+    class FakeSnap:
+        async def get_by_order(self, order_id):
+            return [
+                {
+                    "order_id": order_id,
+                    "node_id": "start_1",
+                    "node_type": "start",
+                    "zone_id": "A",
+                    "image_path": "ord_start_1-end_1.jpg",
+                    "decision": "auto",
+                }
+            ]
+
+    result = _run(GetSnapshotsByOrder(FakeSnap()).execute("ORD-1"))
+    assert result.success
+    assert result.data["orderId"] == "ORD-1"
+    item = result.data["items"][0]
+    assert item["nodeId"] == "start_1"
+    assert item["imageUrl"].endswith("file=ord_start_1-end_1.jpg")

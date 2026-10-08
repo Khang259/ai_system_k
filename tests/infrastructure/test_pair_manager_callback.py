@@ -1,5 +1,7 @@
 """Smoke — SingleDispatch inject on_dispatch_success qua DispatchService."""
+from application.dispatch.dispatch_gate import DispatchGate
 from application.dispatch.dispatch_service import DispatchService
+from application.scan_session import ScanSession
 from domain.node_state import NodeState
 from infrastructure.adapters import NodeStateAdapter
 from infrastructure.dispatch.pair_manager import PairManager, SingleDispatch
@@ -77,6 +79,27 @@ def test_make_pairs_with_adapter_covers_runtime_path():
 
     assert pairs == [("start_1", "end_1")]
     assert empty == [("start_empty",)]
+
+
+def test_make_pairs_with_gate_ignores_start_empty():
+    """Cổng đóng → không cặp nào; mở batch → start_empty ready không làm dừng batch."""
+    ns = NodeState([("start_1", "end_1"), ("start_empty",)])
+    ns.ready_start_list.update({"start_1", "start_empty"})
+    ns.ready_end_list.add("end_1")
+    scan = ScanSession()
+    gw = _FakeGateway()
+    pm = PairManager(
+        state_manager=NodeStateAdapter(ns),
+        validate_pairs=[("start_1", "end_1"), ("start_empty",)],
+        strategy=SingleDispatch(DispatchService(gw)),
+        dispatch_service=DispatchService(gw),
+        dispatch_gate=DispatchGate(scan),
+    )
+    assert pm.make_pairs()[0] == []
+
+    scan.start(["start_1"])
+    assert pm.make_pairs()[0] == [("start_1", "end_1")]
+    assert scan.get().active
 
 
 def test_adapter_process_ends_forwards_warn():

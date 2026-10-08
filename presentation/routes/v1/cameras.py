@@ -19,6 +19,7 @@ from presentation.openapi_responses import (
     WHEP_HANGUP,
 )
 from presentation.schemas import (
+    CreateCameraPayload,
     CreateRoiPayload,
     DeleteCameraPayload,
     DeleteRoiPayload,
@@ -170,6 +171,27 @@ async def set_camera_status(
     )
 
 
+@router.post(
+    "/create_camera",
+    summary="Tạo camera — auto cameraId; zone/observedNodeIds tuỳ chọn",
+)
+async def create_camera(
+    payload: CreateCameraPayload,
+    request: Request,
+    user: Dict[str, Any] = Depends(require_permission(CAMERA_WRITE)),
+) -> Dict[str, Any]:
+    result = await container.create_camera_v1.execute(
+        name=payload.name,
+        rtsp_url=payload.rtspUrl,
+        zone=payload.zone,
+        observed_node_ids=payload.observedNodeIds,
+        node_priorities=payload.nodePriorities,
+    )
+    return await audited_or_error(
+        result, request, user, "create_camera", payload.model_dump(exclude_none=True)
+    )
+
+
 @router.patch(
     "/update_camera",
     summary="Sửa name / RTSP / zone / observedNodeIds — cascade xóa node/pair khi gỡ",
@@ -185,6 +207,7 @@ async def update_camera(
         rtsp_url=payload.rtspUrl,
         zone=payload.zone,
         observed_node_ids=payload.observedNodeIds,
+        node_priorities=payload.nodePriorities,
     )
     return await audited_or_error(
         result, request, user, "update_camera", payload.model_dump(exclude_none=True)

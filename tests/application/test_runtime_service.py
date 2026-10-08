@@ -44,6 +44,7 @@ class FakeComponent:
 @pytest.fixture
 def patched(monkeypatch):
     FakeComponent.instances = []
+    monkeypatch.setattr(rs_module.settings, "RUNTIME_MODE", "real")
 
     async def no_cameras():
         return []

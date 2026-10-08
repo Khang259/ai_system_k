@@ -44,7 +44,7 @@ async def audited_or_error(
     """
     Ghi user-action log rồi map result → HTTP (thin route: execute → return).
 
-    `audit_user` / `audit_role` ghi đè khi không có JWT (vd. unlock_by_order → external).
+    `audit_user` / `audit_role` ghi đè khi không có JWT.
     """
     status = 200 if result.success else int(result.data.get("http_status") or fail_status)
     ip, _ = client_info(request)
@@ -62,6 +62,29 @@ async def audited_or_error(
         payload=payload,
         ip=ip,
         status=status,
+    )
+    return data_or_error(result, fail_status=fail_status)
+
+
+async def system_audited_or_error(
+    result: UseCaseResult,
+    request: Request,
+    action: str,
+    payload: Dict[str, Any],
+    *,
+    order_id: Optional[str] = None,
+    fail_status: int = 400,
+) -> Dict[str, Any]:
+    """Ghi system-action log (dispatch_logs) rồi map result → HTTP."""
+    status = 200 if result.success else int(result.data.get("http_status") or fail_status)
+    await container.system_action_audit.log(
+        action=action,
+        order_id=order_id,
+        endpoint=str(request.url.path),
+        payload=payload,
+        status=status,
+        result=result.data if result.success else None,
+        error=None if result.success else (result.error or "Request failed"),
     )
     return data_or_error(result, fail_status=fail_status)
 

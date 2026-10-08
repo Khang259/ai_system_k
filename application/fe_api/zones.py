@@ -41,29 +41,40 @@ class GetZones:
             z = (node.get("zone_id") or "").upper()
             nodes_by_zone[z] = nodes_by_zone.get(z, 0) + 1
 
-        # RAM enabled theo cameraId
+        # RAM: enabled = công tắc cho phép mở RTSP; streaming = đã có frame
         ram_enabled: Dict[int, bool] = {}
+        ram_streaming: Dict[int, bool] = {}
         if self._runtime.is_ready():
             for row in self._runtime.get_status().get("cameras") or []:
                 cid = row.get("cameraId")
                 if cid is not None:
-                    ram_enabled[int(cid)] = bool(row.get("enabled"))
+                    cam_id = int(cid)
+                    ram_enabled[cam_id] = bool(row.get("enabled"))
+                    ram_streaming[cam_id] = bool(row.get("streaming"))
 
         items: List[Dict[str, Any]] = []
         for doc in zone_docs:
             zid = (doc.get("zone_id") or "").upper()
             zone_cams = cams_by_zone.get(zid, [])
             is_running = False
+            is_streaming = False
             for cam in zone_cams:
                 cid = cam.get("cameraId")
-                if cid is not None and ram_enabled.get(int(cid)):
+                if cid is None:
+                    continue
+                cam_id = int(cid)
+                if ram_enabled.get(cam_id):
                     is_running = True
+                if ram_streaming.get(cam_id):
+                    is_streaming = True
+                if is_running and is_streaming:
                     break
             items.append(
                 {
                     "id": zid,
                     "name": doc.get("name") or zid,
                     "isRunning": is_running,
+                    "isStreaming": is_streaming,
                     "isConfigEnabled": bool(doc.get("enabled", True)),
                     "cameraCount": len(zone_cams),
                     "nodeCount": nodes_by_zone.get(zid, 0),

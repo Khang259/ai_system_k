@@ -110,6 +110,11 @@ uv run uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 | `scripts/` | Seed DB / user, tiện ích vận hành |
 | `models/` | File model TensorRT / ONNX |
 | `tests/` | Pytest |
+| `docs/` | Tài liệu tích hợp FE / contract API |
+
+## Tài liệu FE
+
+- [Zone runtime flags — `isRunning` / `isStreaming`](docs/fe-zones-runtime-flags.md)
 
 ## Ghi chú
 

@@ -9,6 +9,7 @@ import time
 from typing import Any, Dict, Optional
 
 from config.settings import settings
+from domain.dispatch.priority import start_meta_from_docs
 from domain.node_state import NodeState
 from infrastructure.adapters import NodeStateAdapter
 from infrastructure.dispatch.pair_manager import PairManager, SingleDispatch
@@ -17,6 +18,7 @@ from infrastructure.storage.snapshot_fs import SnapshotFsStore
 from infrastructure.vision.camera_manager import CameraManager
 from infrastructure.vision.inference_engine import InferenceEngine
 from infrastructure.ics.http_dispatch_gateway import HttpDispatchGateway
+from infrastructure.sandbox import SandboxCameraManager, SandboxIcs, SandboxInference
 from infrastructure.persistence.camera_repository import camera_repository
 from infrastructure.persistence.pairs_repository import pairs_repository
 from application.container import container
@@ -43,45 +45,86 @@ class RuntimeService:
         if not validate_pairs:
             logger.warning("No pairs found")
 
-        logger.info(f"Loaded {len(cameras)} cameras, {len(validate_pairs)} pairs")
+        # Priority map + kiểm tra pair xuyên zone (restart mới nạp lại)
+        start_meta: Dict[str, Dict[str, Any]] = {}
+        try:
+            all_nodes = await container.nodes_repo.get_all()
+            start_meta = start_meta_from_docs(all_nodes)
+            node_zone = {
+                str(d.get("node_id")): str(d.get("zone_id") or "")
+                for d in all_nodes
+                if d.get("node_id")
+            }
+            for pair in validate_pairs:
+                if len(pair) != 2:
+                    continue
+                zs, ze = node_zone.get(pair[0]), node_zone.get(pair[1])
+                if zs and ze and zs != ze:
+                    logger.warning(
+                        "Pair xuyên zone %s(%s) → %s(%s) — mỗi zone nên chỉ 1 end nội bộ",
+                        pair[0],
+                        zs,
+                        pair[1],
+                        ze,
+                    )
+        except Exception:
+            logger.warning(
+                "Không hydrate start priority / kiểm tra pair xuyên zone",
+                exc_info=True,
+            )
+        container.bind_start_meta(start_meta)
+
+        logger.info(
+            f"Loaded {len(cameras)} cameras, {len(validate_pairs)} pairs, "
+            f"{len(start_meta)} start priorities"
+        )
 
         sm = NodeState(
             validate_pairs,
             start_ready_after_sec=settings.START_READY_AFTER_SEC,
             end_ready_after_sec=settings.END_READY_AFTER_SEC,
-            end_flag_reset_after_sec=settings.END_FLAG_RESET_AFTER_SEC,
         )
 
-        ics_gateway = HttpDispatchGateway(
-            ics_url=settings.ICS_URL,
-            retry=settings.ICS_RETRY_TIMES,
-            delay=settings.ICS_RETRY_DELAY,
-        )
+        sandbox = settings.RUNTIME_MODE == "sandbox"
+        if sandbox:
+            logger.warning("RUNTIME_MODE=sandbox — camera / AI / ICS là bản giả")
+            ics_gateway = SandboxIcs()
+            container.bind_ics_order_query(ics_gateway)
+        else:
+            ics_gateway = HttpDispatchGateway(
+                ics_url=settings.ICS_URL,
+                retry=settings.ICS_RETRY_TIMES,
+                delay=settings.ICS_RETRY_DELAY,
+            )
         container.bind_dispatch_gateway(ics_gateway)
 
         # Ghi từng component vào _components NGAY sau khi start, không gom lại
         # ở cuối: nếu bước sau nổ thì nhánh except mới dọn được thứ đã kịp chạy.
         # Gom ở cuối thì thread + VRAM rò rỉ, và reload sẽ tạo InferenceEngine
         # thứ hai chiếm thêm VRAM.
-        self._components = {"state_manager": sm}
+        self._components = {"state_manager": sm, "ics_gateway": ics_gateway}
         try:
-            inference_eng = InferenceEngine(
-                model_path=settings.MODEL_PATH,
-                max_queue_size=settings.INFERENCE_MAX_QUEUE_SIZE,
-                max_batch_size=settings.INFERENCE_MAX_BATCH_SIZE,
-                batch_timeout=settings.INFERENCE_BATCH_TIMEOUT,
-                num_streams=settings.INFERENCE_NUM_STREAMS,
-                initial_paused=True,
-                use_preallocated_queue=settings.INFERENCE_USE_PREALLOCATED_QUEUE,
-                height=settings.MODEL_HEIGHT,
-                width=settings.MODEL_WIDTH,
-                enable_profiler=settings.ENABLE_TORCH_PROFILER,
-            )
+            if sandbox:
+                inference_eng = SandboxInference()
+            else:
+                inference_eng = InferenceEngine(
+                    model_path=settings.MODEL_PATH,
+                    max_queue_size=settings.INFERENCE_MAX_QUEUE_SIZE,
+                    max_batch_size=settings.INFERENCE_MAX_BATCH_SIZE,
+                    batch_timeout=settings.INFERENCE_BATCH_TIMEOUT,
+                    num_streams=settings.INFERENCE_NUM_STREAMS,
+                    initial_paused=True,
+                    use_preallocated_queue=settings.INFERENCE_USE_PREALLOCATED_QUEUE,
+                    height=settings.MODEL_HEIGHT,
+                    width=settings.MODEL_WIDTH,
+                    enable_profiler=settings.ENABLE_TORCH_PROFILER,
+                )
             self._components["inference_engine"] = inference_eng
             inference_eng.start()
 
             # CameraManager trước — nó implement FrameProvider cho snapshot
-            cam_mgr = CameraManager(
+            camera_cls = SandboxCameraManager if sandbox else CameraManager
+            cam_mgr = camera_cls(
                 cameras_config=cameras,
                 state_manager=sm,
                 inference_engine=inference_eng,
@@ -103,6 +146,8 @@ class RuntimeService:
             state_adapter = NodeStateAdapter(
                 sm, lock_sync=container.node_lock_sync
             )
+            if sandbox and hasattr(ics_gateway, "bind_state_provider"):
+                ics_gateway.bind_state_provider(lambda: state_adapter)
             # Hydrate lock từ Mongo (user + system) sau restart
             try:
                 locked_docs = await container.nodes_repo.list_with_lock()
@@ -124,12 +169,14 @@ class RuntimeService:
                     order_id=raw.get("orderId"),
                 )
 
-            dispatch_svc = DispatchService(ics_gateway)
-
-            def _on_dispatch_failed(start, end, order_id):
-                container.notification_publisher.publish_dispatch_failed(
-                    start, end, order_id
-                )
+            dispatch_svc = DispatchService(
+                ics_gateway,
+                on_ics_audit=container.system_action_audit.log_outbound,
+                start_meta=start_meta,
+                on_task_created=lambda order_id: container.track_dispatched_task.execute(
+                    order_id
+                ),
+            )
 
             pair_mgr = PairManager(
                 state_manager=state_adapter,
@@ -140,7 +187,7 @@ class RuntimeService:
                 on_dispatch_success=lambda node_id: container.on_dispatch_success.execute(
                     node_id
                 ),
-                on_dispatch_failed=_on_dispatch_failed,
+                dispatch_gate=container.dispatch_gate,
             )
             self._components["pair_manager"] = pair_mgr
             pair_mgr.start()
@@ -180,6 +227,10 @@ class RuntimeService:
         self._running = False
         logger.info("Runtime stopped")
         return self.status()
+
+    def component(self, name: str) -> Any:
+        """Component đang chạy theo tên (vd. "camera_manager"); chưa start → None."""
+        return self._components.get(name)
 
     async def reload(self) -> Dict[str, Any]:
         self.stop()

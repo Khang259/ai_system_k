@@ -99,6 +99,7 @@ class GetPollSnapshot:
                         {
                             "id": row.get("id"),
                             "isRunning": row.get("isRunning"),
+                            "isStreaming": row.get("isStreaming"),
                             "isConfigEnabled": row.get("isConfigEnabled"),
                             "cameraCount": row.get("cameraCount"),
                             "nodeCount": row.get("nodeCount"),

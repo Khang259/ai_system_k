@@ -4,6 +4,7 @@ from __future__ import annotations
 import asyncio
 
 from application.fe_api.cameras import (
+    CreateCamera,
     CreateRoi,
     DeleteCamera,
     DeleteRoi,
@@ -15,7 +16,6 @@ from application.fe_api.cameras import (
 )
 from application.fe_api.mappers import validate_box
 from application.fe_api.nodes import (
-    DeleteNode,
     GetNodes,
     SetMaintenance,
     UpdateNode,
@@ -281,11 +281,10 @@ def test_get_nodes_and_maintenance():
     assert start["isUnderMaintenance"] is True
     assert start["lock"]["user"] is True
 
-    unlocked = _run(
-        Unlock(nodes, state).execute("start_10000060", user=True, system=False)
-    )
+    unlocked = _run(Unlock(nodes, state).execute("start_10000060"))
     assert unlocked.success
     assert unlocked.data["lock"]["user"] is False
+    assert unlocked.data["lock"]["system"] is False
 
 
 def test_get_zones_is_running():
@@ -294,8 +293,27 @@ def test_get_zones_is_running():
     z = result.data["items"][0]
     assert z["id"] == "AE5"
     assert z["isRunning"] is True
+    assert z["isStreaming"] is True
     assert z["cameraCount"] == 1
     assert z["nodeCount"] == 2
+
+
+def test_get_zones_enabled_without_streaming():
+    """start_all fail RTSP: công tắc bật nhưng chưa có frame."""
+    cams, nodes, zones, _, runtime = _seed()
+    runtime.cameras = [
+        {
+            "cameraId": 1,
+            "cam_id": "cam_0",
+            "enabled": True,
+            "streaming": False,
+            "error": "Timeout waiting for first frame",
+        }
+    ]
+    result = _run(GetZones(zones, cams, nodes, runtime).execute())
+    z = result.data["items"][0]
+    assert z["isRunning"] is True
+    assert z["isStreaming"] is False
 
 
 def test_get_node_pairs_blocked_by_maintenance():
@@ -381,6 +399,7 @@ def test_update_camera_auto_creates_missing_nodes():
                 "end_10000760",
                 "start_10000999",
             ],
+            node_priorities={"start_10000999": 2},
         )
     )
     assert result.success
@@ -388,6 +407,7 @@ def test_update_camera_auto_creates_missing_nodes():
     assert nodes.rows["start_10000999"]["camera_id"] == 1
     assert nodes.rows["start_10000999"]["node_type"] == "start"
     assert nodes.rows["start_10000999"]["zone_id"] == "AE5"
+    assert nodes.rows["start_10000999"]["priority"] == 2
     assert result.data["observedCreated"] == 1
     assert set(result.data["observedNodeIds"]) == {
         "start_10000060",
@@ -415,8 +435,8 @@ def test_update_camera_blocked_when_inference_running():
     assert bad.data["http_status"] == 409
 
 
-def test_update_delete_node_cascades_pairs():
-    cams, nodes, _, pairs, _ = _seed()
+def test_update_node_and_remove_via_observed():
+    cams, nodes, _, pairs, runtime = _seed()
     state = FakeNodeStateStore()
 
     nodes.rows["start_10000099"] = {
@@ -438,16 +458,18 @@ def test_update_delete_node_cascades_pairs():
     assert updated.data["priority"] == 5
     assert updated.data["enabled"] is False
 
-    # Có pair → cascade xóa pair + node
-    deleted = _run(
-        DeleteNode(nodes, cams, pairs, state, _inf()).execute("start_10000060")
+    # Xóa start_10000060 qua replace-set (giữ end + node ops vừa tạo)
+    removed = _run(
+        _update_camera(cams, nodes, pairs, runtime, state=state).execute(
+            1, observed_node_ids=["end_10000760", "start_10000099"]
+        )
     )
-    assert deleted.success
-    assert deleted.data["roiDeleted"] is True
-    assert "start_10000060:end_10000760" in deleted.data["pairsDeleted"]
+    assert removed.success
+    assert removed.data["observedRemoved"] == 1
     assert "start_10000060" not in nodes.rows
     assert "start_10000060" not in cams.items[1]["rois"]
     assert pairs.rows == []
+    assert "start_10000060:end_10000760" in removed.data["pairsDeleted"]
 
 
 def test_delete_camera_cascades():
@@ -468,11 +490,200 @@ def test_delete_camera_cascades():
     }
 
 
-def test_update_node_rejects_camera_id_change():
-    _, nodes, _, _, _ = _seed()
-    bad = _run(UpdateNode(nodes).execute("start_10000060", camera_id=2))
+def test_create_camera_minimal():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    runtime = FakeCameraRuntime(ready=False)
+    result = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="AE5-CAM-06",
+            rtsp_url="rtsp://host/stream",
+        )
+    )
+    assert result.success
+    assert result.data["cameraId"] == 1
+    assert result.data["name"] == "AE5-CAM-06"
+    assert result.data["rtspUrl"] == "rtsp://host/stream"
+    assert result.data["zone"] == ""
+    assert result.data["observedNodeIds"] == []
+    assert result.data["requiresRestart"] is False
+    assert cams.items[1]["url"] == "rtsp://host/stream"
+
+
+def test_create_camera_with_zone_and_nodes():
+    cams, nodes, _, _, runtime = _seed()
+    result = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="AE5-CAM-06",
+            rtsp_url="rtsp://host/stream",
+            zone="ae5",
+            observed_node_ids=["start_10000099"],
+            node_priorities={"start_10000099": 10},
+        )
+    )
+    assert result.success
+    assert result.data["cameraId"] == 2
+    assert result.data["zone"] == "AE5"
+    assert result.data["observedCreated"] == 1
+    assert result.data["observedNodeIds"] == ["start_10000099"]
+    assert result.data["requiresRestart"] is True
+    assert nodes.rows["start_10000099"]["camera_id"] == 2
+    assert nodes.rows["start_10000099"]["priority"] == 10
+
+
+def test_create_camera_start_requires_priority():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    bad = _run(
+        CreateCamera(
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "640x480"
+        ).execute(
+            name="CAM",
+            rtsp_url="rtsp://x",
+            zone="AE5",
+            observed_node_ids=["start_1"],
+        )
+    )
     assert not bad.success
     assert bad.data["http_status"] == 400
+    assert cams.items == {}
+
+
+def test_create_camera_rejects_duplicate_start_priority_in_zone():
+    cams, nodes, _, _, runtime = _seed()
+    # seed start đã priority=1 trong AE5
+    bad = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="CAM",
+            rtsp_url="rtsp://new",
+            zone="AE5",
+            observed_node_ids=["start_10000099"],
+            node_priorities={"start_10000099": 1},
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert 2 not in cams.items
+
+
+def test_update_node_rejects_duplicate_start_priority():
+    _, nodes, *_ = _seed()
+    nodes.rows["start_x"] = {
+        "node_id": "start_x",
+        "node_type": "start",
+        "zone_id": "AE5",
+        "camera_id": 1,
+        "priority": 5,
+        "enabled": True,
+        "lock": {"user": False, "system": False, "orderId": None},
+    }
+    from application.fe_api.nodes import UpdateNode
+
+    bad = _run(UpdateNode(nodes).execute("start_x", priority=1))
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+
+
+def test_create_camera_rejects_node_without_zone():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    bad = _run(
+        CreateCamera(
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "640x480"
+        ).execute(
+            name="CAM",
+            rtsp_url="rtsp://x",
+            observed_node_ids=["start_1"],
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 400
+    assert cams.items == {}
+
+
+def test_create_camera_rejects_owned_node():
+    cams, nodes, _, _, runtime = _seed()
+    bad = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="CAM",
+            rtsp_url="rtsp://x",
+            zone="AE5",
+            observed_node_ids=["start_10000060"],
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert 2 not in cams.items
+
+
+def test_create_camera_blocked_when_inference_running():
+    cams = FakeCameraConfigRepo()
+    nodes = FakeNodeRepo()
+    bad = _run(
+        CreateCamera(
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(paused=False), "640x480"
+        ).execute(name="CAM", rtsp_url="rtsp://x")
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+
+
+def test_create_camera_rejects_duplicate_rtsp():
+    cams, nodes, _, _, runtime = _seed()
+    bad = _run(
+        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+            name="DUP",
+            rtsp_url="rtsp://x",
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert "camera 1" in (bad.error or "")
+    assert 2 not in cams.items
+
+
+def test_update_camera_rejects_duplicate_rtsp():
+    cams, nodes, _, pairs, runtime = _seed()
+    cams.items[2] = {
+        "cameraId": 2,
+        "name": "CAM-02",
+        "url": "rtsp://other",
+        "zone_id": "AE5",
+        "enabled": True,
+        "rois": {},
+    }
+    bad = _run(
+        _update_camera(cams, nodes, pairs, runtime).execute(
+            2, rtsp_url="rtsp://x"
+        )
+    )
+    assert not bad.success
+    assert bad.data["http_status"] == 409
+    assert cams.items[2]["url"] == "rtsp://other"
+
+
+def test_update_camera_allows_same_rtsp_on_self():
+    cams, nodes, _, pairs, runtime = _seed()
+    ok = _run(
+        _update_camera(cams, nodes, pairs, runtime).execute(
+            1, rtsp_url="rtsp://x", name="CAM-01-renamed"
+        )
+    )
+    assert ok.success
+    assert ok.data["rtspUrl"] == "rtsp://x"
+    assert ok.data["name"] == "CAM-01-renamed"
+
+
+def test_update_node_rejects_camera_id_and_zone_id():
+    _, nodes, _, _, _ = _seed()
+    bad_cam = _run(UpdateNode(nodes).execute("start_10000060", camera_id=2))
+    assert not bad_cam.success
+    assert bad_cam.data["http_status"] == 400
+
+    bad_zone = _run(UpdateNode(nodes).execute("start_10000060", zone_id="AE6"))
+    assert not bad_zone.success
+    assert bad_zone.data["http_status"] == 400
+    assert "zoneId" in bad_zone.error
 
 
 def test_parse_pair_id():
@@ -508,7 +719,6 @@ def test_pairs_crud_with_reload():
     dup = _run(
         CreatePairFe(pairs, nodes, cams, runtime, inf).execute(
             "start_10000060",
-            "AE5",
             end_node_id="end_10000760",
         )
     )
@@ -520,7 +730,6 @@ def test_pairs_crud_with_reload():
     no_roi = _run(
         CreatePairFe(pairs, nodes, cams, runtime, inf).execute(
             "start_10000099",
-            "AE5",
             end_node_id="end_10000760",
         )
     )
@@ -537,19 +746,18 @@ def test_pairs_crud_with_reload():
     created = _run(
         CreatePairFe(pairs, nodes, cams, runtime, inf).execute(
             "start_10000099",
-            "AE5",
             end_node_id="end_10000760",
             name="Test pair",
         )
     )
     assert created.success
     assert created.data["runtimeReloaded"] is True
+    assert "zoneId" not in created.data
     assert runtime.reloads == 1
 
     missing_end = _run(
         CreatePairFe(pairs, nodes, cams, runtime, inf).execute(
             "start_10000099",
-            "AE5",
             pair_type="normal",
         )
     )
@@ -557,14 +765,26 @@ def test_pairs_crud_with_reload():
     assert missing_end.data["http_status"] == 400
 
     pair_id = created.data["id"]
-    updated = _run(
+    bad_zone = _run(
         UpdatePairFe(pairs, nodes, cams, runtime, inf).execute(
             pair_id, zone_id="AE6"
         )
     )
+    assert not bad_zone.success
+    assert bad_zone.data["http_status"] == 400
+
+    updated = _run(
+        UpdatePairFe(pairs, nodes, cams, runtime, inf).execute(
+            pair_id, name="Renamed pair"
+        )
+    )
     assert updated.success
-    assert updated.data["zoneId"] == "AE6"
+    assert "zoneId" not in updated.data
     assert runtime.reloads == 2
+
+    listed = _run(GetNodePairs(pairs, nodes).execute())
+    assert listed.success
+    assert all("zoneId" not in row for row in listed.data["items"])
 
     disabled = _run(
         SetPairEnabledFe(pairs, runtime, inf).execute(

@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     API_SERVER_HOST: str = "0.0.0.0"
     API_SERVER_PORT: int = 5000
     API_LOG_LEVEL: str   = "info"
+    # "real" | "sandbox" — sandbox thay camera/AI/ICS bằng bản giả điều khiển qua API.
+    # KHÔNG bật ở production; dùng kèm MONGODB_DB riêng.
+    RUNTIME_MODE: str    = "real"
 
     # ── MongoDB ───────────────────────────────────────────────
     MONGODB_URL: str = "mongodb://127.0.0.1:27018"
@@ -31,6 +34,8 @@ class Settings(BaseSettings):
     ICS_PROCESS_SINGLE: str = "SingleGroupAE5"
     ICS_PROCESS_EMPTY: str  = "SEGroupAE"
     ICS_PROCESS_DOUBLE: str = "DoubleGroupAE"
+    ICS_ORDER_LIST_URL: str = "http://192.168.1.100:7000/ics/out/task/getOrderList"
+    ICS_AREA_ID: int        = 1
 
     # ── AI Inference ──────────────────────────────────────────
     MODEL_PATH: str              = "models/model_test.engine"
@@ -51,7 +56,9 @@ class Settings(BaseSettings):
     DECODE_WAIT_FIRST_FRAME_SEC: float = 30.0  # NVDEC chờ frame đầu tiên
 
     # ── Snapshot ──────────────────────────────────────────────
-    ENABLE_SNAPSHOTS: bool  = False
+    # Single strategy: capture trước ICS, ghi JPEG sau success.
+    # Empty/Double chưa wire (TODO trong dispatch_service).
+    ENABLE_SNAPSHOTS: bool  = True
     SNAPSHOT_DIR: str       = "snapshots"
     SNAPSHOT_QUALITY: int   = 85   # JPEG quality — reduced from 95 to save disk
 
@@ -71,6 +78,8 @@ class Settings(BaseSettings):
     LOGIN_LOCKOUT_MIN: int     = 5   # cửa sổ đếm số lần sai; 0 = tắt rate limit
 
     # ── Log retention ─────────────────────────────────────────
+    # Mức file logger (utils.setup_log). DEBUG chỉ khi cần soi strategy/dispatch.
+    LOG_LEVEL: str                  = "INFO"
     LOG_KEEP_DAYS: int              = 5        # giữ N ngày gần nhất, kể cả hôm nay
     LOG_CLEANUP_INTERVAL_SEC: float = 86400.0  # chu kỳ dọn; 0 = tắt
 
@@ -94,9 +103,17 @@ class Settings(BaseSettings):
     # ── State Machine Timers (SSOT runtime; default = domain.settings) ─
     START_READY_AFTER_SEC: int = domain_defaults.START_READY_AFTER_SEC
     END_READY_AFTER_SEC: int = domain_defaults.END_READY_AFTER_SEC
-    END_FLAG_RESET_AFTER_SEC: int = domain_defaults.END_FLAG_RESET_AFTER_SEC
     ENABLE_TORCH_PROFILER: bool  = False # PyTorch Profiler — ghi trace.json sau N batches
     EMPTY_DEADLINE_SEC: int     = 15   # chờ ghép double tối đa 15s trước khi gửi empty
+
+    @model_validator(mode="after")
+    def _sandbox_needs_own_db(self):
+        if self.RUNTIME_MODE == "sandbox" and not self.MONGODB_DB.endswith("_sandbox"):
+            raise ValueError(
+                f"RUNTIME_MODE=sandbox cần MONGODB_DB kết thúc bằng '_sandbox' "
+                f"(đang là '{self.MONGODB_DB}')"
+            )
+        return self
 
     model_config = SettingsConfigDict(
         env_file=Path(__file__).parent.parent / ".env",

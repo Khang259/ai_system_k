@@ -1,6 +1,6 @@
 """Request/Response schemas — Pydantic models for API layer."""
 from pydantic import BaseModel, Field, model_validator
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class LoginPayload(BaseModel):
@@ -22,6 +22,15 @@ class SetCameraStatusPayload(BaseModel):
     enabled: bool
 
 
+class CreateCameraPayload(BaseModel):
+    name: str
+    rtspUrl: str
+    zone: Optional[str] = None
+    observedNodeIds: Optional[List[str]] = None
+    # start mới tạo: bắt buộc có key trong map này
+    nodePriorities: Optional[Dict[str, int]] = None
+
+
 class UpdateCameraPayload(BaseModel):
     """Partial update — ít nhất một trong name / rtspUrl / zone / observedNodeIds."""
     cameraId: int
@@ -29,6 +38,7 @@ class UpdateCameraPayload(BaseModel):
     rtspUrl: Optional[str] = None
     zone: Optional[str] = None
     observedNodeIds: Optional[List[str]] = None
+    nodePriorities: Optional[Dict[str, int]] = None
 
 
 class DeleteCameraPayload(BaseModel):
@@ -90,20 +100,17 @@ class SetMaintenancePayload(BaseModel):
 
 
 class UpdateNodePayload(BaseModel):
+    """Partial — priority / enabled. Không đổi cameraId / zoneId (SSOT camera)."""
     nodeId: str
     priority: Optional[int] = None
     enabled: Optional[bool] = None
-    zoneId: Optional[str] = None
-    cameraId: Optional[int] = None
-
-
-class DeleteNodePayload(BaseModel):
-    nodeId: str
+    zoneId: Optional[str] = None  # gửi → 400 (cấm)
+    cameraId: Optional[int] = None  # gửi → 400 (cấm)
 
 
 class CreatePairPayload(BaseModel):
+    """Pair xuyên zone — không còn zoneId."""
     startNodeId: str
-    zoneId: str
     pairType: str = "normal"
     endNodeId: Optional[str] = None
     enabled: bool = True
@@ -112,11 +119,11 @@ class CreatePairPayload(BaseModel):
 
 
 class UpdatePairPayload(BaseModel):
-    """Partial update — ít nhất một field ngoài id."""
+    """Partial update — ít nhất một field ngoài id. Không hỗ trợ zoneId."""
     id: str
     startNodeId: Optional[str] = None
     endNodeId: Optional[str] = None
-    zoneId: Optional[str] = None
+    zoneId: Optional[str] = None  # gửi → 400 (cấm)
     pairType: Optional[str] = None
     enabled: Optional[bool] = None
     autoDispatch: Optional[bool] = None
@@ -170,17 +177,30 @@ class SetLockPayload(BaseModel):
     user: bool = True
 
 
-class UnlockPayload(BaseModel):
+class UnlockByUserPayload(BaseModel):
+    """Operator gỡ cả lock.user + lock.system trên một node."""
+
     nodeId: str
-    user: bool = False
-    system: bool = False
 
 
-class UnlockByOrderPayload(BaseModel):
-    """External/ICS — reset system lock theo orderId (status 3|23)."""
+class SandboxNodeStatePayload(BaseModel):
+    """Sandbox — state mong muốn tại ROI (start: có hàng; end: có hàng = chưa trống)."""
+
+    nodeId: str
+    detected: bool
+
+
+class OrderStatusWebhookPayload(BaseModel):
+    """
+    External/ICS — webhook task status (body phẳng như ICS thật).
+    Chỉ bắt buộc orderId + status; field thừa (deviceCode, qrContent…) được bỏ qua.
+    """
 
     orderId: str
-    status: int  # 3 = COMPLETED (toàn bộ), 23 = EMPTY_DONE (chỉ empty)
+    status: int  # task status ICS: 3 | 6 | 9 | 23 | …
+
+    class Config:
+        extra = "allow"
 
 
 class CameraConfigCreate(BaseModel):

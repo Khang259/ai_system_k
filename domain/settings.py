@@ -13,8 +13,5 @@ KHÔNG dùng để vận hành production. Giá trị runtime = config/settings.
 START_READY_AFTER_SEC = 10
 END_READY_AFTER_SEC = 10
 
-# End node có hàng trở lại trong khi đang flag → reset pair sau N giây
-END_FLAG_RESET_AFTER_SEC = 30
-
-# get_node_priority fallback khi node_id không có chữ số
+# start_sort_key fallback khi Mongo thiếu / invalid priority
 PRIORITY_FALLBACK = 999_999

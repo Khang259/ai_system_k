@@ -2,7 +2,6 @@
 
 from domain.node_state import NodeState
 from domain.settings import (
-    END_FLAG_RESET_AFTER_SEC,
     END_READY_AFTER_SEC,
     START_READY_AFTER_SEC,
 )
@@ -76,16 +75,17 @@ def test_set_pair_used_sets_flags_and_mappings():
     assert state.order_mapping["ORD-1"] == [("start_1", "end_2", False)]
 
 
-def test_process_ends_resets_flagged_pair_after_timeout():
+def test_process_ends_does_not_auto_clear_system_lock():
+    """Lock chỉ gỡ qua webhook / unlock API — không timeout khi end có hàng trở lại."""
     clock = FakeClock()
     state = NodeState([], time_fn=clock)
     state.set_pair_used("start_1", "end_2", "ORD-1")
-    # End có hàng trở lại
     state.get_state_nodes("end_2", True)
 
-    clock.advance(END_FLAG_RESET_AFTER_SEC + 1)
-    state.process_ends()
+    clock.advance(999)
+    cleared = state.process_ends()
 
-    assert state.points["start_1"]["flag"] is False
-    assert state.points["end_2"]["flag"] is False
-    assert "end_2" not in state.pair_mapping
+    assert cleared == []
+    assert state.points["start_1"]["flag"] is True
+    assert state.points["end_2"]["flag"] is True
+    assert state.pair_mapping["end_2"] == "start_1"

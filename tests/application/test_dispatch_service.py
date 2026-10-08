@@ -9,8 +9,12 @@ def test_dispatch_service_single_success():
     store = FakeNodeStateStore()
     store.update_detection("start_1", True)
     store.update_detection("end_1", False)
-    
-    service = DispatchService(gw)
+    audits = []
+
+    service = DispatchService(
+        gw,
+        on_ics_audit=lambda **kw: audits.append(kw),
+    )
     sent, failed = service.dispatch_single(
         [("start_1", "end_1")],
         store,
@@ -20,6 +24,27 @@ def test_dispatch_service_single_success():
     assert sent[0]["start"] == "start_1"
     assert len(failed) == 0
     assert gw.sent_count == 1
+    assert len(audits) == 1
+    assert audits[0]["success"] is True
+    assert audits[0]["start_point"] == "start_1"
+    assert audits[0]["end_point"] == "end_1"
+    assert audits[0]["action"] == "dispatch"
+
+
+def test_dispatch_service_single_success_calls_on_task_created():
+    created = []
+    service = DispatchService(FakeDispatchGateway(), on_task_created=created.append)
+    sent, _ = service.dispatch_single([("start_1", "end_1")], FakeNodeStateStore())
+
+    assert created == [sent[0]["orderId"]]
+
+
+def test_dispatch_service_single_fail_skips_on_task_created():
+    created = []
+    service = DispatchService(FakeDispatchGateway(ok=False), on_task_created=created.append)
+    service.dispatch_single([("start_1", "end_1")], FakeNodeStateStore())
+
+    assert created == []
 
 
 def test_dispatch_service_single_fail():
@@ -28,8 +53,12 @@ def test_dispatch_service_single_fail():
     gw.ok = False  # Need to set ok too
     store = FakeNodeStateStore()
     seen = []
+    audits = []
 
-    service = DispatchService(gw)
+    service = DispatchService(
+        gw,
+        on_ics_audit=lambda **kw: audits.append(kw),
+    )
     sent, failed = service.dispatch_single(
         [("start_2", "end_2")],
         store,
@@ -42,6 +71,9 @@ def test_dispatch_service_single_fail():
     assert len(seen) == 1
     assert seen[0][0] == "start_2"
     assert seen[0][1] == "end_2"
+    assert len(audits) == 1
+    assert audits[0]["success"] is False
+    assert audits[0]["error"] == "ICS request failed"
 
 
 def test_dispatch_service_build_pairs():

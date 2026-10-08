@@ -1,5 +1,6 @@
 """FE-facing use cases for /api/v1."""
 from application.fe_api.cameras import (
+    CreateCamera,
     CreateRoi,
     DeleteCamera,
     DeleteRoi,
@@ -20,13 +21,13 @@ from application.fe_api.logs import (
     GetAuditLogs,
     GetNotifications,
     GetSnapshotImage,
+    GetSnapshotsByOrder,
     GetSystemActionLogs,
     GetUserActionLogs,
     MarkAllNotificationsRead,
     MarkNotificationRead,
 )
 from application.fe_api.nodes import (
-    DeleteNode,
     GetNodes,
     SetLock,
     SetMaintenance,
@@ -48,6 +49,7 @@ __all__ = [
     "GetCameras",
     "GetRois",
     "SetCameraStatus",
+    "CreateCamera",
     "UpdateCamera",
     "DeleteCamera",
     "CreateRoi",
@@ -57,7 +59,6 @@ __all__ = [
     "GetNodeRuntimeState",
     "GetPollSnapshot",
     "UpdateNode",
-    "DeleteNode",
     "SetMaintenance",
     "SetLock",
     "Unlock",
@@ -79,4 +80,5 @@ __all__ = [
     "MarkNotificationRead",
     "MarkAllNotificationsRead",
     "GetSnapshotImage",
+    "GetSnapshotsByOrder",
 ]
