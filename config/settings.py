@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     ICS_AREA_ID: int        = 1
 
     # ── AI Inference ──────────────────────────────────────────
-    MODEL_PATH: str              = "models/model_test.engine"
+    MODEL_PATH: str              = "models/KortekForklift30092601.engine"
     MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
     MODEL_WIDTH: int             = 640  # engine W
     THRESHOLD_DETECT: float      = 0.4  # NMS + ROI detect: loại bỏ detection confidence thấp
@@ -46,7 +46,7 @@ class Settings(BaseSettings):
     INFERENCE_MAX_QUEUE_SIZE: int  = 500
     INFERENCE_MIN_BATCH_SIZE: int  = 1   # TRT profile min — 1 camera / dev
     INFERENCE_OPT_BATCH_SIZE: int  = 8   # TRT profile opt
-    INFERENCE_MAX_BATCH_SIZE: int  = 32  # TRT profile max — prod
+    INFERENCE_MAX_BATCH_SIZE: int  = 16  # TRT profile max — prod
     INFERENCE_BATCH_TIMEOUT: float = 0.3
     INFERENCE_NUM_STREAMS: int     = 2   # D: N TRT context (mỗi cái 1 stream + I/O). <1.15x → đặt 1
     DECODE_STREAM_POOL_SIZE: int   = 8   # C: pool decode, round-robin camera
