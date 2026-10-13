@@ -1,11 +1,10 @@
-"""Central inference: TRT multi-context + CUDA stream/event + optional PyTorch profiler."""
+"""Central inference: TRT multi-context + CUDA stream/event."""
 import queue
 import threading
 import time
 from collections import deque
 
 import torch
-from torch.profiler import ProfilerActivity, profile, record_function
 
 from infrastructure.vision.frame_queue import PreAllocatedFrameQueue
 from infrastructure.vision.trt_yolo_engine import TrtYoloEngine
@@ -13,14 +12,11 @@ from utils.setup_log import setup_logger
 
 logger = setup_logger("inference_engine", "logs/inference_engine/log")
 
-# Re-export — import cũ `from …inference_engine import PreAllocatedFrameQueue` vẫn được.
 __all__ = ["InferenceEngine", "PreAllocatedFrameQueue"]
 
 
 class InferenceEngine(threading.Thread):
     """Batch TRT inference: decode_event → wait → copy → execute_async_v3 → NMS → distribute."""
-
-    STAT_EVERY = 200  # số batch giữa 2 dòng log thống kê gom batch
 
     def __init__(
         self,
@@ -33,9 +29,6 @@ class InferenceEngine(threading.Thread):
         use_preallocated_queue: bool = True,
         height: int = 480,
         width: int = 640,
-        enable_profiler: bool = False,
-        profiler_output: str = "trace.json",
-        profiler_batches: int = 200,
         num_shards: int = 4,
     ):
         super().__init__(daemon=True, name="InferenceEngine")
@@ -49,12 +42,6 @@ class InferenceEngine(threading.Thread):
         self.width = width
         self.imgsz = (height, width)
         self.num_shards = max(1, int(num_shards))
-
-        self._enable_profiler = bool(enable_profiler)
-        self._profiler_output = profiler_output
-        self._profiler_batches = max(1, int(profiler_batches))
-        self._profiler_ctx = None
-        self._batch_count = 0
 
         # QUEUE SHARDING: Chia 1 queue thành N shards để giảm lock contention
         if use_preallocated_queue:
@@ -91,16 +78,7 @@ class InferenceEngine(threading.Thread):
         self._model_ready = threading.Event()
         self._load_done = threading.Event()
         self._load_error = None
-        # Frame vào batch mà thiếu CUDA event → không đồng bộ được, chỉ đếm + log
-        self._missing_event_count = 0
-        # Metrics — một nguồn cho log (xem docs/inference-shard-polling.md)
-        self._batch_stats = deque(maxlen=self.STAT_EVERY)  # (size, collect_s, timed_out)
-        self._gpu_ms = deque(maxlen=self.STAT_EVERY)
-        self._batches_since_log = 0
-        self._gpu_ms_error_count = 0
-        self._total_frames = 0
-        # Xấp xỉ: nhiều camera thread cùng += nên có thể đếm thiếu. Đủ để biết
-        # có drop hay không; lock ở đây tốn hơn giá trị con số chính xác.
+        self._missing_event_count = 0 # count frame để báo nguy cơ đọc VRAM khi convert chưa ghi xong
         self._dropped_frames = 0
 
     def pause(self) -> None:
@@ -109,7 +87,6 @@ class InferenceEngine(threading.Thread):
         trong khi pause và có thể invalid khi resume.
         """
         self._paused.set()
-        # Synchronize pending batches trước khi clear để không rò rỉ GPU work
         for batch_info in self.pending_batches:
             try:
                 batch_info["event"].synchronize()
@@ -211,71 +188,13 @@ class InferenceEngine(threading.Thread):
             except queue.Empty:
                 break
 
-        if batch:
-            self._log_batch_stats(len(batch), time.time() - start_time)
-
         return batch, cam_ids, ready_events
-
-    def get_metrics(self) -> dict:
-        """
-        Snapshot số liệu engine. Hiện chỉ log dùng; sẵn sàng expose HTTP sau.
-
-        avg_gpu_ms so với avg_collect_ms cho biết nghẽn ở đâu:
-        gpu nhỏ hơn nhiều = engine đang chờ đầu vào, không phải GPU yếu.
-        """
-        stats = list(self._batch_stats)
-        gpu = list(self._gpu_ms)
-        n = len(stats) or 1
-        avg_size = sum(s for s, _, _ in stats) / n
-        return {
-            "batches": len(stats),
-            "avg_batch_size": round(avg_size, 1),
-            "batch_utilization_pct": round(avg_size * 100 / self.max_batch_size, 1),
-            "avg_collect_ms": round(sum(c for _, c, _ in stats) / n * 1000, 1),
-            "avg_gpu_ms": round(sum(gpu) / len(gpu), 1) if gpu else None,
-            "timeout_hit_pct": round(sum(1 for _, _, t in stats if t) * 100 / n, 1),
-            "total_frames": self._total_frames,
-            "dropped_frames": self._dropped_frames,
-            "missing_decode_events": self._missing_event_count,
-            "pending_batches": len(self.pending_batches),
-            "shard_qsize": [q.qsize() for q in self.shared_queues],
-        }
-
-    def _log_batch_stats(self, size, elapsed):
-        """
-        Ghi vào deque mỗi batch, log mỗi STAT_EVERY batch (hot path).
-
-        avg_size thấp + timeout_hit cao + shard qsize có phần tử luôn 0
-        = đang chờ vô ích ở shard rỗng (docs/inference-shard-polling.md).
-        """
-        self._batch_stats.append((size, elapsed, elapsed >= self.batch_timeout))
-        self._total_frames += size
-        self._batches_since_log += 1
-        if self._batches_since_log < self.STAT_EVERY:
-            return
-        self._batches_since_log = 0
-
-        m = self.get_metrics()
-        gpu = "n/a" if m["avg_gpu_ms"] is None else f"{m['avg_gpu_ms']}ms"
-        logger.info(
-            f"Batch stats/{m['batches']}: "
-            f"avg_size={m['avg_batch_size']}/{self.max_batch_size} "
-            f"util={m['batch_utilization_pct']:.0f}% "
-            f"avg_collect={m['avg_collect_ms']:.0f}ms avg_gpu={gpu} "
-            f"timeout_hit={m['timeout_hit_pct']:.0f}% "
-            f"frames={m['total_frames']} dropped={m['dropped_frames']} "
-            f"missing_ev={m['missing_decode_events']} "
-            f"pending={m['pending_batches']} shard_qsize={m['shard_qsize']}"
-        )
 
     def _load_model(self):
         try:
-            # Clear stale batches + metrics từ engine cũ (nếu reload)
+            # Clear stale batches từ engine cũ (nếu reload)
             self.pending_batches.clear()
-            self._batch_stats.clear()
-            self._gpu_ms.clear()
-            self._batches_since_log = 0
-            
+
             if not torch.cuda.is_initialized():
                 torch.cuda.init()
             self.engine = TrtYoloEngine(
@@ -319,7 +238,6 @@ class InferenceEngine(threading.Thread):
                     stream.wait_event(ev)
                 else:
                     # Producer không record event → không có gì để đợi.
-                    # Log throttle vì đây là hot path.
                     self._missing_event_count += 1
                     if self._missing_event_count % 100 == 1:
                         logger.warning(
@@ -327,19 +245,10 @@ class InferenceEngine(threading.Thread):
                             "— nguy cơ đọc VRAM khi convert chưa ghi xong"
                         )
 
-            # start_ev trước copy → đo cả H2D copy + inference (GPU time thật).
-            # enable_timing=True là BẮT BUỘC: elapsed_time trên event không bật
-            # timing sẽ trả CUDA "invalid resource handle" và làm hỏng context.
-            start_ev = torch.cuda.Event(enable_timing=True)
-            start_ev.record(stream)
+            batch_size = self.engine.copy_batch(slot_idx, frames_batch)
+            event, batch_size = self.engine.infer_async(slot_idx, batch_size)
 
-            with record_function(f"trt_copy_batch_s{slot_idx}"):
-                batch_size = self.engine.copy_batch(slot_idx, frames_batch)
-
-            with record_function(f"trt_infer_async_s{slot_idx}"):
-                event, batch_size = self.engine.infer_async(slot_idx, batch_size)
-
-        return batch_size, event, start_ev
+        return batch_size, event
 
     def _distribute_results(self, results, cam_ids):
         for detection, cam_id in zip(results, cam_ids):
@@ -360,20 +269,6 @@ class InferenceEngine(threading.Thread):
         for i, batch_info in enumerate(self.pending_batches):
             if not batch_info["event"].query():
                 continue
-            # Cả 2 event đã xong → elapsed_time trả ngay, không block.
-            # KHÔNG nuốt lỗi im lặng: lỗi CUDA ở đây làm hỏng context và sẽ
-            # báo lại ở lệnh sau (nms_ready) — rất khó truy nguyên.
-            try:
-                self._gpu_ms.append(
-                    batch_info["start_ev"].elapsed_time(batch_info["event"])
-                )
-            except Exception as e:
-                self._gpu_ms_error_count += 1
-                if self._gpu_ms_error_count % 100 == 1:
-                    logger.warning(
-                        f"elapsed_time lỗi (lần {self._gpu_ms_error_count}): {e} "
-                        "— event có enable_timing=True không?"
-                    )
             results = self.engine.nms_ready(
                 batch_info["slot_idx"],
                 batch_info["batch_size"],
@@ -385,39 +280,12 @@ class InferenceEngine(threading.Thread):
         for i in reversed(completed):
             del self.pending_batches[i]
 
-    def _start_profiler(self):
-        if not self._enable_profiler:
-            return
-        self._profiler_ctx = profile(
-            activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA],
-            record_shapes=False,
-            with_stack=False,
-        )
-        self._profiler_ctx.__enter__()
-        self._batch_count = 0
-        logger.info(
-            f"PyTorch Profiler started — capture {self._profiler_batches} batches {self._profiler_output}"
-        )
-
-    def _stop_profiler(self):
-        if self._profiler_ctx is None:
-            return
-        try:
-            self._profiler_ctx.__exit__(None, None, None)
-            self._profiler_ctx.export_chrome_trace(self._profiler_output)
-            logger.info(f"PyTorch Profiler trace saved {self._profiler_output}")
-        except Exception as e:
-            logger.warning(f"Profiler stop/export failed: {e}")
-        self._profiler_ctx = None
-
     def run(self):
         self.running = True
         try:
             self._load_model()
         except Exception:
             return
-
-        self._start_profiler()
 
         while self.running:
             try:
@@ -443,10 +311,9 @@ class InferenceEngine(threading.Thread):
                     if slot_idx is None:
                         continue
 
-                with record_function(f"batch_inference_b{len(batch_frames)}"):
-                    batch_size, event, start_ev = self._async_inference(
-                        batch_frames, ready_events, slot_idx
-                    )
+                batch_size, event = self._async_inference(
+                    batch_frames, ready_events, slot_idx
+                )
 
                 self.pending_batches.append(
                     {
@@ -454,22 +321,14 @@ class InferenceEngine(threading.Thread):
                         "batch_size": batch_size,
                         "cam_ids": cam_ids,
                         "event": event,
-                        "start_ev": start_ev,
-                        "timestamp": time.time(),
                     }
                 )
                 self._slot_idx = (slot_idx + 1) % self.num_streams
-
-                if self._enable_profiler and self._profiler_ctx is not None:
-                    self._batch_count += 1
-                    if self._batch_count >= self._profiler_batches:
-                        self._stop_profiler()
 
             except Exception as e:
                 logger.error(f"Error in inference loop: {e}", exc_info=True)
                 time.sleep(0.1)
 
-        self._stop_profiler()
         logger.info("InferenceEngine stopped")
 
     def stop(self):

@@ -79,9 +79,7 @@ class TrtExecSlot:
         ok = self.context.execute_async_v3(stream_handle=stream.cuda_stream)
         if not ok:
             raise RuntimeError("execute_async_v3 failed")
-        # enable_timing=True để consumer đo được elapsed_time (GPU time).
-        # Event không bật timing → elapsed_time trả CUDA invalid resource handle.
-        done = torch.cuda.Event(enable_timing=True)
+        done = torch.cuda.Event(enable_timing=False)
         done.record(stream)
         return done, batch_size
 

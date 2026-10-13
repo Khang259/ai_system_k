@@ -132,16 +132,8 @@ class CameraProcessor(threading.Thread):
 
     def run(self):
         cap = None
-        loop_count = 0
-        slow_loop_count = 0
 
         while self.running:
-            loop_start = time.monotonic()
-            loop_count += 1
-            
-            # Khởi tạo timing variables
-            t_read = t_put = t_get = t_preview = t_roi = 0.0
-            
             if not self._is_enabled():
                 self.streaming = False
                 if cap is not None:
@@ -178,10 +170,8 @@ class CameraProcessor(threading.Thread):
                 self.streaming = True
                 self.last_error = None
 
-            t_read_start = time.monotonic()
             ret, frame, decode_event = cap.read()
-            t_read = time.monotonic() - t_read_start
-            
+
             if not ret:
                 if not cap.isOpened():
                     self.streaming = False
@@ -200,11 +190,9 @@ class CameraProcessor(threading.Thread):
 
             # PHƯƠNG ÁN B: Push frame ngay, không đợi kết quả inference
             # QUEUE SHARDING: Truyền camera_index để route vào đúng shard
-            t_put_start = time.monotonic()
             self.inference_engine.put_frame_with_drop(
                 frame, self.cam_id, decode_event, camera_index=self.camera_index
             )
-            t_put = time.monotonic() - t_put_start
 
             paused = getattr(self.inference_engine, "_paused", None)
             if paused is not None and paused.is_set():
@@ -213,13 +201,11 @@ class CameraProcessor(threading.Thread):
                 continue
 
             # PHƯƠNG ÁN B: Non-blocking get kết quả, không chờ đợi
-            t_get_start = time.monotonic()
             detections = None
             try:
                 detections = self.result_queue.get_nowait()
             except queue.Empty:
                 pass
-            t_get = time.monotonic() - t_get_start
 
             # Sticky detections: Cập nhật cache nếu có detection mới
             if detections is not None:
@@ -234,56 +220,29 @@ class CameraProcessor(threading.Thread):
                     display_detections = self._last_detections
 
             # Publish preview với sticky detections (cho UI mượt)
-            t_preview_start = time.monotonic()
             self._publish_preview(frame, display_detections)
-            t_preview = time.monotonic() - t_preview_start
 
             # ASYNC ROI: Submit job vào thread pool - KHÔNG BLOCK camera thread
-            t_roi_submit = 0.0
             if detections is not None and len(self.rois) > 0:
-                t_roi_start = time.monotonic()
-                
                 # Giữ nguyên GPU tensor — has_object_in_rois_batch tính trên GPU.
                 # Không cần copy phòng vệ: nms_ready trả tensor mới (boolean
                 # indexing luôn cấp bộ nhớ riêng) nên batch sau không ghi đè.
-                
+
                 # Snapshot rois list để tránh concurrent modification
                 rois_snapshot = list(self.rois)
-                
+
                 # Submit job - NON-BLOCKING!
                 self._pending_roi_jobs += 1
-                future = self.roi_executor.submit(
+                self.roi_executor.submit(
                     self._process_rois_async,
                     detections,
                     rois_snapshot,
-                    self.cam_id
+                    self.cam_id,
                 )
                 # ✅ KHÔNG GỌI future.result() → camera thread tiếp tục ngay!
-                
-                t_roi_submit = time.monotonic() - t_roi_start
 
             # PHƯƠNG ÁN B: Rate limiting - tránh busy-loop với mock video
             time.sleep(0.005)
-            
-            # Timing measurement và logging
-            loop_time = time.monotonic() - loop_start
-            if loop_time > 0.05:  # >50ms = chậm
-                slow_loop_count += 1
-                logger.warning(
-                    f"Slow loop cam {self.cam_id}: {loop_time*1000:.1f}ms "
-                    f"(read={t_read*1000:.1f}ms, put={t_put*1000:.1f}ms, "
-                    f"get={t_get*1000:.1f}ms, preview={t_preview*1000:.1f}ms, "
-                    f"roi_submit={t_roi_submit*1000:.1f}ms, pending_jobs={self._pending_roi_jobs}) "
-                    f"slow_rate={slow_loop_count}/{loop_count}"
-                )
-            
-            # Log định kỳ mỗi 300 loops (~50s @ 6fps) để track average
-            if loop_count % 300 == 0:
-                logger.info(
-                    f"Cam {self.cam_id} performance: "
-                    f"{loop_count} loops, {slow_loop_count} slow ({slow_loop_count*100/loop_count:.1f}%), "
-                    f"pending_roi_jobs={self._pending_roi_jobs}"
-                )
 
         if cap is not None:
             try:

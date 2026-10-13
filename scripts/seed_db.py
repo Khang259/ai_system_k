@@ -6,14 +6,40 @@ from pymongo import MongoClient
 from datetime import datetime, timezone
 
 # ── Config ──────────────────────────────────────────────
-MONGO_URI    = "mongodb://127.0.0.1:27018"
+MONGO_URI    = "mongodb://127.0.0.1:27017"
 DB_NAME      = "db_kortek"
 COLLECTION   = "cameras"
-N_CAMERAS    = 20
-RTSP_HOST    = "127.0.0.1"
-RTSP_PORT    = 8554
+RTSP_USER    = "admin"
+RTSP_PASS    = "Kortek2026#"
+RTSP_PORT    = 554
+RTSP_PATH    = "/Streaming/Channels/102"
 ZONE_ID      = "AE5"   # đổi nếu cần
+
+CAMERA_IPS = [
+    "192.168.50.111",
+    "192.168.50.112",
+    "192.168.50.113",
+    "192.168.50.114",
+    "192.168.50.115",
+    "192.168.50.116",
+    "192.168.50.117",
+    "192.168.50.118",
+    "192.168.50.119",
+    "192.168.50.120",
+    "192.168.50.121",
+    "192.168.50.122",
+    "192.168.50.123",
+    "192.168.50.124",
+    "192.168.50.125",
+    "192.168.50.126",
+]
+N_CAMERAS = len(CAMERA_IPS)
 # ────────────────────────────────────────────────────────
+
+def make_rtsp_url(ip: str) -> str:
+    """rtsp://user:pass@ip:port/path — Hikvision sub-stream (channel 102)."""
+    return f"rtsp://{RTSP_USER}:{RTSP_PASS}@{ip}:{RTSP_PORT}{RTSP_PATH}"
+
 
 def generate_camera_docs(n: int) -> list[dict]:
     """
@@ -60,10 +86,11 @@ def generate_camera_docs(n: int) -> list[dict]:
             rois = rois_cam2
         else:
             rois = {}
+        ip = CAMERA_IPS[i - 1]
         doc = {
             "cameraId":   i,
             "name":       f"MOCK-CAM-{i:03d} — stress test",
-            "url":        f"rtsp://{RTSP_HOST}:{RTSP_PORT}/cam_{i}",
+            "url":        make_rtsp_url(ip),
             "zone_id":    ZONE_ID,
             "enabled":    True,
             "rois":       rois,
@@ -109,9 +136,7 @@ def main():
         print(f"   [{last['name']}] {last['url']}")
 
     client.close()
-    print(f"\n✅ Done! Chạy pipeline với {N_CAMERAS} cameras.")
-    print(f"   Nhớ đảm bảo FFmpeg đang push lên:")
-    print(f"   ffmpeg -re -stream_loop -1 -i input.mp4 -c copy -f rtsp rtsp://{RTSP_HOST}:{RTSP_PORT}/raw_stream")
+    print(f"\n✅ Done! Chạy pipeline với {N_CAMERAS} cameras (IP thật).")
 
 
 if __name__ == "__main__":

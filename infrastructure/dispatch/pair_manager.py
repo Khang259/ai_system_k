@@ -147,12 +147,27 @@ class PairManager:
                         )
 
         pairs = self.dispatch_service.build_pairs(self.state_manager)
+        built_count = len(pairs)
         if self.dispatch_gate is not None:
             ready = dispatchable_starts(
                 self.state_manager.ready_starts(), self.validate_pairs
             )
             locked = locked_start_ids(self.state_manager.snapshot_points())
             pairs = self.dispatch_gate.filter(pairs, ready, locked_starts=locked)
+            if built_count and not pairs:
+                logger.debug(
+                    "[pair_manager] gate dropped all pairs built=%s "
+                    "dispatchable=%s locked=%s",
+                    built_count,
+                    sorted(ready),
+                    sorted(locked),
+                )
+            elif built_count != len(pairs):
+                logger.debug(
+                    "[pair_manager] gate filtered built=%s allowed=%s",
+                    built_count,
+                    len(pairs),
+                )
 
         empty_list = [
             (pair[0],)

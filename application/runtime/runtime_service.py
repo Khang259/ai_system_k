@@ -117,7 +117,6 @@ class RuntimeService:
                     use_preallocated_queue=settings.INFERENCE_USE_PREALLOCATED_QUEUE,
                     height=settings.MODEL_HEIGHT,
                     width=settings.MODEL_WIDTH,
-                    enable_profiler=settings.ENABLE_TORCH_PROFILER,
                 )
             self._components["inference_engine"] = inference_eng
             inference_eng.start()

@@ -5,6 +5,7 @@ from typing import Any, Dict, Optional
 from config.settings import settings
 from infrastructure.vision.camera_processor import CameraProcessor
 from infrastructure.vision.preview_store import PreviewStore
+from utils.rtsp_url import encode_rtsp_userinfo
 from utils.setup_log import setup_logger
 
 logger = setup_logger("camera_manager", "logs/camera_manager/log")
@@ -43,7 +44,8 @@ class CameraManager:
         self._build_node_id_to_cam()
 
     def _get_cam_url(self, cam: dict) -> str:
-        return cam.get("url") or cam.get("rtsp") or ""
+        raw = cam.get("url") or cam.get("rtsp") or ""
+        return encode_rtsp_userinfo(raw)
 
     def _make_cam_id(self, index: int, cam: dict) -> str:
         camera_id = cam.get("cameraId")

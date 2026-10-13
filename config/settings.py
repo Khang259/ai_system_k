@@ -103,7 +103,6 @@ class Settings(BaseSettings):
     # ── State Machine Timers (SSOT runtime; default = domain.settings) ─
     START_READY_AFTER_SEC: int = domain_defaults.START_READY_AFTER_SEC
     END_READY_AFTER_SEC: int = domain_defaults.END_READY_AFTER_SEC
-    ENABLE_TORCH_PROFILER: bool  = False # PyTorch Profiler — ghi trace.json sau N batches
     EMPTY_DEADLINE_SEC: int     = 15   # chờ ghép double tối đa 15s trước khi gửi empty
 
     @model_validator(mode="after")

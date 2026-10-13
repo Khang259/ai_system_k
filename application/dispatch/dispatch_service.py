@@ -344,9 +344,21 @@ class DispatchService:
         state_manager,
     ) -> List[Tuple[str, str]]:
         """Helper: ghép cặp từ state manager + Mongo priority map đã hydrate."""
-        return build_dispatch_pairs(
-            state_manager.ready_starts(),
-            state_manager.ready_ends(),
-            state_manager.get_validate_pairs(),
+        ready_starts = state_manager.ready_starts()
+        ready_ends = state_manager.ready_ends()
+        validate_pairs = state_manager.get_validate_pairs()
+        pairs = build_dispatch_pairs(
+            ready_starts,
+            ready_ends,
+            validate_pairs,
             start_meta=self._start_meta,
         )
+        if ready_starts and not pairs:
+            logger.debug(
+                "[dispatch_service] build_pairs empty ready_starts=%s "
+                "ready_ends=%s validate_pairs=%s",
+                sorted(ready_starts),
+                sorted(ready_ends),
+                list(validate_pairs),
+            )
+        return pairs

@@ -15,6 +15,9 @@ from domain.batch_policy import (
 )
 from domain.dispatch.pairing import build_dispatch_pairs
 from domain.dispatch.priority import StartMetaMap, resolve_priority, start_sort_key
+from utils.setup_log import setup_logger
+
+logger = setup_logger("pending_pairs", "logs/pending_pairs/log")
 
 
 class GetPendingPairs:
@@ -39,6 +42,7 @@ class GetPendingPairs:
             "stuckNodes": [],
         }
         if not self._state.is_ready():
+            logger.debug("[pending_pairs] runtime not ready")
             return UseCaseResult.ok(**empty)
 
         meta = self._start_meta()
@@ -60,23 +64,39 @@ class GetPendingPairs:
             for nid in ready
         ]
 
-        pairs = build_dispatch_pairs(
+        built = build_dispatch_pairs(
             ready,
             self._state.ready_ends(),
             validate_pairs,
             start_meta=meta,
         )
+        pairs = built
         if batch.active:
             pairs = allowed_pairs(
                 batch, pairs, start_meta=meta, locked_starts=locked
             )
         next_pairs = [{"startNodeId": p[0], "endNodeId": p[1]} for p in pairs]
+        waiting = waiting_for(batch, meta, ready, locked)
+        stuck = stuck_nodes(batch, ready)
+
+        # FE poll thường xuyên — chỉ DEBUG khi có tín hiệu Dev cần soi
+        if batch.active and (waiting or stuck or (built and not pairs)):
+            logger.debug(
+                "[pending_pairs] batchActive ready=%s built=%s allowed=%s "
+                "waitingFor=%s stuckNodes=%s locked=%s",
+                ready,
+                len(built),
+                len(pairs),
+                waiting,
+                stuck,
+                sorted(locked),
+            )
 
         return UseCaseResult.ok(
             runtimeReady=True,
             batch=batch_status,
             readyStarts=ready_starts,
             nextPairs=next_pairs,
-            waitingFor=waiting_for(batch, meta, ready, locked),
-            stuckNodes=stuck_nodes(batch, ready),
+            waitingFor=waiting,
+            stuckNodes=stuck,
         )
