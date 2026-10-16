@@ -23,22 +23,22 @@ class Settings(BaseSettings):
     RUNTIME_MODE: str    = "real"
 
     # ── MongoDB ───────────────────────────────────────────────
-    MONGODB_URL: str = "mongodb://127.0.0.1:27018"
+    MONGODB_URL: str = "mongodb://127.0.0.1:27017"
     MONGODB_DB: str = "db_kortek"
 
     # ── AMR / ICS ─────────────────────────────────────────────
-    ICS_URL: str          = "http://192.168.1.4:7000/ics/taskOrder/addTask"
+    ICS_URL: str          = "http://192.168.50.250:7000/ics/taskOrder/addTask"
     END_POINT_EMPTY: str  = "end_10001546"
     ICS_RETRY_TIMES: int  = 3
     ICS_RETRY_DELAY: float = 1.0  # seconds between retries
     ICS_PROCESS_SINGLE: str = "SingleGroupAE5"
     ICS_PROCESS_EMPTY: str  = "SEGroupAE"
     ICS_PROCESS_DOUBLE: str = "DoubleGroupAE"
-    ICS_ORDER_LIST_URL: str = "http://192.168.1.100:7000/ics/out/task/getOrderList"
+    ICS_ORDER_LIST_URL: str = "http://192.168.50.250/:7000/ics/out/task/getOrderList"
     ICS_AREA_ID: int        = 1
 
     # ── AI Inference ──────────────────────────────────────────
-    MODEL_PATH: str              = "models/KortekForklift30092601.engine"
+    MODEL_PATH: str              = "models/KortekFL01102601.engine"
     MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
     MODEL_WIDTH: int             = 640  # engine W
     THRESHOLD_DETECT: float      = 0.4  # NMS + ROI detect: loại bỏ detection confidence thấp

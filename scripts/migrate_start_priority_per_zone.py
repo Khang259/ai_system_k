@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Tuple
 
 from pymongo import ASCENDING, MongoClient
 
-MONGO_URI = "mongodb://127.0.0.1:27018"
+MONGO_URI = "mongodb://127.0.0.1:27017"
 DB_NAME = "db_kortek"
 
 

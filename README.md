@@ -9,7 +9,7 @@ Backend FastAPI: camera AI (GPU) + điều phối node/pair + API cho FE (`/api/
 | **OS** | Windows 10/11 (repo dùng `pywin32`, `mediamtx.exe`) |
 | **Python** | ≥ 3.10 (xem `.python-version`) |
 | **uv** | Package manager — [cài uv](https://docs.astral.sh/uv/getting-started/installation/) |
-| **MongoDB** | Chạy local; mặc định `mongodb://127.0.0.1:27018`, DB `db_kortek` |
+| **MongoDB** | Chạy local; mặc định `mongodb://127.0.0.1:27017`, DB `db_kortek` |
 | **NVIDIA GPU + CUDA** | Pipeline **chỉ GPU** (decode NVDEC + TensorRT) — không có fallback CPU |
 | **TensorRT** | Khớp version CUDA; dùng file `.engine` |
 | **FFmpeg (NVDEC)** | Bản full có GPU — thêm vào `PATH` |
@@ -46,7 +46,7 @@ API_SERVER_HOST=0.0.0.0
 API_SERVER_PORT=5000
 
 # MongoDB
-MONGODB_URL=mongodb://127.0.0.1:27018
+MONGODB_URL=mongodb://127.0.0.1:27017
 MONGODB_DB=db_kortek
 
 # Auth — production PHẢI set cố định (trống = secret đổi mỗi lần restart → token cũ mất)
@@ -63,7 +63,7 @@ Các biến khác có default trong `config/settings.py` — chỉ thêm vào `.
 
 ### 4. Bật MongoDB
 
-Đảm bảo Mongo lắng nghe đúng port trong `MONGODB_URL` (mặc định **27018**).
+Đảm bảo Mongo lắng nghe đúng port trong `MONGODB_URL` (mặc định **27017**).
 
 ### 5. Seed user đăng nhập
 
@@ -121,3 +121,5 @@ uv run uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 - **Không commit** file `.env`, model lớn, hay log.  
 - Máy mới thiếu CUDA / TensorRT / FFmpeg GPU → app có thể lên được CRUD, nhưng **không chạy được pipeline detect**.  
 - Dev: `JWT_SECRET` trống vẫn chạy được; mỗi restart hết hiệu lực token cũ.
+- `https://docs.google.com/spreadsheets/d/10LMQfq4LCo2pZWTvG7UQYCnWrMoCK_fKHE1v5CU4cuY/edit?usp=sharing` 
+link báo cáo lỗi người dùng
