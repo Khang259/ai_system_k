@@ -31,18 +31,18 @@ class Settings(BaseSettings):
     END_POINT_EMPTY: str  = "end_10001546"
     ICS_RETRY_TIMES: int  = 3
     ICS_RETRY_DELAY: float = 1.0  # seconds between retries
-    ICS_PROCESS_SINGLE: str = "SingleGroupAE5"
+    ICS_PROCESS_SINGLE: str = "MultiFL"
     ICS_PROCESS_EMPTY: str  = "SEGroupAE"
     ICS_PROCESS_DOUBLE: str = "DoubleGroupAE"
-    ICS_ORDER_LIST_URL: str = "http://192.168.50.250/:7000/ics/out/task/getOrderList"
-    ICS_AREA_ID: int        = 1
+    ICS_ORDER_LIST_URL: str = "http://192.168.50.250:7000/ics/out/task/getOrderList"
+    ICS_AREA_ID: int        = 7
 
     # ── AI Inference ──────────────────────────────────────────
     MODEL_PATH: str              = "models/KortekFL01102601.engine"
-    MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export
+    MODEL_HEIGHT: int            = 480  # engine H — phải khớp imgsz export không chỉnh thành 720 vì !%32=0 . YOLO yêu cầu %32=0.
     MODEL_WIDTH: int             = 640  # engine W
     THRESHOLD_DETECT: float      = 0.4  # NMS + ROI detect: loại bỏ detection confidence thấp
-    THRESHOLD_COVERAGE: float    = 0.7
+    THRESHOLD_COVERAGE: float    = 0.4
     INFERENCE_MAX_QUEUE_SIZE: int  = 500
     INFERENCE_MIN_BATCH_SIZE: int  = 1   # TRT profile min — 1 camera / dev
     INFERENCE_OPT_BATCH_SIZE: int  = 8   # TRT profile opt

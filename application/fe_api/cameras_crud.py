@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from application.fe_api.cameras_helpers import (
+    _col_id_for_new_start,
     _kind_from_node_id,
     _normalize_observed_ids,
     _priority_for_new_node,
@@ -57,6 +58,7 @@ class CreateCamera:
         zone: Optional[str] = None,
         observed_node_ids: Optional[List[str]] = None,
         node_priorities: Optional[Dict[str, int]] = None,
+        node_col_ids: Optional[Dict[str, str]] = None,
     ) -> UseCaseResult:
         gate = require_inference_paused(self._inference)
         if gate:
@@ -111,8 +113,9 @@ class CreateCamera:
                     )
                 to_assign.append(nid)
 
-        # Validate priority trước khi ghi camera (tránh orphan cam nếu fail)
+        # Validate priority + col_id trước khi ghi camera (tránh orphan cam nếu fail)
         create_priorities: Dict[str, int] = {}
+        create_cols: Dict[str, str] = {}
         reserved: Dict[int, str] = {}
         for nid in to_create:
             ntype = _kind_from_node_id(nid)
@@ -124,6 +127,11 @@ class CreateCamera:
                 return err
             assert p is not None
             create_priorities[nid] = p
+            col, col_err = _col_id_for_new_start(nid, ntype, node_col_ids)
+            if col_err:
+                return col_err
+            if col is not None:
+                create_cols[nid] = col
 
         doc: Dict[str, Any] = {
             "cameraId": next_id,
@@ -139,23 +147,24 @@ class CreateCamera:
         for nid in to_create:
             ntype = _kind_from_node_id(nid)
             assert ntype is not None
-            await self._nodes.create(
-                {
-                    "node_id": nid,
-                    "node_type": ntype,
-                    "zone_id": zone_s,
-                    "camera_id": int(next_id),
-                    "priority": create_priorities[nid],
-                    "enabled": True,
-                    "is_under_maintenance": False,
-                    "maintenance_reason": "",
-                    "lock": {
-                        "user": False,
-                        "system": False,
-                        "orderId": None,
-                    },
-                }
-            )
+            body: Dict[str, Any] = {
+                "node_id": nid,
+                "node_type": ntype,
+                "zone_id": zone_s,
+                "camera_id": int(next_id),
+                "priority": create_priorities[nid],
+                "enabled": True,
+                "is_under_maintenance": False,
+                "maintenance_reason": "",
+                "lock": {
+                    "user": False,
+                    "system": False,
+                    "orderId": None,
+                },
+            }
+            if nid in create_cols:
+                body["col_id"] = create_cols[nid]
+            await self._nodes.create(body)
             observed_created += 1
 
         for nid in to_assign:

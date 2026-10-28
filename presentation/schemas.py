@@ -29,6 +29,8 @@ class CreateCameraPayload(BaseModel):
     observedNodeIds: Optional[List[str]] = None
     # start mới tạo: bắt buộc có key trong map này
     nodePriorities: Optional[Dict[str, int]] = None
+    # start mới tạo: bắt buộc colId (lane)
+    nodeColIds: Optional[Dict[str, str]] = None
 
 
 class UpdateCameraPayload(BaseModel):
@@ -39,6 +41,7 @@ class UpdateCameraPayload(BaseModel):
     zone: Optional[str] = None
     observedNodeIds: Optional[List[str]] = None
     nodePriorities: Optional[Dict[str, int]] = None
+    nodeColIds: Optional[Dict[str, str]] = None
 
 
 class DeleteCameraPayload(BaseModel):
@@ -100,10 +103,11 @@ class SetMaintenancePayload(BaseModel):
 
 
 class UpdateNodePayload(BaseModel):
-    """Partial — priority / enabled. Không đổi cameraId / zoneId (SSOT camera)."""
+    """Partial — priority / enabled / colId. Không đổi cameraId / zoneId (SSOT camera)."""
     nodeId: str
     priority: Optional[int] = None
     enabled: Optional[bool] = None
+    colId: Optional[str] = None  # bắt buộc cho start khi tạo; có thể sửa sau
     zoneId: Optional[str] = None  # gửi → 400 (cấm)
     cameraId: Optional[int] = None  # gửi → 400 (cấm)
 

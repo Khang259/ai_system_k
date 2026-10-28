@@ -7,14 +7,18 @@ from application.ports import NodeStateStore
 from application.result import UseCaseResult
 from application.scan_session import ScanSession
 from domain.batch_policy import (
-    allowed_pairs,
     dispatchable_starts,
     locked_start_ids,
+    plan_col_dispatch,
     stuck_nodes,
-    waiting_for,
 )
 from domain.dispatch.pairing import build_dispatch_pairs
-from domain.dispatch.priority import StartMetaMap, resolve_priority, start_sort_key
+from domain.dispatch.priority import (
+    StartMetaMap,
+    col_of,
+    resolve_priority,
+    start_sort_key,
+)
 from utils.setup_log import setup_logger
 
 logger = setup_logger("pending_pairs", "logs/pending_pairs/log")
@@ -40,6 +44,8 @@ class GetPendingPairs:
             "nextPairs": [],
             "waitingFor": [],
             "stuckNodes": [],
+            "colStatus": [],
+            "newNodesOutsideBatch": [],
         }
         if not self._state.is_ready():
             logger.debug("[pending_pairs] runtime not ready")
@@ -58,38 +64,64 @@ class GetPendingPairs:
                 "nodeId": nid,
                 "priority": resolve_priority((meta.get(nid) or {}).get("priority")),
                 "zoneId": (meta.get(nid) or {}).get("zone_id") or "",
+                "colId": col_of(nid, meta),
                 "inBatch": nid in batch.nodes,
                 "dispatched": nid in batch.dispatched,
+                "skipped": nid in batch.skipped,
             }
             for nid in ready
         ]
 
+        # Trust: khi batch active, ghép từ pending batch
+        starts_for_pairs = (
+            sorted(batch.pending, key=lambda n: start_sort_key(n, meta))
+            if batch.active
+            else ready
+        )
         built = build_dispatch_pairs(
-            ready,
+            starts_for_pairs,
             self._state.ready_ends(),
             validate_pairs,
             start_meta=meta,
         )
+        plan = (
+            plan_col_dispatch(batch, meta, locked) if batch.active else None
+        )
         pairs = built
-        if batch.active:
-            pairs = allowed_pairs(
-                batch, pairs, start_meta=meta, locked_starts=locked
-            )
-        next_pairs = [{"startNodeId": p[0], "endNodeId": p[1]} for p in pairs]
-        waiting = waiting_for(batch, meta, ready, locked)
-        stuck = stuck_nodes(batch, ready)
+        if plan is not None:
+            pairs = [p for p in built if p[0] in plan.allow_starts][
+                : batch.remaining
+            ]
 
-        # FE poll thường xuyên — chỉ DEBUG khi có tín hiệu Dev cần soi
+        next_pairs = [{"startNodeId": p[0], "endNodeId": p[1]} for p in pairs]
+        waiting = list(plan.waiting) if plan else []
+        stuck = stuck_nodes(batch, ready) if batch.active else []
+        col_status = []
+        if plan:
+            for key, head in sorted(plan.col_heads.items()):
+                zone, col = key.split("|", 1)
+                col_status.append(
+                    {
+                        "zoneId": zone,
+                        "colId": col,
+                        "headNodeId": head,
+                        "headInBatch": head in batch.nodes,
+                    }
+                )
+
+        new_outside = sorted(set(ready) - set(batch.nodes)) if batch.active else []
+
         if batch.active and (waiting or stuck or (built and not pairs)):
             logger.debug(
                 "[pending_pairs] batchActive ready=%s built=%s allowed=%s "
-                "waitingFor=%s stuckNodes=%s locked=%s",
+                "waitingFor=%s stuckNodes=%s locked=%s skipped=%s",
                 ready,
                 len(built),
                 len(pairs),
                 waiting,
                 stuck,
                 sorted(locked),
+                sorted(batch.skipped),
             )
 
         return UseCaseResult.ok(
@@ -99,4 +131,6 @@ class GetPendingPairs:
             nextPairs=next_pairs,
             waitingFor=waiting,
             stuckNodes=stuck,
+            colStatus=col_status,
+            newNodesOutsideBatch=new_outside,
         )

@@ -13,6 +13,7 @@ from application.cameras import (
     OnDispatchSuccess,
     PauseScan,
     StartAllCameras,
+    StartCameras,
     StartScan,
     StartZoneCameras,
     StopAllCameras,
@@ -342,6 +343,12 @@ class AppContainer:
         inf = self.inference
         state = self.state
         self.start_all_cameras = StartAllCameras(
+            cams,
+            inf,
+            wait_model_sec=settings.START_WAIT_MODEL_SEC,
+            wait_stream_sec=settings.START_WAIT_STREAM_SEC,
+        )
+        self.start_cameras = StartCameras(
             cams,
             inf,
             wait_model_sec=settings.START_WAIT_MODEL_SEC,

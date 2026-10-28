@@ -146,7 +146,14 @@ class PairManager:
                             (start_empty, now + settings.EMPTY_DEADLINE_SEC)
                         )
 
-        pairs = self.dispatch_service.build_pairs(self.state_manager)
+        trusted = (
+            self.dispatch_gate.trusted_starts()
+            if self.dispatch_gate is not None
+            else None
+        )
+        pairs = self.dispatch_service.build_pairs(
+            self.state_manager, trusted_starts=trusted
+        )
         built_count = len(pairs)
         if self.dispatch_gate is not None:
             ready = dispatchable_starts(

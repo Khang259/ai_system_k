@@ -29,14 +29,14 @@ def test_preview_meta_ok():
     cams = FakeCameraRuntime()
     cams.preview_meta = {
         "ts": 1.5,
-        "w": 640,
-        "h": 480,
+        "w": 1280,
+        "h": 736,
         "rois": [{"roi": [1, 2, 3, 4], "node_id": "start_1"}],
         "dets": [{"cls": 0, "conf": 0.9, "xyxy": [10, 20, 30, 40]}],
     }
     result = GetCameraPreviewMeta(cams).execute(1)
     assert result.success
-    assert result.data["w"] == 640
+    assert result.data["w"] == 1280
     assert result.data["dets"][0]["cls"] == 0
 
 

@@ -2,7 +2,7 @@
 import asyncio
 
 from application.scan_session import ScanSession
-from application.cameras.start_stop import StartAllCameras, StopAllCameras
+from application.cameras.start_stop import StartAllCameras, StartCameras, StopAllCameras
 from application.cameras.zone import StartZoneCameras, StopZoneCameras
 from application.cameras.confirm_dispatch import ConfirmDispatch
 from application.cameras.pause_scan import PauseScan
@@ -23,11 +23,22 @@ def test_start_stop_all_cameras():
     assert started.success
     assert cams.started_all
     assert started.data["streaming"] >= 1
+    assert started.data.get("scanning") is False
     assert started.data["warnings"]
+    assert inf.is_paused()
     stop = StopAllCameras(cams, inf, scan).execute()
     assert stop.success
     assert cams.stopped_all
     assert inf.pause_calls == 1
+
+
+def test_start_cameras_auto_resumes_inference():
+    cams = FakeCameraRuntime(enabled=0)
+    inf = FakeInference(paused=True)
+    started = _run(StartCameras(cams, inf, wait_stream_sec=1).execute())
+    assert started.success
+    assert started.data.get("scanning") is True
+    assert not inf.is_paused()
 
 
 def test_start_all_fails_when_model_missing():

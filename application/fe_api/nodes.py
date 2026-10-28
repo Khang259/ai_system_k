@@ -22,7 +22,7 @@ def _node_item(doc: Dict[str, Any]) -> Dict[str, Any]:
     ntype = doc.get("node_type") or ""
     priority = doc.get("priority", 0)
     under = bool(doc.get("is_under_maintenance", False))
-    return {
+    item = {
         "id": doc.get("node_id"),
         "nodeId": doc.get("node_id"),
         "label": node_label(ntype, priority),
@@ -36,6 +36,9 @@ def _node_item(doc: Dict[str, Any]) -> Dict[str, Any]:
         "maintenanceReason": doc.get("maintenance_reason") or None,
         "lock": _lock_from_doc(doc),
     }
+    if (ntype or "").lower() == "start":
+        item["colId"] = doc.get("col_id") or ""
+    return item
 
 
 class GetNodes:
@@ -168,6 +171,7 @@ class UpdateNode:
         *,
         priority: Optional[int] = None,
         enabled: Optional[bool] = None,
+        col_id: Optional[str] = None,
         zone_id: Optional[str] = None,
         camera_id: Optional[int] = None,
     ) -> UseCaseResult:
@@ -181,9 +185,9 @@ class UpdateNode:
                 "Không hỗ trợ đổi zoneId qua update_node — zone kế thừa từ camera (update_camera.zone)",
                 http_status=400,
             )
-        if priority is None and enabled is None:
+        if priority is None and enabled is None and col_id is None:
             return UseCaseResult.fail(
-                "Cần ít nhất một field: priority, enabled", http_status=400
+                "Cần ít nhất một field: priority, enabled, colId", http_status=400
             )
 
         node = await self._nodes.get_by_id(node_id)
@@ -191,10 +195,10 @@ class UpdateNode:
             return UseCaseResult.fail(f"Node {node_id} not found", http_status=404)
 
         patch: Dict[str, Any] = {}
+        ntype = (node.get("node_type") or "").lower()
         if priority is not None:
             if priority < 0:
                 return UseCaseResult.fail("priority phải >= 0", http_status=400)
-            ntype = (node.get("node_type") or "").lower()
             if ntype == "start":
                 zone = str(node.get("zone_id") or "").strip().upper()
                 conflict = await ensure_start_priority_unique(
@@ -208,6 +212,15 @@ class UpdateNode:
             patch["priority"] = int(priority)
         if enabled is not None:
             patch["enabled"] = bool(enabled)
+        if col_id is not None:
+            if ntype != "start":
+                return UseCaseResult.fail(
+                    "colId chỉ áp dụng cho start node", http_status=400
+                )
+            cid = str(col_id).strip()
+            if not cid:
+                return UseCaseResult.fail("colId không được rỗng", http_status=400)
+            patch["col_id"] = cid
 
         await self._nodes.update_by_node_id(node_id, patch)
         fresh = await self._nodes.get_by_id(node_id) or {**node, **patch}

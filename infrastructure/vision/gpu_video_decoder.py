@@ -3,6 +3,7 @@ import threading
 import queue
 import numpy as np
 import torch
+from config.settings import settings
 from infrastructure.vision.annexb_pipe import pull_aus
 from infrastructure.vision.cuda_decode_pool import get_decode_stream
 from infrastructure.vision.gpu_frame import decoded_frame_to_rgb
@@ -26,10 +27,10 @@ def _submit_au(decoder, nvc, au):
 class GPUVideoDecoder:
     """FFmpeg demux (-c:v copy) → Annex-B → NVDEC in-process → tensor CUDA."""
 
-    def __init__(self, rtsp_url, width=640, height=480, camera_index=0):
+    def __init__(self, rtsp_url, width=None, height=None, camera_index=0):
         self.rtsp_url = rtsp_url
-        self.width = width
-        self.height = height
+        self.width = settings.MODEL_WIDTH if width is None else width
+        self.height = settings.MODEL_HEIGHT if height is None else height
         self.camera_index = camera_index
         self.decode_stream = None
         self.queue = queue.Queue(maxsize=3)
@@ -98,8 +99,8 @@ class GPUVideoDecoder:
                 gpuid=0,
                 codec=nvc.cudaVideoCodec.H264,
                 usedevicememory=True,
-                maxwidth=max(self.width, 640),
-                maxheight=max(self.height, 480),
+                maxwidth=max(self.width, settings.MODEL_WIDTH),
+                maxheight=max(self.height, settings.MODEL_HEIGHT),
                 latency=nvc.DisplayDecodeLatencyType.LOW,
             )
             logger.info(f"NVDEC session open {self.rtsp_url} decode_stream={self.camera_index}")

@@ -36,3 +36,6 @@ profiling/
 docs/
 
 data/
+
+# Other files
+*.zip

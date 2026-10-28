@@ -52,7 +52,7 @@ QUADRANT_POSITIONS = [
 # ---------------------------------------------------------
 # 2. CONFIGURATION
 # ---------------------------------------------------------
-# Khớp engine export: batch=16, imgsz=[480, 640] (xem scripts/export_engine.py)
+# Khớp engine export: batch=16, imgsz=[736, 1280] (xem scripts/export_engine.py)
 ENGINE_PATH = r"models\KortekFL01102601.engine"
 
 user = "admin"
@@ -61,7 +61,7 @@ password = quote("Kortek2026#", safe="")  # Encodes '#' as '%23'
 RTSP_STREAMS = {
     # "Cam 1":  f"rtsp://{user}:{password}@192.168.50.111:554/Streaming/Channels/102",
     # "Cam 2":  f"rtsp://{user}:{password}@192.168.50.112:554/Streaming/Channels/102",
-     "Cam 3":  f"rtsp://{user}:{password}@192.168.50.113:554/Streaming/Channels/102",
+    # "Cam 3":  f"rtsp://{user}:{password}@192.168.50.113:554/Streaming/Channels/102",
     # "Cam 4":  f"rtsp://{user}:{password}@192.168.50.114:554/Streaming/Channels/102",
     # "Cam 5":  f"rtsp://{user}:{password}@192.168.50.115:554/Streaming/Channels/102",
     # "Cam 6":  f"rtsp://{user}:{password}@192.168.50.116:554/Streaming/Channels/102",
@@ -72,12 +72,12 @@ RTSP_STREAMS = {
     # "Cam 11": f"rtsp://{user}:{password}@192.168.50.121:554/Streaming/Channels/102",
     # "Cam 12": f"rtsp://{user}:{password}@192.168.50.122:554/Streaming/Channels/102",
     # "Cam 13": f"rtsp://{user}:{password}@192.168.50.123:554/Streaming/Channels/102",
-    # "Cam 14": f"rtsp://{user}:{password}@192.168.50.124:554/Streaming/Channels/102",
+     "Cam 14": f"rtsp://{user}:{password}@192.168.50.124:554/Streaming/Channels/102",
     #"Cam 15": f"rtsp://{user}:{password}@192.168.50.125:554/Streaming/Channels/102",
     # "Cam 16": f"rtsp://{user}:{password}@192.168.50.126:554/Streaming/Channels/102",
 }
 
-INFERENCE_IMGSZ = [480, 640]  # Khớp engine input (16, 3, 480, 640)
+INFERENCE_IMGSZ = [736, 1280]  # Khớp engine input (16, 3, 736, 1280)
 MAX_TRT_BATCH = 16            # Engine static batch — predict phải đúng 16
 FEEDS_PER_WINDOW = 4          # 2x2 layout per window
 

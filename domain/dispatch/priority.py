@@ -6,7 +6,7 @@ from typing import Any, Dict, Iterable, Mapping, Optional, Tuple
 
 from domain.settings import PRIORITY_FALLBACK
 
-# node_id -> { "priority": int|None, "zone_id": str }
+# node_id -> { "priority": int|None, "zone_id": str, "col_id": str }
 StartMetaMap = Mapping[str, Mapping[str, Any]]
 
 
@@ -32,6 +32,7 @@ def start_meta_from_docs(docs: Iterable[Mapping[str, Any]]) -> Dict[str, Dict[st
         meta[str(nid)] = {
             "priority": doc.get("priority"),
             "zone_id": doc.get("zone_id") or "",
+            "col_id": str(doc.get("col_id") or ""),
         }
     return meta
 
@@ -49,3 +50,16 @@ def start_sort_key(
     priority = resolve_priority(meta.get("priority"))
     zone_id = str(meta.get("zone_id") or "")
     return (priority, zone_id, node_id)
+
+
+def col_of(node_id: str, start_meta: Optional[StartMetaMap] = None) -> str:
+    return str(((start_meta or {}).get(node_id) or {}).get("col_id") or "")
+
+
+def zone_of(node_id: str, start_meta: Optional[StartMetaMap] = None) -> str:
+    return str(((start_meta or {}).get(node_id) or {}).get("zone_id") or "")
+
+
+def col_sort_key(col_id: str) -> str:
+    """String sort col_id ASC (A < B < C)."""
+    return str(col_id or "")

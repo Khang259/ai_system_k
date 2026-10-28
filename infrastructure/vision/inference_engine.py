@@ -6,6 +6,7 @@ from collections import deque
 
 import torch
 
+from config.settings import settings
 from infrastructure.vision.frame_queue import PreAllocatedFrameQueue
 from infrastructure.vision.trt_yolo_engine import TrtYoloEngine
 from utils.setup_log import setup_logger
@@ -27,8 +28,8 @@ class InferenceEngine(threading.Thread):
         num_streams,
         initial_paused: bool = False,
         use_preallocated_queue: bool = True,
-        height: int = 480,
-        width: int = 640,
+        height: int | None = None,
+        width: int | None = None,
         num_shards: int = 4,
     ):
         super().__init__(daemon=True, name="InferenceEngine")
@@ -38,9 +39,9 @@ class InferenceEngine(threading.Thread):
         self.max_batch_size = max_batch_size
         self.batch_timeout = batch_timeout
         self.num_streams = max(1, int(num_streams))
-        self.height = height
-        self.width = width
-        self.imgsz = (height, width)
+        self.height = settings.MODEL_HEIGHT if height is None else height
+        self.width = settings.MODEL_WIDTH if width is None else width
+        self.imgsz = (self.height, self.width)
         self.num_shards = max(1, int(num_shards))
 
         # QUEUE SHARDING: Chia 1 queue thành N shards để giảm lock contention
@@ -48,7 +49,7 @@ class InferenceEngine(threading.Thread):
             shard_size = max(1, max_queue_size // self.num_shards)
             self.shared_queues = [
                 PreAllocatedFrameQueue(
-                    max_size=shard_size, height=height, width=width
+                    max_size=shard_size, height=self.height, width=self.width
                 )
                 for _ in range(self.num_shards)
             ]

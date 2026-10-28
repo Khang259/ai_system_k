@@ -59,6 +59,7 @@ async def update_node(
         payload.nodeId,
         priority=payload.priority,
         enabled=payload.enabled,
+        col_id=payload.colId,
         zone_id=payload.zoneId,
         camera_id=payload.cameraId,
     )

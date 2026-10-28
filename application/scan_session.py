@@ -4,12 +4,19 @@ from __future__ import annotations
 import threading
 from typing import Any, Dict, Iterable, Optional
 
-from domain.batch_policy import BatchSnapshot, idle_batch, record_dispatch_success, start_batch
+from domain.batch_policy import (
+    BatchSnapshot,
+    idle_batch,
+    record_dispatch_success,
+    record_skip,
+    start_batch,
+)
 
 # Lý do cổng gửi đóng — FE hiển thị cho người dùng
 STOP_BATCH_COMPLETE = "batch_complete"
-STOP_NEW_NODES = "new_nodes"
 STOP_CANCELED = "canceled"
+# Giữ constant để không phá import cũ; không còn halt vì new_nodes
+STOP_NEW_NODES = "new_nodes"
 
 
 class ScanSession:
@@ -37,6 +44,11 @@ class ScanSession:
             self._batch = record_dispatch_success(self._batch, node_id)
             return self._batch
 
+    def record_skip(self, node_ids: Iterable[str]) -> BatchSnapshot:
+        with self._lock:
+            self._batch = record_skip(self._batch, node_ids)
+            return self._batch
+
     def get(self) -> BatchSnapshot:
         with self._lock:
             return self._batch
@@ -49,6 +61,7 @@ class ScanSession:
                 "size": batch.size,
                 "nodes": sorted(batch.nodes),
                 "dispatched": sorted(batch.dispatched),
+                "skipped": sorted(batch.skipped),
                 "remaining": max(batch.remaining, 0) if batch.active else 0,
                 "stopReason": self._stop_reason,
                 "newNodes": sorted(self._new_nodes),

@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any, Dict
 
 from fastapi import APIRouter, Depends
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 
 from application.container import container
 from domain.permissions import SYSTEM_CONTROL
@@ -20,6 +20,15 @@ from presentation.openapi_responses import (
 from presentation.sse import sse_response
 
 router = APIRouter()
+
+_DEPRECATE_SCAN = {
+    "X-Deprecated": "true",
+    "X-Use-Instead": "/api/v1/system/start-cameras",
+}
+_DEPRECATE_CONFIRM = {
+    "X-Deprecated": "true",
+    "X-Use-Instead": "/api/v1/runtime/dispatch",
+}
 
 
 @router.get(
@@ -47,24 +56,39 @@ async def reload_runtime(
 
 @router.post(
     "/start-scan",
-    summary="Bật inference (detect) — chưa gửi ICS",
+    summary="[Deprecated] Bật inference — dùng /system/start-cameras",
     responses=START_SCAN,
+    deprecated=True,
 )
 def start_scan(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
+) -> JSONResponse:
+    data = data_or_error(container.start_scan.execute())
+    return JSONResponse(content=data, headers=_DEPRECATE_SCAN)
+
+
+@router.post(
+    "/dispatch",
+    summary="Xác nhận batch start isReady → mở cổng gửi ICS",
+    responses=CONFIRM_DISPATCH,
+)
+def dispatch(
+    _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
 ) -> Dict[str, Any]:
-    return data_or_error(container.start_scan.execute())
+    return data_or_error(container.confirm_dispatch.execute())
 
 
 @router.post(
     "/confirm-dispatch",
-    summary="Xác nhận batch start isReady → mở cổng gửi ICS",
+    summary="[Deprecated] Alias của /dispatch",
     responses=CONFIRM_DISPATCH,
+    deprecated=True,
 )
 def confirm_dispatch(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
-) -> Dict[str, Any]:
-    return data_or_error(container.confirm_dispatch.execute())
+) -> JSONResponse:
+    data = data_or_error(container.confirm_dispatch.execute())
+    return JSONResponse(content=data, headers=_DEPRECATE_CONFIRM)
 
 
 @router.get(

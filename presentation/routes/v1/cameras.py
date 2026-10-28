@@ -53,7 +53,7 @@ async def webrtc_ice(
 
 @router.get(
     "/{camera_id}/preview/meta",
-    summary="JSON ROI + dets + ts (F5 canvas, không gian 640×480)",
+    summary="JSON ROI + dets + ts (F5 canvas, không gian 1280×736)",
     responses=PREVIEW_META,
 )
 async def preview_meta(
@@ -133,7 +133,7 @@ async def get_cameras(
 @router.get(
     "/get_snapshot",
     response_class=Response,
-    summary="JPEG frame infer 640×480",
+    summary="JPEG frame infer 1280×736",
     responses=JPEG_SNAPSHOT,
 )
 def get_snapshot(
@@ -145,7 +145,7 @@ def get_snapshot(
 
 @router.get(
     "/get_rois",
-    summary="Danh sách ROI — pixel [x,y,w,h] trong 640×480",
+    summary="Danh sách ROI — pixel [x,y,w,h] trong 1280×736",
 )
 async def get_rois(
     cameraId: Optional[int] = Query(None),
@@ -186,6 +186,7 @@ async def create_camera(
         zone=payload.zone,
         observed_node_ids=payload.observedNodeIds,
         node_priorities=payload.nodePriorities,
+        node_col_ids=payload.nodeColIds,
     )
     return await audited_or_error(
         result, request, user, "create_camera", payload.model_dump(exclude_none=True)
@@ -208,6 +209,7 @@ async def update_camera(
         zone=payload.zone,
         observed_node_ids=payload.observedNodeIds,
         node_priorities=payload.nodePriorities,
+        node_col_ids=payload.nodeColIds,
     )
     return await audited_or_error(
         result, request, user, "update_camera", payload.model_dump(exclude_none=True)

@@ -58,12 +58,12 @@ def _update_camera(cams, nodes, pairs, runtime, state=None, inf=None):
         runtime,
         inf or _inf(),
         state or FakeNodeStateStore(),
-        "640x480",
+        "1280x736",
     )
 
 
 def _roi_args(cams, nodes, pairs=None, inf=None):
-    return (cams, nodes, 640, 480, inf or _inf(), pairs)
+    return (cams, nodes, 1280, 736, inf or _inf(), pairs)
 
 
 def _seed():
@@ -126,14 +126,14 @@ def _seed():
 
 
 def test_validate_box():
-    assert validate_box([0, 0, 10, 10], 640, 480) is None
-    assert validate_box([-1, 0, 10, 10], 640, 480)
-    assert validate_box([600, 0, 50, 10], 640, 480)
+    assert validate_box([0, 0, 10, 10], 1280, 736) is None
+    assert validate_box([-1, 0, 10, 10], 1280, 736)
+    assert validate_box([1240, 0, 50, 10], 1280, 736)
 
 
 def test_get_cameras_merges_runtime():
     cams, nodes, _, _, runtime = _seed()
-    result = _run(GetCameras(cams, nodes, runtime, "640x480").execute())
+    result = _run(GetCameras(cams, nodes, runtime, "1280x736").execute())
     assert result.success
     item = result.data["items"][0]
     assert item["cameraId"] == 1
@@ -147,30 +147,30 @@ def test_get_cameras_merges_runtime():
 def test_get_cameras_offline_when_runtime_down():
     cams, nodes, _, _, _ = _seed()
     runtime = FakeCameraRuntime(ready=False)
-    result = _run(GetCameras(cams, nodes, runtime, "640x480").execute())
+    result = _run(GetCameras(cams, nodes, runtime, "1280x736").execute())
     assert result.data["items"][0]["status"] == "offline"
 
 
 def test_get_rois_and_crud():
     cams, nodes, _, pairs, _ = _seed()
-    get = GetRois(cams, nodes, 640, 480)
+    get = GetRois(cams, nodes, 1280, 736)
     listed = _run(get.execute())
     assert listed.data["items"][0]["id"] == "1:start_10000060"
     assert listed.data["items"][0]["box"] == [80, 120, 140, 90]
     assert listed.data["items"][0]["kind"] == "start"
 
     created = _run(
-        CreateRoi(cams, nodes, 640, 480, _inf()).execute(
+        CreateRoi(cams, nodes, 1280, 736, _inf()).execute(
             1, "end_10000760", [10, 20, 30, 40]
         )
     )
     assert created.success
     assert created.data["id"] == "1:end_10000760"
-    assert cams.items[1]["rois"]["end_10000760"]["ref_width"] == 640
+    assert cams.items[1]["rois"]["end_10000760"]["ref_width"] == 1280
 
     # Single (1 phần tử trong items) — tương thích cũ
     updated = _run(
-        UpdateRoi(cams, nodes, 640, 480, _inf()).execute(
+        UpdateRoi(cams, nodes, 1280, 736, _inf()).execute(
             [{"box": [11, 22, 33, 44], "id": "1:end_10000760"}]
         )
     )
@@ -179,7 +179,7 @@ def test_get_rois_and_crud():
 
     # Batch — cập nhật 2 ROI cùng lúc
     batch = _run(
-        UpdateRoi(cams, nodes, 640, 480, _inf()).execute(
+        UpdateRoi(cams, nodes, 1280, 736, _inf()).execute(
             [
                 {"id": "1:start_10000060", "box": [1, 2, 3, 4]},
                 {"cameraId": 1, "nodeId": "end_10000760", "box": [5, 6, 7, 8]},
@@ -193,7 +193,7 @@ def test_get_rois_and_crud():
 
     # Batch fail trước khi ghi nếu 1 item không tồn tại
     bad = _run(
-        UpdateRoi(cams, nodes, 640, 480, _inf()).execute(
+        UpdateRoi(cams, nodes, 1280, 736, _inf()).execute(
             [
                 {"id": "1:start_10000060", "box": [9, 9, 9, 9]},
                 {"id": "1:missing_node", "box": [1, 1, 1, 1]},
@@ -205,7 +205,7 @@ def test_get_rois_and_crud():
     assert cams.items[1]["rois"]["start_10000060"]["roi"] == [1.0, 2.0, 3.0, 4.0]
 
     deleted = _run(
-        DeleteRoi(cams, nodes, 640, 480, _inf(), pairs).execute(
+        DeleteRoi(cams, nodes, 1280, 736, _inf(), pairs).execute(
             roi_id="1:end_10000760"
         )
     )
@@ -217,7 +217,7 @@ def test_get_rois_and_crud():
 def test_create_roi_rejects_bad_box():
     cams, nodes, _, _, _ = _seed()
     bad = _run(
-        CreateRoi(cams, nodes, 640, 480, _inf()).execute(
+        CreateRoi(cams, nodes, 1280, 736, _inf()).execute(
             1, "start_10000060", [0, 0, 999, 10]
         )
     )
@@ -400,6 +400,7 @@ def test_update_camera_auto_creates_missing_nodes():
                 "start_10000999",
             ],
             node_priorities={"start_10000999": 2},
+            node_col_ids={"start_10000999": "A"},
         )
     )
     assert result.success
@@ -408,6 +409,7 @@ def test_update_camera_auto_creates_missing_nodes():
     assert nodes.rows["start_10000999"]["node_type"] == "start"
     assert nodes.rows["start_10000999"]["zone_id"] == "AE5"
     assert nodes.rows["start_10000999"]["priority"] == 2
+    assert nodes.rows["start_10000999"]["col_id"] == "A"
     assert result.data["observedCreated"] == 1
     assert set(result.data["observedNodeIds"]) == {
         "start_10000060",
@@ -495,7 +497,7 @@ def test_create_camera_minimal():
     nodes = FakeNodeRepo()
     runtime = FakeCameraRuntime(ready=False)
     result = _run(
-        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+        CreateCamera(cams, nodes, runtime, _inf(), "1280x736").execute(
             name="AE5-CAM-06",
             rtsp_url="rtsp://host/stream",
         )
@@ -513,12 +515,13 @@ def test_create_camera_minimal():
 def test_create_camera_with_zone_and_nodes():
     cams, nodes, _, _, runtime = _seed()
     result = _run(
-        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+        CreateCamera(cams, nodes, runtime, _inf(), "1280x736").execute(
             name="AE5-CAM-06",
             rtsp_url="rtsp://host/stream",
             zone="ae5",
             observed_node_ids=["start_10000099"],
             node_priorities={"start_10000099": 10},
+            node_col_ids={"start_10000099": "A"},
         )
     )
     assert result.success
@@ -529,6 +532,7 @@ def test_create_camera_with_zone_and_nodes():
     assert result.data["requiresRestart"] is True
     assert nodes.rows["start_10000099"]["camera_id"] == 2
     assert nodes.rows["start_10000099"]["priority"] == 10
+    assert nodes.rows["start_10000099"]["col_id"] == "A"
 
 
 def test_create_camera_start_requires_priority():
@@ -536,7 +540,7 @@ def test_create_camera_start_requires_priority():
     nodes = FakeNodeRepo()
     bad = _run(
         CreateCamera(
-            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "640x480"
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "1280x736"
         ).execute(
             name="CAM",
             rtsp_url="rtsp://x",
@@ -553,12 +557,13 @@ def test_create_camera_rejects_duplicate_start_priority_in_zone():
     cams, nodes, _, _, runtime = _seed()
     # seed start đã priority=1 trong AE5
     bad = _run(
-        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+        CreateCamera(cams, nodes, runtime, _inf(), "1280x736").execute(
             name="CAM",
             rtsp_url="rtsp://new",
             zone="AE5",
             observed_node_ids=["start_10000099"],
             node_priorities={"start_10000099": 1},
+            node_col_ids={"start_10000099": "A"},
         )
     )
     assert not bad.success
@@ -589,7 +594,7 @@ def test_create_camera_rejects_node_without_zone():
     nodes = FakeNodeRepo()
     bad = _run(
         CreateCamera(
-            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "640x480"
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(), "1280x736"
         ).execute(
             name="CAM",
             rtsp_url="rtsp://x",
@@ -604,7 +609,7 @@ def test_create_camera_rejects_node_without_zone():
 def test_create_camera_rejects_owned_node():
     cams, nodes, _, _, runtime = _seed()
     bad = _run(
-        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+        CreateCamera(cams, nodes, runtime, _inf(), "1280x736").execute(
             name="CAM",
             rtsp_url="rtsp://x",
             zone="AE5",
@@ -621,7 +626,7 @@ def test_create_camera_blocked_when_inference_running():
     nodes = FakeNodeRepo()
     bad = _run(
         CreateCamera(
-            cams, nodes, FakeCameraRuntime(ready=False), _inf(paused=False), "640x480"
+            cams, nodes, FakeCameraRuntime(ready=False), _inf(paused=False), "1280x736"
         ).execute(name="CAM", rtsp_url="rtsp://x")
     )
     assert not bad.success
@@ -631,7 +636,7 @@ def test_create_camera_blocked_when_inference_running():
 def test_create_camera_rejects_duplicate_rtsp():
     cams, nodes, _, _, runtime = _seed()
     bad = _run(
-        CreateCamera(cams, nodes, runtime, _inf(), "640x480").execute(
+        CreateCamera(cams, nodes, runtime, _inf(), "1280x736").execute(
             name="DUP",
             rtsp_url="rtsp://x",
         )

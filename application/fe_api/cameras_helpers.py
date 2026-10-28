@@ -75,6 +75,28 @@ async def _priority_for_new_node(
     return parse_optional_end_priority(nid, node_priorities), None
 
 
+def _col_id_for_new_start(
+    nid: str,
+    ntype: str,
+    node_col_ids: Optional[Dict[str, str]],
+) -> tuple[Optional[str], Optional[UseCaseResult]]:
+    """Start mới: bắt buộc nodeColIds[nid]. End: bỏ qua."""
+    if ntype != "start":
+        return None, None
+    if not node_col_ids or nid not in node_col_ids:
+        return None, UseCaseResult.fail(
+            f'start {nid} cần nodeColIds["{nid}"]',
+            http_status=400,
+        )
+    cid = str(node_col_ids[nid] or "").strip()
+    if not cid:
+        return None, UseCaseResult.fail(
+            f"colId của {nid} không được rỗng",
+            http_status=400,
+        )
+    return cid, None
+
+
 async def _reject_duplicate_rtsp(
     cameras: CameraConfigRepository,
     rtsp_url: str,

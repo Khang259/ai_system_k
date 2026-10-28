@@ -167,11 +167,6 @@ def create_app() -> FastAPI:
 
     @app.exception_handler(StarletteHTTPException)
     async def http_error_as_message(request, exc: StarletteHTTPException):
-        """
-        FE mong lỗi dạng `{"message": ...}`, còn FastAPI trả `{"detail": ...}`.
-
-        Áp cho cả app: lỗi framework (404/405) và HTTPException `/api/v1` đi qua đây.
-        """
         return JSONResponse(status_code=exc.status_code, content={"message": exc.detail})
 
     app.include_router(auth_router, prefix="/api/v1/auth", tags=["auth"])

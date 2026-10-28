@@ -5,6 +5,7 @@ import queue
 import threading
 import time
 
+from config.settings import settings
 from utils.setup_log import setup_logger
 
 logger = setup_logger("inference_engine", "logs/inference_engine/log")
@@ -18,10 +19,10 @@ class PreAllocatedFrameQueue:
     Inference wait_event rồi mới đọc frame — tránh race và giữ overlap.
     """
 
-    def __init__(self, max_size=500, height=480, width=640):
+    def __init__(self, max_size=500, height=None, width=None):
         self.max_size = max_size
-        self.height = height
-        self.width = width
+        self.height = settings.MODEL_HEIGHT if height is None else height
+        self.width = settings.MODEL_WIDTH if width is None else width
         self.frames = [None] * max_size
         self.cam_ids = [None] * max_size
         self.events = [None] * max_size
@@ -32,7 +33,8 @@ class PreAllocatedFrameQueue:
         self._not_empty = threading.Condition(self._lock)
         self._not_full = threading.Condition(self._lock)
         logger.info(
-            f"Frame queue (ring refs): {max_size} slots × {height}×{width}"
+            f"Frame queue (ring refs): {max_size} slots × "
+            f"{self.height}×{self.width}"
         )
 
     def put_nowait(self, frame, cam_id, decode_event=None):

@@ -18,6 +18,11 @@ from presentation.openapi_responses import (
 
 router = APIRouter()
 
+_DEPRECATE_START_ALL = {
+    "X-Deprecated": "true",
+    "X-Use-Instead": "/api/v1/system/start-cameras",
+}
+
 
 @router.get(
     "/get_health",
@@ -36,17 +41,34 @@ async def get_health(
 
 
 @router.post(
-    "/start_all",
-    summary="Bật mọi camera",
+    "/start-cameras",
+    summary="Bật mọi camera + tự bật inference (scan)",
     responses=SYSTEM_START_ALL,
 )
-async def start_all(
+async def start_cameras(
     _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
 ) -> Dict[str, Any]:
     return data_or_error(
+        await container.start_cameras.execute(),
+        fail_status=503,
+    )
+
+
+@router.post(
+    "/start_all",
+    summary="[Deprecated] Bật mọi camera — dùng /start-cameras",
+    responses=SYSTEM_START_ALL,
+    deprecated=True,
+)
+async def start_all(
+    _user: Dict[str, Any] = Depends(require_permission(SYSTEM_CONTROL)),
+) -> JSONResponse:
+    """Giữ hành vi cũ (không auto-scan)."""
+    data = data_or_error(
         await container.start_all_cameras.execute(),
         fail_status=503,
     )
+    return JSONResponse(content=data, headers=_DEPRECATE_START_ALL)
 
 
 @router.post(

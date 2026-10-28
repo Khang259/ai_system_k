@@ -342,23 +342,33 @@ class DispatchService:
     def build_pairs(
         self,
         state_manager,
+        *,
+        trusted_starts: Optional[set] = None,
     ) -> List[Tuple[str, str]]:
-        """Helper: ghép cặp từ state manager + Mongo priority map đã hydrate."""
-        ready_starts = state_manager.ready_starts()
+        """
+        Ghép cặp từ ready ends + starts.
+        trusted_starts: khi batch active — dùng pending batch (trust, không cần ready).
+        """
+        starts = (
+            set(trusted_starts)
+            if trusted_starts is not None
+            else state_manager.ready_starts()
+        )
         ready_ends = state_manager.ready_ends()
         validate_pairs = state_manager.get_validate_pairs()
         pairs = build_dispatch_pairs(
-            ready_starts,
+            starts,
             ready_ends,
             validate_pairs,
             start_meta=self._start_meta,
         )
-        if ready_starts and not pairs:
+        if starts and not pairs:
             logger.debug(
-                "[dispatch_service] build_pairs empty ready_starts=%s "
-                "ready_ends=%s validate_pairs=%s",
-                sorted(ready_starts),
+                "[dispatch_service] build_pairs empty starts=%s "
+                "ready_ends=%s validate_pairs=%s trusted=%s",
+                sorted(starts),
                 sorted(ready_ends),
                 list(validate_pairs),
+                trusted_starts is not None,
             )
         return pairs

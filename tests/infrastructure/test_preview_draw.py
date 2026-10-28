@@ -23,7 +23,7 @@ def test_frame_to_bgr_chw():
 
 
 def test_draw_overlay_roi_and_box():
-    bgr = np.zeros((480, 640, 3), dtype=np.uint8)
+    bgr = np.zeros((736, 1280, 3), dtype=np.uint8)
     rois = [{"node_id": "start_1", "roi": [10, 20, 100, 80]}]
     dets = np.array([[30.0, 40.0, 90.0, 120.0, 0.87, 0.0]], dtype=np.float32)
     out = draw_overlay(bgr, dets, rois)
@@ -36,8 +36,8 @@ def test_draw_overlay_roi_and_box():
 def test_overlay_meta_shape():
     rois = [{"node_id": "start_1", "roi": [10, 20, 100, 80]}]
     dets = np.array([[30.0, 40.0, 90.0, 120.0, 0.87, 0.0]], dtype=np.float32)
-    meta = overlay_meta(dets, rois, ts=12.5, width=640, height=480)
-    assert meta["w"] == 640 and meta["h"] == 480
+    meta = overlay_meta(dets, rois, ts=12.5, width=1280, height=736)
+    assert meta["w"] == 1280 and meta["h"] == 736
     assert meta["ts"] == 12.5
     assert meta["rois"][0]["roi"] == [10, 20, 100, 80]
     assert meta["dets"][0]["cls"] == 0
