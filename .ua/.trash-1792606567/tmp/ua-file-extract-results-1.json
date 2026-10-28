@@ -1,0 +1,6880 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 29,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 29,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 29,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "application/auth/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/auth/session.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 184,
+      "nonEmptyLines": 151,
+      "functions": [
+        {
+          "name": "public_user",
+          "startLine": 26,
+          "endLine": 33,
+          "params": [
+            "user"
+          ]
+        },
+        {
+          "name": "_is_expired",
+          "startLine": 36,
+          "endLine": 45,
+          "params": [
+            "expires_at"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Login",
+          "startLine": 48,
+          "endLine": 109,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "Logout",
+          "startLine": 112,
+          "endLine": 129,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RefreshSession",
+          "startLine": 132,
+          "endLine": 173,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetMe",
+          "startLine": 176,
+          "endLine": 184,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "public_user",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "_is_expired",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "Login",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Logout",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshSession",
+          "line": 132,
+          "isDefault": false
+        },
+        {
+          "name": "GetMe",
+          "line": 176,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "public_user",
+          "callee": "user.get",
+          "lineNumber": 29
+        },
+        {
+          "caller": "public_user",
+          "callee": "user.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "public_user",
+          "callee": "user.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "public_user",
+          "callee": "user.get",
+          "lineNumber": 31
+        },
+        {
+          "caller": "public_user",
+          "callee": "list",
+          "lineNumber": 32
+        },
+        {
+          "caller": "public_user",
+          "callee": "user.get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "_is_expired",
+          "callee": "expires_at.replace",
+          "lineNumber": 44
+        },
+        {
+          "caller": "_is_expired",
+          "callee": "datetime.now",
+          "lineNumber": 45
+        },
+        {
+          "caller": "execute",
+          "callee": "(username or \"\").lower().strip",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "(username or \"\").lower",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 72
+        },
+        {
+          "caller": "execute",
+          "callee": "self._audit.count_recent_failures",
+          "lineNumber": 75
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 79
+        },
+        {
+          "caller": "execute",
+          "callee": "self._users.get_by_username",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "user.get",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hasher.dummy_hash",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hasher.verify",
+          "lineNumber": 89
+        },
+        {
+          "caller": "execute",
+          "callee": "self._audit.log_event",
+          "lineNumber": 92
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 93
+        },
+        {
+          "caller": "execute",
+          "callee": "user.get",
+          "lineNumber": 95
+        },
+        {
+          "caller": "execute",
+          "callee": "self._audit.log_event",
+          "lineNumber": 96
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 97
+        },
+        {
+          "caller": "execute",
+          "callee": "self._tokens.issue_access",
+          "lineNumber": 99
+        },
+        {
+          "caller": "execute",
+          "callee": "self._tokens.new_refresh",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "self._refresh.save",
+          "lineNumber": 101
+        },
+        {
+          "caller": "execute",
+          "callee": "self._audit.log_event",
+          "lineNumber": 102
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 104
+        },
+        {
+          "caller": "execute",
+          "callee": "public_user",
+          "lineNumber": 108
+        },
+        {
+          "caller": "execute",
+          "callee": "self._refresh.revoke_user",
+          "lineNumber": 127
+        },
+        {
+          "caller": "execute",
+          "callee": "self._audit.log_event",
+          "lineNumber": 128
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 129
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 145
+        },
+        {
+          "caller": "execute",
+          "callee": "self._refresh.find",
+          "lineNumber": 147
+        },
+        {
+          "caller": "execute",
+          "callee": "self._tokens.hash_refresh",
+          "lineNumber": 147
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 149
+        },
+        {
+          "caller": "execute",
+          "callee": "_is_expired",
+          "lineNumber": 151
+        },
+        {
+          "caller": "execute",
+          "callee": "record.get",
+          "lineNumber": 151
+        },
+        {
+          "caller": "execute",
+          "callee": "self._refresh.revoke_user",
+          "lineNumber": 152
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 153
+        },
+        {
+          "caller": "execute",
+          "callee": "self._users.get_by_id",
+          "lineNumber": 155
+        },
+        {
+          "caller": "execute",
+          "callee": "user.get",
+          "lineNumber": 156
+        },
+        {
+          "caller": "execute",
+          "callee": "self._refresh.revoke_user",
+          "lineNumber": 157
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 158
+        },
+        {
+          "caller": "execute",
+          "callee": "self._tokens.issue_access",
+          "lineNumber": 162
+        },
+        {
+          "caller": "execute",
+          "callee": "self._tokens.new_refresh",
+          "lineNumber": 163
+        },
+        {
+          "caller": "execute",
+          "callee": "self._refresh.save",
+          "lineNumber": 164
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 168
+        },
+        {
+          "caller": "execute",
+          "callee": "public_user",
+          "lineNumber": 172
+        },
+        {
+          "caller": "execute",
+          "callee": "self._users.get_by_id",
+          "lineNumber": 181
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 183
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 184
+        },
+        {
+          "caller": "execute",
+          "callee": "public_user",
+          "lineNumber": 184
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 2,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "application/cameras/preview.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 24,
+      "classes": [
+        {
+          "name": "GetCameraPreview",
+          "startLine": 5,
+          "endLine": 17,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetCameraPreviewMeta",
+          "startLine": 20,
+          "endLine": 32,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetCameraPreview",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "GetCameraPreviewMeta",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 12
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 13
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_preview_jpeg",
+          "lineNumber": 14
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 14
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 16
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 27
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_preview_meta",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 31
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "application/fe_api/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 84,
+      "nonEmptyLines": 83,
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/cameras.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 17,
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/cameras_crud.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 245,
+      "nonEmptyLines": 219,
+      "classes": [
+        {
+          "name": "CreateCamera",
+          "startLine": 30,
+          "endLine": 187,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DeleteCamera",
+          "startLine": 191,
+          "endLine": 244,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateCamera",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteCamera",
+          "line": 191,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 61
+        },
+        {
+          "caller": "execute",
+          "callee": "str(name or \"\").strip",
+          "lineNumber": 65
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 65
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 67
+        },
+        {
+          "caller": "execute",
+          "callee": "str(rtsp_url or \"\").strip",
+          "lineNumber": 68
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 68
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "str(zone).strip().upper",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "str(zone).strip",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 76
+        },
+        {
+          "caller": "execute",
+          "callee": "_normalize_observed_ids",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 82
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_all",
+          "lineNumber": 87
+        },
+        {
+          "caller": "execute",
+          "callee": "_reject_duplicate_rtsp",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "max",
+          "lineNumber": 94
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 94
+        },
+        {
+          "caller": "execute",
+          "callee": "d.get",
+          "lineNumber": 94
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 101
+        },
+        {
+          "caller": "execute",
+          "callee": "to_create.append",
+          "lineNumber": 103
+        },
+        {
+          "caller": "execute",
+          "callee": "existing_node.get",
+          "lineNumber": 105
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 106
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 106
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "to_assign.append",
+          "lineNumber": 112
+        },
+        {
+          "caller": "execute",
+          "callee": "_kind_from_node_id",
+          "lineNumber": 118
+        },
+        {
+          "caller": "execute",
+          "callee": "_priority_for_new_node",
+          "lineNumber": 120
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.create",
+          "lineNumber": 136
+        },
+        {
+          "caller": "execute",
+          "callee": "_kind_from_node_id",
+          "lineNumber": 140
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.create",
+          "lineNumber": 142
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 147
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.update_by_node_id",
+          "lineNumber": 162
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 165
+        },
+        {
+          "caller": "execute",
+          "callee": "len",
+          "lineNumber": 170
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 172
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 173
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 181
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 181
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 184
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.is_ready",
+          "lineNumber": 184
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 209
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 212
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 214
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 216
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 220
+        },
+        {
+          "caller": "execute",
+          "callee": "cascade_delete_node",
+          "lineNumber": 223
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 228
+        },
+        {
+          "caller": "execute",
+          "callee": "nodes_deleted.append",
+          "lineNumber": 231
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 231
+        },
+        {
+          "caller": "execute",
+          "callee": "pairs_deleted.extend",
+          "lineNumber": 232
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.delete_by_camera_id",
+          "lineNumber": 234
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 236
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 239
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "application/fe_api/cameras_helpers.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 100,
+      "nonEmptyLines": 89,
+      "functions": [
+        {
+          "name": "_kind_from_node_id",
+          "startLine": 15,
+          "endLine": 20,
+          "params": [
+            "node_id"
+          ]
+        },
+        {
+          "name": "_normalize_observed_ids",
+          "startLine": 23,
+          "endLine": 42,
+          "params": [
+            "observed_node_ids"
+          ]
+        },
+        {
+          "name": "_priority_for_new_node",
+          "startLine": 45,
+          "endLine": 75,
+          "params": [
+            "nodes",
+            "nid",
+            "ntype",
+            "zone_s",
+            "node_priorities",
+            "reserved"
+          ]
+        },
+        {
+          "name": "_reject_duplicate_rtsp",
+          "startLine": 78,
+          "endLine": 99,
+          "params": [
+            "cameras",
+            "rtsp_url",
+            "exclude_camera_id",
+            "existing"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_kind_from_node_id",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "_normalize_observed_ids",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "_priority_for_new_node",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "_reject_duplicate_rtsp",
+          "line": 78,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_kind_from_node_id",
+          "callee": "node_id.startswith",
+          "lineNumber": 16
+        },
+        {
+          "caller": "_kind_from_node_id",
+          "callee": "node_id.startswith",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "set",
+          "lineNumber": 28
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "str(raw or \"\").strip",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "str",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "seen.add",
+          "lineNumber": 34
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "desired.append",
+          "lineNumber": 35
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "_kind_from_node_id",
+          "lineNumber": 37
+        },
+        {
+          "caller": "_normalize_observed_ids",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_priority_for_new_node",
+          "callee": "parse_required_start_priority",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_priority_for_new_node",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_priority_for_new_node",
+          "callee": "ensure_start_priority_unique",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_priority_for_new_node",
+          "callee": "parse_optional_end_priority",
+          "lineNumber": 75
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "rtsp_url.strip",
+          "lineNumber": 86
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "cameras.get_all",
+          "lineNumber": 87
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "doc.get",
+          "lineNumber": 89
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "int",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "int",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "(doc.get(\"url\") or \"\").strip",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "doc.get",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 95
+        },
+        {
+          "caller": "_reject_duplicate_rtsp",
+          "callee": "int",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/cameras_read.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 101,
+      "nonEmptyLines": 90,
+      "classes": [
+        {
+          "name": "GetCameras",
+          "startLine": 11,
+          "endLine": 52,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetRois",
+          "startLine": 55,
+          "endLine": 100,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetCameras",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "GetRois",
+          "line": 55,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_all",
+          "lineNumber": 25
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.is_ready",
+          "lineNumber": 27
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.get_status().get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.get_status",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 31
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 35
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 35
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 38
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 42
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "execute",
+          "callee": "camera_status",
+          "lineNumber": 44
+        },
+        {
+          "caller": "execute",
+          "callee": "runtime_by_id.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "(runtime_by_id.get(cid) or {}).get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "runtime_by_id.get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 52
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_all",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 79
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "execute",
+          "callee": "isinstance",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "rois.items",
+          "lineNumber": 83
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "(node or {}).get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "execute",
+          "callee": "str(node_id).startswith",
+          "lineNumber": 86
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 86
+        },
+        {
+          "caller": "execute",
+          "callee": "(node or {}).get",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 89
+        },
+        {
+          "caller": "execute",
+          "callee": "roi_item",
+          "lineNumber": 90
+        },
+        {
+          "caller": "execute",
+          "callee": "node_label",
+          "lineNumber": 94
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 100
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "application/fe_api/cameras_status.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 62,
+      "classes": [
+        {
+          "name": "SetCameraStatus",
+          "startLine": 19,
+          "endLine": 70,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SetCameraStatus",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 42
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 45
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.set_enabled",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.is_ready",
+          "lineNumber": 50
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.set_camera_enabled_by_id",
+          "lineNumber": 51
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 53
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 54
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.set_enabled",
+          "lineNumber": 57
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 59
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.discard_from_ready",
+          "lineNumber": 60
+        },
+        {
+          "caller": "execute",
+          "callee": "set_pairs_enabled_for_nodes",
+          "lineNumber": 62
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/fe_api/cameras_update.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 273,
+      "nonEmptyLines": 250,
+      "classes": [
+        {
+          "name": "UpdateCamera",
+          "startLine": 30,
+          "endLine": 271,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UpdateCamera",
+          "line": 30,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 67
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 77
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 82
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "str(name).strip",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 90
+        },
+        {
+          "caller": "execute",
+          "callee": "str(rtsp_url).strip",
+          "lineNumber": 93
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 93
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 95
+        },
+        {
+          "caller": "execute",
+          "callee": "str(zone).strip().upper",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "str(zone).strip",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "_normalize_observed_ids",
+          "lineNumber": 103
+        },
+        {
+          "caller": "execute",
+          "callee": "(doc.get(\"url\") or \"\").strip",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "_reject_duplicate_rtsp",
+          "lineNumber": 110
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 120
+        },
+        {
+          "caller": "execute",
+          "callee": "(n.get(\"node_type\") or \"\").lower",
+          "lineNumber": 122
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 122
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 124
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 128
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 128
+        },
+        {
+          "caller": "execute",
+          "callee": "ensure_start_priority_unique",
+          "lineNumber": 131
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 135
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.update_by_camera_id",
+          "lineNumber": 141
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.set_zone_by_camera",
+          "lineNumber": 145
+        },
+        {
+          "caller": "execute",
+          "callee": "str(\r\n                patch.get(\"zone_id\") or (doc.get(\"zone_id\") or \"\")\r\n            ).strip().upper",
+          "lineNumber": 154
+        },
+        {
+          "caller": "execute",
+          "callee": "str(\r\n                patch.get(\"zone_id\") or (doc.get(\"zone_id\") or \"\")\r\n            ).strip",
+          "lineNumber": 154
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 154
+        },
+        {
+          "caller": "execute",
+          "callee": "patch.get",
+          "lineNumber": 155
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 155
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 158
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 163
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 165
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 165
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 167
+        },
+        {
+          "caller": "execute",
+          "callee": "set",
+          "lineNumber": 169
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 174
+        },
+        {
+          "caller": "execute",
+          "callee": "_kind_from_node_id",
+          "lineNumber": 176
+        },
+        {
+          "caller": "execute",
+          "callee": "_priority_for_new_node",
+          "lineNumber": 178
+        },
+        {
+          "caller": "execute",
+          "callee": "existing.get",
+          "lineNumber": 191
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 192
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 192
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 193
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 200
+        },
+        {
+          "caller": "execute",
+          "callee": "_kind_from_node_id",
+          "lineNumber": 202
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.create",
+          "lineNumber": 204
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 209
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.update_by_node_id",
+          "lineNumber": 223
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 226
+        },
+        {
+          "caller": "execute",
+          "callee": "cascade_delete_node",
+          "lineNumber": 233
+        },
+        {
+          "caller": "execute",
+          "callee": "pairs_deleted.extend",
+          "lineNumber": 242
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 243
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_camera",
+          "lineNumber": 244
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.is_ready",
+          "lineNumber": 246
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.get_status().get",
+          "lineNumber": 247
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.get_status",
+          "lineNumber": 247
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 248
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 254
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 255
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 256
+        },
+        {
+          "caller": "execute",
+          "callee": "camera_status",
+          "lineNumber": 257
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 257
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 257
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 259
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 259
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 260
+        },
+        {
+          "caller": "execute",
+          "callee": "n.get",
+          "lineNumber": 260
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 261
+        },
+        {
+          "caller": "execute",
+          "callee": "fresh.get",
+          "lineNumber": 261
+        },
+        {
+          "caller": "execute",
+          "callee": "(runtime_row or {}).get",
+          "lineNumber": 262
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 263
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.is_ready",
+          "lineNumber": 263
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 271
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/fe_api/log_mappers.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 131,
+      "nonEmptyLines": 113,
+      "functions": [
+        {
+          "name": "iso_utc",
+          "startLine": 9,
+          "endLine": 16,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "parse_iso",
+          "startLine": 19,
+          "endLine": 31,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "parse_device",
+          "startLine": 34,
+          "endLine": 58,
+          "params": [
+            "user_agent"
+          ]
+        },
+        {
+          "name": "map_audit",
+          "startLine": 61,
+          "endLine": 70,
+          "params": [
+            "doc"
+          ]
+        },
+        {
+          "name": "map_user_action",
+          "startLine": 73,
+          "endLine": 88,
+          "params": [
+            "doc"
+          ]
+        },
+        {
+          "name": "map_dispatch",
+          "startLine": 91,
+          "endLine": 108,
+          "params": [
+            "doc"
+          ]
+        },
+        {
+          "name": "snapshot_image_url",
+          "startLine": 111,
+          "endLine": 118,
+          "params": [
+            "filename"
+          ]
+        },
+        {
+          "name": "map_notification",
+          "startLine": 121,
+          "endLine": 131,
+          "params": [
+            "doc"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "iso_utc",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "parse_iso",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "parse_device",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "map_audit",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "map_user_action",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "map_dispatch",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "snapshot_image_url",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "map_notification",
+          "line": 121,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "iso_utc",
+          "callee": "isinstance",
+          "lineNumber": 12
+        },
+        {
+          "caller": "iso_utc",
+          "callee": "value.replace",
+          "lineNumber": 14
+        },
+        {
+          "caller": "iso_utc",
+          "callee": "value.isoformat",
+          "lineNumber": 15
+        },
+        {
+          "caller": "iso_utc",
+          "callee": "str",
+          "lineNumber": 16
+        },
+        {
+          "caller": "parse_iso",
+          "callee": "value.strip",
+          "lineNumber": 22
+        },
+        {
+          "caller": "parse_iso",
+          "callee": "raw.endswith",
+          "lineNumber": 23
+        },
+        {
+          "caller": "parse_iso",
+          "callee": "datetime.fromisoformat",
+          "lineNumber": 26
+        },
+        {
+          "caller": "parse_iso",
+          "callee": "dt.replace",
+          "lineNumber": 30
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 63
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 64
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 65
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 66
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 67
+        },
+        {
+          "caller": "map_audit",
+          "callee": "parse_device",
+          "lineNumber": 68
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 68
+        },
+        {
+          "caller": "map_audit",
+          "callee": "iso_utc",
+          "lineNumber": 69
+        },
+        {
+          "caller": "map_audit",
+          "callee": "doc.get",
+          "lineNumber": 69
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "isinstance",
+          "lineNumber": 75
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 78
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 79
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 81
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 82
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 83
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "iso_utc",
+          "lineNumber": 85
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "doc.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "map_user_action",
+          "callee": "payload.get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 92
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 94
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 94
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 95
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 96
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 97
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 98
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 100
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 101
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "int",
+          "lineNumber": 102
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "isinstance",
+          "lineNumber": 102
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "iso_utc",
+          "lineNumber": 103
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 103
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 103
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 104
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 105
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "map_dispatch",
+          "callee": "doc.get",
+          "lineNumber": 107
+        },
+        {
+          "caller": "snapshot_image_url",
+          "callee": "filename.replace(\"\\\\\", \"/\").split",
+          "lineNumber": 115
+        },
+        {
+          "caller": "snapshot_image_url",
+          "callee": "filename.replace",
+          "lineNumber": 115
+        },
+        {
+          "caller": "snapshot_image_url",
+          "callee": "quote",
+          "lineNumber": 118
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 123
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 124
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 125
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 126
+        },
+        {
+          "caller": "map_notification",
+          "callee": "iso_utc",
+          "lineNumber": 127
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 127
+        },
+        {
+          "caller": "map_notification",
+          "callee": "iso_utc",
+          "lineNumber": 128
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 128
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 129
+        },
+        {
+          "caller": "map_notification",
+          "callee": "snapshot_image_url",
+          "lineNumber": 130
+        },
+        {
+          "caller": "map_notification",
+          "callee": "doc.get",
+          "lineNumber": 130
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/logs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 229,
+      "nonEmptyLines": 186,
+      "functions": [
+        {
+          "name": "_paged",
+          "startLine": 34,
+          "endLine": 35,
+          "params": [
+            "items",
+            "total",
+            "page",
+            "page_size"
+          ]
+        },
+        {
+          "name": "_time_query",
+          "startLine": 37,
+          "endLine": 50,
+          "params": [
+            "field",
+            "from_iso",
+            "to_iso"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PagedLogStore",
+          "startLine": 18,
+          "endLine": 21,
+          "methods": [
+            "find_page"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NotificationStore",
+          "startLine": 24,
+          "endLine": 31,
+          "methods": [
+            "list_for_user",
+            "mark_read",
+            "mark_all_read"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetAuditLogs",
+          "startLine": 53,
+          "endLine": 71,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetUserActionLogs",
+          "startLine": 74,
+          "endLine": 93,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetSystemActionLogs",
+          "startLine": 96,
+          "endLine": 122,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetNotifications",
+          "startLine": 125,
+          "endLine": 142,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "MarkNotificationRead",
+          "startLine": 145,
+          "endLine": 153,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "MarkAllNotificationsRead",
+          "startLine": 156,
+          "endLine": 162,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "SnapshotDocStore",
+          "startLine": 165,
+          "endLine": 166,
+          "methods": [
+            "get_by_order"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetSnapshotImage",
+          "startLine": 169,
+          "endLine": 194,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetSnapshotsByOrder",
+          "startLine": 197,
+          "endLine": 229,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PagedLogStore",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationStore",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "_paged",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "_time_query",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "GetAuditLogs",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserActionLogs",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "GetSystemActionLogs",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "GetNotifications",
+          "line": 125,
+          "isDefault": false
+        },
+        {
+          "name": "MarkNotificationRead",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "MarkAllNotificationsRead",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "SnapshotDocStore",
+          "line": 165,
+          "isDefault": false
+        },
+        {
+          "name": "GetSnapshotImage",
+          "line": 169,
+          "isDefault": false
+        },
+        {
+          "name": "GetSnapshotsByOrder",
+          "line": 197,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_time_query",
+          "callee": "parse_iso",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_time_query",
+          "callee": "parse_iso",
+          "lineNumber": 42
+        },
+        {
+          "caller": "execute",
+          "callee": "_time_query",
+          "lineNumber": 65
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.find_page",
+          "lineNumber": 66
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 69
+        },
+        {
+          "caller": "execute",
+          "callee": "_paged",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "map_audit",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "query.update",
+          "lineNumber": 87
+        },
+        {
+          "caller": "execute",
+          "callee": "_time_query",
+          "lineNumber": 87
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.find_page",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 91
+        },
+        {
+          "caller": "execute",
+          "callee": "_paged",
+          "lineNumber": 92
+        },
+        {
+          "caller": "execute",
+          "callee": "map_user_action",
+          "lineNumber": 92
+        },
+        {
+          "caller": "execute",
+          "callee": "_time_query",
+          "lineNumber": 110
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.find_page",
+          "lineNumber": 114
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 120
+        },
+        {
+          "caller": "execute",
+          "callee": "_paged",
+          "lineNumber": 121
+        },
+        {
+          "caller": "execute",
+          "callee": "map_dispatch",
+          "lineNumber": 121
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.list_for_user",
+          "lineNumber": 137
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 140
+        },
+        {
+          "caller": "execute",
+          "callee": "_paged",
+          "lineNumber": 141
+        },
+        {
+          "caller": "execute",
+          "callee": "map_notification",
+          "lineNumber": 141
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.mark_read",
+          "lineNumber": 150
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 152
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 153
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.mark_all_read",
+          "lineNumber": 161
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 162
+        },
+        {
+          "caller": "__init__",
+          "callee": "Path(snapshot_dir).resolve",
+          "lineNumber": 173
+        },
+        {
+          "caller": "__init__",
+          "callee": "Path",
+          "lineNumber": 173
+        },
+        {
+          "caller": "execute",
+          "callee": "(filename or \"\").replace(\"\\\\\", \"/\").split",
+          "lineNumber": 176
+        },
+        {
+          "caller": "execute",
+          "callee": "(filename or \"\").replace",
+          "lineNumber": 176
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 178
+        },
+        {
+          "caller": "execute",
+          "callee": "name.lower().endswith",
+          "lineNumber": 179
+        },
+        {
+          "caller": "execute",
+          "callee": "name.lower",
+          "lineNumber": 179
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 180
+        },
+        {
+          "caller": "execute",
+          "callee": "(self._root / name).resolve",
+          "lineNumber": 182
+        },
+        {
+          "caller": "execute",
+          "callee": "path.relative_to",
+          "lineNumber": 184
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 186
+        },
+        {
+          "caller": "execute",
+          "callee": "path.is_file",
+          "lineNumber": 188
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 190
+        },
+        {
+          "caller": "execute",
+          "callee": "path.read_bytes",
+          "lineNumber": 192
+        },
+        {
+          "caller": "execute",
+          "callee": "name.lower().endswith",
+          "lineNumber": 193
+        },
+        {
+          "caller": "execute",
+          "callee": "name.lower",
+          "lineNumber": 193
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 194
+        },
+        {
+          "caller": "execute",
+          "callee": "(order_id or \"\").strip",
+          "lineNumber": 206
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 208
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.get_by_order",
+          "lineNumber": 209
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 212
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 213
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 215
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 216
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 217
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 218
+        },
+        {
+          "caller": "execute",
+          "callee": "snapshot_image_url",
+          "lineNumber": 220
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 221
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get(\"created_at\").isoformat",
+          "lineNumber": 223
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 223
+        },
+        {
+          "caller": "execute",
+          "callee": "hasattr",
+          "lineNumber": 224
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 224
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 225
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 229
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 13,
+        "functionCount": 2,
+        "classCount": 11
+      }
+    },
+    {
+      "path": "application/fe_api/mappers.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 97,
+      "nonEmptyLines": 84,
+      "functions": [
+        {
+          "name": "node_label",
+          "startLine": 7,
+          "endLine": 14,
+          "params": [
+            "node_type",
+            "priority"
+          ]
+        },
+        {
+          "name": "camera_status",
+          "startLine": 17,
+          "endLine": 32,
+          "params": [
+            "db_enabled",
+            "runtime"
+          ]
+        },
+        {
+          "name": "parse_roi_id",
+          "startLine": 35,
+          "endLine": 43,
+          "params": [
+            "roi_id"
+          ]
+        },
+        {
+          "name": "roi_item",
+          "startLine": 46,
+          "endLine": 81,
+          "params": [
+            "camera_id",
+            "node_id",
+            "entry",
+            "label",
+            "kind",
+            "ref_width",
+            "ref_height"
+          ]
+        },
+        {
+          "name": "validate_box",
+          "startLine": 84,
+          "endLine": 97,
+          "params": [
+            "box",
+            "ref_width",
+            "ref_height"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "node_label",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "camera_status",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "parse_roi_id",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "roi_item",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "validate_box",
+          "line": 84,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "node_label",
+          "callee": "(node_type or \"\").lower",
+          "lineNumber": 9
+        },
+        {
+          "caller": "node_label",
+          "callee": "int",
+          "lineNumber": 11
+        },
+        {
+          "caller": "camera_status",
+          "callee": "runtime.get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "camera_status",
+          "callee": "runtime.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "parse_roi_id",
+          "callee": "roi_id.split",
+          "lineNumber": 39
+        },
+        {
+          "caller": "parse_roi_id",
+          "callee": "int",
+          "lineNumber": 41
+        },
+        {
+          "caller": "roi_item",
+          "callee": "isinstance",
+          "lineNumber": 57
+        },
+        {
+          "caller": "roi_item",
+          "callee": "list",
+          "lineNumber": 58
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 58
+        },
+        {
+          "caller": "roi_item",
+          "callee": "int",
+          "lineNumber": 59
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 59
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 59
+        },
+        {
+          "caller": "roi_item",
+          "callee": "int",
+          "lineNumber": 60
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "roi_item",
+          "callee": "entry.get",
+          "lineNumber": 63
+        },
+        {
+          "caller": "roi_item",
+          "callee": "isinstance",
+          "lineNumber": 65
+        },
+        {
+          "caller": "roi_item",
+          "callee": "list",
+          "lineNumber": 66
+        },
+        {
+          "caller": "validate_box",
+          "callee": "isinstance",
+          "lineNumber": 87
+        },
+        {
+          "caller": "validate_box",
+          "callee": "len",
+          "lineNumber": 87
+        },
+        {
+          "caller": "validate_box",
+          "callee": "float",
+          "lineNumber": 90
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/maps.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 206,
+      "nonEmptyLines": 179,
+      "functions": [
+        {
+          "name": "_iso",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "_public_version",
+          "startLine": 34,
+          "endLine": 44,
+          "params": [
+            "doc",
+            "active_id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MapVersionStore",
+          "startLine": 12,
+          "endLine": 18,
+          "methods": [
+            "insert_version",
+            "get_by_version_id",
+            "list_newest_first",
+            "list_oldest_first",
+            "delete_by_version_id",
+            "count_all"
+          ],
+          "properties": []
+        },
+        {
+          "name": "MapStateStore",
+          "startLine": 21,
+          "endLine": 23,
+          "methods": [
+            "get_active_version_id",
+            "set_active_version_id"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ImportMap",
+          "startLine": 47,
+          "endLine": 123,
+          "methods": [
+            "__init__",
+            "execute",
+            "_prune_old"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ListMapVersions",
+          "startLine": 126,
+          "endLine": 135,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "SetActiveMap",
+          "startLine": 138,
+          "endLine": 148,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetCompress",
+          "startLine": 151,
+          "endLine": 175,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DownloadMapZip",
+          "startLine": 178,
+          "endLine": 206,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "MapVersionStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "MapStateStore",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "_iso",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "_public_version",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "ImportMap",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "ListMapVersions",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "SetActiveMap",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "GetCompress",
+          "line": 151,
+          "isDefault": false
+        },
+        {
+          "name": "DownloadMapZip",
+          "line": 178,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_iso",
+          "callee": "isinstance",
+          "lineNumber": 27
+        },
+        {
+          "caller": "_iso",
+          "callee": "value.replace",
+          "lineNumber": 29
+        },
+        {
+          "caller": "_iso",
+          "callee": "value.isoformat",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_public_version",
+          "callee": "doc.get",
+          "lineNumber": 35
+        },
+        {
+          "caller": "_public_version",
+          "callee": "doc.get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_public_version",
+          "callee": "doc.get",
+          "lineNumber": 39
+        },
+        {
+          "caller": "_public_version",
+          "callee": "doc.get",
+          "lineNumber": 40
+        },
+        {
+          "caller": "_public_version",
+          "callee": "_iso",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_public_version",
+          "callee": "doc.get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_public_version",
+          "callee": "doc.get",
+          "lineNumber": 42
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 59
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 59
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 60
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 60
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 69
+        },
+        {
+          "caller": "execute",
+          "callee": "len",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 71
+        },
+        {
+          "caller": "execute",
+          "callee": "validate_zip_has_compress",
+          "lineNumber": 76
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "uuid.uuid4",
+          "lineNumber": 80
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.save",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "self._versions.insert_version",
+          "lineNumber": 82
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.set_active_version_id",
+          "lineNumber": 92
+        },
+        {
+          "caller": "execute",
+          "callee": "self._prune_old",
+          "lineNumber": 93
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "self._state.get_active_version_id",
+          "lineNumber": 105
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "self._versions.count_all",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "self._versions.list_oldest_first",
+          "lineNumber": 107
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "doc.get",
+          "lineNumber": 110
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "victim.get",
+          "lineNumber": 116
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "self._versions.delete_by_version_id",
+          "lineNumber": 117
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "self._store.delete",
+          "lineNumber": 119
+        },
+        {
+          "caller": "_prune_old",
+          "callee": "removed.append",
+          "lineNumber": 122
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.get_active_version_id",
+          "lineNumber": 132
+        },
+        {
+          "caller": "execute",
+          "callee": "self._versions.list_newest_first",
+          "lineNumber": 133
+        },
+        {
+          "caller": "execute",
+          "callee": "_public_version",
+          "lineNumber": 134
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 135
+        },
+        {
+          "caller": "execute",
+          "callee": "self._versions.get_by_version_id",
+          "lineNumber": 144
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 146
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.set_active_version_id",
+          "lineNumber": 147
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 148
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.get_active_version_id",
+          "lineNumber": 163
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 165
+        },
+        {
+          "caller": "execute",
+          "callee": "self._versions.get_by_version_id",
+          "lineNumber": 166
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 168
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.read_compress",
+          "lineNumber": 170
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 172
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 174
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 174
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 175
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.get_active_version_id",
+          "lineNumber": 190
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 192
+        },
+        {
+          "caller": "execute",
+          "callee": "self._versions.get_by_version_id",
+          "lineNumber": 193
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 195
+        },
+        {
+          "caller": "execute",
+          "callee": "self._store.read_bytes",
+          "lineNumber": 197
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 199
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 200
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 201
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 2,
+        "classCount": 7
+      }
+    },
+    {
+      "path": "application/fe_api/nodes.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 214,
+      "nonEmptyLines": 183,
+      "functions": [
+        {
+          "name": "_lock_from_doc",
+          "startLine": 12,
+          "endLine": 18,
+          "params": [
+            "doc"
+          ]
+        },
+        {
+          "name": "_node_item",
+          "startLine": 21,
+          "endLine": 38,
+          "params": [
+            "doc"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GetNodes",
+          "startLine": 41,
+          "endLine": 50,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "SetMaintenance",
+          "startLine": 53,
+          "endLine": 87,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "SetLock",
+          "startLine": 90,
+          "endLine": 115,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "Unlock",
+          "startLine": 118,
+          "endLine": 152,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "UpdateNode",
+          "startLine": 155,
+          "endLine": 214,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_lock_from_doc",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "_node_item",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "GetNodes",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "SetMaintenance",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "SetLock",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "Unlock",
+          "line": 118,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateNode",
+          "line": 155,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_lock_from_doc",
+          "callee": "doc.get",
+          "lineNumber": 13
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "isinstance",
+          "lineNumber": 13
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "doc.get",
+          "lineNumber": 13
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "bool",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "raw.get",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "bool",
+          "lineNumber": 16
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "raw.get",
+          "lineNumber": 16
+        },
+        {
+          "caller": "_lock_from_doc",
+          "callee": "raw.get",
+          "lineNumber": 17
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 23
+        },
+        {
+          "caller": "_node_item",
+          "callee": "bool",
+          "lineNumber": 24
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 24
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 26
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "_node_item",
+          "callee": "node_label",
+          "lineNumber": 28
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_node_item",
+          "callee": "bool",
+          "lineNumber": 33
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 33
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "_node_item",
+          "callee": "doc.get",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_node_item",
+          "callee": "_lock_from_doc",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_by_zone",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_all",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 50
+        },
+        {
+          "caller": "execute",
+          "callee": "_node_item",
+          "lineNumber": 50
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_by_id",
+          "lineNumber": 71
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "(reason or \"\").strip",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 75
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.set_maintenance",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "(reason or \"\").strip",
+          "lineNumber": 79
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.discard_from_ready",
+          "lineNumber": 82
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 83
+        },
+        {
+          "caller": "execute",
+          "callee": "(reason or \"\").strip",
+          "lineNumber": 86
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_by_id",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 102
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.set_lock",
+          "lineNumber": 105
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_by_id",
+          "lineNumber": 106
+        },
+        {
+          "caller": "execute",
+          "callee": "_lock_from_doc",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 108
+        },
+        {
+          "caller": "execute",
+          "callee": "hasattr",
+          "lineNumber": 108
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.apply_persisted_lock",
+          "lineNumber": 109
+        },
+        {
+          "caller": "execute",
+          "callee": "lock.get",
+          "lineNumber": 113
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 115
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 129
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_by_id",
+          "lineNumber": 132
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 134
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.set_lock",
+          "lineNumber": 141
+        },
+        {
+          "caller": "execute",
+          "callee": "self._repo.get_by_id",
+          "lineNumber": 143
+        },
+        {
+          "caller": "execute",
+          "callee": "_lock_from_doc",
+          "lineNumber": 144
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 145
+        },
+        {
+          "caller": "execute",
+          "callee": "hasattr",
+          "lineNumber": 145
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.apply_persisted_lock",
+          "lineNumber": 146
+        },
+        {
+          "caller": "execute",
+          "callee": "lock.get",
+          "lineNumber": 150
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 152
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 175
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 180
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 185
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 189
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 191
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 196
+        },
+        {
+          "caller": "execute",
+          "callee": "(node.get(\"node_type\") or \"\").lower",
+          "lineNumber": 197
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 197
+        },
+        {
+          "caller": "execute",
+          "callee": "str(node.get(\"zone_id\") or \"\").strip().upper",
+          "lineNumber": 199
+        },
+        {
+          "caller": "execute",
+          "callee": "str(node.get(\"zone_id\") or \"\").strip",
+          "lineNumber": 199
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 199
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 199
+        },
+        {
+          "caller": "execute",
+          "callee": "ensure_start_priority_unique",
+          "lineNumber": 200
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 203
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 208
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 210
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.update_by_node_id",
+          "lineNumber": 212
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 213
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 214
+        },
+        {
+          "caller": "execute",
+          "callee": "_node_item",
+          "lineNumber": 214
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 7,
+        "functionCount": 2,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "application/fe_api/pairs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 400,
+      "nonEmptyLines": 348,
+      "functions": [
+        {
+          "name": "parse_pair_id",
+          "startLine": 20,
+          "endLine": 29,
+          "params": [
+            "pair_id"
+          ]
+        },
+        {
+          "name": "make_pair_id",
+          "startLine": 32,
+          "endLine": 33,
+          "params": [
+            "start",
+            "end"
+          ]
+        },
+        {
+          "name": "_resolve_key",
+          "startLine": 36,
+          "endLine": 51,
+          "params": [
+            "pair_id",
+            "start_node_id",
+            "end_node_id"
+          ]
+        },
+        {
+          "name": "_validate_nodes_for_pair",
+          "startLine": 54,
+          "endLine": 72,
+          "params": [
+            "nodes",
+            "cameras",
+            "start_id",
+            "end_id",
+            "pair_type"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GetNodePairs",
+          "startLine": 75,
+          "endLine": 144,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "CreatePairFe",
+          "startLine": 147,
+          "endLine": 207,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "UpdatePairFe",
+          "startLine": 210,
+          "endLine": 322,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DeletePairFe",
+          "startLine": 325,
+          "endLine": 360,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "SetPairEnabledFe",
+          "startLine": 363,
+          "endLine": 400,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "parse_pair_id",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "make_pair_id",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "_resolve_key",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "_validate_nodes_for_pair",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "GetNodePairs",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "CreatePairFe",
+          "line": 147,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePairFe",
+          "line": 210,
+          "isDefault": false
+        },
+        {
+          "name": "DeletePairFe",
+          "line": 325,
+          "isDefault": false
+        },
+        {
+          "name": "SetPairEnabledFe",
+          "line": 363,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parse_pair_id",
+          "callee": "ValueError",
+          "lineNumber": 23
+        },
+        {
+          "caller": "parse_pair_id",
+          "callee": "pair_id.split",
+          "lineNumber": 24
+        },
+        {
+          "caller": "parse_pair_id",
+          "callee": "start.strip",
+          "lineNumber": 25
+        },
+        {
+          "caller": "parse_pair_id",
+          "callee": "ValueError",
+          "lineNumber": 26
+        },
+        {
+          "caller": "_resolve_key",
+          "callee": "parse_pair_id",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_resolve_key",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 46
+        },
+        {
+          "caller": "_resolve_key",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 49
+        },
+        {
+          "caller": "_validate_nodes_for_pair",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_validate_nodes_for_pair",
+          "callee": "require_node_ready_for_pair",
+          "lineNumber": 63
+        },
+        {
+          "caller": "_validate_nodes_for_pair",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 68
+        },
+        {
+          "caller": "_validate_nodes_for_pair",
+          "callee": "require_node_ready_for_pair",
+          "lineNumber": 71
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.list_all",
+          "lineNumber": 85
+        },
+        {
+          "caller": "_node",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 93
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "execute",
+          "callee": "make_pair_id",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 101
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "reasons.append",
+          "lineNumber": 109
+        },
+        {
+          "caller": "execute",
+          "callee": "_node",
+          "lineNumber": 114
+        },
+        {
+          "caller": "execute",
+          "callee": "reasons.append",
+          "lineNumber": 117
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 119
+        },
+        {
+          "caller": "execute",
+          "callee": "reasons.append",
+          "lineNumber": 121
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 122
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 124
+        },
+        {
+          "caller": "execute",
+          "callee": "reasons.append",
+          "lineNumber": 125
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 126
+        },
+        {
+          "caller": "execute",
+          "callee": "isinstance",
+          "lineNumber": 126
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 126
+        },
+        {
+          "caller": "execute",
+          "callee": "lock.get",
+          "lineNumber": 127
+        },
+        {
+          "caller": "execute",
+          "callee": "lock.get",
+          "lineNumber": 127
+        },
+        {
+          "caller": "execute",
+          "callee": "reasons.append",
+          "lineNumber": 129
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 131
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 137
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 138
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 138
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 139
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 139
+        },
+        {
+          "caller": "execute",
+          "callee": "\"; \".join",
+          "lineNumber": 141
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 144
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 171
+        },
+        {
+          "caller": "execute",
+          "callee": "(pair_type or \"normal\").lower().strip",
+          "lineNumber": 175
+        },
+        {
+          "caller": "execute",
+          "callee": "(pair_type or \"normal\").lower",
+          "lineNumber": 175
+        },
+        {
+          "caller": "execute",
+          "callee": "_validate_nodes_for_pair",
+          "lineNumber": 177
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.find_by_key",
+          "lineNumber": 184
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 185
+        },
+        {
+          "caller": "execute",
+          "callee": "name.strip",
+          "lineNumber": 194
+        },
+        {
+          "caller": "execute",
+          "callee": "name.strip",
+          "lineNumber": 195
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.create",
+          "lineNumber": 197
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.reload",
+          "lineNumber": 198
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 199
+        },
+        {
+          "caller": "execute",
+          "callee": "make_pair_id",
+          "lineNumber": 200
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 236
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 241
+        },
+        {
+          "caller": "execute",
+          "callee": "parse_pair_id",
+          "lineNumber": 247
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 249
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.find_by_key",
+          "lineNumber": 251
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 253
+        },
+        {
+          "caller": "execute",
+          "callee": "any",
+          "lineNumber": 255
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 266
+        },
+        {
+          "caller": "execute",
+          "callee": "(pair_type or current.get(\"pair_type\") or \"normal\").lower().strip",
+          "lineNumber": 269
+        },
+        {
+          "caller": "execute",
+          "callee": "(pair_type or current.get(\"pair_type\") or \"normal\").lower",
+          "lineNumber": 269
+        },
+        {
+          "caller": "execute",
+          "callee": "current.get",
+          "lineNumber": 269
+        },
+        {
+          "caller": "execute",
+          "callee": "_validate_nodes_for_pair",
+          "lineNumber": 284
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.find_by_key",
+          "lineNumber": 291
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 293
+        },
+        {
+          "caller": "execute",
+          "callee": "name.strip",
+          "lineNumber": 305
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.update_by_key",
+          "lineNumber": 307
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 309
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.reload",
+          "lineNumber": 311
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 312
+        },
+        {
+          "caller": "execute",
+          "callee": "make_pair_id",
+          "lineNumber": 313
+        },
+        {
+          "caller": "execute",
+          "callee": "updates.get",
+          "lineNumber": 317
+        },
+        {
+          "caller": "execute",
+          "callee": "current.get",
+          "lineNumber": 317
+        },
+        {
+          "caller": "execute",
+          "callee": "updates.get",
+          "lineNumber": 318
+        },
+        {
+          "caller": "execute",
+          "callee": "current.get",
+          "lineNumber": 319
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 342
+        },
+        {
+          "caller": "execute",
+          "callee": "_resolve_key",
+          "lineNumber": 346
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.delete",
+          "lineNumber": 350
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 352
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.reload",
+          "lineNumber": 354
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 355
+        },
+        {
+          "caller": "execute",
+          "callee": "make_pair_id",
+          "lineNumber": 356
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 381
+        },
+        {
+          "caller": "execute",
+          "callee": "_resolve_key",
+          "lineNumber": 385
+        },
+        {
+          "caller": "execute",
+          "callee": "self._pairs.set_enabled",
+          "lineNumber": 389
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 391
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.reload",
+          "lineNumber": 393
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 394
+        },
+        {
+          "caller": "execute",
+          "callee": "make_pair_id",
+          "lineNumber": 395
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 9,
+        "functionCount": 4,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "application/fe_api/poll.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 135,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "compute_etag",
+          "startLine": 37,
+          "endLine": 39,
+          "params": [
+            "payload"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "_CamerasUC",
+          "startLine": 17,
+          "endLine": 18,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "_ZonesUC",
+          "startLine": 21,
+          "endLine": 22,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "_NotifStore",
+          "startLine": 25,
+          "endLine": 26,
+          "methods": [
+            "count_unread"
+          ],
+          "properties": []
+        },
+        {
+          "name": "_MapState",
+          "startLine": 29,
+          "endLine": 30,
+          "methods": [
+            "get_active_version_id"
+          ],
+          "properties": []
+        },
+        {
+          "name": "_RuntimeNodesUC",
+          "startLine": 33,
+          "endLine": 34,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetPollSnapshot",
+          "startLine": 42,
+          "endLine": 135,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_CamerasUC",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "_ZonesUC",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "_NotifStore",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "_MapState",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "_RuntimeNodesUC",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "compute_etag",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "GetPollSnapshot",
+          "line": 42,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "compute_etag",
+          "callee": "json.dumps",
+          "lineNumber": 38
+        },
+        {
+          "caller": "compute_etag",
+          "callee": "hashlib.sha256(raw.encode(\"utf-8\")).hexdigest",
+          "lineNumber": 39
+        },
+        {
+          "caller": "compute_etag",
+          "callee": "hashlib.sha256",
+          "lineNumber": 39
+        },
+        {
+          "caller": "compute_etag",
+          "callee": "raw.encode",
+          "lineNumber": 39
+        },
+        {
+          "caller": "execute",
+          "callee": "datetime.now(timezone.utc).isoformat",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "datetime.now",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.execute",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "cam.data.get",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 82
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 87
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "self._zones.execute",
+          "lineNumber": 94
+        },
+        {
+          "caller": "execute",
+          "callee": "zones.data.get",
+          "lineNumber": 97
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 101
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 102
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 103
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 104
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 105
+        },
+        {
+          "caller": "execute",
+          "callee": "self._notifications.count_unread",
+          "lineNumber": 111
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 112
+        },
+        {
+          "caller": "execute",
+          "callee": "self._map_state.get_active_version_id",
+          "lineNumber": 115
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime_nodes.execute",
+          "lineNumber": 122
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 125
+        },
+        {
+          "caller": "execute",
+          "callee": "rt.data.get",
+          "lineNumber": 125
+        },
+        {
+          "caller": "execute",
+          "callee": "list",
+          "lineNumber": 126
+        },
+        {
+          "caller": "execute",
+          "callee": "rt.data.get",
+          "lineNumber": 126
+        },
+        {
+          "caller": "execute",
+          "callee": "body.items",
+          "lineNumber": 132
+        },
+        {
+          "caller": "execute",
+          "callee": "compute_etag",
+          "lineNumber": 133
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 7,
+        "functionCount": 1,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "application/fe_api/priority_rules.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 89,
+      "nonEmptyLines": 79,
+      "functions": [
+        {
+          "name": "find_start_conflict",
+          "startLine": 10,
+          "endLine": 24,
+          "params": [
+            "nodes",
+            "zone_id",
+            "priority",
+            "exclude_node_id"
+          ]
+        },
+        {
+          "name": "ensure_start_priority_unique",
+          "startLine": 27,
+          "endLine": 50,
+          "params": [
+            "nodes",
+            "zone_id",
+            "priority",
+            "exclude_node_id"
+          ]
+        },
+        {
+          "name": "parse_required_start_priority",
+          "startLine": 53,
+          "endLine": 75,
+          "params": [
+            "node_id",
+            "node_priorities"
+          ]
+        },
+        {
+          "name": "parse_optional_end_priority",
+          "startLine": 78,
+          "endLine": 89,
+          "params": [
+            "node_id",
+            "node_priorities"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "find_start_conflict",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ensure_start_priority_unique",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "parse_required_start_priority",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "parse_optional_end_priority",
+          "line": 78,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "find_start_conflict",
+          "callee": "nodes.find_start_by_zone_priority",
+          "lineNumber": 18
+        },
+        {
+          "caller": "find_start_conflict",
+          "callee": "conflict.get",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ensure_start_priority_unique",
+          "callee": "(zone_id or \"\").strip().upper",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ensure_start_priority_unique",
+          "callee": "(zone_id or \"\").strip",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ensure_start_priority_unique",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ensure_start_priority_unique",
+          "callee": "find_start_conflict",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ensure_start_priority_unique",
+          "callee": "conflict.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ensure_start_priority_unique",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 46
+        },
+        {
+          "caller": "parse_required_start_priority",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 59
+        },
+        {
+          "caller": "parse_required_start_priority",
+          "callee": "int",
+          "lineNumber": 64
+        },
+        {
+          "caller": "parse_required_start_priority",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 66
+        },
+        {
+          "caller": "parse_required_start_priority",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 71
+        },
+        {
+          "caller": "parse_optional_end_priority",
+          "callee": "int",
+          "lineNumber": 86
+        },
+        {
+          "caller": "parse_optional_end_priority",
+          "callee": "max",
+          "lineNumber": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/rois.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 224,
+      "nonEmptyLines": 205,
+      "classes": [
+        {
+          "name": "_RoiWriteBase",
+          "startLine": 21,
+          "endLine": 65,
+          "methods": [
+            "__init__",
+            "_resolve",
+            "_roi_doc"
+          ],
+          "properties": []
+        },
+        {
+          "name": "CreateRoi",
+          "startLine": 68,
+          "endLine": 113,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "UpdateRoi",
+          "startLine": 116,
+          "endLine": 194,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DeleteRoi",
+          "startLine": 197,
+          "endLine": 224,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_RoiWriteBase",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "CreateRoi",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateRoi",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteRoi",
+          "line": 197,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_resolve",
+          "callee": "parse_roi_id",
+          "lineNumber": 45
+        },
+        {
+          "caller": "_resolve",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 47
+        },
+        {
+          "caller": "_resolve",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 52
+        },
+        {
+          "caller": "_resolve",
+          "callee": "int",
+          "lineNumber": 55
+        },
+        {
+          "caller": "_roi_doc",
+          "callee": "float",
+          "lineNumber": 60
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 75
+        },
+        {
+          "caller": "execute",
+          "callee": "validate_box",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 80
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 83
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 86
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 87
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 89
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 93
+        },
+        {
+          "caller": "execute",
+          "callee": "node_id.startswith",
+          "lineNumber": 94
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.upsert_roi",
+          "lineNumber": 96
+        },
+        {
+          "caller": "execute",
+          "callee": "self._roi_doc",
+          "lineNumber": 97
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "(cam2 or {}).get",
+          "lineNumber": 101
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 103
+        },
+        {
+          "caller": "execute",
+          "callee": "roi_item",
+          "lineNumber": 104
+        },
+        {
+          "caller": "execute",
+          "callee": "self._roi_doc",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "node_label",
+          "lineNumber": 108
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 108
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 113
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 120
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 124
+        },
+        {
+          "caller": "execute",
+          "callee": "enumerate",
+          "lineNumber": 129
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 130
+        },
+        {
+          "caller": "execute",
+          "callee": "validate_box",
+          "lineNumber": 131
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 133
+        },
+        {
+          "caller": "execute",
+          "callee": "self._resolve",
+          "lineNumber": 135
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 136
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 136
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 136
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 137
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 137
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 138
+        },
+        {
+          "caller": "execute",
+          "callee": "raw.get",
+          "lineNumber": 138
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 141
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 143
+        },
+        {
+          "caller": "execute",
+          "callee": "fail.data.get",
+          "lineNumber": 143
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 147
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 149
+        },
+        {
+          "caller": "execute",
+          "callee": "cam_cache[camera_id].get",
+          "lineNumber": 154
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 156
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_by_id",
+          "lineNumber": 161
+        },
+        {
+          "caller": "execute",
+          "callee": "(node or {}).get",
+          "lineNumber": 162
+        },
+        {
+          "caller": "execute",
+          "callee": "node_id.startswith",
+          "lineNumber": 163
+        },
+        {
+          "caller": "execute",
+          "callee": "self._roi_doc",
+          "lineNumber": 165
+        },
+        {
+          "caller": "execute",
+          "callee": "list",
+          "lineNumber": 165
+        },
+        {
+          "caller": "execute",
+          "callee": "prepared.append",
+          "lineNumber": 166
+        },
+        {
+          "caller": "execute",
+          "callee": "(node or {}).get",
+          "lineNumber": 172
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.upsert_roi",
+          "lineNumber": 178
+        },
+        {
+          "caller": "execute",
+          "callee": "dict",
+          "lineNumber": 180
+        },
+        {
+          "caller": "execute",
+          "callee": "cam.get",
+          "lineNumber": 180
+        },
+        {
+          "caller": "execute",
+          "callee": "out.append",
+          "lineNumber": 183
+        },
+        {
+          "caller": "execute",
+          "callee": "roi_item",
+          "lineNumber": 184
+        },
+        {
+          "caller": "execute",
+          "callee": "node_label",
+          "lineNumber": 188
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 194
+        },
+        {
+          "caller": "execute",
+          "callee": "require_inference_paused",
+          "lineNumber": 204
+        },
+        {
+          "caller": "execute",
+          "callee": "self._resolve",
+          "lineNumber": 207
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_by_id",
+          "lineNumber": 210
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 212
+        },
+        {
+          "caller": "execute",
+          "callee": "cam.get",
+          "lineNumber": 213
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 215
+        },
+        {
+          "caller": "execute",
+          "callee": "cascade_delete_pairs_for_node",
+          "lineNumber": 218
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.delete_roi",
+          "lineNumber": 219
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 220
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "application/fe_api/runtime_nodes.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 22,
+      "classes": [
+        {
+          "name": "GetNodeRuntimeState",
+          "startLine": 11,
+          "endLine": 29,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetNodeRuntimeState",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 22
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 23
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.snapshot_points",
+          "lineNumber": 24
+        },
+        {
+          "caller": "execute",
+          "callee": "map_runtime_item",
+          "lineNumber": 26
+        },
+        {
+          "caller": "execute",
+          "callee": "snap.items",
+          "lineNumber": 26
+        },
+        {
+          "caller": "execute",
+          "callee": "items.sort",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "r.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/fe_api/sync_rules.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 153,
+      "nonEmptyLines": 134,
+      "functions": [
+        {
+          "name": "require_inference_paused",
+          "startLine": 25,
+          "endLine": 35,
+          "params": [
+            "inference"
+          ]
+        },
+        {
+          "name": "cascade_delete_pairs_for_node",
+          "startLine": 38,
+          "endLine": 50,
+          "params": [
+            "pairs",
+            "node_id"
+          ]
+        },
+        {
+          "name": "cascade_delete_node",
+          "startLine": 53,
+          "endLine": 95,
+          "params": [
+            "nodes",
+            "cameras",
+            "pairs",
+            "state",
+            "node_id"
+          ]
+        },
+        {
+          "name": "set_pairs_enabled_for_nodes",
+          "startLine": 98,
+          "endLine": 118,
+          "params": [
+            "pairs",
+            "node_ids",
+            "enabled"
+          ]
+        },
+        {
+          "name": "require_node_ready_for_pair",
+          "startLine": 121,
+          "endLine": 153,
+          "params": [
+            "nodes",
+            "cameras",
+            "node_id",
+            "role"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "require_inference_paused",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "cascade_delete_pairs_for_node",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "cascade_delete_node",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "set_pairs_enabled_for_nodes",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "require_node_ready_for_pair",
+          "line": 121,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "require_inference_paused",
+          "callee": "inference.is_ready",
+          "lineNumber": 30
+        },
+        {
+          "caller": "require_inference_paused",
+          "callee": "inference.is_paused",
+          "lineNumber": 32
+        },
+        {
+          "caller": "require_inference_paused",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 34
+        },
+        {
+          "caller": "cascade_delete_pairs_for_node",
+          "callee": "pairs.list_containing_node",
+          "lineNumber": 44
+        },
+        {
+          "caller": "cascade_delete_pairs_for_node",
+          "callee": "doc.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "cascade_delete_pairs_for_node",
+          "callee": "doc.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "cascade_delete_pairs_for_node",
+          "callee": "pairs.delete",
+          "lineNumber": 47
+        },
+        {
+          "caller": "cascade_delete_pairs_for_node",
+          "callee": "deleted.append",
+          "lineNumber": 49
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "(node_id or \"\").strip",
+          "lineNumber": 65
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "nodes.get_by_id",
+          "lineNumber": 66
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "cascade_delete_pairs_for_node",
+          "lineNumber": 75
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "node.get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "cameras.get_by_id",
+          "lineNumber": 80
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "int",
+          "lineNumber": 80
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "(cam or {}).get",
+          "lineNumber": 81
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "cameras.delete_roi",
+          "lineNumber": 83
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "int",
+          "lineNumber": 83
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "nodes.delete_by_node_id",
+          "lineNumber": 86
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "state.is_ready",
+          "lineNumber": 87
+        },
+        {
+          "caller": "cascade_delete_node",
+          "callee": "state.discard_from_ready",
+          "lineNumber": 88
+        },
+        {
+          "caller": "set_pairs_enabled_for_nodes",
+          "callee": "set",
+          "lineNumber": 106
+        },
+        {
+          "caller": "set_pairs_enabled_for_nodes",
+          "callee": "pairs.list_containing_node",
+          "lineNumber": 109
+        },
+        {
+          "caller": "set_pairs_enabled_for_nodes",
+          "callee": "doc.get",
+          "lineNumber": 110
+        },
+        {
+          "caller": "set_pairs_enabled_for_nodes",
+          "callee": "doc.get",
+          "lineNumber": 111
+        },
+        {
+          "caller": "set_pairs_enabled_for_nodes",
+          "callee": "seen.add",
+          "lineNumber": 115
+        },
+        {
+          "caller": "set_pairs_enabled_for_nodes",
+          "callee": "pairs.set_enabled",
+          "lineNumber": 116
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "nodes.get_by_id",
+          "lineNumber": 130
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 132
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "node.get",
+          "lineNumber": 135
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 137
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "cameras.get_by_id",
+          "lineNumber": 141
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "int",
+          "lineNumber": 141
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 143
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "cam.get",
+          "lineNumber": 147
+        },
+        {
+          "caller": "require_node_ready_for_pair",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 149
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/fe_api/zones.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 85,
+      "nonEmptyLines": 76,
+      "classes": [
+        {
+          "name": "GetZones",
+          "startLine": 15,
+          "endLine": 85,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetZones",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._zones.get_all",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_all",
+          "lineNumber": 30
+        },
+        {
+          "caller": "execute",
+          "callee": "self._nodes.get_all",
+          "lineNumber": 31
+        },
+        {
+          "caller": "execute",
+          "callee": "(cam.get(\"zone_id\") or \"\").upper",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "cam.get",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "cams_by_zone.setdefault(z, []).append",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "cams_by_zone.setdefault",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "(node.get(\"zone_id\") or \"\").upper",
+          "lineNumber": 41
+        },
+        {
+          "caller": "execute",
+          "callee": "node.get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "execute",
+          "callee": "nodes_by_zone.get",
+          "lineNumber": 42
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.is_ready",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.get_status().get",
+          "lineNumber": 48
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.get_status",
+          "lineNumber": 48
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 51
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 52
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 53
+        },
+        {
+          "caller": "execute",
+          "callee": "row.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "execute",
+          "callee": "(doc.get(\"zone_id\") or \"\").upper",
+          "lineNumber": 57
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 57
+        },
+        {
+          "caller": "execute",
+          "callee": "cams_by_zone.get",
+          "lineNumber": 58
+        },
+        {
+          "caller": "execute",
+          "callee": "cam.get",
+          "lineNumber": 62
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 65
+        },
+        {
+          "caller": "execute",
+          "callee": "ram_enabled.get",
+          "lineNumber": 66
+        },
+        {
+          "caller": "execute",
+          "callee": "ram_streaming.get",
+          "lineNumber": 68
+        },
+        {
+          "caller": "execute",
+          "callee": "items.append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 75
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "doc.get",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "execute",
+          "callee": "nodes_by_zone.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 85
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/ports.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 257,
+      "nonEmptyLines": 209,
+      "classes": [
+        {
+          "name": "CameraConfigRepository",
+          "startLine": 13,
+          "endLine": 24,
+          "methods": [
+            "get_all",
+            "get_by_area",
+            "get_by_id",
+            "create",
+            "update_by_camera_id",
+            "delete_by_camera_id",
+            "set_enabled",
+            "upsert_roi",
+            "delete_roi"
+          ],
+          "properties": []
+        },
+        {
+          "name": "PairsRepositoryPort",
+          "startLine": 27,
+          "endLine": 45,
+          "methods": [
+            "get_by_zone",
+            "list_all",
+            "set_enabled",
+            "create",
+            "delete",
+            "find_by_key",
+            "update_by_key",
+            "get_as_tuples",
+            "list_containing_node"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NodeRepositoryPort",
+          "startLine": 48,
+          "endLine": 75,
+          "methods": [
+            "get_all",
+            "get_by_zone",
+            "get_by_id",
+            "get_by_camera",
+            "set_enabled",
+            "set_maintenance",
+            "set_lock",
+            "clear_system_lock_by_order",
+            "list_with_lock",
+            "set_camera_nodes_enabled",
+            "set_zone_by_camera",
+            "update_priority",
+            "find_start_by_zone_priority",
+            "update_by_node_id",
+            "create",
+            "delete_by_node_id"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ZoneRepositoryPort",
+          "startLine": 78,
+          "endLine": 79,
+          "methods": [
+            "get_all"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ActionAuditPort",
+          "startLine": 82,
+          "endLine": 93,
+          "methods": [
+            "log"
+          ],
+          "properties": []
+        },
+        {
+          "name": "SystemActionAuditPort",
+          "startLine": 96,
+          "endLine": 125,
+          "methods": [
+            "log",
+            "bind_loop",
+            "log_outbound"
+          ],
+          "properties": []
+        },
+        {
+          "name": "CameraRuntime",
+          "startLine": 128,
+          "endLine": 137,
+          "methods": [
+            "is_ready",
+            "start_all",
+            "stop_all",
+            "set_zone_enabled",
+            "set_camera_enabled_by_id",
+            "get_status",
+            "get_preview_jpeg",
+            "get_preview_meta",
+            "get_rtsp_url"
+          ],
+          "properties": []
+        },
+        {
+          "name": "InferencePort",
+          "startLine": 140,
+          "endLine": 147,
+          "methods": [
+            "is_ready",
+            "pause",
+            "resume",
+            "is_paused",
+            "is_model_loaded",
+            "wait_model_ready",
+            "load_error"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NodeStateStore",
+          "startLine": 150,
+          "endLine": 165,
+          "methods": [
+            "is_ready",
+            "update_detection",
+            "has_node",
+            "discard_from_ready",
+            "get_detected_start_nodes",
+            "snapshot_points",
+            "apply_reset",
+            "ready_starts",
+            "ready_ends",
+            "get_validate_pairs",
+            "set_pair_used",
+            "process_starts",
+            "process_ends"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DispatchGateway",
+          "startLine": 168,
+          "endLine": 170,
+          "methods": [
+            "send"
+          ],
+          "properties": []
+        },
+        {
+          "name": "IcsOrderQueryPort",
+          "startLine": 173,
+          "endLine": 175,
+          "methods": [
+            "get_order_list"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RuntimeControl",
+          "startLine": 178,
+          "endLine": 182,
+          "methods": [
+            "start",
+            "stop",
+            "status",
+            "reload"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DbHealthPort",
+          "startLine": 185,
+          "endLine": 187,
+          "methods": [
+            "ping"
+          ],
+          "properties": []
+        },
+        {
+          "name": "WebrtcRunnerPort",
+          "startLine": 190,
+          "endLine": 192,
+          "methods": [
+            "status"
+          ],
+          "properties": []
+        },
+        {
+          "name": "UserRepositoryPort",
+          "startLine": 195,
+          "endLine": 197,
+          "methods": [
+            "get_by_username",
+            "get_by_id"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RefreshTokenStore",
+          "startLine": 200,
+          "endLine": 209,
+          "methods": [
+            "save",
+            "find",
+            "revoke_user"
+          ],
+          "properties": []
+        },
+        {
+          "name": "PasswordHasher",
+          "startLine": 212,
+          "endLine": 217,
+          "methods": [
+            "hash",
+            "verify",
+            "dummy_hash"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TokenIssuer",
+          "startLine": 220,
+          "endLine": 225,
+          "methods": [
+            "issue_access",
+            "decode_access",
+            "new_refresh",
+            "hash_refresh"
+          ],
+          "properties": []
+        },
+        {
+          "name": "AuthAuditPort",
+          "startLine": 228,
+          "endLine": 233,
+          "methods": [
+            "log_event",
+            "count_recent_failures"
+          ],
+          "properties": []
+        },
+        {
+          "name": "FrameProvider",
+          "startLine": 236,
+          "endLine": 257,
+          "methods": [
+            "capture_for_node"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CameraConfigRepository",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "PairsRepositoryPort",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "NodeRepositoryPort",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "ZoneRepositoryPort",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "ActionAuditPort",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "SystemActionAuditPort",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "CameraRuntime",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "InferencePort",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "NodeStateStore",
+          "line": 150,
+          "isDefault": false
+        },
+        {
+          "name": "DispatchGateway",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "IcsOrderQueryPort",
+          "line": 173,
+          "isDefault": false
+        },
+        {
+          "name": "RuntimeControl",
+          "line": 178,
+          "isDefault": false
+        },
+        {
+          "name": "DbHealthPort",
+          "line": 185,
+          "isDefault": false
+        },
+        {
+          "name": "WebrtcRunnerPort",
+          "line": 190,
+          "isDefault": false
+        },
+        {
+          "name": "UserRepositoryPort",
+          "line": 195,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshTokenStore",
+          "line": 200,
+          "isDefault": false
+        },
+        {
+          "name": "PasswordHasher",
+          "line": 212,
+          "isDefault": false
+        },
+        {
+          "name": "TokenIssuer",
+          "line": 220,
+          "isDefault": false
+        },
+        {
+          "name": "AuthAuditPort",
+          "line": 228,
+          "isDefault": false
+        },
+        {
+          "name": "FrameProvider",
+          "line": 236,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 20,
+        "functionCount": 0,
+        "classCount": 20
+      }
+    },
+    {
+      "path": "application/result.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 22,
+      "classes": [
+        {
+          "name": "UseCaseResult",
+          "startLine": 9,
+          "endLine": 28,
+          "methods": [
+            "ok",
+            "fail",
+            "to_http"
+          ],
+          "properties": [
+            "success",
+            "error",
+            "data"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UseCaseResult",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ok",
+          "callee": "cls",
+          "lineNumber": 16
+        },
+        {
+          "caller": "fail",
+          "callee": "cls",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/runtime/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 21,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/runtime/control.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 25,
+      "classes": [
+        {
+          "name": "StartRuntime",
+          "startLine": 5,
+          "endLine": 11,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "StopRuntime",
+          "startLine": 14,
+          "endLine": 20,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetRuntimeStatus",
+          "startLine": 23,
+          "endLine": 28,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ReloadRuntime",
+          "startLine": 31,
+          "endLine": 37,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "StartRuntime",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "StopRuntime",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GetRuntimeStatus",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "ReloadRuntime",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._runtime.start",
+          "lineNumber": 10
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 11
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.stop",
+          "lineNumber": 19
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 20
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.status",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.reload",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "application/runtime/health.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 46,
+      "classes": [
+        {
+          "name": "GetHealth",
+          "startLine": 13,
+          "endLine": 56,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetHealth",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._db.ping",
+          "lineNumber": 25
+        },
+        {
+          "caller": "execute",
+          "callee": "bool",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.status().get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime.status",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runner.status",
+          "lineNumber": 33
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 45
+        },
+        {
+          "caller": "execute",
+          "callee": "missing.append",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "missing.append",
+          "lineNumber": 51
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 52
+        },
+        {
+          "caller": "execute",
+          "callee": "', '.join",
+          "lineNumber": 53
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/runtime/runtime_state_hub.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 94,
+      "nonEmptyLines": 83,
+      "functions": [
+        {
+          "name": "map_runtime_item",
+          "startLine": 14,
+          "endLine": 25,
+          "params": [
+            "node_id",
+            "data"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RuntimeStateHub",
+          "startLine": 28,
+          "endLine": 94,
+          "methods": [
+            "__init__",
+            "bind_snapshot",
+            "touch",
+            "subscribe",
+            "unsubscribe",
+            "_flush"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "map_runtime_item",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "RuntimeStateHub",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "map_runtime_item",
+          "callee": "data.get",
+          "lineNumber": 15
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "isinstance",
+          "lineNumber": 15
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "data.get",
+          "lineNumber": 15
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "bool",
+          "lineNumber": 18
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "data.get",
+          "lineNumber": 18
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "data.get",
+          "lineNumber": 18
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "bool",
+          "lineNumber": 19
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "data.get",
+          "lineNumber": 19
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "bool",
+          "lineNumber": 21
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "lock.get",
+          "lineNumber": 21
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "bool",
+          "lineNumber": 22
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "lock.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "map_runtime_item",
+          "callee": "lock.get",
+          "lineNumber": 23
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 30
+        },
+        {
+          "caller": "__init__",
+          "callee": "float",
+          "lineNumber": 30
+        },
+        {
+          "caller": "__init__",
+          "callee": "set",
+          "lineNumber": 31
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 32
+        },
+        {
+          "caller": "touch",
+          "callee": "self._pending.update",
+          "lineNumber": 45
+        },
+        {
+          "caller": "touch",
+          "callee": "self._timer.cancel",
+          "lineNumber": 47
+        },
+        {
+          "caller": "touch",
+          "callee": "threading.Timer",
+          "lineNumber": 48
+        },
+        {
+          "caller": "touch",
+          "callee": "t.start",
+          "lineNumber": 51
+        },
+        {
+          "caller": "subscribe",
+          "callee": "queue.Queue",
+          "lineNumber": 54
+        },
+        {
+          "caller": "subscribe",
+          "callee": "self._subs.append",
+          "lineNumber": 56
+        },
+        {
+          "caller": "unsubscribe",
+          "callee": "self._subs.remove",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_flush",
+          "callee": "list",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_flush",
+          "callee": "self._pending.clear",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_flush",
+          "callee": "list",
+          "lineNumber": 68
+        },
+        {
+          "caller": "_flush",
+          "callee": "snap_fn",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_flush",
+          "callee": "snap.get",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_flush",
+          "callee": "events.append",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_flush",
+          "callee": "map_runtime_item",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_flush",
+          "callee": "q.put_nowait",
+          "lineNumber": 85
+        },
+        {
+          "caller": "_flush",
+          "callee": "q.get_nowait",
+          "lineNumber": 88
+        },
+        {
+          "caller": "_flush",
+          "callee": "q.put_nowait",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/state/reset_flags.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 22,
+      "classes": [
+        {
+          "name": "ResetFlagsByOrder",
+          "startLine": 5,
+          "endLine": 28,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ResetFlagsByOrder",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 10
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 11
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.apply_reset",
+          "lineNumber": 13
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 15
+        },
+        {
+          "caller": "execute",
+          "callee": "hasattr",
+          "lineNumber": 19
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.clear_system_by_order_id",
+          "lineNumber": 20
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 22
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

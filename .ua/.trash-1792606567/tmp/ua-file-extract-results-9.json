@@ -1,0 +1,1313 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 14,
+  "filesSkipped": [
+    ".github/CODEOWNERS",
+    ".python-version",
+    "infrastructure/storage/.gitkeep",
+    "infrastructure/vision/.gitkeep"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 14,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 13,
+      "failed": 0,
+      "skipped": 1
+    }
+  },
+  "results": [
+    {
+      "path": "application/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/dispatch/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/state/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "config/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "config/mediamtx.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 27,
+      "nonEmptyLines": 21,
+      "sections": [
+        {
+          "heading": "logLevel",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "api",
+          "level": 1,
+          "line": 7
+        },
+        {
+          "heading": "apiAddress",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "rtsp",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "rtmp",
+          "level": 1,
+          "line": 11
+        },
+        {
+          "heading": "hls",
+          "level": 1,
+          "line": 12
+        },
+        {
+          "heading": "srt",
+          "level": 1,
+          "line": 13
+        },
+        {
+          "heading": "moq",
+          "level": 1,
+          "line": 14
+        },
+        {
+          "heading": "webrtc",
+          "level": 1,
+          "line": 16
+        },
+        {
+          "heading": "webrtcAddress",
+          "level": 1,
+          "line": 17
+        },
+        {
+          "heading": "webrtcEncryption",
+          "level": 1,
+          "line": 18
+        },
+        {
+          "heading": "webrtcAllowOrigins",
+          "level": 1,
+          "line": 19
+        },
+        {
+          "heading": "webrtcICEServers2",
+          "level": 1,
+          "line": 20
+        },
+        {
+          "heading": "webrtcLocalUDPAddress",
+          "level": 1,
+          "line": 21
+        },
+        {
+          "heading": "pathDefaults",
+          "level": 1,
+          "line": 23
+        },
+        {
+          "heading": "paths",
+          "level": 1,
+          "line": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 16
+      }
+    },
+    {
+      "path": "domain/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "presentation/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "presentation/routes/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/cleanup_orphan_rois.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 74,
+      "nonEmptyLines": 60,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 24,
+          "endLine": 70,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "main",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "argparse.ArgumentParser",
+          "lineNumber": 25
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 26
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 31
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "parser.parse_args",
+          "lineNumber": 33
+        },
+        {
+          "caller": "main",
+          "callee": "MongoClient",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "list",
+          "lineNumber": 38
+        },
+        {
+          "caller": "main",
+          "callee": "col.find(\r\n            {\"cameraId\": {\"$nin\": sorted(KEEP_CAMERA_IDS)}},\r\n            {\"cameraId\": 1, \"rois\": 1, \"name\": 1},\r\n        ).sort",
+          "lineNumber": 39
+        },
+        {
+          "caller": "main",
+          "callee": "col.find",
+          "lineNumber": 39
+        },
+        {
+          "caller": "main",
+          "callee": "sorted",
+          "lineNumber": 40
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 45
+        },
+        {
+          "caller": "main",
+          "callee": "sorted",
+          "lineNumber": 45
+        },
+        {
+          "caller": "main",
+          "callee": "col.find(\r\n        {\"cameraId\": {\"$in\": sorted(KEEP_CAMERA_IDS)}},\r\n        {\"cameraId\": 1, \"rois\": 1},\r\n    ).sort",
+          "lineNumber": 46
+        },
+        {
+          "caller": "main",
+          "callee": "col.find",
+          "lineNumber": 46
+        },
+        {
+          "caller": "main",
+          "callee": "sorted",
+          "lineNumber": 47
+        },
+        {
+          "caller": "main",
+          "callee": "list",
+          "lineNumber": 50
+        },
+        {
+          "caller": "main",
+          "callee": "(cam.get(\"rois\") or {}).keys",
+          "lineNumber": 50
+        },
+        {
+          "caller": "main",
+          "callee": "cam.get",
+          "lineNumber": 50
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "cam.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 53
+        },
+        {
+          "caller": "main",
+          "callee": "len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "main",
+          "callee": "cam.get",
+          "lineNumber": 56
+        },
+        {
+          "caller": "main",
+          "callee": "list",
+          "lineNumber": 57
+        },
+        {
+          "caller": "main",
+          "callee": "(cam.get(\"rois\") or {}).keys",
+          "lineNumber": 57
+        },
+        {
+          "caller": "main",
+          "callee": "cam.get",
+          "lineNumber": 57
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 59
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 61
+        },
+        {
+          "caller": "main",
+          "callee": "col.update_one",
+          "lineNumber": 63
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 67
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 69
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/migrate_ssot_nodes_pairs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 174,
+      "nonEmptyLines": 147,
+      "functions": [
+        {
+          "name": "_cam_ids",
+          "startLine": 25,
+          "endLine": 31,
+          "params": [
+            "cams"
+          ]
+        },
+        {
+          "name": "_delete_pairs_for_node",
+          "startLine": 34,
+          "endLine": 48,
+          "params": [
+            "pairs",
+            "node_id",
+            "dry_run"
+          ]
+        },
+        {
+          "name": "_unset_roi_keys",
+          "startLine": 51,
+          "endLine": 61,
+          "params": [
+            "cams",
+            "node_id",
+            "dry_run"
+          ]
+        },
+        {
+          "name": "migrate_orphans",
+          "startLine": 64,
+          "endLine": 98,
+          "params": [
+            "db",
+            "dry_run"
+          ]
+        },
+        {
+          "name": "sync_node_zones",
+          "startLine": 101,
+          "endLine": 133,
+          "params": [
+            "db",
+            "dry_run"
+          ]
+        },
+        {
+          "name": "unset_pair_zones",
+          "startLine": 136,
+          "endLine": 144,
+          "params": [
+            "db",
+            "dry_run"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 147,
+          "endLine": 170,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_cam_ids",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "_delete_pairs_for_node",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "_unset_roi_keys",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "migrate_orphans",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "sync_node_zones",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "unset_pair_zones",
+          "line": 136,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 147,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_cam_ids",
+          "callee": "set",
+          "lineNumber": 26
+        },
+        {
+          "caller": "_cam_ids",
+          "callee": "cams.find",
+          "lineNumber": 27
+        },
+        {
+          "caller": "_cam_ids",
+          "callee": "doc.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "_cam_ids",
+          "callee": "out.add",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_cam_ids",
+          "callee": "int",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_delete_pairs_for_node",
+          "callee": "pairs.find",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_delete_pairs_for_node",
+          "callee": "doc.get",
+          "lineNumber": 40
+        },
+        {
+          "caller": "_delete_pairs_for_node",
+          "callee": "doc.get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_delete_pairs_for_node",
+          "callee": "deleted.append",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_delete_pairs_for_node",
+          "callee": "pairs.delete_one",
+          "lineNumber": 45
+        },
+        {
+          "caller": "_unset_roi_keys",
+          "callee": "cams.find",
+          "lineNumber": 53
+        },
+        {
+          "caller": "_unset_roi_keys",
+          "callee": "cam.get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "_unset_roi_keys",
+          "callee": "cams.update_one",
+          "lineNumber": 57
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "_cam_ids",
+          "lineNumber": 68
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "nodes.find",
+          "lineNumber": 71
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "node.get",
+          "lineNumber": 72
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "orphans.append",
+          "lineNumber": 74
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "int",
+          "lineNumber": 77
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "orphans.append",
+          "lineNumber": 78
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "orphans.append",
+          "lineNumber": 80
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "print",
+          "lineNumber": 82
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "len",
+          "lineNumber": 82
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "node.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "print",
+          "lineNumber": 86
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "node.get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "_delete_pairs_for_node",
+          "lineNumber": 87
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "print",
+          "lineNumber": 89
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "_unset_roi_keys",
+          "lineNumber": 90
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "print",
+          "lineNumber": 92
+        },
+        {
+          "caller": "migrate_orphans",
+          "callee": "nodes.delete_one",
+          "lineNumber": 94
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "cams.find",
+          "lineNumber": 105
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "cam.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "int",
+          "lineNumber": 109
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "str(cam.get(\"zone_id\") or \"\").upper",
+          "lineNumber": 109
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "str",
+          "lineNumber": 109
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "cam.get",
+          "lineNumber": 109
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "nodes.find",
+          "lineNumber": 112
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "node.get",
+          "lineNumber": 113
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "int",
+          "lineNumber": 117
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "cam_zone.get",
+          "lineNumber": 120
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "str(node.get(\"zone_id\") or \"\").upper",
+          "lineNumber": 121
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "str",
+          "lineNumber": 121
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "node.get",
+          "lineNumber": 121
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "print",
+          "lineNumber": 123
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "node.get",
+          "lineNumber": 124
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "nodes.update_one",
+          "lineNumber": 127
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "node.get",
+          "lineNumber": 128
+        },
+        {
+          "caller": "sync_node_zones",
+          "callee": "print",
+          "lineNumber": 132
+        },
+        {
+          "caller": "unset_pair_zones",
+          "callee": "pairs.count_documents",
+          "lineNumber": 138
+        },
+        {
+          "caller": "unset_pair_zones",
+          "callee": "print",
+          "lineNumber": 139
+        },
+        {
+          "caller": "unset_pair_zones",
+          "callee": "pairs.update_many",
+          "lineNumber": 141
+        },
+        {
+          "caller": "unset_pair_zones",
+          "callee": "print",
+          "lineNumber": 142
+        },
+        {
+          "caller": "unset_pair_zones",
+          "callee": "int",
+          "lineNumber": 143
+        },
+        {
+          "caller": "main",
+          "callee": "argparse.ArgumentParser",
+          "lineNumber": 148
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 151
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 152
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 153
+        },
+        {
+          "caller": "main",
+          "callee": "parser.parse_args",
+          "lineNumber": 154
+        },
+        {
+          "caller": "main",
+          "callee": "MongoClient",
+          "lineNumber": 156
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 159
+        },
+        {
+          "caller": "main",
+          "callee": "migrate_orphans",
+          "lineNumber": 160
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 161
+        },
+        {
+          "caller": "main",
+          "callee": "sync_node_zones",
+          "lineNumber": 162
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 163
+        },
+        {
+          "caller": "main",
+          "callee": "unset_pair_zones",
+          "lineNumber": 164
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 167
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 169
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/migrate_start_priority_per_zone.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 89,
+      "nonEmptyLines": 72,
+      "functions": [
+        {
+          "name": "_digits_key",
+          "startLine": 24,
+          "endLine": 27,
+          "params": [
+            "node_id"
+          ]
+        },
+        {
+          "name": "migrate",
+          "startLine": 30,
+          "endLine": 51,
+          "params": [
+            "db",
+            "dry_run"
+          ]
+        },
+        {
+          "name": "ensure_index",
+          "startLine": 54,
+          "endLine": 64,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 67,
+          "endLine": 85,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_digits_key",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "migrate",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "ensure_index",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 67,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_digits_key",
+          "callee": "\"\".join",
+          "lineNumber": 25
+        },
+        {
+          "caller": "_digits_key",
+          "callee": "ch.isdigit",
+          "lineNumber": 25
+        },
+        {
+          "caller": "_digits_key",
+          "callee": "int",
+          "lineNumber": 26
+        },
+        {
+          "caller": "migrate",
+          "callee": "defaultdict",
+          "lineNumber": 32
+        },
+        {
+          "caller": "migrate",
+          "callee": "nodes.find",
+          "lineNumber": 33
+        },
+        {
+          "caller": "migrate",
+          "callee": "str(doc.get(\"zone_id\") or \"\").strip().upper",
+          "lineNumber": 34
+        },
+        {
+          "caller": "migrate",
+          "callee": "str(doc.get(\"zone_id\") or \"\").strip",
+          "lineNumber": 34
+        },
+        {
+          "caller": "migrate",
+          "callee": "str",
+          "lineNumber": 34
+        },
+        {
+          "caller": "migrate",
+          "callee": "doc.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "migrate",
+          "callee": "by_zone[z].append",
+          "lineNumber": 35
+        },
+        {
+          "caller": "migrate",
+          "callee": "sorted",
+          "lineNumber": 38
+        },
+        {
+          "caller": "migrate",
+          "callee": "by_zone.items",
+          "lineNumber": 38
+        },
+        {
+          "caller": "migrate",
+          "callee": "sorted",
+          "lineNumber": 39
+        },
+        {
+          "caller": "migrate",
+          "callee": "_digits_key",
+          "lineNumber": 39
+        },
+        {
+          "caller": "migrate",
+          "callee": "str",
+          "lineNumber": 39
+        },
+        {
+          "caller": "migrate",
+          "callee": "d.get",
+          "lineNumber": 39
+        },
+        {
+          "caller": "migrate",
+          "callee": "print",
+          "lineNumber": 40
+        },
+        {
+          "caller": "migrate",
+          "callee": "len",
+          "lineNumber": 40
+        },
+        {
+          "caller": "migrate",
+          "callee": "enumerate",
+          "lineNumber": 41
+        },
+        {
+          "caller": "migrate",
+          "callee": "doc.get",
+          "lineNumber": 42
+        },
+        {
+          "caller": "migrate",
+          "callee": "doc.get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "migrate",
+          "callee": "print",
+          "lineNumber": 45
+        },
+        {
+          "caller": "migrate",
+          "callee": "print",
+          "lineNumber": 47
+        },
+        {
+          "caller": "migrate",
+          "callee": "nodes.update_one",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ensure_index",
+          "callee": "nodes.create_index",
+          "lineNumber": 58
+        },
+        {
+          "caller": "ensure_index",
+          "callee": "print",
+          "lineNumber": 64
+        },
+        {
+          "caller": "main",
+          "callee": "argparse.ArgumentParser",
+          "lineNumber": 68
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 69
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 70
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 75
+        },
+        {
+          "caller": "main",
+          "callee": "parser.add_argument",
+          "lineNumber": 76
+        },
+        {
+          "caller": "main",
+          "callee": "parser.parse_args",
+          "lineNumber": 77
+        },
+        {
+          "caller": "main",
+          "callee": "MongoClient",
+          "lineNumber": 79
+        },
+        {
+          "caller": "main",
+          "callee": "migrate",
+          "lineNumber": 81
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 82
+        },
+        {
+          "caller": "main",
+          "callee": "ensure_index",
+          "lineNumber": 84
+        },
+        {
+          "caller": "main",
+          "callee": "client.close",
+          "lineNumber": 85
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/seed_db.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 128,
+      "functions": [
+        {
+          "name": "make_rtsp_url",
+          "startLine": 39,
+          "endLine": 41,
+          "params": [
+            "ip"
+          ]
+        },
+        {
+          "name": "generate_camera_docs",
+          "startLine": 44,
+          "endLine": 100,
+          "params": [
+            "n"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 103,
+          "endLine": 139,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "make_rtsp_url",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "generate_camera_docs",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 103,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "generate_camera_docs",
+          "callee": "range",
+          "lineNumber": 82
+        },
+        {
+          "caller": "generate_camera_docs",
+          "callee": "make_rtsp_url",
+          "lineNumber": 93
+        },
+        {
+          "caller": "generate_camera_docs",
+          "callee": "datetime.now",
+          "lineNumber": 97
+        },
+        {
+          "caller": "generate_camera_docs",
+          "callee": "docs.append",
+          "lineNumber": 99
+        },
+        {
+          "caller": "main",
+          "callee": "MongoClient",
+          "lineNumber": 104
+        },
+        {
+          "caller": "main",
+          "callee": "col.delete_many",
+          "lineNumber": 109
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 110
+        },
+        {
+          "caller": "main",
+          "callee": "generate_camera_docs",
+          "lineNumber": 113
+        },
+        {
+          "caller": "main",
+          "callee": "col.insert_many",
+          "lineNumber": 114
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 115
+        },
+        {
+          "caller": "main",
+          "callee": "len",
+          "lineNumber": 115
+        },
+        {
+          "caller": "main",
+          "callee": "col.count_documents",
+          "lineNumber": 118
+        },
+        {
+          "caller": "main",
+          "callee": "col.count_documents",
+          "lineNumber": 119
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 121
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 122
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 123
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 124
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 127
+        },
+        {
+          "caller": "main",
+          "callee": "col.find(\r\n        {\"name\": {\"$regex\": \"^MOCK-CAM-\"}},\r\n        {\"url\": 1, \"name\": 1}\r\n    ).limit",
+          "lineNumber": 128
+        },
+        {
+          "caller": "main",
+          "callee": "col.find",
+          "lineNumber": 128
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 132
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 133
+        },
+        {
+          "caller": "main",
+          "callee": "col.find_one",
+          "lineNumber": 134
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 136
+        },
+        {
+          "caller": "main",
+          "callee": "client.close",
+          "lineNumber": 138
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 139
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "utils/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "layers": [
+    {
+      "id": "layer:entry",
+      "name": "Điểm vào ứng dụng",
+      "count": 2
+    },
+    {
+      "id": "layer:presentation",
+      "name": "Tầng giao diện API",
+      "count": 23
+    },
+    {
+      "id": "layer:application",
+      "name": "Tầng ứng dụng",
+      "count": 53
+    },
+    {
+      "id": "layer:domain",
+      "name": "Tầng miền nghiệp vụ",
+      "count": 11
+    },
+    {
+      "id": "layer:infrastructure",
+      "name": "Tầng hạ tầng",
+      "count": 59
+    },
+    {
+      "id": "layer:config",
+      "name": "Cấu hình",
+      "count": 4
+    },
+    {
+      "id": "layer:utils",
+      "name": "Tầng tiện ích",
+      "count": 4
+    },
+    {
+      "id": "layer:scripts",
+      "name": "Scripts vận hành",
+      "count": 7
+    },
+    {
+      "id": "layer:docs",
+      "name": "Tài liệu",
+      "count": 4
+    }
+  ],
+  "tourSteps": 9,
+  "fileNodes": 167,
+  "assigned": 167
+}

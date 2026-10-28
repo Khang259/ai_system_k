@@ -1,0 +1,153 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 2,
+  "filesSkipped": [
+    "requirements.txt"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 2,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 2
+    }
+  },
+  "results": [
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 127,
+      "nonEmptyLines": 87,
+      "sections": [
+        {
+          "heading": "AMR Camera Dispatch System — Layered Architecture",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Yêu cầu thiết bị mới",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "Chạy lần đầu",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "1. Clone & vào thư mục",
+          "level": 3,
+          "line": 20
+        },
+        {
+          "heading": "2. Cài dependency",
+          "level": 3,
+          "line": 27
+        },
+        {
+          "heading": "3. Tạo file `.env`",
+          "level": 3,
+          "line": 39
+        },
+        {
+          "heading": "4. Bật MongoDB",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "5. Seed user đăng nhập",
+          "level": 3,
+          "line": 68
+        },
+        {
+          "heading": "6. (Tuỳ chọn) Seed camera mock",
+          "level": 3,
+          "line": 78
+        },
+        {
+          "heading": "7. Chạy API",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Kiểm tra nhanh sau khi lên",
+          "level": 2,
+          "line": 95
+        },
+        {
+          "heading": "Cấu trúc thư mục (tóm tắt)",
+          "level": 2,
+          "line": 101
+        },
+        {
+          "heading": "Tài liệu FE",
+          "level": 2,
+          "line": 115
+        },
+        {
+          "heading": "Vận hành",
+          "level": 2,
+          "line": 119
+        },
+        {
+          "heading": "Ghi chú",
+          "level": 2,
+          "line": 123
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 15
+      }
+    },
+    {
+      "path": "pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config",
+      "totalLines": 52,
+      "nonEmptyLines": 47,
+      "sections": [
+        {
+          "heading": "project",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "project.optional-dependencies",
+          "level": 2,
+          "line": 34
+        },
+        {
+          "heading": "[[tool.uv.index]]",
+          "level": 3,
+          "line": 39
+        },
+        {
+          "heading": "tool.uv.sources",
+          "level": 3,
+          "line": 44
+        },
+        {
+          "heading": "tool.pytest.ini_options",
+          "level": 3,
+          "line": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    }
+  ]
+}

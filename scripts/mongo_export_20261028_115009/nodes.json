@@ -1,0 +1,923 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d016b"
+    },
+    "node_id": "start_10000146",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 1,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T03:59:14.479Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d016c"
+    },
+    "node_id": "start_10000151",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 2,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T04:03:11.149Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d016d"
+    },
+    "node_id": "start_10000154",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 3,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T04:07:22.355Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d016e"
+    },
+    "node_id": "start_10000157",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 4,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T04:12:44.573Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d016f"
+    },
+    "node_id": "start_10000163",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 5,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T04:17:22.171Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0170"
+    },
+    "node_id": "start_10000160",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 6,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T04:21:34.884Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0171"
+    },
+    "node_id": "start_10000166",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 7,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A",
+    "updated_at": {
+      "$date": "2026-10-28T04:35:45.371Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0172"
+    },
+    "node_id": "start_10000169",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 8,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "updated_at": {
+      "$date": "2026-10-27T13:06:57.738Z"
+    },
+    "col_id": "A"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0173"
+    },
+    "node_id": "start_10000172",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 9,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "A"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0174"
+    },
+    "node_id": "start_10000177",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 10,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0175"
+    },
+    "node_id": "start_10000180",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 11,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "updated_at": {
+      "$date": "2026-10-28T04:40:43.963Z"
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0176"
+    },
+    "node_id": "start_10000183",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 12,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B",
+    "updated_at": {
+      "$date": "2026-10-28T04:46:10.833Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0177"
+    },
+    "node_id": "start_10000186",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 13,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0178"
+    },
+    "node_id": "start_10000189",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 9,
+    "priority": 14,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0179"
+    },
+    "node_id": "start_10000193",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 15,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d017a"
+    },
+    "node_id": "start_10000196",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 16,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d017b"
+    },
+    "node_id": "start_10000199",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 17,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d017c"
+    },
+    "node_id": "start_10000202",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 14,
+    "priority": 18,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "B"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d017d"
+    },
+    "node_id": "start_10000205",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 19,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d017e"
+    },
+    "node_id": "start_10000208",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 20,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d017f"
+    },
+    "node_id": "start_10000211",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 21,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "updated_at": {
+      "$date": "2026-10-27T13:11:35.406Z"
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0180"
+    },
+    "node_id": "start_10000214",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 22,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0181"
+    },
+    "node_id": "start_10000217",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 23,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0182"
+    },
+    "node_id": "start_10000220",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 24,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0183"
+    },
+    "node_id": "start_10000223",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 25,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0184"
+    },
+    "node_id": "start_10000226",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 26,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0185"
+    },
+    "node_id": "start_10000229",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 27,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "C"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0186"
+    },
+    "node_id": "start_10000057",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 28,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D",
+    "updated_at": {
+      "$date": "2026-10-28T03:09:34.170Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0187"
+    },
+    "node_id": "start_10000056",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 29,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D",
+    "updated_at": {
+      "$date": "2026-10-28T03:14:54.257Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0188"
+    },
+    "node_id": "start_10000069",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 30,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D",
+    "updated_at": {
+      "$date": "2026-10-28T03:28:48.007Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0189"
+    },
+    "node_id": "start_10000073",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 31,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D",
+    "updated_at": {
+      "$date": "2026-10-28T03:51:46.558Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d018a"
+    },
+    "node_id": "start_10000076",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 32,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d018b"
+    },
+    "node_id": "start_10000081",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 33,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d018c"
+    },
+    "node_id": "start_10000084",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 34,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d018d"
+    },
+    "node_id": "start_10000087",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 35,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d018e"
+    },
+    "node_id": "start_10000090",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 36,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "D"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d018f"
+    },
+    "node_id": "start_10000059",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 37,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0190"
+    },
+    "node_id": "start_10000058",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 38,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0191"
+    },
+    "node_id": "start_10000093",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 8,
+    "priority": 39,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0192"
+    },
+    "node_id": "start_10000096",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 40,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0193"
+    },
+    "node_id": "start_10000100",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 41,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0194"
+    },
+    "node_id": "start_10000103",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 11,
+    "priority": 42,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0195"
+    },
+    "node_id": "start_10000106",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 43,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0196"
+    },
+    "node_id": "start_10000109",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 44,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0197"
+    },
+    "node_id": "start_10000112",
+    "node_type": "start",
+    "zone_id": "X",
+    "camera_id": 13,
+    "priority": 45,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "col_id": "E"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0198"
+    },
+    "node_id": "end_10000013",
+    "node_type": "end",
+    "zone_id": "X",
+    "camera_id": 15,
+    "priority": 1,
+    "enabled": true,
+    "is_under_maintenance": false,
+    "maintenance_reason": "",
+    "lock": {
+      "user": false,
+      "system": false,
+      "orderId": null
+    },
+    "updated_at": {
+      "$date": "2026-10-28T04:46:10.834Z"
+    }
+  }
+]

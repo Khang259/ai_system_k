@@ -1,0 +1,3431 @@
+[
+  {
+    "_id": {
+      "$oid": "6ad73a7b27234d5eaf2d5b3f"
+    },
+    "order_id": "string",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:55:07.722Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "string",
+      "status": 0,
+      "additionalProp1": {}
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 0",
+      "orderId": "string"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:55:07.722Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b3927234d5eaf2d5b40"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:17.457186",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:17.524Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:17.457186",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "102",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:17.457186"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:17.524Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b3c27234d5eaf2d5b41"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:17.457186",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:20.565Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:17.457186",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:20.565Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b3d27234d5eaf2d5b42"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:21.572365",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:21.641Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:21.572365",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "103",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:21.572365"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:21.641Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4027234d5eaf2d5b43"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:21.572365",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:24.705Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:21.572365",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:24.705Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4127234d5eaf2d5b44"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:25.717235",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:25.804Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:25.717235",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "104",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:25.717235"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:25.804Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4427234d5eaf2d5b45"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:25.717235",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:28.851Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:25.717235",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:28.851Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4527234d5eaf2d5b46"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:29.863343",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:29.973Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:29.863343",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "105",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:29.863343"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:29.973Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4927234d5eaf2d5b47"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:29.863343",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:33.035Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:29.863343",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:33.035Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4a27234d5eaf2d5b48"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:34.050468",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:34.129Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:34.050468",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "106",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:34.050468"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:34.129Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4d27234d5eaf2d5b49"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:34.050468",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:37.196Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:34.050468",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:37.196Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b4e27234d5eaf2d5b4a"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:38.201496",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:38.282Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:38.201496",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "107",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:38.201496"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:38.282Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5127234d5eaf2d5b4b"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:38.201496",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:41.336Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:38.201496",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:41.336Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5227234d5eaf2d5b4c"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:42.341152",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:42.421Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:42.341152",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "108",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:42.341152"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:42.421Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5527234d5eaf2d5b4d"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:42.341152",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:45.477Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:42.341152",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:45.477Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5627234d5eaf2d5b4e"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:46.488371",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:46.569Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:46.488371",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "109",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:46.488371"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:46.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5927234d5eaf2d5b4f"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:46.488371",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:49.619Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:46.488371",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:49.619Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5a27234d5eaf2d5b50"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:50.634237",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:50.715Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:50.634237",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "110",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:50.634237"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:50.715Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5d27234d5eaf2d5b51"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:50.634237",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:53.795Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:50.634237",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:53.795Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b5e27234d5eaf2d5b52"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:54.799363",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:54.875Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:54.799363",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "111",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:54.799363"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:54.875Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6127234d5eaf2d5b53"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:54.799363",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:57.921Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:54.799363",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:58:57.921Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6327234d5eaf2d5b54"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:58.928324",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:58:59.010Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:58.928324",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "112",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:58.928324"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:58:59.010Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6627234d5eaf2d5b55"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:58:58.928324",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:02.073Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:58:58.928324",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:02.073Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6727234d5eaf2d5b56"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:03.076482",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:03.163Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:03.076482",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "113",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:03.076482"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:59:03.163Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6a27234d5eaf2d5b57"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:03.076482",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:06.213Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:03.076482",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:06.213Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6b27234d5eaf2d5b58"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:07.230290",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:07.298Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:07.230290",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "114",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:07.230290"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:59:07.298Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6e27234d5eaf2d5b59"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:07.230290",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:10.373Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:07.230290",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:10.373Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b6f27234d5eaf2d5b5a"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:11.378214",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:11.448Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:11.378214",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "115",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:11.378214"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:59:11.448Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7227234d5eaf2d5b5b"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:11.378214",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:14.502Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:11.378214",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:14.502Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7327234d5eaf2d5b5c"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:15.509827",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:15.575Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:15.509827",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "116",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:15.509827"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:59:15.575Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7627234d5eaf2d5b5d"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:15.509827",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:18.615Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:15.509827",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:18.615Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7727234d5eaf2d5b5e"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:19.626887",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:19.705Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:19.626887",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "117",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:19.626887"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:59:19.705Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7a27234d5eaf2d5b5f"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:19.626887",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:22.753Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:19.626887",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:22.753Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7b27234d5eaf2d5b60"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:23.763645",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:23.837Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:23.763645",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "118",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:23.763645"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T09:59:23.837Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73b7e27234d5eaf2d5b61"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 16:59:23.763645",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-20T09:59:26.892Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 16:59:23.763645",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T09:59:26.892Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73c5127234d5eaf2d5b62"
+    },
+    "order_id": "1792490577.3724184",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T10:02:57.456Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "1792490577.3724184",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "119",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "1792490577.3724184"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:02:57.456Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad73dc127234d5eaf2d5b63"
+    },
+    "order_id": "A_20260915_14051_741",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T10:09:05.296Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "A_20260915_14051_741",
+      "status": 5,
+      "errorDesc": "10000066269232点的栈板对接(叉车)action未配置",
+      "modelProcessCode": "FL",
+      "icsTaskOrderDetailId": "120",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 5",
+      "orderId": "A_20260915_14051_741"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:09:05.296Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad744c639cf607c89b01bfb"
+    },
+    "order_id": "A_20260915_14051_745",
+    "action": "unlock_by_order_status",
+    "status": "failed",
+    "error_msg": "orderId A_20260915_14051_745 not found",
+    "dispatched_at": {
+      "$date": "2026-10-20T10:39:02.311Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "A_20260915_14051_745",
+      "status": 3,
+      "modelProcessCode": "FL",
+      "subTaskTypeId": "20",
+      "subTaskId": "532",
+      "qrContent": "10000066",
+      "qrCode": "10000066",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "123",
+      "processRate": "1/1"
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:39:02.311Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad744c939cf607c89b01bfc"
+    },
+    "order_id": "A_20260915_14051_745",
+    "action": "unlock_by_order_status",
+    "status": "failed",
+    "error_msg": "orderId A_20260915_14051_745 not found",
+    "dispatched_at": {
+      "$date": "2026-10-20T10:39:05.350Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "A_20260915_14051_745",
+      "status": 3,
+      "qrContent": "10000066",
+      "qrCode": "10000066",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "123",
+      "modelProcessCode": "FL",
+      "subTaskTypeId": "20",
+      "subTaskId": "532",
+      "processRate": "1/1"
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:39:05.350Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad744cc39cf607c89b01bfd"
+    },
+    "order_id": "A_20260915_14051_745",
+    "action": "unlock_by_order_status",
+    "status": "failed",
+    "error_msg": "orderId A_20260915_14051_745 not found",
+    "dispatched_at": {
+      "$date": "2026-10-20T10:39:08.370Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "A_20260915_14051_745",
+      "status": 3,
+      "qrContent": "10000066",
+      "qrCode": "10000066",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "123",
+      "modelProcessCode": "FL",
+      "subTaskTypeId": "20",
+      "subTaskId": "532",
+      "processRate": "1/1"
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:39:08.370Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad744cf39cf607c89b01bfe"
+    },
+    "order_id": "A_20260915_14051_745",
+    "action": "unlock_by_order_status",
+    "status": "failed",
+    "error_msg": "orderId A_20260915_14051_745 not found",
+    "dispatched_at": {
+      "$date": "2026-10-20T10:39:11.384Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "A_20260915_14051_745",
+      "status": 3,
+      "qrContent": "10000066",
+      "qrCode": "10000066",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "123",
+      "modelProcessCode": "FL",
+      "subTaskTypeId": "20",
+      "subTaskId": "532",
+      "processRate": "1/1"
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:39:11.384Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad744d239cf607c89b01bff"
+    },
+    "order_id": "A_20260915_14051_745",
+    "action": "unlock_by_order_status",
+    "status": "failed",
+    "error_msg": "orderId A_20260915_14051_745 not found",
+    "dispatched_at": {
+      "$date": "2026-10-20T10:39:14.399Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "A_20260915_14051_745",
+      "status": 3,
+      "qrContent": "10000066",
+      "qrCode": "10000066",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "123",
+      "modelProcessCode": "FL",
+      "subTaskTypeId": "20",
+      "subTaskId": "532",
+      "processRate": "1/1"
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:39:14.399Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7455339cf607c89b01c00"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 17:41:23.453596",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T10:41:23.538Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000066-10000105-2026-10-20 17:41:23.453596",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000066,10000105"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000066",
+    "end_point": "end_10000105",
+    "created_at": {
+      "$date": "2026-10-20T10:41:23.538Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad745e539cf607c89b01c03"
+    },
+    "order_id": "S-10000066-10000105-2026-10-20 17:41:23.453596",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-20T10:43:49.516Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000066-10000105-2026-10-20 17:41:23.453596",
+      "status": 3,
+      "modelProcessCode": "FL",
+      "subTaskTypeId": "20",
+      "subTaskId": "536",
+      "qrContent": "10000066",
+      "qrCode": "10000066",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "124",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000066-10000105-2026-10-20 17:41:23.453596",
+      "orderId": "S-10000066-10000105-2026-10-20 17:41:23.453596"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-20T10:43:49.516Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae050e997636767735c6454"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:10.436219",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:13.569Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:10.436219",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:13.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae050ed97636767735c6455"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:14.579184",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:17.683Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:14.579184",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:17.683Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae050f197636767735c6456"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:18.686219",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:21.723Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:18.686219",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:21.723Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae050f597636767735c6457"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:22.728935",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:25.817Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:22.728935",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:25.817Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae050f997636767735c6458"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:26.825947",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:29.895Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:26.825947",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:29.895Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae050fd97636767735c6459"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:30.909942",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:33.992Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:30.909942",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:33.992Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0510297636767735c645a"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:34.997474",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:38.065Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:34.997474",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:38.065Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0510697636767735c645b"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:39.068378",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:42.146Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:39.068378",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:42.146Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0510a97636767735c645c"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:43.149484",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:46.216Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:43.149484",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:46.216Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0510e97636767735c645d"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:47.220947",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:50.278Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:47.220947",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:50.278Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0511297636767735c645e"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:51.282953",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:54.327Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:51.282953",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:54.327Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0511697636767735c645f"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:55.332566",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:21:58.412Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:55.332566",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:21:58.412Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0511a97636767735c6460"
+    },
+    "order_id": "S-10000163-10000013-2026-10-27 14:21:59.425061",
+    "action": "dispatch",
+    "status": "failed",
+    "error_msg": "ICS request failed",
+    "dispatched_at": {
+      "$date": "2026-10-27T07:22:02.484Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "FL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-27 14:21:59.425061",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {},
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T07:22:02.484Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a1ef54e9781e1be1bc73"
+    },
+    "order_id": "S-10000169-10000013-2026-10-27 20:06:55.465556",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:06:55.530Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000169-10000013-2026-10-27 20:06:55.465556",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000169,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000169",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T13:06:55.530Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a1f154e9781e1be1bc76"
+    },
+    "order_id": "S-10000169-10000013-2026-10-27 20:06:55.465556",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:06:57.736Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000169-10000013-2026-10-27 20:06:55.465556",
+      "status": 3,
+      "storageNum": "A8",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "20",
+      "subTaskId": "1372",
+      "deviceNum": "1370",
+      "qrContent": "10000169",
+      "qrCode": "10000169",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "132",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000169-10000013-2026-10-27 20:06:55.465556",
+      "orderId": "S-10000169-10000013-2026-10-27 20:06:55.465556"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-27T13:06:57.736Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a28854e9781e1be1bc78"
+    },
+    "order_id": "S-10000211-10000013-2026-10-27 20:09:28.654606",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:09:28.694Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000211-10000013-2026-10-27 20:09:28.654606",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000211,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000211",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T13:09:28.694Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a30754e9781e1be1bc7b"
+    },
+    "order_id": "S-10000211-10000013-2026-10-27 20:09:28.654606",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:11:35.405Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000211-10000013-2026-10-27 20:09:28.654606",
+      "status": 3,
+      "storageNum": "C3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "20",
+      "subTaskId": "1376",
+      "deviceNum": "1370",
+      "qrContent": "10000211",
+      "qrCode": "10000211",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "133",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000211-10000013-2026-10-27 20:09:28.654606",
+      "orderId": "S-10000211-10000013-2026-10-27 20:09:28.654606"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-27T13:11:35.405Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a3ba54e9781e1be1bc7d"
+    },
+    "order_id": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:14:34.174Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000180,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000180",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-27T13:14:34.174Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a3ed54e9781e1be1bc80"
+    },
+    "order_id": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:15:25.254Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+      "status": 6,
+      "storageNum": "B2",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1381",
+      "deviceNum": "1370",
+      "qrContent": "10000180",
+      "qrCode": "10000180",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "134",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000180-10000013-2026-10-27 20:14:34.126467 → inprogress",
+      "orderId": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-27T13:15:25.254Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a49754e9781e1be1bc81"
+    },
+    "order_id": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-27T13:18:15.277Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000180-10000013-2026-10-27 20:14:34.126467",
+      "status": 7,
+      "storageNum": "Line22",
+      "errorDesc": "action条件判断错误(0X2032)",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1383",
+      "deviceNum": "1370",
+      "qrContent": "10000013",
+      "qrCode": "10000013",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "134",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Bỏ qua status 7",
+      "orderId": "S-10000180-10000013-2026-10-27 20:14:34.126467"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-27T13:18:15.277Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16640e40c72d502306b3c"
+    },
+    "order_id": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:04:32.826Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000057,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000057",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T03:04:32.826Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16674e40c72d502306b3f"
+    },
+    "order_id": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:05:24.237Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+      "status": 6,
+      "storageNum": "D1",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1448",
+      "deviceNum": "1370",
+      "qrContent": "10000057",
+      "qrCode": "10000057",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "135",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000057-10000013-2026-10-28 10:04:32.728364 → inprogress",
+      "orderId": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:05:24.237Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1676ee40c72d502306b41"
+    },
+    "order_id": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:09:34.168Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000057-10000013-2026-10-28 10:04:32.728364",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1450",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "135",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000057-10000013-2026-10-28 10:04:32.728364",
+      "orderId": "S-10000057-10000013-2026-10-28 10:04:32.728364"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:09:34.168Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae167c5e40c72d502306b42"
+    },
+    "order_id": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:11:01.443Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000056,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000056",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T03:11:01.443Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16829e40c72d502306b45"
+    },
+    "order_id": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:12:41.676Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+      "status": 6,
+      "storageNum": "D2",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1452",
+      "deviceNum": "1370",
+      "qrContent": "10000056",
+      "qrCode": "10000056",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "136",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000056-10000013-2026-10-28 10:11:01.397296 → inprogress",
+      "orderId": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:12:41.676Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae168aee40c72d502306b46"
+    },
+    "order_id": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:14:54.253Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000056-10000013-2026-10-28 10:11:01.397296",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1454",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "136",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000056-10000013-2026-10-28 10:11:01.397296",
+      "orderId": "S-10000056-10000013-2026-10-28 10:11:01.397296"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:14:54.253Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16bdce40c72d502306b47"
+    },
+    "order_id": "S-10000069-10000013-2026-10-28 10:28:27.953800",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:28:28.032Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000069-10000013-2026-10-28 10:28:27.953800",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000069,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000069",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T03:28:28.032Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16bf0e40c72d502306b4a"
+    },
+    "order_id": "S-10000069-10000013-2026-10-28 10:28:27.953800",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:28:48.002Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000069-10000013-2026-10-28 10:28:27.953800",
+      "status": 3,
+      "storageNum": "D3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "20",
+      "subTaskId": "1456",
+      "deviceNum": "1370",
+      "qrContent": "10000069",
+      "qrCode": "10000069",
+      "subTaskSeq": "0",
+      "icsTaskOrderDetailId": "137",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000069-10000013-2026-10-28 10:28:27.953800",
+      "orderId": "S-10000069-10000013-2026-10-28 10:28:27.953800"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:28:48.002Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16c0ee40c72d502306b4b"
+    },
+    "order_id": "S-10000073-10000013-2026-10-28 10:29:18.703028",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:29:18.796Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000073-10000013-2026-10-28 10:29:18.703028",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000073,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000073",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T03:29:18.796Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1716cf07aef1f59c53673"
+    },
+    "order_id": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:52:12.030Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000146,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000146",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T03:52:12.030Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17286f07aef1f59c53676"
+    },
+    "order_id": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:56:54.069Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+      "status": 6,
+      "storageNum": "A1",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1469",
+      "deviceNum": "1370",
+      "qrContent": "10000146",
+      "qrCode": "10000146",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "139",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000146-10000013-2026-10-28 10:52:11.948666 → inprogress",
+      "orderId": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:56:54.069Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17312f07aef1f59c53677"
+    },
+    "order_id": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T03:59:14.477Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000146-10000013-2026-10-28 10:52:11.948666",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1471",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "139",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000146-10000013-2026-10-28 10:52:11.948666",
+      "orderId": "S-10000146-10000013-2026-10-28 10:52:11.948666"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T03:59:14.477Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17355f07aef1f59c53678"
+    },
+    "order_id": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:00:21.507Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000151,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000151",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:00:21.507Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17378f07aef1f59c5367b"
+    },
+    "order_id": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:00:56.661Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+      "status": 6,
+      "storageNum": "A2",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1473",
+      "deviceNum": "1370",
+      "qrContent": "10000151",
+      "qrCode": "10000151",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "140",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000151-10000013-2026-10-28 11:00:21.474900 → inprogress",
+      "orderId": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:00:56.661Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae173fff07aef1f59c5367c"
+    },
+    "order_id": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:03:11.147Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000151-10000013-2026-10-28 11:00:21.474900",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1475",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "140",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000151-10000013-2026-10-28 11:00:21.474900",
+      "orderId": "S-10000151-10000013-2026-10-28 11:00:21.474900"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:03:11.147Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17443f07aef1f59c5367d"
+    },
+    "order_id": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:04:19.214Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000154,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000154",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:04:19.214Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1746af07aef1f59c53680"
+    },
+    "order_id": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:04:58.812Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+      "status": 6,
+      "storageNum": "A3",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1477",
+      "deviceNum": "1370",
+      "qrContent": "10000154",
+      "qrCode": "10000154",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "141",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000154-10000013-2026-10-28 11:04:19.159158 → inprogress",
+      "orderId": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:04:58.812Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae174faf07aef1f59c53681"
+    },
+    "order_id": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:07:22.353Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000154-10000013-2026-10-28 11:04:19.159158",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1479",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "141",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000154-10000013-2026-10-28 11:04:19.159158",
+      "orderId": "S-10000154-10000013-2026-10-28 11:04:19.159158"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:07:22.353Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17536f07aef1f59c53682"
+    },
+    "order_id": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:08:22.130Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000157,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000157",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:08:22.130Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae175a2f07aef1f59c53685"
+    },
+    "order_id": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:10:10.471Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+      "status": 6,
+      "storageNum": "A4",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1481",
+      "deviceNum": "1370",
+      "qrContent": "10000157",
+      "qrCode": "10000157",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "142",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000157-10000013-2026-10-28 11:08:22.096249 → inprogress",
+      "orderId": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:10:10.471Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1763cf07aef1f59c53686"
+    },
+    "order_id": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:12:44.569Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000157-10000013-2026-10-28 11:08:22.096249",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1483",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "142",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000157-10000013-2026-10-28 11:08:22.096249",
+      "orderId": "S-10000157-10000013-2026-10-28 11:08:22.096249"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:12:44.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17673f07aef1f59c53687"
+    },
+    "order_id": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:13:39.836Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000163,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:13:39.836Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae176bdf07aef1f59c5368a"
+    },
+    "order_id": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:14:53.700Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+      "status": 6,
+      "storageNum": "A5",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1485",
+      "deviceNum": "1370",
+      "qrContent": "10000163",
+      "qrCode": "10000163",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "143",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000163-10000013-2026-10-28 11:13:39.789462 → inprogress",
+      "orderId": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:14:53.700Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17752f07aef1f59c5368b"
+    },
+    "order_id": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:17:22.169Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000163-10000013-2026-10-28 11:13:39.789462",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1487",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "143",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000163-10000013-2026-10-28 11:13:39.789462",
+      "orderId": "S-10000163-10000013-2026-10-28 11:13:39.789462"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:17:22.169Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17787f07aef1f59c5368c"
+    },
+    "order_id": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:18:15.999Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000160,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000160",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:18:15.999Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae177c3f07aef1f59c5368f"
+    },
+    "order_id": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:19:15.434Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+      "status": 6,
+      "storageNum": "A6",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1489",
+      "deviceNum": "1370",
+      "qrContent": "10000160",
+      "qrCode": "10000160",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "144",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000160-10000013-2026-10-28 11:18:15.965484 → inprogress",
+      "orderId": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:19:15.434Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1784ef07aef1f59c53690"
+    },
+    "order_id": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:21:34.880Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000160-10000013-2026-10-28 11:18:15.965484",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1491",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "144",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000160-10000013-2026-10-28 11:18:15.965484",
+      "orderId": "S-10000160-10000013-2026-10-28 11:18:15.965484"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:21:34.880Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae178d3f07aef1f59c53691"
+    },
+    "order_id": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:23:47.730Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000166,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000166",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:23:47.730Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1790af07aef1f59c53694"
+    },
+    "order_id": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:24:42.810Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+      "status": 6,
+      "storageNum": "A7",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1493",
+      "deviceNum": "1370",
+      "qrContent": "10000166",
+      "qrCode": "10000166",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "145",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000166-10000013-2026-10-28 11:23:47.682428 → inprogress",
+      "orderId": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:24:42.810Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae179a6f07aef1f59c53695"
+    },
+    "order_id": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:27:18.605Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000166-10000013-2026-10-28 11:23:47.682428",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1495",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "145",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000166-10000013-2026-10-28 11:23:47.682428",
+      "orderId": "S-10000166-10000013-2026-10-28 11:23:47.682428"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:27:18.605Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17adff33ec0351c335f39"
+    },
+    "order_id": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:32:31.094Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000166,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000166",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:32:31.094Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17b15f33ec0351c335f3c"
+    },
+    "order_id": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:33:25.843Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+      "status": 6,
+      "storageNum": "A7",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1497",
+      "deviceNum": "1370",
+      "qrContent": "10000166",
+      "qrCode": "10000166",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "146",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000166-10000013-2026-10-28 11:32:31.010810 → inprogress",
+      "orderId": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:33:25.843Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17ba1f33ec0351c335f3d"
+    },
+    "order_id": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:35:45.364Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000166-10000013-2026-10-28 11:32:31.010810",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1499",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "146",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000166-10000013-2026-10-28 11:32:31.010810",
+      "orderId": "S-10000166-10000013-2026-10-28 11:32:31.010810"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:35:45.364Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17bd9f33ec0351c335f3e"
+    },
+    "order_id": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:36:41.116Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000180,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000180",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:36:41.116Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17c4af33ec0351c335f41"
+    },
+    "order_id": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:38:34.345Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+      "status": 6,
+      "storageNum": "B2",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1501",
+      "deviceNum": "1370",
+      "qrContent": "10000180",
+      "qrCode": "10000180",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "147",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000180-10000013-2026-10-28 11:36:41.031440 → inprogress",
+      "orderId": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:38:34.345Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17ccbf33ec0351c335f43"
+    },
+    "order_id": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:40:43.960Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000180-10000013-2026-10-28 11:36:41.031440",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1503",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "147",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000180-10000013-2026-10-28 11:36:41.031440",
+      "orderId": "S-10000180-10000013-2026-10-28 11:36:41.031440"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:40:43.960Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17d56f33ec0351c335f44"
+    },
+    "order_id": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+    "action": "dispatch",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:43:02.598Z"
+    },
+    "endpoint": "http://192.168.50.250:7000/ics/taskOrder/addTask",
+    "request_payload": {
+      "modelProcessCode": "MultiFL",
+      "fromSystem": "ICS",
+      "orderId": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+      "taskOrderDetail": [
+        {
+          "taskPath": "10000183,10000013"
+        }
+      ]
+    },
+    "response_payload": {
+      "ok": true
+    },
+    "external_source": "ICS",
+    "start_point": "start_10000183",
+    "end_point": "end_10000013",
+    "created_at": {
+      "$date": "2026-10-28T04:43:02.598Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17d7ef33ec0351c335f47"
+    },
+    "order_id": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:43:42.231Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+      "status": 6,
+      "storageNum": "B3",
+      "subTaskStatus": "2",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "68",
+      "subTaskId": "1505",
+      "deviceNum": "1370",
+      "qrContent": "10000183",
+      "qrCode": "10000183",
+      "subTaskSeq": "1",
+      "icsTaskOrderDetailId": "148",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "orderId S-10000183-10000013-2026-10-28 11:43:02.528199 → inprogress",
+      "orderId": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+      "status": "inprogress"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:43:42.231Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17e12f33ec0351c335f48"
+    },
+    "order_id": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+    "action": "unlock_by_order_status",
+    "status": "success",
+    "error_msg": null,
+    "dispatched_at": {
+      "$date": "2026-10-28T04:46:10.828Z"
+    },
+    "endpoint": "/api/v1/external_server/unlock_by_order_status",
+    "request_payload": {
+      "orderId": "S-10000183-10000013-2026-10-28 11:43:02.528199",
+      "status": 23,
+      "storageNum": "Line22",
+      "subTaskStatus": "3",
+      "deviceCode": "EC48552BAK00001",
+      "modelProcessCode": "MultiFL",
+      "subTaskTypeId": "102",
+      "subTaskId": "1507",
+      "deviceNum": "1370",
+      "qrContent": "10000014",
+      "qrCode": "10000014",
+      "subTaskSeq": "3",
+      "icsTaskOrderDetailId": "148",
+      "processRate": "1/1"
+    },
+    "response_payload": {
+      "message": "Flags reset for orderId S-10000183-10000013-2026-10-28 11:43:02.528199",
+      "orderId": "S-10000183-10000013-2026-10-28 11:43:02.528199"
+    },
+    "external_source": "ICS",
+    "start_point": null,
+    "end_point": null,
+    "created_at": {
+      "$date": "2026-10-28T04:46:10.828Z"
+    }
+  }
+]

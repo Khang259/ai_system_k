@@ -116,6 +116,10 @@ uv run uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 
 - [Zone runtime flags — `isRunning` / `isStreaming`](docs/fe-zones-runtime-flags.md)
 
+## Vận hành
+
+- [Runbook runtime product](docs/runbook-runtime-product.md) — checklist lên ca, luồng start-scan / confirm-dispatch, reload, degraded, sự cố
+
 ## Ghi chú
 
 - **Không commit** file `.env`, model lớn, hay log.  

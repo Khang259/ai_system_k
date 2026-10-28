@@ -1,0 +1,18 @@
+[
+  {
+    "_id": {
+      "$oid": "6ad1dd3cf293a40860192ea4"
+    },
+    "zone_id": "Y",
+    "enabled": true,
+    "name": "Zone Y"
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0164"
+    },
+    "zone_id": "X",
+    "name": "Zone X",
+    "enabled": true
+  }
+]

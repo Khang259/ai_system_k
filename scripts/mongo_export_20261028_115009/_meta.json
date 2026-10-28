@@ -1,0 +1,17 @@
+{
+  "db": "db_kortek",
+  "collections": {
+    "action_logs": 169,
+    "audit_logs": 15,
+    "cameras": 6,
+    "dispatch_logs": 103,
+    "map_state": 1,
+    "map_versions": 5,
+    "nodes": 46,
+    "pairs": 45,
+    "refresh_tokens": 1,
+    "snapshots": 36,
+    "users": 3,
+    "zones": 2
+  }
+}

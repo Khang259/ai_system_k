@@ -1,0 +1,75 @@
+[
+  {
+    "_id": {
+      "$oid": "6acca7cd78b5a4d45e476026"
+    },
+    "user_id": "u-4053d3649060",
+    "username": "admin",
+    "name": "Administrator",
+    "role": "admin",
+    "permissions": [
+      "camera.read",
+      "camera.write",
+      "node.read",
+      "node.maintenance",
+      "pair.read",
+      "pair.write",
+      "zone.control",
+      "system.control",
+      "logs.read",
+      "map.read",
+      "map.write"
+    ],
+    "password_hash": "$2b$12$E.BEHuqDPEBDlKQOsWQ8X.F6Z8HD./dvoEAMyJIXAdKmAn2OKYP7O",
+    "enabled": true,
+    "created_at": {
+      "$date": "2026-10-12T09:26:37.418Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acca7cd78b5a4d45e476027"
+    },
+    "user_id": "u-a5908d70f25f",
+    "username": "operator",
+    "name": "Operator",
+    "role": "operator",
+    "permissions": [
+      "camera.read",
+      "camera.write",
+      "node.read",
+      "node.maintenance",
+      "pair.read",
+      "pair.write",
+      "zone.control",
+      "logs.read",
+      "map.read"
+    ],
+    "password_hash": "$2b$12$E.BEHuqDPEBDlKQOsWQ8X.F6Z8HD./dvoEAMyJIXAdKmAn2OKYP7O",
+    "enabled": true,
+    "created_at": {
+      "$date": "2026-10-12T09:26:37.427Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acca7cd78b5a4d45e476028"
+    },
+    "user_id": "u-6b0c89bda090",
+    "username": "viewer",
+    "name": "Viewer",
+    "role": "viewer",
+    "permissions": [
+      "camera.read",
+      "node.read",
+      "pair.read",
+      "logs.read",
+      "map.read"
+    ],
+    "password_hash": "$2b$12$E.BEHuqDPEBDlKQOsWQ8X.F6Z8HD./dvoEAMyJIXAdKmAn2OKYP7O",
+    "enabled": true,
+    "created_at": {
+      "$date": "2026-10-12T09:26:37.428Z"
+    }
+  }
+]

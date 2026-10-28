@@ -1,0 +1,704 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 167,
+    "filesWithImports": 124,
+    "totalEdges": 402
+  },
+  "failures": [],
+  "importMap": {
+    ".github/CODEOWNERS": [],
+    ".python-version": [],
+    "README.md": [],
+    "app.py": [
+      "application/container.py",
+      "application/runtime/runtime_service.py",
+      "config/settings.py",
+      "infrastructure/auth/__init__.py",
+      "infrastructure/ics/__init__.py",
+      "infrastructure/persistence/__init__.py",
+      "infrastructure/persistence/camera_repository.py",
+      "infrastructure/persistence/dispatch_log_repository.py",
+      "infrastructure/persistence/node_repository.py",
+      "infrastructure/persistence/notification_repository.py",
+      "infrastructure/persistence/pairs_repository.py",
+      "infrastructure/persistence/refresh_token_repository.py",
+      "infrastructure/persistence/snapshot_repository.py",
+      "infrastructure/persistence/user_repository.py",
+      "infrastructure/persistence/zone_repository.py",
+      "infrastructure/storage/__init__.py",
+      "infrastructure/webrtc/__init__.py",
+      "presentation/openapi_responses.py",
+      "presentation/routes/v1/__init__.py",
+      "utils/setup_log.py"
+    ],
+    "application/__init__.py": [],
+    "application/auth/__init__.py": [
+      "application/auth/session.py"
+    ],
+    "application/auth/session.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/cameras/__init__.py": [
+      "application/cameras/cancel_batch.py",
+      "application/cameras/confirm_dispatch.py",
+      "application/cameras/on_dispatch_success.py",
+      "application/cameras/pause_scan.py",
+      "application/cameras/preview.py",
+      "application/cameras/start_scan.py",
+      "application/cameras/start_stop.py",
+      "application/cameras/webrtc_ice.py",
+      "application/cameras/webrtc_sessions.py",
+      "application/cameras/webrtc_signaling.py",
+      "application/cameras/zone.py"
+    ],
+    "application/cameras/cancel_batch.py": [
+      "application/result.py",
+      "application/scan_session.py",
+      "infrastructure/sandbox/smoke_trail.py"
+    ],
+    "application/cameras/confirm_dispatch.py": [
+      "application/ports.py",
+      "application/result.py",
+      "application/scan_session.py",
+      "domain/batch_policy.py",
+      "domain/dispatch/priority.py",
+      "infrastructure/sandbox/smoke_trail.py",
+      "utils/setup_log.py"
+    ],
+    "application/cameras/on_dispatch_success.py": [
+      "application/scan_session.py",
+      "domain/batch_policy.py",
+      "infrastructure/sandbox/smoke_trail.py",
+      "utils/setup_log.py"
+    ],
+    "application/cameras/pause_scan.py": [
+      "application/ports.py",
+      "application/result.py",
+      "application/scan_session.py",
+      "infrastructure/sandbox/smoke_trail.py"
+    ],
+    "application/cameras/preview.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/cameras/start_scan.py": [
+      "application/ports.py",
+      "application/result.py",
+      "infrastructure/sandbox/smoke_trail.py"
+    ],
+    "application/cameras/start_stop.py": [
+      "application/ports.py",
+      "application/result.py",
+      "application/scan_session.py",
+      "infrastructure/sandbox/smoke_trail.py"
+    ],
+    "application/cameras/webrtc_ice.py": [
+      "config/settings.py"
+    ],
+    "application/cameras/webrtc_sessions.py": [],
+    "application/cameras/webrtc_signaling.py": [
+      "application/cameras/webrtc_sessions.py",
+      "application/result.py"
+    ],
+    "application/cameras/zone.py": [
+      "application/ports.py",
+      "application/result.py",
+      "application/scan_session.py"
+    ],
+    "application/container.py": [
+      "application/auth/__init__.py",
+      "application/cameras/__init__.py",
+      "application/dispatch/active_task_hub.py",
+      "application/dispatch/active_tasks.py",
+      "application/dispatch/dispatch_gate.py",
+      "application/dispatch/pending_pairs.py",
+      "application/fe_api/__init__.py",
+      "application/null_ports.py",
+      "application/runtime/__init__.py",
+      "application/scan_session.py",
+      "application/state/reset_flags.py"
+    ],
+    "application/dispatch/__init__.py": [],
+    "application/dispatch/active_task_hub.py": [
+      "domain/dispatch/active_task.py"
+    ],
+    "application/dispatch/active_tasks.py": [
+      "application/dispatch/active_task_hub.py",
+      "application/ports.py",
+      "application/result.py",
+      "domain/dispatch/active_task.py",
+      "domain/dispatch/priority.py",
+      "domain/models.py"
+    ],
+    "application/dispatch/dispatch_gate.py": [
+      "application/scan_session.py",
+      "domain/batch_policy.py",
+      "domain/dispatch/priority.py",
+      "infrastructure/sandbox/smoke_trail.py",
+      "utils/setup_log.py"
+    ],
+    "application/dispatch/dispatch_service.py": [
+      "application/dispatch/ics_payload.py",
+      "application/ports.py",
+      "domain/dispatch/pairing.py",
+      "domain/dispatch/priority.py",
+      "utils/setup_log.py"
+    ],
+    "application/dispatch/ics_payload.py": [
+      "config/settings.py"
+    ],
+    "application/dispatch/pending_pairs.py": [
+      "application/ports.py",
+      "application/result.py",
+      "application/scan_session.py",
+      "domain/batch_policy.py",
+      "domain/dispatch/pairing.py",
+      "domain/dispatch/priority.py",
+      "utils/setup_log.py"
+    ],
+    "application/fe_api/__init__.py": [
+      "application/fe_api/cameras.py",
+      "application/fe_api/logs.py",
+      "application/fe_api/maps.py",
+      "application/fe_api/nodes.py",
+      "application/fe_api/pairs.py",
+      "application/fe_api/poll.py",
+      "application/fe_api/runtime_nodes.py",
+      "application/fe_api/zones.py"
+    ],
+    "application/fe_api/cameras.py": [
+      "application/fe_api/cameras_crud.py",
+      "application/fe_api/cameras_read.py",
+      "application/fe_api/cameras_status.py",
+      "application/fe_api/cameras_update.py",
+      "application/fe_api/rois.py"
+    ],
+    "application/fe_api/cameras_crud.py": [
+      "application/fe_api/cameras_helpers.py",
+      "application/fe_api/mappers.py",
+      "application/fe_api/priority_rules.py",
+      "application/fe_api/sync_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/cameras_helpers.py": [
+      "application/fe_api/priority_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/cameras_read.py": [
+      "application/fe_api/mappers.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/cameras_status.py": [
+      "application/fe_api/sync_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/cameras_update.py": [
+      "application/fe_api/cameras_helpers.py",
+      "application/fe_api/mappers.py",
+      "application/fe_api/priority_rules.py",
+      "application/fe_api/sync_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/log_mappers.py": [],
+    "application/fe_api/logs.py": [
+      "application/fe_api/log_mappers.py",
+      "application/result.py"
+    ],
+    "application/fe_api/mappers.py": [],
+    "application/fe_api/maps.py": [
+      "application/result.py",
+      "infrastructure/storage/map_zip_store.py"
+    ],
+    "application/fe_api/nodes.py": [
+      "application/fe_api/mappers.py",
+      "application/fe_api/priority_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/pairs.py": [
+      "application/fe_api/sync_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/poll.py": [
+      "application/result.py"
+    ],
+    "application/fe_api/priority_rules.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/rois.py": [
+      "application/fe_api/mappers.py",
+      "application/fe_api/sync_rules.py",
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/runtime_nodes.py": [
+      "application/ports.py",
+      "application/result.py",
+      "application/runtime/runtime_state_hub.py"
+    ],
+    "application/fe_api/sync_rules.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/fe_api/zones.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/null_ports.py": [
+      "domain/reset_policy.py"
+    ],
+    "application/ports.py": [
+      "domain/reset_policy.py"
+    ],
+    "application/result.py": [],
+    "application/runtime/__init__.py": [
+      "application/runtime/control.py",
+      "application/runtime/health.py",
+      "application/runtime/runtime_state_hub.py"
+    ],
+    "application/runtime/control.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/runtime/health.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "application/runtime/runtime_service.py": [
+      "application/container.py",
+      "application/dispatch/dispatch_service.py",
+      "config/settings.py",
+      "domain/dispatch/priority.py",
+      "domain/node_state.py",
+      "infrastructure/adapters.py",
+      "infrastructure/dispatch/pair_manager.py",
+      "infrastructure/ics/http_dispatch_gateway.py",
+      "infrastructure/persistence/camera_repository.py",
+      "infrastructure/persistence/pairs_repository.py",
+      "infrastructure/sandbox/__init__.py",
+      "infrastructure/storage/snapshot_fs.py",
+      "infrastructure/vision/camera_manager.py",
+      "infrastructure/vision/inference_engine.py",
+      "utils/setup_log.py"
+    ],
+    "application/runtime/runtime_state_hub.py": [],
+    "application/scan_session.py": [
+      "domain/batch_policy.py"
+    ],
+    "application/state/__init__.py": [],
+    "application/state/reset_flags.py": [
+      "application/ports.py",
+      "application/result.py"
+    ],
+    "config/__init__.py": [],
+    "config/mediamtx.yml": [],
+    "config/settings.py": [
+      "domain/settings.py"
+    ],
+    "domain/__init__.py": [],
+    "domain/batch_policy.py": [
+      "domain/dispatch/priority.py"
+    ],
+    "domain/dispatch/__init__.py": [
+      "domain/dispatch/pairing.py",
+      "domain/dispatch/priority.py"
+    ],
+    "domain/dispatch/active_task.py": [
+      "domain/dispatch/priority.py",
+      "domain/models.py"
+    ],
+    "domain/dispatch/pairing.py": [
+      "domain/dispatch/priority.py"
+    ],
+    "domain/dispatch/priority.py": [
+      "domain/settings.py"
+    ],
+    "domain/models.py": [],
+    "domain/node_state.py": [
+      "domain/settings.py"
+    ],
+    "domain/permissions.py": [],
+    "domain/reset_policy.py": [
+      "domain/models.py"
+    ],
+    "domain/settings.py": [],
+    "infrastructure/__init__.py": [],
+    "infrastructure/adapters.py": [
+      "domain/reset_policy.py"
+    ],
+    "infrastructure/auth/__init__.py": [
+      "infrastructure/auth/action_audit_adapter.py",
+      "infrastructure/auth/audit_adapter.py",
+      "infrastructure/auth/indexes.py",
+      "infrastructure/auth/jwt_service.py",
+      "infrastructure/auth/password_hasher.py",
+      "infrastructure/auth/system_action_audit_adapter.py"
+    ],
+    "infrastructure/auth/action_audit_adapter.py": [
+      "infrastructure/persistence/log_repositories.py"
+    ],
+    "infrastructure/auth/audit_adapter.py": [
+      "infrastructure/persistence/log_repositories.py"
+    ],
+    "infrastructure/auth/indexes.py": [
+      "infrastructure/persistence/db.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/auth/jwt_service.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/auth/notification_publisher.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/auth/password_hasher.py": [],
+    "infrastructure/auth/system_action_audit_adapter.py": [
+      "config/settings.py",
+      "infrastructure/persistence/base_repository.py",
+      "infrastructure/persistence/dispatch_log_repository.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/dispatch/__init__.py": [
+      "infrastructure/dispatch/pair_manager.py"
+    ],
+    "infrastructure/dispatch/pair_manager.py": [
+      "application/dispatch/dispatch_service.py",
+      "config/settings.py",
+      "domain/batch_policy.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/ics/__init__.py": [
+      "infrastructure/ics/http_dispatch_gateway.py",
+      "infrastructure/ics/http_order_query.py"
+    ],
+    "infrastructure/ics/http_dispatch_gateway.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/ics/http_order_query.py": [],
+    "infrastructure/persistence/__init__.py": [
+      "infrastructure/persistence/camera_repository.py",
+      "infrastructure/persistence/db.py",
+      "infrastructure/persistence/db_health.py",
+      "infrastructure/persistence/dispatch_log_repository.py",
+      "infrastructure/persistence/log_repositories.py",
+      "infrastructure/persistence/map_repository.py",
+      "infrastructure/persistence/node_repository.py",
+      "infrastructure/persistence/notification_repository.py",
+      "infrastructure/persistence/pairs_repository.py",
+      "infrastructure/persistence/refresh_token_repository.py",
+      "infrastructure/persistence/snapshot_repository.py",
+      "infrastructure/persistence/user_repository.py",
+      "infrastructure/persistence/zone_repository.py"
+    ],
+    "infrastructure/persistence/base_repository.py": [
+      "infrastructure/persistence/db.py"
+    ],
+    "infrastructure/persistence/camera_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/db.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/persistence/db_health.py": [
+      "infrastructure/persistence/db.py"
+    ],
+    "infrastructure/persistence/dispatch_log_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/log_repositories.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/map_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/node_lock_sync.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/persistence/node_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/notification_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/pairs_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/refresh_token_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/snapshot_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/user_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/persistence/zone_repository.py": [
+      "infrastructure/persistence/base_repository.py"
+    ],
+    "infrastructure/sandbox/__init__.py": [
+      "infrastructure/sandbox/sandbox_camera_manager.py",
+      "infrastructure/sandbox/sandbox_ics.py",
+      "infrastructure/sandbox/sandbox_inference.py",
+      "infrastructure/sandbox/smoke_trail.py"
+    ],
+    "infrastructure/sandbox/sandbox_camera_manager.py": [
+      "infrastructure/vision/camera_manager.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/sandbox/sandbox_ics.py": [
+      "domain/dispatch/active_task.py",
+      "domain/models.py",
+      "infrastructure/sandbox/smoke_trail.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/sandbox/sandbox_inference.py": [],
+    "infrastructure/sandbox/smoke_trail.py": [
+      "config/settings.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/storage/.gitkeep": [],
+    "infrastructure/storage/__init__.py": [
+      "infrastructure/storage/map_zip_store.py",
+      "infrastructure/storage/retention.py"
+    ],
+    "infrastructure/storage/map_zip_store.py": [],
+    "infrastructure/storage/retention.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/storage/snapshot_fs.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/storage/snapshot_indexer.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/.gitkeep": [],
+    "infrastructure/vision/__init__.py": [
+      "infrastructure/vision/camera_manager.py",
+      "infrastructure/vision/inference_engine.py"
+    ],
+    "infrastructure/vision/annexb_pipe.py": [],
+    "infrastructure/vision/camera_manager.py": [
+      "config/settings.py",
+      "infrastructure/vision/camera_processor.py",
+      "infrastructure/vision/preview_store.py",
+      "utils/rtsp_url.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/camera_processor.py": [
+      "config/settings.py",
+      "infrastructure/vision/detection.py",
+      "infrastructure/vision/gpu_video_decoder.py",
+      "infrastructure/vision/preview_draw.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/cuda_decode_pool.py": [
+      "config/settings.py"
+    ],
+    "infrastructure/vision/detection.py": [
+      "config/settings.py",
+      "utils/overlap_utils.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/frame_queue.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/gpu_frame.py": [],
+    "infrastructure/vision/gpu_video_decoder.py": [
+      "infrastructure/vision/annexb_pipe.py",
+      "infrastructure/vision/cuda_decode_pool.py",
+      "infrastructure/vision/gpu_frame.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/inference_engine.py": [
+      "infrastructure/vision/frame_queue.py",
+      "infrastructure/vision/trt_yolo_engine.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/vision/preview_draw.py": [],
+    "infrastructure/vision/preview_store.py": [],
+    "infrastructure/vision/trt_yolo_engine.py": [
+      "config/settings.py",
+      "utils/setup_log.py"
+    ],
+    "infrastructure/webrtc/__init__.py": [
+      "infrastructure/webrtc/mediamtx_gateway.py",
+      "infrastructure/webrtc/mediamtx_runner.py"
+    ],
+    "infrastructure/webrtc/mediamtx_gateway.py": [
+      "utils/setup_log.py"
+    ],
+    "infrastructure/webrtc/mediamtx_runner.py": [
+      "utils/setup_log.py"
+    ],
+    "main.py": [
+      "app.py"
+    ],
+    "presentation/__init__.py": [],
+    "presentation/deps.py": [
+      "application/container.py"
+    ],
+    "presentation/http_v1.py": [
+      "application/container.py",
+      "application/result.py",
+      "presentation/deps.py"
+    ],
+    "presentation/openapi_responses.py": [],
+    "presentation/routes/__init__.py": [],
+    "presentation/routes/v1/__init__.py": [
+      "presentation/routes/v1/auth.py",
+      "presentation/routes/v1/cameras.py",
+      "presentation/routes/v1/dispatch.py",
+      "presentation/routes/v1/external_server.py",
+      "presentation/routes/v1/logs.py",
+      "presentation/routes/v1/maps.py",
+      "presentation/routes/v1/nodes.py",
+      "presentation/routes/v1/notifications.py",
+      "presentation/routes/v1/pairs.py",
+      "presentation/routes/v1/poll.py",
+      "presentation/routes/v1/runtime.py",
+      "presentation/routes/v1/sandbox.py",
+      "presentation/routes/v1/snapshots.py",
+      "presentation/routes/v1/system.py",
+      "presentation/routes/v1/zones.py"
+    ],
+    "presentation/routes/v1/auth.py": [
+      "application/container.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/routes/v1/cameras.py": [
+      "application/cameras/__init__.py",
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/routes/v1/dispatch.py": [
+      "application/container.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/sse.py"
+    ],
+    "presentation/routes/v1/external_server.py": [
+      "application/container.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/routes/v1/logs.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py"
+    ],
+    "presentation/routes/v1/maps.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py"
+    ],
+    "presentation/routes/v1/nodes.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/routes/v1/notifications.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py"
+    ],
+    "presentation/routes/v1/pairs.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/routes/v1/poll.py": [
+      "application/container.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py"
+    ],
+    "presentation/routes/v1/runtime.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/sse.py"
+    ],
+    "presentation/routes/v1/sandbox.py": [
+      "application/container.py",
+      "application/runtime/runtime_service.py",
+      "domain/dispatch/active_task.py",
+      "domain/permissions.py",
+      "infrastructure/sandbox/smoke_trail.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/routes/v1/snapshots.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py"
+    ],
+    "presentation/routes/v1/system.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py"
+    ],
+    "presentation/routes/v1/zones.py": [
+      "application/container.py",
+      "domain/permissions.py",
+      "presentation/deps.py",
+      "presentation/http_v1.py",
+      "presentation/openapi_responses.py",
+      "presentation/schemas.py"
+    ],
+    "presentation/schemas.py": [],
+    "presentation/sse.py": [],
+    "pyproject.toml": [],
+    "requirements.txt": [],
+    "scripts/cleanup_orphan_rois.py": [],
+    "scripts/export_engine.py": [
+      "config/settings.py"
+    ],
+    "scripts/migrate_ssot_nodes_pairs.py": [],
+    "scripts/migrate_start_priority_per_zone.py": [],
+    "scripts/seed_db.py": [],
+    "scripts/seed_sandbox.py": [
+      "config/settings.py",
+      "domain/dispatch/priority.py"
+    ],
+    "scripts/seed_users.py": [
+      "config/settings.py",
+      "domain/permissions.py",
+      "infrastructure/auth/password_hasher.py"
+    ],
+    "utils/__init__.py": [],
+    "utils/overlap_utils.py": [],
+    "utils/rtsp_url.py": [],
+    "utils/setup_log.py": []
+  }
+}

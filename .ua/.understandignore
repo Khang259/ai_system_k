@@ -1,0 +1,45 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+# Lines below are suggestions — uncomment to activate.
+# Use ! prefix to force-include something excluded by defaults.
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, obj/, *.lock, *.min.js, etc.
+#
+
+# --- Active exclusions (user-confirmed) ---
+
+logs/
+.env
+bin/mediamtx
+bin/mediamtx.exe
+benchmarks/
+profiling/
+docs/
+data/
+snapshots/
+tests/
+models/*.onnx
+models/*.pt
+models/*.engine
+.ua/
+
+# --- From .gitignore (optional) ---
+
+# *.py[oc]
+# wheels/
+# *.egg-info
+# .pytest_cache/
+# *.bak
+# *.bak_eng
+
+# --- Detected directories (optional) ---
+
+# scripts/
+
+# --- Test file patterns (covered by tests/ above) ---
+
+# **/test_*.py
+# **/*_test.py
+# **/tests.py
+# **/conftest.py

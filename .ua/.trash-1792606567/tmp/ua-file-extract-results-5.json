@@ -1,0 +1,5343 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 23,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 23,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 23,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "infrastructure/storage/snapshot_fs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 313,
+      "nonEmptyLines": 268,
+      "functions": [
+        {
+          "name": "_sanitize_for_filename",
+          "startLine": 20,
+          "endLine": 23,
+          "params": [
+            "value"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SnapshotFsStore",
+          "startLine": 26,
+          "endLine": 313,
+          "methods": [
+            "__init__",
+            "_index_saved",
+            "capture_pair",
+            "save_pair_snapshots",
+            "get_snapshot_count",
+            "cleanup_old_snapshots"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_sanitize_for_filename",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "SnapshotFsStore",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_sanitize_for_filename",
+          "callee": "value.replace",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_sanitize_for_filename",
+          "callee": "re.sub",
+          "lineNumber": 23
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "min",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 45
+        },
+        {
+          "caller": "__init__",
+          "callee": "os.makedirs",
+          "lineNumber": 48
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.info",
+          "lineNumber": 49
+        },
+        {
+          "caller": "_index_saved",
+          "callee": "self.indexer.record",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_index_saved",
+          "callee": "self.indexer.record",
+          "lineNumber": 74
+        },
+        {
+          "caller": "capture_pair",
+          "callee": "self.frame_provider.capture_for_node",
+          "lineNumber": 94
+        },
+        {
+          "caller": "capture_pair",
+          "callee": "self.frame_provider.capture_for_node",
+          "lineNumber": 95
+        },
+        {
+          "caller": "capture_pair",
+          "callee": "logger.info",
+          "lineNumber": 98
+        },
+        {
+          "caller": "capture_pair",
+          "callee": "logger.info",
+          "lineNumber": 100
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "capture.get",
+          "lineNumber": 125
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "capture.get",
+          "lineNumber": 126
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.error",
+          "lineNumber": 139
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "datetime.now().strftime",
+          "lineNumber": 142
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "datetime.now",
+          "lineNumber": 142
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "_sanitize_for_filename",
+          "lineNumber": 143
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "frames_bgr.append",
+          "lineNumber": 151
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "metas.append",
+          "lineNumber": 152
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cap.get",
+          "lineNumber": 156
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "event.synchronize",
+          "lineNumber": 158
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "frame_to_bgr",
+          "lineNumber": 162
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cap.get",
+          "lineNumber": 165
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cap.get",
+          "lineNumber": 166
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "draw_overlay",
+          "lineNumber": 167
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "frames_bgr.append",
+          "lineNumber": 169
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cap.get",
+          "lineNumber": 172
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "time.time",
+          "lineNumber": 173
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "overlay_meta",
+          "lineNumber": 174
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "time.time",
+          "lineNumber": 177
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "round",
+          "lineNumber": 181
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cap.get",
+          "lineNumber": 183
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "metas.append",
+          "lineNumber": 184
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "np.hstack",
+          "lineNumber": 192
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "os.path.join",
+          "lineNumber": 194
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cv2.imwrite",
+          "lineNumber": 195
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "int",
+          "lineNumber": 196
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.info",
+          "lineNumber": 201
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "path.replace",
+          "lineNumber": 204
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "open",
+          "lineNumber": 205
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "json.dump",
+          "lineNumber": 206
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "self._index_saved",
+          "lineNumber": 215
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.error",
+          "lineNumber": 223
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "os.path.join",
+          "lineNumber": 228
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cv2.imwrite",
+          "lineNumber": 229
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "int",
+          "lineNumber": 230
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.info",
+          "lineNumber": 235
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "path.replace",
+          "lineNumber": 238
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "open",
+          "lineNumber": 239
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "json.dump",
+          "lineNumber": 240
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "self._index_saved",
+          "lineNumber": 245
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.error",
+          "lineNumber": 250
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "os.path.join",
+          "lineNumber": 255
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "cv2.imwrite",
+          "lineNumber": 256
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "int",
+          "lineNumber": 257
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.info",
+          "lineNumber": 262
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "path.replace",
+          "lineNumber": 265
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "open",
+          "lineNumber": 266
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "json.dump",
+          "lineNumber": 267
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "self._index_saved",
+          "lineNumber": 272
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.error",
+          "lineNumber": 275
+        },
+        {
+          "caller": "save_pair_snapshots",
+          "callee": "logger.error",
+          "lineNumber": 278
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "datetime.now",
+          "lineNumber": 289
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "timedelta",
+          "lineNumber": 289
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "os.listdir",
+          "lineNumber": 292
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "filename.lower().endswith",
+          "lineNumber": 294
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "filename.lower",
+          "lineNumber": 294
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "filename.lower().endswith",
+          "lineNumber": 295
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "filename.lower",
+          "lineNumber": 295
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "os.path.join",
+          "lineNumber": 299
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "datetime.fromtimestamp",
+          "lineNumber": 301
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "os.path.getmtime",
+          "lineNumber": 301
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "os.remove",
+          "lineNumber": 303
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "logger.warning",
+          "lineNumber": 306
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "logger.info",
+          "lineNumber": 309
+        },
+        {
+          "caller": "cleanup_old_snapshots",
+          "callee": "logger.error",
+          "lineNumber": 313
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/storage/snapshot_indexer.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 75,
+      "nonEmptyLines": 61,
+      "classes": [
+        {
+          "name": "SnapshotIndexer",
+          "startLine": 17,
+          "endLine": 67,
+          "methods": [
+            "__init__",
+            "bind_loop",
+            "record"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullSnapshotIndexer",
+          "startLine": 70,
+          "endLine": 75,
+          "methods": [
+            "bind_loop",
+            "record"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SnapshotIndexer",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NullSnapshotIndexer",
+          "line": 70,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "record",
+          "callee": "os.path.basename",
+          "lineNumber": 36
+        },
+        {
+          "caller": "record",
+          "callee": "self._repo.create",
+          "lineNumber": 40
+        },
+        {
+          "caller": "record",
+          "callee": "loop.is_running",
+          "lineNumber": 49
+        },
+        {
+          "caller": "record",
+          "callee": "logger.warning",
+          "lineNumber": 50
+        },
+        {
+          "caller": "_done",
+          "callee": "fut.result",
+          "lineNumber": 55
+        },
+        {
+          "caller": "_done",
+          "callee": "logger.exception",
+          "lineNumber": 57
+        },
+        {
+          "caller": "record",
+          "callee": "asyncio.run_coroutine_threadsafe",
+          "lineNumber": 64
+        },
+        {
+          "caller": "record",
+          "callee": "fut.add_done_callback",
+          "lineNumber": 65
+        },
+        {
+          "caller": "record",
+          "callee": "logger.exception",
+          "lineNumber": 67
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "infrastructure/vision/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 5,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/vision/annexb_pipe.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 30,
+      "functions": [
+        {
+          "name": "_nal_type",
+          "startLine": 4,
+          "endLine": 8,
+          "params": [
+            "buf",
+            "start_code_pos"
+          ]
+        },
+        {
+          "name": "pull_aus",
+          "startLine": 11,
+          "endLine": 37,
+          "params": [
+            "buf"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_nal_type",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "pull_aus",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_nal_type",
+          "callee": "len",
+          "lineNumber": 6
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "buf.find",
+          "lineNumber": 19
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "starts.append",
+          "lineNumber": 22
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "len",
+          "lineNumber": 25
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "enumerate",
+          "lineNumber": 30
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "_nal_type",
+          "lineNumber": 31
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "len",
+          "lineNumber": 32
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "aus.append",
+          "lineNumber": 34
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "bytes",
+          "lineNumber": 34
+        },
+        {
+          "caller": "pull_aus",
+          "callee": "bytearray",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/vision/camera_manager.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 291,
+      "nonEmptyLines": 253,
+      "classes": [
+        {
+          "name": "CameraManager",
+          "startLine": 14,
+          "endLine": 291,
+          "methods": [
+            "__init__",
+            "_get_cam_url",
+            "_make_cam_id",
+            "_get_internal_rois",
+            "_build_node_id_to_cam",
+            "start",
+            "stop",
+            "set_camera_enabled",
+            "set_camera_enabled_by_id",
+            "set_zone_enabled",
+            "start_all_cameras",
+            "stop_all_cameras",
+            "get_rtsp_url",
+            "get_preview_jpeg",
+            "get_preview_meta",
+            "get_cam_id_for_node",
+            "get_status",
+            "capture_for_node"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CameraManager",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "str(cam.get(\"zone_id\") or cam.get(\"area\") or \"\").upper",
+          "lineNumber": 28
+        },
+        {
+          "caller": "__init__",
+          "callee": "str",
+          "lineNumber": 28
+        },
+        {
+          "caller": "__init__",
+          "callee": "cam.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "__init__",
+          "callee": "cam.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "__init__",
+          "callee": "len",
+          "lineNumber": 33
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 34
+        },
+        {
+          "caller": "__init__",
+          "callee": "PreviewStore",
+          "lineNumber": 38
+        },
+        {
+          "caller": "__init__",
+          "callee": "cam.get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "self._get_cam_url",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "self._build_node_id_to_cam",
+          "lineNumber": 44
+        },
+        {
+          "caller": "_get_cam_url",
+          "callee": "cam.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "_get_cam_url",
+          "callee": "cam.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "_get_cam_url",
+          "callee": "encode_rtsp_userinfo",
+          "lineNumber": 48
+        },
+        {
+          "caller": "_make_cam_id",
+          "callee": "cam.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "_make_cam_id",
+          "callee": "self._get_cam_url",
+          "lineNumber": 54
+        },
+        {
+          "caller": "_make_cam_id",
+          "callee": "cam_url.split",
+          "lineNumber": 55
+        },
+        {
+          "caller": "_make_cam_id",
+          "callee": "len",
+          "lineNumber": 56
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "cam.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "isinstance",
+          "lineNumber": 61
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "rois.items",
+          "lineNumber": 63
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "isinstance",
+          "lineNumber": 64
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "roi_val.get",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "bool",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "roi_val.get",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "bool",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "roi_val.get",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "len",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "str",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "roi_key_str.startswith",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "roi_key_str.startswith",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_get_internal_rois",
+          "callee": "internal.append",
+          "lineNumber": 87
+        },
+        {
+          "caller": "_build_node_id_to_cam",
+          "callee": "enumerate",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_build_node_id_to_cam",
+          "callee": "self._make_cam_id",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_build_node_id_to_cam",
+          "callee": "self._get_internal_rois",
+          "lineNumber": 95
+        },
+        {
+          "caller": "_build_node_id_to_cam",
+          "callee": "roi_dict.get",
+          "lineNumber": 96
+        },
+        {
+          "caller": "start",
+          "callee": "enumerate",
+          "lineNumber": 101
+        },
+        {
+          "caller": "start",
+          "callee": "self._get_cam_url",
+          "lineNumber": 102
+        },
+        {
+          "caller": "start",
+          "callee": "self._make_cam_id",
+          "lineNumber": 103
+        },
+        {
+          "caller": "start",
+          "callee": "queue.Queue",
+          "lineNumber": 105
+        },
+        {
+          "caller": "start",
+          "callee": "self.inference_engine.register_camera",
+          "lineNumber": 106
+        },
+        {
+          "caller": "start",
+          "callee": "self._get_internal_rois",
+          "lineNumber": 108
+        },
+        {
+          "caller": "start",
+          "callee": "CameraProcessor",
+          "lineNumber": 109
+        },
+        {
+          "caller": "start",
+          "callee": "cam.get",
+          "lineNumber": 119
+        },
+        {
+          "caller": "start",
+          "callee": "self.threads.append",
+          "lineNumber": 122
+        },
+        {
+          "caller": "start",
+          "callee": "cam.get",
+          "lineNumber": 123
+        },
+        {
+          "caller": "start",
+          "callee": "int",
+          "lineNumber": 125
+        },
+        {
+          "caller": "start",
+          "callee": "thread.start",
+          "lineNumber": 126
+        },
+        {
+          "caller": "start",
+          "callee": "logger.info",
+          "lineNumber": 128
+        },
+        {
+          "caller": "start",
+          "callee": "len",
+          "lineNumber": 128
+        },
+        {
+          "caller": "stop",
+          "callee": "logger.info",
+          "lineNumber": 131
+        },
+        {
+          "caller": "stop",
+          "callee": "self.latest_frames.clear",
+          "lineNumber": 133
+        },
+        {
+          "caller": "stop",
+          "callee": "thread.is_alive",
+          "lineNumber": 135
+        },
+        {
+          "caller": "stop",
+          "callee": "thread.is_alive",
+          "lineNumber": 138
+        },
+        {
+          "caller": "stop",
+          "callee": "thread.join",
+          "lineNumber": 139
+        },
+        {
+          "caller": "stop",
+          "callee": "sum",
+          "lineNumber": 140
+        },
+        {
+          "caller": "stop",
+          "callee": "t.is_alive",
+          "lineNumber": 140
+        },
+        {
+          "caller": "stop",
+          "callee": "logger.warning",
+          "lineNumber": 142
+        },
+        {
+          "caller": "stop",
+          "callee": "logger.info",
+          "lineNumber": 144
+        },
+        {
+          "caller": "set_camera_enabled",
+          "callee": "len",
+          "lineNumber": 148
+        },
+        {
+          "caller": "set_camera_enabled_by_id",
+          "callee": "int",
+          "lineNumber": 153
+        },
+        {
+          "caller": "set_camera_enabled_by_id",
+          "callee": "enumerate",
+          "lineNumber": 154
+        },
+        {
+          "caller": "set_camera_enabled_by_id",
+          "callee": "cfg.get",
+          "lineNumber": 155
+        },
+        {
+          "caller": "set_camera_enabled_by_id",
+          "callee": "self.set_camera_enabled",
+          "lineNumber": 156
+        },
+        {
+          "caller": "set_zone_enabled",
+          "callee": "enumerate",
+          "lineNumber": 162
+        },
+        {
+          "caller": "set_zone_enabled",
+          "callee": "len",
+          "lineNumber": 163
+        },
+        {
+          "caller": "start_all_cameras",
+          "callee": "range",
+          "lineNumber": 168
+        },
+        {
+          "caller": "start_all_cameras",
+          "callee": "len",
+          "lineNumber": 168
+        },
+        {
+          "caller": "start_all_cameras",
+          "callee": "logger.info",
+          "lineNumber": 170
+        },
+        {
+          "caller": "stop_all_cameras",
+          "callee": "range",
+          "lineNumber": 174
+        },
+        {
+          "caller": "stop_all_cameras",
+          "callee": "len",
+          "lineNumber": 174
+        },
+        {
+          "caller": "stop_all_cameras",
+          "callee": "logger.info",
+          "lineNumber": 176
+        },
+        {
+          "caller": "get_rtsp_url",
+          "callee": "(self._rtsp_by_id.get(int(camera_id)) or \"\").strip",
+          "lineNumber": 179
+        },
+        {
+          "caller": "get_rtsp_url",
+          "callee": "self._rtsp_by_id.get",
+          "lineNumber": 179
+        },
+        {
+          "caller": "get_rtsp_url",
+          "callee": "int",
+          "lineNumber": 179
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "int",
+          "lineNumber": 184
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "self._by_public_id.get",
+          "lineNumber": 185
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "thread._is_enabled",
+          "lineNumber": 188
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "getattr",
+          "lineNumber": 190
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "getattr",
+          "lineNumber": 191
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "self.preview_store.watch",
+          "lineNumber": 194
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "self.preview_store.get_wait",
+          "lineNumber": 195
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "int",
+          "lineNumber": 204
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "self._by_public_id.get",
+          "lineNumber": 205
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "thread._is_enabled",
+          "lineNumber": 208
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "getattr",
+          "lineNumber": 210
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "getattr",
+          "lineNumber": 211
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "self.preview_store.watch",
+          "lineNumber": 214
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "self.preview_store.get_wait_meta",
+          "lineNumber": 215
+        },
+        {
+          "caller": "get_cam_id_for_node",
+          "callee": "self._node_id_to_cam.get",
+          "lineNumber": 223
+        },
+        {
+          "caller": "get_status",
+          "callee": "sum",
+          "lineNumber": 228
+        },
+        {
+          "caller": "get_status",
+          "callee": "list",
+          "lineNumber": 229
+        },
+        {
+          "caller": "get_status",
+          "callee": "enumerate",
+          "lineNumber": 232
+        },
+        {
+          "caller": "get_status",
+          "callee": "bool",
+          "lineNumber": 233
+        },
+        {
+          "caller": "get_status",
+          "callee": "getattr",
+          "lineNumber": 233
+        },
+        {
+          "caller": "get_status",
+          "callee": "getattr",
+          "lineNumber": 236
+        },
+        {
+          "caller": "get_status",
+          "callee": "len",
+          "lineNumber": 237
+        },
+        {
+          "caller": "get_status",
+          "callee": "(self.cameras_config or [])[i].get",
+          "lineNumber": 238
+        },
+        {
+          "caller": "get_status",
+          "callee": "cameras.append",
+          "lineNumber": 239
+        },
+        {
+          "caller": "get_status",
+          "callee": "getattr",
+          "lineNumber": 241
+        },
+        {
+          "caller": "get_status",
+          "callee": "len",
+          "lineNumber": 243
+        },
+        {
+          "caller": "get_status",
+          "callee": "getattr",
+          "lineNumber": 245
+        },
+        {
+          "caller": "get_status",
+          "callee": "len",
+          "lineNumber": 249
+        },
+        {
+          "caller": "get_status",
+          "callee": "sum",
+          "lineNumber": 250
+        },
+        {
+          "caller": "get_status",
+          "callee": "t.is_alive",
+          "lineNumber": 250
+        },
+        {
+          "caller": "capture_for_node",
+          "callee": "self._node_id_to_cam.get",
+          "lineNumber": 264
+        },
+        {
+          "caller": "capture_for_node",
+          "callee": "self.latest_frames.get",
+          "lineNumber": 271
+        },
+        {
+          "caller": "capture_for_node",
+          "callee": "len",
+          "lineNumber": 278
+        },
+        {
+          "caller": "capture_for_node",
+          "callee": "thread.get_latest_capture",
+          "lineNumber": 282
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/vision/camera_processor.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 274,
+      "nonEmptyLines": 238,
+      "classes": [
+        {
+          "name": "CameraProcessor",
+          "startLine": 21,
+          "endLine": 274,
+          "methods": [
+            "__init__",
+            "_is_enabled",
+            "_publish_preview",
+            "_process_rois_async",
+            "run",
+            "get_latest_capture"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CameraProcessor",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 36
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 36
+        },
+        {
+          "caller": "__init__",
+          "callee": "rtsp.split",
+          "lineNumber": 52
+        },
+        {
+          "caller": "__init__",
+          "callee": "ThreadPoolExecutor",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_is_enabled",
+          "callee": "len",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "self.preview_store.is_watched",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "time.monotonic",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "frame_to_bgr",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "encode_jpeg",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "encode_jpeg",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "draw_overlay",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "overlay_meta",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "time.time",
+          "lineNumber": 96
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "round",
+          "lineNumber": 100
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "self.preview_store.put",
+          "lineNumber": 102
+        },
+        {
+          "caller": "_publish_preview",
+          "callee": "logger.warning",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_process_rois_async",
+          "callee": "has_object_in_rois_batch",
+          "lineNumber": 120
+        },
+        {
+          "caller": "_process_rois_async",
+          "callee": "self.state_manager.get_state_nodes",
+          "lineNumber": 125
+        },
+        {
+          "caller": "_process_rois_async",
+          "callee": "logger.error",
+          "lineNumber": 128
+        },
+        {
+          "caller": "_process_rois_async",
+          "callee": "max",
+          "lineNumber": 131
+        },
+        {
+          "caller": "run",
+          "callee": "self._is_enabled",
+          "lineNumber": 137
+        },
+        {
+          "caller": "run",
+          "callee": "cap.release",
+          "lineNumber": 141
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 145
+        },
+        {
+          "caller": "run",
+          "callee": "cap.isOpened",
+          "lineNumber": 148
+        },
+        {
+          "caller": "run",
+          "callee": "GPUVideoDecoder",
+          "lineNumber": 149
+        },
+        {
+          "caller": "run",
+          "callee": "cap.isOpened",
+          "lineNumber": 155
+        },
+        {
+          "caller": "run",
+          "callee": "logger.error",
+          "lineNumber": 158
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 159
+        },
+        {
+          "caller": "run",
+          "callee": "logger.info",
+          "lineNumber": 161
+        },
+        {
+          "caller": "run",
+          "callee": "cap.wait_ready",
+          "lineNumber": 162
+        },
+        {
+          "caller": "run",
+          "callee": "logger.error",
+          "lineNumber": 165
+        },
+        {
+          "caller": "run",
+          "callee": "cap.release",
+          "lineNumber": 166
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 168
+        },
+        {
+          "caller": "run",
+          "callee": "cap.read",
+          "lineNumber": 173
+        },
+        {
+          "caller": "run",
+          "callee": "cap.isOpened",
+          "lineNumber": 176
+        },
+        {
+          "caller": "run",
+          "callee": "logger.warning",
+          "lineNumber": 179
+        },
+        {
+          "caller": "run",
+          "callee": "cap.release",
+          "lineNumber": 180
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 182
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 184
+        },
+        {
+          "caller": "run",
+          "callee": "self.inference_engine.put_frame_with_drop",
+          "lineNumber": 193
+        },
+        {
+          "caller": "run",
+          "callee": "getattr",
+          "lineNumber": 197
+        },
+        {
+          "caller": "run",
+          "callee": "paused.is_set",
+          "lineNumber": 198
+        },
+        {
+          "caller": "run",
+          "callee": "self._publish_preview",
+          "lineNumber": 199
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 200
+        },
+        {
+          "caller": "run",
+          "callee": "self.result_queue.get_nowait",
+          "lineNumber": 206
+        },
+        {
+          "caller": "run",
+          "callee": "time.monotonic",
+          "lineNumber": 213
+        },
+        {
+          "caller": "run",
+          "callee": "time.monotonic",
+          "lineNumber": 218
+        },
+        {
+          "caller": "run",
+          "callee": "self._publish_preview",
+          "lineNumber": 223
+        },
+        {
+          "caller": "run",
+          "callee": "len",
+          "lineNumber": 226
+        },
+        {
+          "caller": "run",
+          "callee": "list",
+          "lineNumber": 232
+        },
+        {
+          "caller": "run",
+          "callee": "self.roi_executor.submit",
+          "lineNumber": 236
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 245
+        },
+        {
+          "caller": "run",
+          "callee": "cap.release",
+          "lineNumber": 249
+        },
+        {
+          "caller": "run",
+          "callee": "self.roi_executor.shutdown",
+          "lineNumber": 255
+        },
+        {
+          "caller": "run",
+          "callee": "logger.info",
+          "lineNumber": 256
+        },
+        {
+          "caller": "run",
+          "callee": "logger.warning",
+          "lineNumber": 258
+        },
+        {
+          "caller": "get_latest_capture",
+          "callee": "list",
+          "lineNumber": 272
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/vision/cuda_decode_pool.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "get_decode_stream",
+          "startLine": 12,
+          "endLine": 22,
+          "params": [
+            "camera_index"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "get_decode_stream",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "get_decode_stream",
+          "callee": "torch.cuda.is_initialized",
+          "lineNumber": 18
+        },
+        {
+          "caller": "get_decode_stream",
+          "callee": "torch.cuda.init",
+          "lineNumber": 19
+        },
+        {
+          "caller": "get_decode_stream",
+          "callee": "max",
+          "lineNumber": 20
+        },
+        {
+          "caller": "get_decode_stream",
+          "callee": "torch.cuda.Stream",
+          "lineNumber": 21
+        },
+        {
+          "caller": "get_decode_stream",
+          "callee": "range",
+          "lineNumber": 21
+        },
+        {
+          "caller": "get_decode_stream",
+          "callee": "len",
+          "lineNumber": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/vision/detection.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 83,
+      "nonEmptyLines": 66,
+      "functions": [
+        {
+          "name": "_require_cuda_tensor",
+          "startLine": 16,
+          "endLine": 32,
+          "params": [
+            "detections"
+          ]
+        },
+        {
+          "name": "has_object_in_rois_batch",
+          "startLine": 35,
+          "endLine": 83,
+          "params": [
+            "detections",
+            "rois_list"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_require_cuda_tensor",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "has_object_in_rois_batch",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "isinstance",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "logger.error",
+          "lineNumber": 19
+        },
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "type",
+          "lineNumber": 20
+        },
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "TypeError",
+          "lineNumber": 23
+        },
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "type",
+          "lineNumber": 24
+        },
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "logger.error",
+          "lineNumber": 28
+        },
+        {
+          "caller": "_require_cuda_tensor",
+          "callee": "TypeError",
+          "lineNumber": 32
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "_require_cuda_tensor",
+          "lineNumber": 52
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "roi_dict.get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "len",
+          "lineNumber": 55
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "calculate_coverage_multi_rois",
+          "lineNumber": 67
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "torch.max",
+          "lineNumber": 72
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "max_coverages.cpu().numpy",
+          "lineNumber": 73
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "max_coverages.cpu",
+          "lineNumber": 73
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "float",
+          "lineNumber": 78
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "float",
+          "lineNumber": 79
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "roi_dict.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "has_object_in_rois_batch",
+          "callee": "enumerate",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/vision/frame_queue.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 91,
+      "nonEmptyLines": 77,
+      "classes": [
+        {
+          "name": "PreAllocatedFrameQueue",
+          "startLine": 13,
+          "endLine": 91,
+          "methods": [
+            "__init__",
+            "put_nowait",
+            "get",
+            "get_nowait",
+            "_pop_locked",
+            "qsize",
+            "empty",
+            "full"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PreAllocatedFrameQueue",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 31
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Condition",
+          "lineNumber": 32
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Condition",
+          "lineNumber": 33
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.info",
+          "lineNumber": 34
+        },
+        {
+          "caller": "put_nowait",
+          "callee": "queue.Full",
+          "lineNumber": 41
+        },
+        {
+          "caller": "put_nowait",
+          "callee": "self._not_empty.notify",
+          "lineNumber": 47
+        },
+        {
+          "caller": "get",
+          "callee": "time.time",
+          "lineNumber": 51
+        },
+        {
+          "caller": "get",
+          "callee": "time.time",
+          "lineNumber": 54
+        },
+        {
+          "caller": "get",
+          "callee": "queue.Empty",
+          "lineNumber": 56
+        },
+        {
+          "caller": "get",
+          "callee": "self._not_empty.wait",
+          "lineNumber": 57
+        },
+        {
+          "caller": "get",
+          "callee": "queue.Empty",
+          "lineNumber": 58
+        },
+        {
+          "caller": "get",
+          "callee": "self._not_empty.wait",
+          "lineNumber": 60
+        },
+        {
+          "caller": "get",
+          "callee": "self._pop_locked",
+          "lineNumber": 61
+        },
+        {
+          "caller": "get_nowait",
+          "callee": "queue.Empty",
+          "lineNumber": 66
+        },
+        {
+          "caller": "get_nowait",
+          "callee": "self._pop_locked",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_pop_locked",
+          "callee": "self._not_full.notify",
+          "lineNumber": 78
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/vision/gpu_frame.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 64,
+      "functions": [
+        {
+          "name": "_infer_hw",
+          "startLine": 6,
+          "endLine": 13,
+          "params": [
+            "tensor",
+            "fallback_h",
+            "fallback_w"
+          ]
+        },
+        {
+          "name": "decoded_frame_to_rgb",
+          "startLine": 16,
+          "endLine": 43,
+          "params": [
+            "frame",
+            "src_h",
+            "src_w",
+            "dst_h",
+            "dst_w",
+            "stream"
+          ]
+        },
+        {
+          "name": "_as_rgb_chw",
+          "startLine": 46,
+          "endLine": 51,
+          "params": [
+            "tensor",
+            "src_h",
+            "src_w"
+          ]
+        },
+        {
+          "name": "_upsample_uv",
+          "startLine": 54,
+          "endLine": 61,
+          "params": [
+            "uv_plane",
+            "height",
+            "width"
+          ]
+        },
+        {
+          "name": "_nv12_to_rgb_chw",
+          "startLine": 64,
+          "endLine": 77,
+          "params": [
+            "nv12",
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_infer_hw",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "decoded_frame_to_rgb",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "_as_rgb_chw",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "_upsample_uv",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "_nv12_to_rgb_chw",
+          "line": 64,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_convert",
+          "callee": "torch.from_dlpack",
+          "lineNumber": 26
+        },
+        {
+          "caller": "_convert",
+          "callee": "_infer_hw",
+          "lineNumber": 27
+        },
+        {
+          "caller": "_convert",
+          "callee": "_as_rgb_chw",
+          "lineNumber": 28
+        },
+        {
+          "caller": "_convert",
+          "callee": "F.interpolate(\n                rgb.unsqueeze(0).float(),\n                size=(dst_h, dst_w),\n                mode=\"bilinear\",\n                align_corners=False,\n            ).squeeze",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_convert",
+          "callee": "F.interpolate",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_convert",
+          "callee": "rgb.unsqueeze(0).float",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_convert",
+          "callee": "rgb.unsqueeze",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_convert",
+          "callee": "rgb.clamp(0, 255).to(torch.uint8).contiguous().clone",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_convert",
+          "callee": "rgb.clamp(0, 255).to(torch.uint8).contiguous",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_convert",
+          "callee": "rgb.clamp(0, 255).to",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_convert",
+          "callee": "rgb.clamp",
+          "lineNumber": 36
+        },
+        {
+          "caller": "decoded_frame_to_rgb",
+          "callee": "torch.cuda.current_stream",
+          "lineNumber": 39
+        },
+        {
+          "caller": "decoded_frame_to_rgb",
+          "callee": "torch.cuda.stream",
+          "lineNumber": 40
+        },
+        {
+          "caller": "decoded_frame_to_rgb",
+          "callee": "_convert",
+          "lineNumber": 41
+        },
+        {
+          "caller": "decoded_frame_to_rgb",
+          "callee": "stream.record_event",
+          "lineNumber": 42
+        },
+        {
+          "caller": "_as_rgb_chw",
+          "callee": "tensor.float",
+          "lineNumber": 48
+        },
+        {
+          "caller": "_as_rgb_chw",
+          "callee": "tensor.permute(2, 0, 1).float",
+          "lineNumber": 50
+        },
+        {
+          "caller": "_as_rgb_chw",
+          "callee": "tensor.permute",
+          "lineNumber": 50
+        },
+        {
+          "caller": "_as_rgb_chw",
+          "callee": "_nv12_to_rgb_chw",
+          "lineNumber": 51
+        },
+        {
+          "caller": "_upsample_uv",
+          "callee": "F.interpolate",
+          "lineNumber": 56
+        },
+        {
+          "caller": "_upsample_uv",
+          "callee": "uv_plane.float",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_nv12_to_rgb_chw",
+          "callee": "nv12.view",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_nv12_to_rgb_chw",
+          "callee": "nv12.reshape",
+          "lineNumber": 68
+        },
+        {
+          "caller": "_nv12_to_rgb_chw",
+          "callee": "nv12[:height, :width].float",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_nv12_to_rgb_chw",
+          "callee": "_upsample_uv",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_nv12_to_rgb_chw",
+          "callee": "_upsample_uv",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_nv12_to_rgb_chw",
+          "callee": "torch.stack",
+          "lineNumber": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/vision/gpu_video_decoder.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 158,
+      "functions": [
+        {
+          "name": "_submit_au",
+          "startLine": 14,
+          "endLine": 23,
+          "params": [
+            "decoder",
+            "nvc",
+            "au"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GPUVideoDecoder",
+          "startLine": 26,
+          "endLine": 176,
+          "methods": [
+            "__init__",
+            "_start_decode",
+            "_log_stderr",
+            "_decode_loop",
+            "isOpened",
+            "read",
+            "release",
+            "get_width_height",
+            "wait_ready"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_submit_au",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GPUVideoDecoder",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_submit_au",
+          "callee": "np.frombuffer(au, dtype=np.uint8).copy",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_submit_au",
+          "callee": "np.frombuffer",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_submit_au",
+          "callee": "nvc.PacketData",
+          "lineNumber": 16
+        },
+        {
+          "caller": "_submit_au",
+          "callee": "int",
+          "lineNumber": 17
+        },
+        {
+          "caller": "_submit_au",
+          "callee": "int",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_submit_au",
+          "callee": "decoder.Decode",
+          "lineNumber": 19
+        },
+        {
+          "caller": "__init__",
+          "callee": "queue.Queue",
+          "lineNumber": 35
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Event",
+          "lineNumber": 40
+        },
+        {
+          "caller": "__init__",
+          "callee": "self._start_decode",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_start_decode",
+          "callee": "subprocess.Popen",
+          "lineNumber": 63
+        },
+        {
+          "caller": "_start_decode",
+          "callee": "threading.Thread(target=self._log_stderr, daemon=True).start",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_start_decode",
+          "callee": "threading.Thread",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_start_decode",
+          "callee": "threading.Thread",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_start_decode",
+          "callee": "self.thread.start",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_start_decode",
+          "callee": "logger.error",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_log_stderr",
+          "callee": "iter",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_log_stderr",
+          "callee": "line.decode(\"utf-8\", errors=\"replace\").rstrip",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_log_stderr",
+          "callee": "line.decode",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_log_stderr",
+          "callee": "text.startswith",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_log_stderr",
+          "callee": "logger.warning",
+          "lineNumber": 86
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "bytearray",
+          "lineNumber": 91
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "torch.cuda.init",
+          "lineNumber": 95
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "get_decode_stream",
+          "lineNumber": 96
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "nvc.CreateDecoder",
+          "lineNumber": 97
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "max",
+          "lineNumber": 101
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "max",
+          "lineNumber": 102
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "logger.info",
+          "lineNumber": 105
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "stdout.read",
+          "lineNumber": 109
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "buf.extend",
+          "lineNumber": 112
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "pull_aus",
+          "lineNumber": 113
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "_submit_au",
+          "lineNumber": 115
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "self.queue.full",
+          "lineNumber": 117
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "decoded_frame_to_rgb",
+          "lineNumber": 119
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "self.queue.put",
+          "lineNumber": 127
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "self._ready.set",
+          "lineNumber": 129
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "logger.info",
+          "lineNumber": 131
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "str",
+          "lineNumber": 133
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "msg.split(\"Invoked with\")[0].strip",
+          "lineNumber": 135
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "msg.split",
+          "lineNumber": 135
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "logger.error",
+          "lineNumber": 136
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "self.process.poll",
+          "lineNumber": 140
+        },
+        {
+          "caller": "_decode_loop",
+          "callee": "self.process.kill",
+          "lineNumber": 142
+        },
+        {
+          "caller": "isOpened",
+          "callee": "self.process.poll",
+          "lineNumber": 148
+        },
+        {
+          "caller": "read",
+          "callee": "self.isOpened",
+          "lineNumber": 151
+        },
+        {
+          "caller": "read",
+          "callee": "self.queue.empty",
+          "lineNumber": 153
+        },
+        {
+          "caller": "read",
+          "callee": "self.queue.get",
+          "lineNumber": 154
+        },
+        {
+          "caller": "release",
+          "callee": "self.process.kill",
+          "lineNumber": 163
+        },
+        {
+          "caller": "release",
+          "callee": "self.process.wait",
+          "lineNumber": 164
+        },
+        {
+          "caller": "wait_ready",
+          "callee": "self._ready.wait",
+          "lineNumber": 173
+        },
+        {
+          "caller": "wait_ready",
+          "callee": "logger.warning",
+          "lineNumber": 175
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/vision/inference_engine.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 336,
+      "nonEmptyLines": 289,
+      "classes": [
+        {
+          "name": "InferenceEngine",
+          "startLine": 18,
+          "endLine": 336,
+          "methods": [
+            "__init__",
+            "pause",
+            "resume",
+            "is_model_loaded",
+            "load_error",
+            "wait_model_ready",
+            "register_camera",
+            "put_frame_with_drop",
+            "_pop_one",
+            "_collect_batch",
+            "_load_model",
+            "_slot_busy",
+            "_pick_free_slot",
+            "_async_inference",
+            "_distribute_results",
+            "_poll_pending",
+            "run",
+            "stop"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "InferenceEngine",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 34
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 34
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 40
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 40
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 44
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 44
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 48
+        },
+        {
+          "caller": "__init__",
+          "callee": "PreAllocatedFrameQueue",
+          "lineNumber": 50
+        },
+        {
+          "caller": "__init__",
+          "callee": "range",
+          "lineNumber": 53
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.info",
+          "lineNumber": 55
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 60
+        },
+        {
+          "caller": "__init__",
+          "callee": "queue.Queue",
+          "lineNumber": 62
+        },
+        {
+          "caller": "__init__",
+          "callee": "range",
+          "lineNumber": 62
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.info",
+          "lineNumber": 64
+        },
+        {
+          "caller": "__init__",
+          "callee": "deque",
+          "lineNumber": 70
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Event",
+          "lineNumber": 75
+        },
+        {
+          "caller": "__init__",
+          "callee": "self._paused.set",
+          "lineNumber": 77
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Event",
+          "lineNumber": 78
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Event",
+          "lineNumber": 79
+        },
+        {
+          "caller": "pause",
+          "callee": "self._paused.set",
+          "lineNumber": 89
+        },
+        {
+          "caller": "pause",
+          "callee": "batch_info[\"event\"].synchronize",
+          "lineNumber": 92
+        },
+        {
+          "caller": "pause",
+          "callee": "self.pending_batches.clear",
+          "lineNumber": 95
+        },
+        {
+          "caller": "pause",
+          "callee": "logger.info",
+          "lineNumber": 96
+        },
+        {
+          "caller": "resume",
+          "callee": "self._paused.clear",
+          "lineNumber": 99
+        },
+        {
+          "caller": "resume",
+          "callee": "logger.info",
+          "lineNumber": 100
+        },
+        {
+          "caller": "is_model_loaded",
+          "callee": "self._model_ready.is_set",
+          "lineNumber": 103
+        },
+        {
+          "caller": "wait_model_ready",
+          "callee": "self._load_done.wait",
+          "lineNumber": 109
+        },
+        {
+          "caller": "wait_model_ready",
+          "callee": "self._model_ready.is_set",
+          "lineNumber": 110
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "isinstance",
+          "lineNumber": 126
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "target_queue.put_nowait",
+          "lineNumber": 127
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "target_queue.put_nowait",
+          "lineNumber": 129
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "target_queue.get_nowait",
+          "lineNumber": 132
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "isinstance",
+          "lineNumber": 137
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "target_queue.put_nowait",
+          "lineNumber": 138
+        },
+        {
+          "caller": "put_frame_with_drop",
+          "callee": "target_queue.put_nowait",
+          "lineNumber": 140
+        },
+        {
+          "caller": "_pop_one",
+          "callee": "range",
+          "lineNumber": 149
+        },
+        {
+          "caller": "_pop_one",
+          "callee": "target_queue.get",
+          "lineNumber": 156
+        },
+        {
+          "caller": "_pop_one",
+          "callee": "isinstance",
+          "lineNumber": 161
+        },
+        {
+          "caller": "_pop_one",
+          "callee": "len",
+          "lineNumber": 163
+        },
+        {
+          "caller": "_pop_one",
+          "callee": "queue.Empty",
+          "lineNumber": 171
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "time.time",
+          "lineNumber": 177
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "len",
+          "lineNumber": 179
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "time.time",
+          "lineNumber": 180
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "self._pop_one",
+          "lineNumber": 184
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "batch.append",
+          "lineNumber": 185
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "cam_ids.append",
+          "lineNumber": 186
+        },
+        {
+          "caller": "_collect_batch",
+          "callee": "ready_events.append",
+          "lineNumber": 187
+        },
+        {
+          "caller": "_load_model",
+          "callee": "self.pending_batches.clear",
+          "lineNumber": 196
+        },
+        {
+          "caller": "_load_model",
+          "callee": "torch.cuda.is_initialized",
+          "lineNumber": 198
+        },
+        {
+          "caller": "_load_model",
+          "callee": "torch.cuda.init",
+          "lineNumber": 199
+        },
+        {
+          "caller": "_load_model",
+          "callee": "TrtYoloEngine",
+          "lineNumber": 200
+        },
+        {
+          "caller": "_load_model",
+          "callee": "torch.cuda.mem_get_info",
+          "lineNumber": 208
+        },
+        {
+          "caller": "_load_model",
+          "callee": "logger.info",
+          "lineNumber": 209
+        },
+        {
+          "caller": "_load_model",
+          "callee": "self._model_ready.set",
+          "lineNumber": 213
+        },
+        {
+          "caller": "_load_model",
+          "callee": "str",
+          "lineNumber": 215
+        },
+        {
+          "caller": "_load_model",
+          "callee": "logger.error",
+          "lineNumber": 216
+        },
+        {
+          "caller": "_load_model",
+          "callee": "self._load_done.set",
+          "lineNumber": 219
+        },
+        {
+          "caller": "_slot_busy",
+          "callee": "any",
+          "lineNumber": 222
+        },
+        {
+          "caller": "_pick_free_slot",
+          "callee": "range",
+          "lineNumber": 225
+        },
+        {
+          "caller": "_pick_free_slot",
+          "callee": "self._slot_busy",
+          "lineNumber": 227
+        },
+        {
+          "caller": "_async_inference",
+          "callee": "torch.cuda.stream",
+          "lineNumber": 235
+        },
+        {
+          "caller": "_async_inference",
+          "callee": "stream.wait_event",
+          "lineNumber": 238
+        },
+        {
+          "caller": "_async_inference",
+          "callee": "logger.warning",
+          "lineNumber": 243
+        },
+        {
+          "caller": "_async_inference",
+          "callee": "self.engine.copy_batch",
+          "lineNumber": 248
+        },
+        {
+          "caller": "_async_inference",
+          "callee": "self.engine.infer_async",
+          "lineNumber": 249
+        },
+        {
+          "caller": "_distribute_results",
+          "callee": "zip",
+          "lineNumber": 254
+        },
+        {
+          "caller": "_distribute_results",
+          "callee": "logger.warning",
+          "lineNumber": 256
+        },
+        {
+          "caller": "_distribute_results",
+          "callee": "self.result_queues[cam_id].put_nowait",
+          "lineNumber": 259
+        },
+        {
+          "caller": "_distribute_results",
+          "callee": "self.result_queues[cam_id].get_nowait",
+          "lineNumber": 262
+        },
+        {
+          "caller": "_distribute_results",
+          "callee": "self.result_queues[cam_id].put_nowait",
+          "lineNumber": 263
+        },
+        {
+          "caller": "_distribute_results",
+          "callee": "logger.warning",
+          "lineNumber": 265
+        },
+        {
+          "caller": "_poll_pending",
+          "callee": "enumerate",
+          "lineNumber": 269
+        },
+        {
+          "caller": "_poll_pending",
+          "callee": "batch_info[\"event\"].query",
+          "lineNumber": 270
+        },
+        {
+          "caller": "_poll_pending",
+          "callee": "self.engine.nms_ready",
+          "lineNumber": 272
+        },
+        {
+          "caller": "_poll_pending",
+          "callee": "self._distribute_results",
+          "lineNumber": 278
+        },
+        {
+          "caller": "_poll_pending",
+          "callee": "completed.append",
+          "lineNumber": 279
+        },
+        {
+          "caller": "_poll_pending",
+          "callee": "reversed",
+          "lineNumber": 280
+        },
+        {
+          "caller": "run",
+          "callee": "self._load_model",
+          "lineNumber": 286
+        },
+        {
+          "caller": "run",
+          "callee": "self._paused.is_set",
+          "lineNumber": 292
+        },
+        {
+          "caller": "run",
+          "callee": "self._poll_pending",
+          "lineNumber": 293
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 294
+        },
+        {
+          "caller": "run",
+          "callee": "self._poll_pending",
+          "lineNumber": 297
+        },
+        {
+          "caller": "run",
+          "callee": "self._collect_batch",
+          "lineNumber": 299
+        },
+        {
+          "caller": "run",
+          "callee": "len",
+          "lineNumber": 300
+        },
+        {
+          "caller": "run",
+          "callee": "len",
+          "lineNumber": 301
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 302
+        },
+        {
+          "caller": "run",
+          "callee": "self._pick_free_slot",
+          "lineNumber": 305
+        },
+        {
+          "caller": "run",
+          "callee": "oldest[\"event\"].synchronize",
+          "lineNumber": 308
+        },
+        {
+          "caller": "run",
+          "callee": "self._poll_pending",
+          "lineNumber": 309
+        },
+        {
+          "caller": "run",
+          "callee": "self._pick_free_slot",
+          "lineNumber": 310
+        },
+        {
+          "caller": "run",
+          "callee": "self._async_inference",
+          "lineNumber": 314
+        },
+        {
+          "caller": "run",
+          "callee": "self.pending_batches.append",
+          "lineNumber": 318
+        },
+        {
+          "caller": "run",
+          "callee": "logger.error",
+          "lineNumber": 329
+        },
+        {
+          "caller": "run",
+          "callee": "time.sleep",
+          "lineNumber": 330
+        },
+        {
+          "caller": "run",
+          "callee": "logger.info",
+          "lineNumber": 332
+        },
+        {
+          "caller": "stop",
+          "callee": "logger.info",
+          "lineNumber": 336
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/vision/preview_draw.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 110,
+      "nonEmptyLines": 98,
+      "functions": [
+        {
+          "name": "frame_to_bgr",
+          "startLine": 6,
+          "endLine": 22,
+          "params": [
+            "frame"
+          ]
+        },
+        {
+          "name": "encode_jpeg",
+          "startLine": 25,
+          "endLine": 29,
+          "params": [
+            "bgr",
+            "quality"
+          ]
+        },
+        {
+          "name": "_as_numpy_dets",
+          "startLine": 32,
+          "endLine": 40,
+          "params": [
+            "detections"
+          ]
+        },
+        {
+          "name": "overlay_meta",
+          "startLine": 43,
+          "endLine": 75,
+          "params": [
+            "detections",
+            "rois",
+            "ts",
+            "width",
+            "height"
+          ]
+        },
+        {
+          "name": "draw_overlay",
+          "startLine": 78,
+          "endLine": 110,
+          "params": [
+            "bgr",
+            "detections",
+            "rois"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "frame_to_bgr",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "encode_jpeg",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "_as_numpy_dets",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "overlay_meta",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "draw_overlay",
+          "line": 78,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "frame_to_bgr",
+          "callee": "hasattr",
+          "lineNumber": 8
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "frame.detach",
+          "lineNumber": 9
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "getattr",
+          "lineNumber": 10
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "tensor.cpu",
+          "lineNumber": 11
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "tensor.numpy",
+          "lineNumber": 12
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "np.asarray",
+          "lineNumber": 14
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "np.transpose",
+          "lineNumber": 17
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "np.clip(arr, 0, 255).astype",
+          "lineNumber": 19
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "np.clip",
+          "lineNumber": 19
+        },
+        {
+          "caller": "frame_to_bgr",
+          "callee": "cv2.cvtColor",
+          "lineNumber": 21
+        },
+        {
+          "caller": "encode_jpeg",
+          "callee": "cv2.imencode",
+          "lineNumber": 26
+        },
+        {
+          "caller": "encode_jpeg",
+          "callee": "int",
+          "lineNumber": 26
+        },
+        {
+          "caller": "encode_jpeg",
+          "callee": "int",
+          "lineNumber": 26
+        },
+        {
+          "caller": "encode_jpeg",
+          "callee": "RuntimeError",
+          "lineNumber": 28
+        },
+        {
+          "caller": "encode_jpeg",
+          "callee": "buf.tobytes",
+          "lineNumber": 29
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "np.zeros",
+          "lineNumber": 34
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "hasattr",
+          "lineNumber": 35
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "detections.detach",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "getattr",
+          "lineNumber": 37
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "tensor.cpu",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "tensor.numpy",
+          "lineNumber": 39
+        },
+        {
+          "caller": "_as_numpy_dets",
+          "callee": "np.asarray",
+          "lineNumber": 40
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "isinstance",
+          "lineNumber": 47
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "item.get",
+          "lineNumber": 48
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "str",
+          "lineNumber": 49
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "item.get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "len",
+          "lineNumber": 53
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "roi_out.append",
+          "lineNumber": 55
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "int",
+          "lineNumber": 56
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "_as_numpy_dets",
+          "lineNumber": 60
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "float",
+          "lineNumber": 63
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "dets_out.append",
+          "lineNumber": 64
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "int",
+          "lineNumber": 65
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "round",
+          "lineNumber": 66
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "int",
+          "lineNumber": 71
+        },
+        {
+          "caller": "overlay_meta",
+          "callee": "int",
+          "lineNumber": 72
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "bgr.copy",
+          "lineNumber": 80
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "roi_dict.get",
+          "lineNumber": 82
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "isinstance",
+          "lineNumber": 82
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "len",
+          "lineNumber": 83
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "int",
+          "lineNumber": 85
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "isinstance",
+          "lineNumber": 87
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "str",
+          "lineNumber": 88
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "roi_dict.get",
+          "lineNumber": 88
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "node_id.startswith",
+          "lineNumber": 89
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "cv2.rectangle",
+          "lineNumber": 90
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "cv2.putText",
+          "lineNumber": 92
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "max",
+          "lineNumber": 93
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "_as_numpy_dets",
+          "lineNumber": 97
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "float",
+          "lineNumber": 101
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "int",
+          "lineNumber": 102
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "int",
+          "lineNumber": 102
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "int",
+          "lineNumber": 103
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "int",
+          "lineNumber": 103
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "cv2.rectangle",
+          "lineNumber": 104
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "int",
+          "lineNumber": 105
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "cv2.putText",
+          "lineNumber": 106
+        },
+        {
+          "caller": "draw_overlay",
+          "callee": "max",
+          "lineNumber": 107
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/vision/preview_store.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 57,
+      "nonEmptyLines": 50,
+      "classes": [
+        {
+          "name": "PreviewStore",
+          "startLine": 6,
+          "endLine": 57,
+          "methods": [
+            "__init__",
+            "watch",
+            "is_watched",
+            "put",
+            "get_wait",
+            "get_wait_meta"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PreviewStore",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 8
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Condition",
+          "lineNumber": 9
+        },
+        {
+          "caller": "watch",
+          "callee": "int",
+          "lineNumber": 17
+        },
+        {
+          "caller": "watch",
+          "callee": "time.monotonic",
+          "lineNumber": 17
+        },
+        {
+          "caller": "watch",
+          "callee": "self._cv.notify_all",
+          "lineNumber": 18
+        },
+        {
+          "caller": "is_watched",
+          "callee": "self._watch_until.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "is_watched",
+          "callee": "int",
+          "lineNumber": 22
+        },
+        {
+          "caller": "is_watched",
+          "callee": "time.monotonic",
+          "lineNumber": 23
+        },
+        {
+          "caller": "put",
+          "callee": "int",
+          "lineNumber": 26
+        },
+        {
+          "caller": "put",
+          "callee": "self._cv.notify_all",
+          "lineNumber": 34
+        },
+        {
+          "caller": "get_wait",
+          "callee": "int",
+          "lineNumber": 37
+        },
+        {
+          "caller": "get_wait",
+          "callee": "time.monotonic",
+          "lineNumber": 38
+        },
+        {
+          "caller": "get_wait",
+          "callee": "bucket.get",
+          "lineNumber": 41
+        },
+        {
+          "caller": "get_wait",
+          "callee": "time.monotonic",
+          "lineNumber": 42
+        },
+        {
+          "caller": "get_wait",
+          "callee": "self._cv.wait",
+          "lineNumber": 45
+        },
+        {
+          "caller": "get_wait",
+          "callee": "bucket.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "get_wait_meta",
+          "callee": "int",
+          "lineNumber": 49
+        },
+        {
+          "caller": "get_wait_meta",
+          "callee": "time.monotonic",
+          "lineNumber": 50
+        },
+        {
+          "caller": "get_wait_meta",
+          "callee": "self._meta.get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "get_wait_meta",
+          "callee": "time.monotonic",
+          "lineNumber": 53
+        },
+        {
+          "caller": "get_wait_meta",
+          "callee": "self._cv.wait",
+          "lineNumber": 56
+        },
+        {
+          "caller": "get_wait_meta",
+          "callee": "self._meta.get",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/vision/trt_yolo_engine.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 152,
+      "functions": [
+        {
+          "name": "_engine_bytes",
+          "startLine": 17,
+          "endLine": 26,
+          "params": [
+            "path"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TrtExecSlot",
+          "startLine": 29,
+          "endLine": 103,
+          "methods": [
+            "__init__",
+            "copy_batch",
+            "infer_async",
+            "nms_ready"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TrtYoloEngine",
+          "startLine": 106,
+          "endLine": 176,
+          "methods": [
+            "__init__",
+            "copy_batch",
+            "infer_async",
+            "nms_ready"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_engine_bytes",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "TrtExecSlot",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "TrtYoloEngine",
+          "line": 106,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_engine_bytes",
+          "callee": "Path(path).read_bytes",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_engine_bytes",
+          "callee": "Path",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_engine_bytes",
+          "callee": "int.from_bytes",
+          "lineNumber": 20
+        },
+        {
+          "caller": "_engine_bytes",
+          "callee": "json.loads",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_engine_bytes",
+          "callee": "data[4 : 4 + meta_len].decode",
+          "lineNumber": 22
+        },
+        {
+          "caller": "__init__",
+          "callee": "engine.create_execution_context",
+          "lineNumber": 41
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.context.set_input_shape",
+          "lineNumber": 42
+        },
+        {
+          "caller": "__init__",
+          "callee": "tuple",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.context.get_tensor_shape",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "torch.zeros",
+          "lineNumber": 44
+        },
+        {
+          "caller": "__init__",
+          "callee": "torch.empty",
+          "lineNumber": 45
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.context.set_tensor_address",
+          "lineNumber": 46
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.input.data_ptr",
+          "lineNumber": 46
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.context.set_tensor_address",
+          "lineNumber": 47
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.output.data_ptr",
+          "lineNumber": 47
+        },
+        {
+          "caller": "__init__",
+          "callee": "torch.cuda.Stream",
+          "lineNumber": 48
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "min",
+          "lineNumber": 51
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "len",
+          "lineNumber": 51
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "enumerate",
+          "lineNumber": 52
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "isinstance",
+          "lineNumber": 53
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "TypeError",
+          "lineNumber": 54
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "type",
+          "lineNumber": 56
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "frame.float().div_",
+          "lineNumber": 61
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "frame.float",
+          "lineNumber": 61
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "frame.float",
+          "lineNumber": 63
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "src.half",
+          "lineNumber": 65
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "self.input[i].copy_",
+          "lineNumber": 66
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "self.input[n:].zero_",
+          "lineNumber": 68
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.context.set_input_shape",
+          "lineNumber": 74
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.context.set_tensor_address",
+          "lineNumber": 77
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.input.data_ptr",
+          "lineNumber": 77
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.context.set_tensor_address",
+          "lineNumber": 78
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.output.data_ptr",
+          "lineNumber": 78
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.context.execute_async_v3",
+          "lineNumber": 79
+        },
+        {
+          "caller": "infer_async",
+          "callee": "RuntimeError",
+          "lineNumber": 81
+        },
+        {
+          "caller": "infer_async",
+          "callee": "torch.cuda.Event",
+          "lineNumber": 82
+        },
+        {
+          "caller": "infer_async",
+          "callee": "done.record",
+          "lineNumber": 83
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "self.output[:batch_size].float",
+          "lineNumber": 90
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "range",
+          "lineNumber": 92
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "det.numel",
+          "lineNumber": 94
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "results.append",
+          "lineNumber": 95
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "det.new_zeros",
+          "lineNumber": 95
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "kept[:, 4].topk",
+          "lineNumber": 100
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "results.append",
+          "lineNumber": 102
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "kept.contiguous",
+          "lineNumber": 102
+        },
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 118
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 118
+        },
+        {
+          "caller": "__init__",
+          "callee": "trt.Logger",
+          "lineNumber": 120
+        },
+        {
+          "caller": "__init__",
+          "callee": "trt.Runtime",
+          "lineNumber": 121
+        },
+        {
+          "caller": "__init__",
+          "callee": "runtime.deserialize_cuda_engine",
+          "lineNumber": 122
+        },
+        {
+          "caller": "__init__",
+          "callee": "_engine_bytes",
+          "lineNumber": 122
+        },
+        {
+          "caller": "__init__",
+          "callee": "RuntimeError",
+          "lineNumber": 124
+        },
+        {
+          "caller": "__init__",
+          "callee": "tuple",
+          "lineNumber": 126
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.engine.get_tensor_shape",
+          "lineNumber": 126
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.warning",
+          "lineNumber": 128
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 131
+        },
+        {
+          "caller": "__init__",
+          "callee": "range",
+          "lineNumber": 134
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.engine.get_tensor_name",
+          "lineNumber": 135
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.engine.get_tensor_mode",
+          "lineNumber": 136
+        },
+        {
+          "caller": "__init__",
+          "callee": "RuntimeError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.engine.get_tensor_dtype",
+          "lineNumber": 144
+        },
+        {
+          "caller": "__init__",
+          "callee": "self.engine.get_tensor_dtype",
+          "lineNumber": 146
+        },
+        {
+          "caller": "__init__",
+          "callee": "TrtExecSlot",
+          "lineNumber": 150
+        },
+        {
+          "caller": "__init__",
+          "callee": "range",
+          "lineNumber": 161
+        },
+        {
+          "caller": "__init__",
+          "callee": "tuple",
+          "lineNumber": 163
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.info",
+          "lineNumber": 164
+        },
+        {
+          "caller": "copy_batch",
+          "callee": "self.slots[slot_idx].copy_batch",
+          "lineNumber": 170
+        },
+        {
+          "caller": "infer_async",
+          "callee": "self.slots[slot_idx].infer_async",
+          "lineNumber": 173
+        },
+        {
+          "caller": "nms_ready",
+          "callee": "self.slots[slot_idx].nms_ready",
+          "lineNumber": 176
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "infrastructure/webrtc/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/webrtc/mediamtx_gateway.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 87,
+      "functions": [
+        {
+          "name": "path_name",
+          "startLine": 11,
+          "endLine": 12,
+          "params": [
+            "camera_id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MediaMtxGateway",
+          "startLine": 15,
+          "endLine": 90,
+          "methods": [
+            "__init__",
+            "is_ready",
+            "_ensure_path",
+            "whep_offer",
+            "hangup",
+            "apply_ice_servers"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullWebrtcGateway",
+          "startLine": 93,
+          "endLine": 104,
+          "methods": [
+            "is_ready",
+            "whep_offer",
+            "hangup",
+            "apply_ice_servers"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "path_name",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "MediaMtxGateway",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NullWebrtcGateway",
+          "line": 93,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "path_name",
+          "callee": "int",
+          "lineNumber": 12
+        },
+        {
+          "caller": "__init__",
+          "callee": "api_url.rstrip",
+          "lineNumber": 17
+        },
+        {
+          "caller": "__init__",
+          "callee": "webrtc_url.rstrip",
+          "lineNumber": 18
+        },
+        {
+          "caller": "is_ready",
+          "callee": "httpx.get",
+          "lineNumber": 23
+        },
+        {
+          "caller": "_ensure_path",
+          "callee": "path_name",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_ensure_path",
+          "callee": "httpx.post",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_ensure_path",
+          "callee": "httpx.patch",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_ensure_path",
+          "callee": "logger.warning",
+          "lineNumber": 49
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "self._ensure_path",
+          "lineNumber": 52
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "path_name",
+          "lineNumber": 53
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "httpx.post",
+          "lineNumber": 55
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "sdp_offer.encode",
+          "lineNumber": 57
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "RuntimeError",
+          "lineNumber": 62
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "r.headers.get",
+          "lineNumber": 63
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "loc.startswith",
+          "lineNumber": 64
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "urljoin",
+          "lineNumber": 65
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "loc.lstrip",
+          "lineNumber": 65
+        },
+        {
+          "caller": "hangup",
+          "callee": "httpx.delete",
+          "lineNumber": 74
+        },
+        {
+          "caller": "hangup",
+          "callee": "logger.warning",
+          "lineNumber": 76
+        },
+        {
+          "caller": "apply_ice_servers",
+          "callee": "httpx.patch",
+          "lineNumber": 82
+        },
+        {
+          "caller": "apply_ice_servers",
+          "callee": "logger.warning",
+          "lineNumber": 88
+        },
+        {
+          "caller": "apply_ice_servers",
+          "callee": "logger.warning",
+          "lineNumber": 90
+        },
+        {
+          "caller": "whep_offer",
+          "callee": "RuntimeError",
+          "lineNumber": 98
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "infrastructure/webrtc/mediamtx_runner.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 209,
+      "nonEmptyLines": 180,
+      "functions": [
+        {
+          "name": "_resolve_bin",
+          "startLine": 28,
+          "endLine": 47,
+          "params": [
+            "bin_path"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MediaMtxRunner",
+          "startLine": 50,
+          "endLine": 209,
+          "methods": [
+            "__init__",
+            "_probe",
+            "_spawn",
+            "start",
+            "stop",
+            "_watchdog_loop",
+            "status"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_resolve_bin",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "MediaMtxRunner",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_resolve_bin",
+          "callee": "(bin_path or \"\").strip",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "names.append",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "bin_path.strip",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "names.extend",
+          "lineNumber": 32
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "str",
+          "lineNumber": 34
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "str",
+          "lineNumber": 35
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "Path",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "path.is_file",
+          "lineNumber": 42
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "str",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_resolve_bin",
+          "callee": "shutil.which",
+          "lineNumber": 44
+        },
+        {
+          "caller": "__init__",
+          "callee": "(api_url or \"\").rstrip",
+          "lineNumber": 68
+        },
+        {
+          "caller": "__init__",
+          "callee": "float",
+          "lineNumber": 69
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 70
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Event",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_probe",
+          "callee": "self._proc.poll",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_probe",
+          "callee": "httpx.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "_spawn",
+          "callee": "_resolve_bin",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_spawn",
+          "callee": "logger.warning",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_spawn",
+          "callee": "Path",
+          "lineNumber": 100
+        },
+        {
+          "caller": "_spawn",
+          "callee": "yml.is_absolute",
+          "lineNumber": 101
+        },
+        {
+          "caller": "_spawn",
+          "callee": "yml.is_file",
+          "lineNumber": 103
+        },
+        {
+          "caller": "_spawn",
+          "callee": "logger.warning",
+          "lineNumber": 104
+        },
+        {
+          "caller": "_spawn",
+          "callee": "subprocess.Popen",
+          "lineNumber": 108
+        },
+        {
+          "caller": "_spawn",
+          "callee": "str",
+          "lineNumber": 109
+        },
+        {
+          "caller": "_spawn",
+          "callee": "logger.info",
+          "lineNumber": 113
+        },
+        {
+          "caller": "_spawn",
+          "callee": "logger.warning",
+          "lineNumber": 116
+        },
+        {
+          "caller": "start",
+          "callee": "self._probe",
+          "lineNumber": 122
+        },
+        {
+          "caller": "start",
+          "callee": "logger.info",
+          "lineNumber": 124
+        },
+        {
+          "caller": "start",
+          "callee": "self._spawn",
+          "lineNumber": 126
+        },
+        {
+          "caller": "start",
+          "callee": "self._stop_flag.clear",
+          "lineNumber": 129
+        },
+        {
+          "caller": "start",
+          "callee": "threading.Thread",
+          "lineNumber": 130
+        },
+        {
+          "caller": "start",
+          "callee": "self._thread.start",
+          "lineNumber": 133
+        },
+        {
+          "caller": "start",
+          "callee": "logger.info",
+          "lineNumber": 134
+        },
+        {
+          "caller": "stop",
+          "callee": "self._stop_flag.set",
+          "lineNumber": 138
+        },
+        {
+          "caller": "stop",
+          "callee": "self._thread.join",
+          "lineNumber": 140
+        },
+        {
+          "caller": "stop",
+          "callee": "self._proc.terminate",
+          "lineNumber": 146
+        },
+        {
+          "caller": "stop",
+          "callee": "self._proc.wait",
+          "lineNumber": 147
+        },
+        {
+          "caller": "stop",
+          "callee": "self._proc.kill",
+          "lineNumber": 150
+        },
+        {
+          "caller": "stop",
+          "callee": "logger.info",
+          "lineNumber": 154
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "self._stop_flag.wait",
+          "lineNumber": 160
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "self._probe",
+          "lineNumber": 161
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "logger.info",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "logger.error",
+          "lineNumber": 174
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "logger.error",
+          "lineNumber": 183
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "logger.warning",
+          "lineNumber": 189
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "self._stop_flag.wait",
+          "lineNumber": 194
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "self._spawn",
+          "lineNumber": 196
+        },
+        {
+          "caller": "_watchdog_loop",
+          "callee": "min",
+          "lineNumber": 197
+        },
+        {
+          "caller": "status",
+          "callee": "self._probe",
+          "lineNumber": 201
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "scripts/export_engine.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 113,
+      "nonEmptyLines": 92,
+      "functions": [
+        {
+          "name": "export_onnx",
+          "startLine": 29,
+          "endLine": 42,
+          "params": []
+        },
+        {
+          "name": "build_engine",
+          "startLine": 45,
+          "endLine": 88,
+          "params": []
+        },
+        {
+          "name": "inspect_engine",
+          "startLine": 91,
+          "endLine": 103,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "export_onnx",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "build_engine",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "inspect_engine",
+          "line": 91,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "export_onnx",
+          "callee": "print",
+          "lineNumber": 31
+        },
+        {
+          "caller": "export_onnx",
+          "callee": "YOLO",
+          "lineNumber": 32
+        },
+        {
+          "caller": "export_onnx",
+          "callee": "str",
+          "lineNumber": 32
+        },
+        {
+          "caller": "export_onnx",
+          "callee": "model.export",
+          "lineNumber": 33
+        },
+        {
+          "caller": "export_onnx",
+          "callee": "ONNX_PATH.exists",
+          "lineNumber": 40
+        },
+        {
+          "caller": "export_onnx",
+          "callee": "FileNotFoundError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "export_onnx",
+          "callee": "print",
+          "lineNumber": 42
+        },
+        {
+          "caller": "build_engine",
+          "callee": "torch.cuda.is_available",
+          "lineNumber": 49
+        },
+        {
+          "caller": "build_engine",
+          "callee": "RuntimeError",
+          "lineNumber": 50
+        },
+        {
+          "caller": "build_engine",
+          "callee": "torch.cuda.init",
+          "lineNumber": 51
+        },
+        {
+          "caller": "build_engine",
+          "callee": "print",
+          "lineNumber": 52
+        },
+        {
+          "caller": "build_engine",
+          "callee": "torch.cuda.get_device_name",
+          "lineNumber": 52
+        },
+        {
+          "caller": "build_engine",
+          "callee": "trt.Logger",
+          "lineNumber": 56
+        },
+        {
+          "caller": "build_engine",
+          "callee": "trt.Builder",
+          "lineNumber": 57
+        },
+        {
+          "caller": "build_engine",
+          "callee": "builder.create_network",
+          "lineNumber": 58
+        },
+        {
+          "caller": "build_engine",
+          "callee": "int",
+          "lineNumber": 58
+        },
+        {
+          "caller": "build_engine",
+          "callee": "trt.OnnxParser",
+          "lineNumber": 59
+        },
+        {
+          "caller": "build_engine",
+          "callee": "ONNX_PATH.read_bytes",
+          "lineNumber": 61
+        },
+        {
+          "caller": "build_engine",
+          "callee": "parser.parse",
+          "lineNumber": 62
+        },
+        {
+          "caller": "build_engine",
+          "callee": "range",
+          "lineNumber": 63
+        },
+        {
+          "caller": "build_engine",
+          "callee": "print",
+          "lineNumber": 64
+        },
+        {
+          "caller": "build_engine",
+          "callee": "parser.get_error",
+          "lineNumber": 64
+        },
+        {
+          "caller": "build_engine",
+          "callee": "RuntimeError",
+          "lineNumber": 65
+        },
+        {
+          "caller": "build_engine",
+          "callee": "builder.create_builder_config",
+          "lineNumber": 67
+        },
+        {
+          "caller": "build_engine",
+          "callee": "config.set_flag",
+          "lineNumber": 68
+        },
+        {
+          "caller": "build_engine",
+          "callee": "config.set_memory_pool_limit",
+          "lineNumber": 69
+        },
+        {
+          "caller": "build_engine",
+          "callee": "builder.create_optimization_profile",
+          "lineNumber": 72
+        },
+        {
+          "caller": "build_engine",
+          "callee": "profile.set_shape",
+          "lineNumber": 73
+        },
+        {
+          "caller": "build_engine",
+          "callee": "config.add_optimization_profile",
+          "lineNumber": 79
+        },
+        {
+          "caller": "build_engine",
+          "callee": "print",
+          "lineNumber": 81
+        },
+        {
+          "caller": "build_engine",
+          "callee": "builder.build_serialized_network",
+          "lineNumber": 82
+        },
+        {
+          "caller": "build_engine",
+          "callee": "RuntimeError",
+          "lineNumber": 84
+        },
+        {
+          "caller": "build_engine",
+          "callee": "ENGINE_PATH.parent.mkdir",
+          "lineNumber": 86
+        },
+        {
+          "caller": "build_engine",
+          "callee": "ENGINE_PATH.write_bytes",
+          "lineNumber": 87
+        },
+        {
+          "caller": "build_engine",
+          "callee": "bytes",
+          "lineNumber": 87
+        },
+        {
+          "caller": "build_engine",
+          "callee": "print",
+          "lineNumber": 88
+        },
+        {
+          "caller": "build_engine",
+          "callee": "ENGINE_PATH.stat",
+          "lineNumber": 88
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "trt.Logger",
+          "lineNumber": 93
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "trt.Runtime",
+          "lineNumber": 94
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "runtime.deserialize_cuda_engine",
+          "lineNumber": 95
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "ENGINE_PATH.read_bytes",
+          "lineNumber": 95
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "engine.get_tensor_name",
+          "lineNumber": 96
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 97
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "engine.get_tensor_shape",
+          "lineNumber": 97
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "engine.get_tensor_profile_shape",
+          "lineNumber": 98
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "print",
+          "lineNumber": 99
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "print",
+          "lineNumber": 100
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 100
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 100
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 100
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 101
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 102
+        },
+        {
+          "caller": "inspect_engine",
+          "callee": "tuple",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/seed_sandbox.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 127,
+      "nonEmptyLines": 103,
+      "functions": [
+        {
+          "name": "_roi_doc",
+          "startLine": 34,
+          "endLine": 41,
+          "params": [
+            "is_start"
+          ]
+        },
+        {
+          "name": "_node_doc",
+          "startLine": 44,
+          "endLine": 55,
+          "params": [
+            "node_id",
+            "node_type",
+            "zone",
+            "camera_id",
+            "priority"
+          ]
+        },
+        {
+          "name": "_camera_doc",
+          "startLine": 58,
+          "endLine": 66,
+          "params": [
+            "camera_id",
+            "zone",
+            "node_ids",
+            "is_start"
+          ]
+        },
+        {
+          "name": "build_docs",
+          "startLine": 69,
+          "endLine": 93,
+          "params": []
+        },
+        {
+          "name": "main",
+          "startLine": 96,
+          "endLine": 123,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_roi_doc",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "_node_doc",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "_camera_doc",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "build_docs",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 96,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_camera_doc",
+          "callee": "_roi_doc",
+          "lineNumber": 65
+        },
+        {
+          "caller": "build_docs",
+          "callee": "enumerate",
+          "lineNumber": 73
+        },
+        {
+          "caller": "build_docs",
+          "callee": "range",
+          "lineNumber": 75
+        },
+        {
+          "caller": "build_docs",
+          "callee": "cameras.append",
+          "lineNumber": 78
+        },
+        {
+          "caller": "build_docs",
+          "callee": "_camera_doc",
+          "lineNumber": 78
+        },
+        {
+          "caller": "build_docs",
+          "callee": "nodes.append",
+          "lineNumber": 79
+        },
+        {
+          "caller": "build_docs",
+          "callee": "_node_doc",
+          "lineNumber": 79
+        },
+        {
+          "caller": "build_docs",
+          "callee": "pairs.append",
+          "lineNumber": 80
+        },
+        {
+          "caller": "build_docs",
+          "callee": "cameras.append",
+          "lineNumber": 89
+        },
+        {
+          "caller": "build_docs",
+          "callee": "_camera_doc",
+          "lineNumber": 89
+        },
+        {
+          "caller": "build_docs",
+          "callee": "nodes.append",
+          "lineNumber": 90
+        },
+        {
+          "caller": "build_docs",
+          "callee": "_node_doc",
+          "lineNumber": 90
+        },
+        {
+          "caller": "main",
+          "callee": "db_name.endswith",
+          "lineNumber": 98
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 99
+        },
+        {
+          "caller": "main",
+          "callee": "MongoClient",
+          "lineNumber": 102
+        },
+        {
+          "caller": "main",
+          "callee": "build_docs",
+          "lineNumber": 104
+        },
+        {
+          "caller": "main",
+          "callee": "db[name].delete_many",
+          "lineNumber": 106
+        },
+        {
+          "caller": "main",
+          "callee": "db[name].insert_many",
+          "lineNumber": 107
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 108
+        },
+        {
+          "caller": "main",
+          "callee": "len",
+          "lineNumber": 108
+        },
+        {
+          "caller": "main",
+          "callee": "client.close",
+          "lineNumber": 109
+        },
+        {
+          "caller": "main",
+          "callee": "start_meta_from_docs",
+          "lineNumber": 111
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 112
+        },
+        {
+          "caller": "main",
+          "callee": "sorted",
+          "lineNumber": 114
+        },
+        {
+          "caller": "main",
+          "callee": "meta.items",
+          "lineNumber": 115
+        },
+        {
+          "caller": "main",
+          "callee": "m.get",
+          "lineNumber": 115
+        },
+        {
+          "caller": "main",
+          "callee": "start_sort_key",
+          "lineNumber": 116
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 119
+        },
+        {
+          "caller": "main",
+          "callee": "enumerate",
+          "lineNumber": 120
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 121
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 122
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "utils/overlap_utils.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "calculate_coverage_multi_rois",
+          "startLine": 10,
+          "endLine": 67,
+          "params": [
+            "detection_boxes",
+            "rois_list",
+            "device"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "calculate_coverage_multi_rois",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "isinstance",
+          "lineNumber": 25
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "TypeError",
+          "lineNumber": 26
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "type",
+          "lineNumber": 28
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "len",
+          "lineNumber": 31
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "len",
+          "lineNumber": 31
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.zeros",
+          "lineNumber": 32
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "len",
+          "lineNumber": 32
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "rois_xyxy.append",
+          "lineNumber": 46
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "roi_areas.append",
+          "lineNumber": 47
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.tensor",
+          "lineNumber": 49
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.tensor",
+          "lineNumber": 50
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "det_boxes.unsqueeze",
+          "lineNumber": 53
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "rois_xyxy.unsqueeze",
+          "lineNumber": 54
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.maximum",
+          "lineNumber": 57
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.maximum",
+          "lineNumber": 58
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.minimum",
+          "lineNumber": 59
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.minimum",
+          "lineNumber": 60
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.clamp",
+          "lineNumber": 62
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "torch.clamp",
+          "lineNumber": 63
+        },
+        {
+          "caller": "calculate_coverage_multi_rois",
+          "callee": "roi_areas.unsqueeze",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "utils/rtsp_url.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 42,
+      "functions": [
+        {
+          "name": "encode_rtsp_userinfo",
+          "startLine": 12,
+          "endLine": 52,
+          "params": [
+            "url"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "encode_rtsp_userinfo",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "(url or \"\").strip",
+          "lineNumber": 21
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "raw.lower",
+          "lineNumber": 25
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "lower.startswith",
+          "lineNumber": 26
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "lower.startswith",
+          "lineNumber": 28
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "rest.rfind",
+          "lineNumber": 34
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "userinfo.partition",
+          "lineNumber": 44
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "quote",
+          "lineNumber": 46
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "unquote",
+          "lineNumber": 46
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "quote",
+          "lineNumber": 47
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "unquote",
+          "lineNumber": 47
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "quote",
+          "lineNumber": 50
+        },
+        {
+          "caller": "encode_rtsp_userinfo",
+          "callee": "unquote",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "utils/setup_log.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 28,
+      "functions": [
+        {
+          "name": "_resolve_level",
+          "startLine": 6,
+          "endLine": 18,
+          "params": [
+            "level"
+          ]
+        },
+        {
+          "name": "setup_logger",
+          "startLine": 21,
+          "endLine": 36,
+          "params": [
+            "name",
+            "log_file",
+            "level"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_resolve_level",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "setup_logger",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_resolve_level",
+          "callee": "isinstance",
+          "lineNumber": 9
+        },
+        {
+          "caller": "_resolve_level",
+          "callee": "getattr",
+          "lineNumber": 11
+        },
+        {
+          "caller": "_resolve_level",
+          "callee": "str(level).upper",
+          "lineNumber": 11
+        },
+        {
+          "caller": "_resolve_level",
+          "callee": "str",
+          "lineNumber": 11
+        },
+        {
+          "caller": "_resolve_level",
+          "callee": "(getattr(settings, \"LOG_LEVEL\", None) or \"INFO\").upper",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_resolve_level",
+          "callee": "getattr",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_resolve_level",
+          "callee": "getattr",
+          "lineNumber": 16
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "datetime.now().strftime",
+          "lineNumber": 23
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "datetime.now",
+          "lineNumber": 23
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "os.makedirs",
+          "lineNumber": 24
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "os.path.dirname",
+          "lineNumber": 24
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "logging.Formatter",
+          "lineNumber": 26
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "logging.FileHandler",
+          "lineNumber": 28
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "handler.setFormatter",
+          "lineNumber": 29
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "_resolve_level",
+          "lineNumber": 31
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "logging.getLogger",
+          "lineNumber": 32
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "logger.setLevel",
+          "lineNumber": 33
+        },
+        {
+          "caller": "setup_logger",
+          "callee": "logger.addHandler",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

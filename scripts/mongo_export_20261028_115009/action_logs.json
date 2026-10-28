@@ -1,0 +1,3916 @@
+[
+  {
+    "_id": {
+      "$oid": "6acda166407d5f1e7bb88925"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_camera",
+    "endpoint": "/api/v1/cameras/delete_camera",
+    "payload": {
+      "cameraId": 1
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:11:34.243Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acda220407d5f1e7bb88928"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_camera",
+    "endpoint": "/api/v1/cameras/create_camera",
+    "payload": {
+      "name": "test-1",
+      "rtspUrl": "rtsp://admin:Kortek2026#@192.168.50.111:554/Streaming/Channels/102",
+      "zone": "AE5",
+      "observedNodeIds": [
+        "start_1"
+      ],
+      "nodePriorities": {
+        "start_1": 1
+      }
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:14:40.227Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acda244407d5f1e7bb88929"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_camera",
+    "endpoint": "/api/v1/cameras/create_camera",
+    "payload": {
+      "name": "test1",
+      "rtspUrl": "rtsp://admin:Kortek2026#@192.168.50.111:554/Streaming/Channels/102",
+      "zone": "AE5",
+      "observedNodeIds": [
+        "start_1"
+      ]
+    },
+    "ip": "127.0.0.1",
+    "status": 409,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:15:16.382Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acda522407d5f1e7bb8892a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_camera",
+    "endpoint": "/api/v1/cameras/create_camera",
+    "payload": {
+      "name": "test2",
+      "rtspUrl": "rtsp://admin:Kortek2026#@192.168.50.112:554/Streaming/Channels/102",
+      "zone": "AE5",
+      "observedNodeIds": [
+        "start2"
+      ]
+    },
+    "ip": "127.0.0.1",
+    "status": 400,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:27:30.498Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acda52b407d5f1e7bb8892b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_camera",
+    "endpoint": "/api/v1/cameras/create_camera",
+    "payload": {
+      "name": "test2",
+      "rtspUrl": "rtsp://admin:Kortek2026#@192.168.50.112:554/Streaming/Channels/102",
+      "zone": "AE5",
+      "observedNodeIds": [
+        "start_2"
+      ],
+      "nodePriorities": {
+        "start_2": 2
+      }
+    },
+    "ip": "127.0.0.1",
+    "status": 409,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:27:39.582Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acda533407d5f1e7bb8892c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_camera",
+    "endpoint": "/api/v1/cameras/delete_camera",
+    "payload": {
+      "cameraId": 2
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:27:47.827Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6acda539407d5f1e7bb8892f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_camera",
+    "endpoint": "/api/v1/cameras/create_camera",
+    "payload": {
+      "name": "test2",
+      "rtspUrl": "rtsp://admin:Kortek2026#@192.168.50.112:554/Streaming/Channels/102",
+      "zone": "AE5",
+      "observedNodeIds": [
+        "start_2"
+      ],
+      "nodePriorities": {
+        "start_2": 2
+      }
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-13T03:27:53.102Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad1ddd08a0f3eb69beb1ecd"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "import_map",
+    "endpoint": "/api/v1/maps/import_map",
+    "payload": {
+      "filename": "map1 (10).zip",
+      "bytes": 581311
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-16T08:18:24.594Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad1e4238a0f3eb69beb1ecf"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "import_map",
+    "endpoint": "/api/v1/maps/import_map",
+    "payload": {
+      "filename": "map6 (1).zip",
+      "bytes": 122239
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-16T08:45:23.569Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad1e4468a0f3eb69beb1ed1"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "import_map",
+    "endpoint": "/api/v1/maps/import_map",
+    "payload": {
+      "filename": "map6 (1).zip",
+      "bytes": 122239
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-16T08:45:58.807Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7349723a76a68fb11fe13"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000010",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-20T09:29:59.040Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7349723a76a68fb11fe14"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000067",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-20T09:29:59.060Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7349723a76a68fb11fe15"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000013",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-20T09:29:59.076Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7349723a76a68fb11fe16"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000078",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-20T09:29:59.095Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7349723a76a68fb11fe17"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000082",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-20T09:29:59.112Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad7349723a76a68fb11fe18"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "update_roi",
+    "endpoint": "/api/v1/cameras/update_roi",
+    "payload": {
+      "items": [
+        {
+          "box": [
+            126.0,
+            216.0,
+            59.0,
+            103.0
+          ],
+          "id": "9:start_10000004",
+          "cameraId": null,
+          "nodeId": null
+        },
+        {
+          "box": [
+            205.0,
+            212.0,
+            59.0,
+            96.0
+          ],
+          "id": "9:start_10000066",
+          "cameraId": null,
+          "nodeId": null
+        },
+        {
+          "box": [
+            283.0,
+            205.0,
+            68.0,
+            104.0
+          ],
+          "id": "9:start_10000007",
+          "cameraId": null,
+          "nodeId": null
+        },
+        {
+          "box": [
+            363.0,
+            202.0,
+            76.0,
+            100.0
+          ],
+          "id": "9:start_10000077",
+          "cameraId": null,
+          "nodeId": null
+        },
+        {
+          "box": [
+            458.0,
+            193.0,
+            53.0,
+            101.0
+          ],
+          "id": "9:start_10000081",
+          "cameraId": null,
+          "nodeId": null
+        }
+      ]
+    },
+    "ip": "127.0.0.1",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-20T09:29:59.151Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae022dd625f85ce7c44f48c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "import_map",
+    "endpoint": "/api/v1/maps/import_map",
+    "payload": {
+      "filename": "MotNgayMoiTotLanh.zip",
+      "bytes": 203677
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T04:04:45.781Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0486d189e23a0b74ef813"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "import_map",
+    "endpoint": "/api/v1/maps/import_map",
+    "payload": {
+      "filename": "MotNgayMoiTotLanh.zip",
+      "bytes": 209213
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:45:01.278Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c6426"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000146",
+      "box": [
+        125.0,
+        215.0,
+        61.0,
+        100.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.529Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c6427"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000151",
+      "box": [
+        197.0,
+        215.0,
+        73.0,
+        95.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.559Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c6428"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000154",
+      "box": [
+        285.0,
+        209.0,
+        67.0,
+        97.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.578Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c6429"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000157",
+      "box": [
+        364.0,
+        198.0,
+        69.0,
+        107.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.609Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c642a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000163",
+      "box": [
+        443.0,
+        201.0,
+        67.0,
+        97.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.622Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c642b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000177",
+      "box": [
+        131.0,
+        111.0,
+        55.0,
+        91.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.636Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c642c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000180",
+      "box": [
+        203.0,
+        100.0,
+        60.0,
+        93.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.652Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c642d"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000183",
+      "box": [
+        277.0,
+        94.0,
+        74.0,
+        95.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.669Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c642e"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000186",
+      "box": [
+        361.0,
+        90.0,
+        67.0,
+        92.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.686Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04bda97636767735c642f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000189",
+      "box": [
+        435.0,
+        92.0,
+        69.0,
+        92.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T06:59:38.700Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6430"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000172",
+      "box": [
+        156.0,
+        204.0,
+        67.0,
+        99.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.752Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6431"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000169",
+      "box": [
+        239.0,
+        207.0,
+        59.0,
+        97.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.777Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6432"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000166",
+      "box": [
+        312.0,
+        206.0,
+        67.0,
+        100.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.793Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6433"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000160",
+      "box": [
+        392.0,
+        204.0,
+        63.0,
+        97.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.813Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6434"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000202",
+      "box": [
+        160.0,
+        313.0,
+        65.0,
+        95.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.828Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6435"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000199",
+      "box": [
+        237.0,
+        315.0,
+        63.0,
+        96.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.846Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6436"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000196",
+      "box": [
+        312.0,
+        316.0,
+        64.0,
+        93.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.859Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04c5897636767735c6437"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000193",
+      "box": [
+        390.0,
+        314.0,
+        63.0,
+        99.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:01:44.872Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c6438"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000205",
+      "box": [
+        423.0,
+        348.0,
+        69.0,
+        77.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.577Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c6439"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000208",
+      "box": [
+        417.0,
+        247.0,
+        72.0,
+        73.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.607Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c643a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000211",
+      "box": [
+        412.0,
+        145.0,
+        72.0,
+        80.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.625Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c643b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000057",
+      "box": [
+        339.0,
+        350.0,
+        76.0,
+        77.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.645Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c643c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000056",
+      "box": [
+        335.0,
+        249.0,
+        76.0,
+        80.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.664Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c643d"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000069",
+      "box": [
+        333.0,
+        146.0,
+        79.0,
+        80.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.678Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c643e"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000059",
+      "box": [
+        260.0,
+        350.0,
+        75.0,
+        88.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.694Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c643f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000058",
+      "box": [
+        256.0,
+        254.0,
+        73.0,
+        83.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.709Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04de197636767735c6440"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000093",
+      "box": [
+        248.0,
+        150.0,
+        80.0,
+        81.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:08:17.729Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6441"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000223",
+      "box": [
+        379.0,
+        298.0,
+        71.0,
+        76.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.833Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6442"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000226",
+      "box": [
+        384.0,
+        198.0,
+        68.0,
+        80.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.857Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6443"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000229",
+      "box": [
+        385.0,
+        94.0,
+        72.0,
+        85.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.875Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6444"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000084",
+      "box": [
+        296.0,
+        295.0,
+        77.0,
+        75.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.895Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6445"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000087",
+      "box": [
+        303.0,
+        193.0,
+        71.0,
+        79.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.908Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6446"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000090",
+      "box": [
+        304.0,
+        94.0,
+        73.0,
+        80.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.922Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6447"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000106",
+      "box": [
+        220.0,
+        292.0,
+        69.0,
+        85.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.937Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6448"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000109",
+      "box": [
+        223.0,
+        197.0,
+        69.0,
+        78.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.952Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04f2597636767735c6449"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000112",
+      "box": [
+        220.0,
+        86.0,
+        72.0,
+        80.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:13:41.968Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c644a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000214",
+      "box": [
+        401.0,
+        310.0,
+        65.0,
+        68.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.667Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c644b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000217",
+      "box": [
+        397.0,
+        207.0,
+        71.0,
+        75.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.694Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c644c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000220",
+      "box": [
+        390.0,
+        113.0,
+        75.0,
+        71.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.719Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c644d"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000073",
+      "box": [
+        317.0,
+        316.0,
+        76.0,
+        71.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.737Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c644e"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000076",
+      "box": [
+        317.0,
+        212.0,
+        75.0,
+        73.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.753Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c644f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000081",
+      "box": [
+        315.0,
+        110.0,
+        73.0,
+        72.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.766Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c6450"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000096",
+      "box": [
+        238.0,
+        316.0,
+        71.0,
+        75.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.781Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c6451"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000100",
+      "box": [
+        231.0,
+        214.0,
+        76.0,
+        77.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.794Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fd297636767735c6452"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000103",
+      "box": [
+        236.0,
+        112.0,
+        67.0,
+        78.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:34.806Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae04fe397636767735c6453"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 15,
+      "nodeId": "end_10000013",
+      "box": [
+        269.0,
+        263.0,
+        99.0,
+        152.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T07:16:51.330Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae05cb445788c7e23c8f044"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "update_roi",
+    "endpoint": "/api/v1/cameras/update_roi",
+    "payload": {
+      "items": [
+        {
+          "box": [
+            418.0,
+            142.0,
+            84.0,
+            87.0
+          ],
+          "id": "8:start_10000211",
+          "cameraId": null,
+          "nodeId": null
+        }
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:11:32.976Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae05ece45788c7e23c8f046"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "update_roi",
+    "endpoint": "/api/v1/cameras/update_roi",
+    "payload": {
+      "items": [
+        {
+          "box": [
+            425.0,
+            139.0,
+            70.0,
+            85.0
+          ],
+          "id": "8:start_10000211",
+          "cameraId": null,
+          "nodeId": null
+        }
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:20:30.831Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae061057fe93056d1f36aec"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000172:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:29:57.147Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae061187fe93056d1f36aed"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000202:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:30:16.209Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae061207fe93056d1f36aee"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000229:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:30:24.286Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae061297fe93056d1f36aef"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000090:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:30:33.350Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae061317fe93056d1f36af0"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000112:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T08:30:41.419Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40df"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000205",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.251Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e0"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000208",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.271Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e1"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000211",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.289Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e2"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000057",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.305Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e3"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000056",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.323Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e4"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000069",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.337Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e5"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000059",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.355Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e6"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000058",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.374Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bda0080c4cd921b40e7"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "8:start_10000093",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:10.390Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40e8"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000146",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.752Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40e9"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000151",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.775Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40ea"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000154",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.794Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40eb"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000157",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.808Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40ec"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000163",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.826Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40ed"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000177",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.842Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40ee"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000180",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.864Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40ef"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000183",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.882Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40f0"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000186",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.898Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06be40080c4cd921b40f1"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "9:start_10000189",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:20.914Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f2"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000214",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.832Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f3"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000217",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.853Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f4"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000220",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.869Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f5"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000073",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.885Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f6"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000076",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.904Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f7"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000081",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.921Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f8"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000096",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.952Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06beb0080c4cd921b40f9"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000100",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:27.979Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bec0080c4cd921b40fa"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "11:start_10000103",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:28Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b40fb"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000223",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.257Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b40fc"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000226",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.279Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b40fd"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000229",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.296Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b40fe"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000084",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.313Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b40ff"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000087",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.329Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b4100"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000090",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.345Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b4101"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000106",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.359Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b4102"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000109",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.375Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bf30080c4cd921b4103"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "13:start_10000112",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:35.390Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b4104"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000172",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.544Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b4105"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000169",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.575Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b4106"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000166",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.591Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b4107"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000160",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.608Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b4108"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000202",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.623Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b4109"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000199",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.637Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b410a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000196",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.654Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bfa0080c4cd921b410b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "14:start_10000193",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:42.679Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06bff0080c4cd921b410c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "delete_roi",
+    "endpoint": "/api/v1/cameras/delete_roi",
+    "payload": {
+      "id": "15:end_10000013",
+      "cameraId": null,
+      "nodeId": null
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:16:47.938Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b410d"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000146",
+      "box": [
+        261.0,
+        329.0,
+        123.0,
+        155.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.707Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b410e"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000151",
+      "box": [
+        403.0,
+        332.0,
+        136.0,
+        141.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.802Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b410f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000154",
+      "box": [
+        560.0,
+        298.0,
+        144.0,
+        173.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.837Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4110"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000157",
+      "box": [
+        728.0,
+        305.0,
+        144.0,
+        160.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.868Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4111"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000163",
+      "box": [
+        891.0,
+        293.0,
+        128.0,
+        163.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.883Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4112"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000177",
+      "box": [
+        256.0,
+        156.0,
+        120.0,
+        163.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.895Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4113"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000180",
+      "box": [
+        400.0,
+        149.0,
+        136.0,
+        165.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.910Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4114"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000183",
+      "box": [
+        555.0,
+        137.0,
+        141.0,
+        160.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.922Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4115"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000186",
+      "box": [
+        712.0,
+        133.0,
+        147.0,
+        157.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.937Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06c6a0080c4cd921b4116"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 9,
+      "nodeId": "start_10000189",
+      "box": [
+        875.0,
+        130.0,
+        151.0,
+        151.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:18:34.950Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d030080c4cd921b4117"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000160",
+      "box": [
+        789.0,
+        308.0,
+        123.0,
+        163.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:07.948Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d030080c4cd921b4118"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000166",
+      "box": [
+        619.0,
+        300.0,
+        144.0,
+        179.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:07.977Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d040080c4cd921b4119"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000169",
+      "box": [
+        456.0,
+        309.0,
+        149.0,
+        163.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:08.002Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d040080c4cd921b411a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000172",
+      "box": [
+        307.0,
+        305.0,
+        136.0,
+        173.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:08.016Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d040080c4cd921b411b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000193",
+      "box": [
+        789.0,
+        493.0,
+        115.0,
+        144.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:08.031Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d040080c4cd921b411c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000196",
+      "box": [
+        621.0,
+        500.0,
+        136.0,
+        144.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:08.045Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d040080c4cd921b411d"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000199",
+      "box": [
+        461.0,
+        498.0,
+        144.0,
+        144.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:08.060Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d040080c4cd921b411e"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 14,
+      "nodeId": "start_10000202",
+      "box": [
+        309.0,
+        497.0,
+        139.0,
+        149.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:21:08.078Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b411f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000205",
+      "box": [
+        843.0,
+        516.0,
+        163.0,
+        136.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.429Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4120"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000208",
+      "box": [
+        843.0,
+        364.0,
+        160.0,
+        141.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.458Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4121"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000211",
+      "box": [
+        824.0,
+        218.0,
+        163.0,
+        123.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.489Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4122"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000057",
+      "box": [
+        688.0,
+        537.0,
+        147.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.505Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4123"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000056",
+      "box": [
+        675.0,
+        376.0,
+        155.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.520Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4124"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000069",
+      "box": [
+        667.0,
+        228.0,
+        157.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.536Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4125"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000059",
+      "box": [
+        509.0,
+        533.0,
+        160.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.550Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4126"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000058",
+      "box": [
+        501.0,
+        374.0,
+        165.0,
+        152.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.564Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06d470080c4cd921b4127"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 8,
+      "nodeId": "start_10000093",
+      "box": [
+        496.0,
+        216.0,
+        160.0,
+        147.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:22:15.577Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b4128"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000214",
+      "box": [
+        800.0,
+        470.0,
+        149.0,
+        128.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.358Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b4129"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000217",
+      "box": [
+        800.0,
+        321.0,
+        141.0,
+        123.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.404Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b412a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000220",
+      "box": [
+        787.0,
+        170.0,
+        149.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.434Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b412b"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000073",
+      "box": [
+        635.0,
+        476.0,
+        160.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.448Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b412c"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000076",
+      "box": [
+        635.0,
+        320.0,
+        157.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.463Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b412d"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000081",
+      "box": [
+        621.0,
+        156.0,
+        165.0,
+        152.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.479Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b412e"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000096",
+      "box": [
+        475.0,
+        477.0,
+        149.0,
+        139.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.493Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b412f"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000100",
+      "box": [
+        456.0,
+        318.0,
+        163.0,
+        131.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.510Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06da10080c4cd921b4130"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 11,
+      "nodeId": "start_10000103",
+      "box": [
+        461.0,
+        168.0,
+        149.0,
+        128.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:23:45.526Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4131"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000223",
+      "box": [
+        753.0,
+        449.0,
+        157.0,
+        136.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.609Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4132"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000226",
+      "box": [
+        751.0,
+        284.0,
+        184.0,
+        155.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.652Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4133"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000229",
+      "box": [
+        767.0,
+        122.0,
+        168.0,
+        152.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.667Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4134"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000084",
+      "box": [
+        601.0,
+        449.0,
+        149.0,
+        147.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.687Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4135"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000087",
+      "box": [
+        588.0,
+        285.0,
+        155.0,
+        157.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.702Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4136"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000090",
+      "box": [
+        601.0,
+        134.0,
+        160.0,
+        136.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.717Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4137"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000106",
+      "box": [
+        436.0,
+        450.0,
+        152.0,
+        136.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.732Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4138"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000109",
+      "box": [
+        412.0,
+        281.0,
+        168.0,
+        152.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.747Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06deb0080c4cd921b4139"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 13,
+      "nodeId": "start_10000112",
+      "box": [
+        423.0,
+        112.0,
+        163.0,
+        147.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:24:59.768Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae06df50080c4cd921b413a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "create_roi",
+    "endpoint": "/api/v1/cameras/create_roi",
+    "payload": {
+      "cameraId": 15,
+      "nodeId": "end_10000013",
+      "box": [
+        524.0,
+        417.0,
+        205.0,
+        221.0
+      ]
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T09:25:09.042Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae09be954e9781e1be1bc72"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000205:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.13.2",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T12:41:13.335Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0a21354e9781e1be1bc77"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "set_pair_enabled",
+    "endpoint": "/api/v1/pairs/set_pair_enabled",
+    "payload": {
+      "id": "start_10000208:end_10000013",
+      "enabled": false
+    },
+    "ip": "192.168.13.2",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-27T13:07:31.844Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae16574e40c72d502306b39"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "unlock_by_user",
+    "endpoint": "/api/v1/nodes/unlock_by_user",
+    "payload": {
+      "nodeId": "end_10000013"
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-28T03:01:08.322Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae165a8e40c72d502306b3a"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "unlock_by_user",
+    "endpoint": "/api/v1/nodes/unlock_by_user",
+    "payload": {
+      "nodeId": "start_10000180"
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-28T03:02:00.559Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae1714df07aef1f59c53671"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "unlock_by_user",
+    "endpoint": "/api/v1/nodes/unlock_by_user",
+    "payload": {
+      "nodeId": "end_10000013"
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-28T03:51:41.259Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae17152f07aef1f59c53672"
+    },
+    "user": "admin",
+    "role": "admin",
+    "action": "unlock_by_user",
+    "endpoint": "/api/v1/nodes/unlock_by_user",
+    "payload": {
+      "nodeId": "start_10000073"
+    },
+    "ip": "192.168.50.200",
+    "status": 200,
+    "source": "user",
+    "created_at": {
+      "$date": "2026-10-28T03:51:46.561Z"
+    }
+  }
+]

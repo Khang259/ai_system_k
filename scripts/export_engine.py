@@ -23,7 +23,7 @@ PT_PATH = Path("models/model_test.pt")
 ONNX_PATH = Path("models/model_test.onnx")
 ENGINE_PATH = Path(settings.MODEL_PATH)
 INPUT_NAME = "images"
-FIXED_BATCH = 32
+FIXED_BATCH = 16
 
 
 def export_onnx():

@@ -1,0 +1,72 @@
+[
+  {
+    "_id": {
+      "$oid": "6ad1ddd08a0f3eb69beb1ecc"
+    },
+    "version_id": "693849884b6448beabc1032380a86990",
+    "original_filename": "map1 (10).zip",
+    "stored_path": "data\\maps\\693849884b6448beabc1032380a86990.zip",
+    "byte_size": 581311,
+    "checksum": "e8878e065e1d9467366e8d7d2b5e0fc068523cdfad66fad0b1fc13a27355ed85",
+    "created_by": "admin",
+    "created_at": {
+      "$date": "2026-10-16T08:18:24.571Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad1e4238a0f3eb69beb1ece"
+    },
+    "version_id": "fd4c2885b1774440b075211e94207971",
+    "original_filename": "map6 (1).zip",
+    "stored_path": "data\\maps\\fd4c2885b1774440b075211e94207971.zip",
+    "byte_size": 122239,
+    "checksum": "8946812e13de7b79ed56b9f096f9692d3102d13bb4cdd0927a52697f14c3f8b9",
+    "created_by": "admin",
+    "created_at": {
+      "$date": "2026-10-16T08:45:23.566Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ad1e4468a0f3eb69beb1ed0"
+    },
+    "version_id": "654e3655fc0d4000be87c17d5e498c95",
+    "original_filename": "map6 (1).zip",
+    "stored_path": "data\\maps\\654e3655fc0d4000be87c17d5e498c95.zip",
+    "byte_size": 122239,
+    "checksum": "8946812e13de7b79ed56b9f096f9692d3102d13bb4cdd0927a52697f14c3f8b9",
+    "created_by": "admin",
+    "created_at": {
+      "$date": "2026-10-16T08:45:58.803Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae022dd625f85ce7c44f48b"
+    },
+    "version_id": "f45e007dbf9c4f4ea915ae1351486b87",
+    "original_filename": "MotNgayMoiTotLanh.zip",
+    "stored_path": "data\\maps\\f45e007dbf9c4f4ea915ae1351486b87.zip",
+    "byte_size": 203677,
+    "checksum": "368bf5b5edd51abcc37498dd38d02318b9443ac29945819b14a200d739c9bdc8",
+    "created_by": "admin",
+    "created_at": {
+      "$date": "2026-10-27T04:04:45.779Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae0486d189e23a0b74ef812"
+    },
+    "version_id": "a46a523cad4a493db9b4d96a99a14636",
+    "original_filename": "MotNgayMoiTotLanh.zip",
+    "stored_path": "data\\maps\\a46a523cad4a493db9b4d96a99a14636.zip",
+    "byte_size": 209213,
+    "checksum": "10c49cec614f1615145e6438a740a8b6b5aa0c0cec2cb2318e11b84f2211290f",
+    "created_by": "admin",
+    "created_at": {
+      "$date": "2026-10-27T06:45:01.274Z"
+    }
+  }
+]

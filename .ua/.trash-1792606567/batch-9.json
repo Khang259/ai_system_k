@@ -1,0 +1,789 @@
+{
+  "nodes": [
+    {
+      "id": "file:.github/CODEOWNERS",
+      "type": "file",
+      "name": "CODEOWNERS",
+      "filePath": ".github/CODEOWNERS",
+      "summary": "Quy tắc GitHub CODEOWNERS: gán reviewer theo đường dẫn (vision, dispatch, presentation, …).",
+      "tags": [
+        "github",
+        "codeowners",
+        "governance",
+        "review"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.python-version",
+      "type": "file",
+      "name": ".python-version",
+      "filePath": ".python-version",
+      "summary": "Pin phiên bản Python runtime (pyenv/asdf): 3.10 cho dự án.",
+      "tags": [
+        "python",
+        "toolchain",
+        "config",
+        "version-pin"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "application/__init__.py",
+      "summary": "Docstring package application: use case + ports, không phụ thuộc Mongo/torch/requests.",
+      "tags": [
+        "barrel",
+        "application",
+        "layer",
+        "entry-point"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Package marker clean architecture."
+    },
+    {
+      "id": "file:application/dispatch/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "application/dispatch/__init__.py",
+      "summary": "Package marker subpackage dispatch (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "dispatch",
+        "package"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/state/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "application/state/__init__.py",
+      "summary": "Package marker subpackage state (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "state",
+        "package"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:config/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "config/__init__.py",
+      "summary": "Package marker config (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "config",
+        "package"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:config/mediamtx.yml",
+      "type": "file",
+      "name": "mediamtx.yml",
+      "filePath": "config/mediamtx.yml",
+      "summary": "Cấu hình MediaMTX: WebRTC :8890, API :9997, RTSP passthrough không transcode, paths rỗng.",
+      "tags": [
+        "mediamtx",
+        "webrtc",
+        "yaml",
+        "config",
+        "streaming"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Được mediamtx_runner đọc khi khởi chạy sidecar."
+    },
+    {
+      "id": "file:domain/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "domain/__init__.py",
+      "summary": "Package marker tầng domain (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "domain",
+        "layer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "infrastructure/__init__.py",
+      "summary": "Package marker tầng infrastructure (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "infrastructure",
+        "layer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/storage/.gitkeep",
+      "type": "file",
+      "name": ".gitkeep",
+      "filePath": "infrastructure/storage/.gitkeep",
+      "summary": "Giữ thư mục storage trong git khi chưa có artifact snapshot.",
+      "tags": [
+        "gitkeep",
+        "storage",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/vision/.gitkeep",
+      "type": "file",
+      "name": ".gitkeep",
+      "filePath": "infrastructure/vision/.gitkeep",
+      "summary": "Giữ thư mục vision trong git trước khi có model/binary GPU.",
+      "tags": [
+        "gitkeep",
+        "vision",
+        "placeholder"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "presentation/__init__.py",
+      "summary": "Package marker tầng presentation / FastAPI (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "presentation",
+        "layer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "presentation/routes/__init__.py",
+      "summary": "Package marker routes (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "routes",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/cleanup_orphan_rois.py",
+      "type": "file",
+      "name": "cleanup_orphan_rois.py",
+      "filePath": "scripts/cleanup_orphan_rois.py",
+      "summary": "CLI Mongo: xóa ROI trên mọi camera trừ cameraId 1 và 2 để tránh ghi đè node_id.",
+      "tags": [
+        "script",
+        "mongodb",
+        "migration",
+        "roi",
+        "maintenance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "type": "file",
+      "name": "migrate_ssot_nodes_pairs.py",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "summary": "Migration SSOT: dọn orphan nodes, sync zone_id node từ camera, unset pairs.zone_id.",
+      "tags": [
+        "script",
+        "mongodb",
+        "migration",
+        "ssot",
+        "nodes"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/migrate_start_priority_per_zone.py",
+      "type": "file",
+      "name": "migrate_start_priority_per_zone.py",
+      "filePath": "scripts/migrate_start_priority_per_zone.py",
+      "summary": "Gán start_priority tuần tự trong từng zone_id và tạo index compound trên nodes.",
+      "tags": [
+        "script",
+        "mongodb",
+        "migration",
+        "priority",
+        "zones"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/seed_db.py",
+      "type": "file",
+      "name": "seed_db.py",
+      "filePath": "scripts/seed_db.py",
+      "summary": "Seed mock cameras vào Mongo cho stress test: RTSP URL Hikvision, zone AE5.",
+      "tags": [
+        "script",
+        "mongodb",
+        "seed",
+        "mock-data",
+        "cameras"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:utils/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "utils/__init__.py",
+      "summary": "Package marker utils dùng chung (barrel rỗng).",
+      "tags": [
+        "barrel",
+        "utils",
+        "package"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/cleanup_orphan_rois.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/cleanup_orphan_rois.py",
+      "lineRange": [
+        24,
+        70
+      ],
+      "summary": "Parse args, kết nối Mongo, liệt kê và clear rois (hoặc dry-run).",
+      "tags": [
+        "cli",
+        "mongodb",
+        "maintenance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:_cam_ids",
+      "type": "function",
+      "name": "_cam_ids",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        25,
+        31
+      ],
+      "summary": "Thu thập tập camera_id hợp lệ từ collection cameras.",
+      "tags": [
+        "mongodb",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:_delete_pairs_for_node",
+      "type": "function",
+      "name": "_delete_pairs_for_node",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        34,
+        48
+      ],
+      "summary": "Xóa mọi pair document tham chiếu node_id (dry-run tùy chọn).",
+      "tags": [
+        "mongodb",
+        "pairs",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:_unset_roi_keys",
+      "type": "function",
+      "name": "_unset_roi_keys",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        51,
+        61
+      ],
+      "summary": "Gỡ key ROI trên mọi camera gắn node_id trước khi xóa node.",
+      "tags": [
+        "mongodb",
+        "roi",
+        "cleanup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "type": "function",
+      "name": "migrate_orphans",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        64,
+        98
+      ],
+      "summary": "Tìm node mồ côi (camera_id null/không tồn tại) và xóa pairs/ROI/node.",
+      "tags": [
+        "migration",
+        "orphan",
+        "nodes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:sync_node_zones",
+      "type": "function",
+      "name": "sync_node_zones",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        101,
+        133
+      ],
+      "summary": "Đồng bộ nodes.zone_id theo cameras.zone_id cho từng camera_id.",
+      "tags": [
+        "migration",
+        "zone",
+        "sync"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:unset_pair_zones",
+      "type": "function",
+      "name": "unset_pair_zones",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        136,
+        144
+      ],
+      "summary": "Unset field zone_id trên toàn bộ collection pairs.",
+      "tags": [
+        "migration",
+        "pairs",
+        "schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_ssot_nodes_pairs.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/migrate_ssot_nodes_pairs.py",
+      "lineRange": [
+        147,
+        170
+      ],
+      "summary": "Orchestrate migrate_orphans → sync_node_zones → unset_pair_zones với --dry-run.",
+      "tags": [
+        "cli",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_start_priority_per_zone.py:_digits_key",
+      "type": "function",
+      "name": "_digits_key",
+      "filePath": "scripts/migrate_start_priority_per_zone.py",
+      "lineRange": [
+        24,
+        27
+      ],
+      "summary": "Sort key số từ node_id (chỉ giữ chữ số) cho thứ tự trong zone.",
+      "tags": [
+        "utility",
+        "sorting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_start_priority_per_zone.py:migrate",
+      "type": "function",
+      "name": "migrate",
+      "filePath": "scripts/migrate_start_priority_per_zone.py",
+      "lineRange": [
+        30,
+        51
+      ],
+      "summary": "Nhóm node theo zone, sort và gán start_priority 0..n-1.",
+      "tags": [
+        "migration",
+        "priority"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/migrate_start_priority_per_zone.py:ensure_index",
+      "type": "function",
+      "name": "ensure_index",
+      "filePath": "scripts/migrate_start_priority_per_zone.py",
+      "lineRange": [
+        54,
+        64
+      ],
+      "summary": "Tạo index (zone_id, start_priority) trên collection nodes nếu chưa có.",
+      "tags": [
+        "mongodb",
+        "index"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/migrate_start_priority_per_zone.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/migrate_start_priority_per_zone.py",
+      "lineRange": [
+        67,
+        85
+      ],
+      "summary": "CLI kết nối Mongo, chạy migrate và ensure_index.",
+      "tags": [
+        "cli",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/seed_db.py:make_rtsp_url",
+      "type": "function",
+      "name": "make_rtsp_url",
+      "filePath": "scripts/seed_db.py",
+      "lineRange": [
+        39,
+        41
+      ],
+      "summary": "Build URL RTSP sub-stream channel 102 từ IP và credential cấu hình.",
+      "tags": [
+        "rtsp",
+        "utility",
+        "hikvision"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/seed_db.py:generate_camera_docs",
+      "type": "function",
+      "name": "generate_camera_docs",
+      "filePath": "scripts/seed_db.py",
+      "lineRange": [
+        44,
+        100
+      ],
+      "summary": "Sinh danh sách document camera MOCK-CAM-* với IP cố định và metadata zone.",
+      "tags": [
+        "mock-data",
+        "generator"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/seed_db.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/seed_db.py",
+      "lineRange": [
+        103,
+        139
+      ],
+      "summary": "Xóa collection cameras, insert mock docs và in thống kê mẫu.",
+      "tags": [
+        "cli",
+        "seed"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/cleanup_orphan_rois.py",
+      "target": "function:scripts/cleanup_orphan_rois.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/cleanup_orphan_rois.py",
+      "target": "function:scripts/cleanup_orphan_rois.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_cam_ids",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_cam_ids",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_delete_pairs_for_node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_delete_pairs_for_node",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_unset_roi_keys",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_unset_roi_keys",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:sync_node_zones",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:sync_node_zones",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:unset_pair_zones",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:unset_pair_zones",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_ssot_nodes_pairs.py",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:_digits_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:_digits_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:migrate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:migrate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:ensure_index",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:ensure_index",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/migrate_start_priority_per_zone.py",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_db.py",
+      "target": "function:scripts/seed_db.py:make_rtsp_url",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_db.py",
+      "target": "function:scripts/seed_db.py:make_rtsp_url",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_db.py",
+      "target": "function:scripts/seed_db.py:generate_camera_docs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_db.py",
+      "target": "function:scripts/seed_db.py:generate_camera_docs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_db.py",
+      "target": "function:scripts/seed_db.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_db.py",
+      "target": "function:scripts/seed_db.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_cam_ids",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_delete_pairs_for_node",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:_unset_roi_keys",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_ssot_nodes_pairs.py:main",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:migrate_orphans",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_ssot_nodes_pairs.py:main",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:sync_node_zones",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_ssot_nodes_pairs.py:main",
+      "target": "function:scripts/migrate_ssot_nodes_pairs.py:unset_pair_zones",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_start_priority_per_zone.py:migrate",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:_digits_key",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_start_priority_per_zone.py:main",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:migrate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/migrate_start_priority_per_zone.py:main",
+      "target": "function:scripts/migrate_start_priority_per_zone.py:ensure_index",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_db.py:generate_camera_docs",
+      "target": "function:scripts/seed_db.py:make_rtsp_url",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_db.py:main",
+      "target": "function:scripts/seed_db.py:generate_camera_docs",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

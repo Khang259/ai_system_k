@@ -1,0 +1,4545 @@
+{
+  "nodes": [
+    {
+      "id": "file:application/container.py",
+      "type": "file",
+      "name": "container.py",
+      "filePath": "application/container.py",
+      "summary": "Composition root (DI): lớp AppContainer gắn port/infrastructure vào use case, quản lý runtime camera/dispatch/auth và singleton module-level `container`.",
+      "tags": [
+        "factory",
+        "singleton",
+        "service",
+        "dependency-injection"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/container.py:AppContainer",
+      "type": "class",
+      "name": "AppContainer",
+      "filePath": "application/container.py",
+      "lineRange": [
+        106,
+        540
+      ],
+      "summary": "Container DI khởi tạo null port, bind adapter thật và wire use case FE/runtime/dispatch.",
+      "tags": [
+        "factory",
+        "singleton",
+        "service"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:domain/permissions.py",
+      "type": "file",
+      "name": "permissions.py",
+      "filePath": "domain/permissions.py",
+      "summary": "Ánh xạ role người dùng sang tập permission string dùng cho RBAC ở tầng presentation.",
+      "tags": [
+        "validation",
+        "security",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/permissions.py:permissions_for_role",
+      "type": "function",
+      "name": "permissions_for_role",
+      "filePath": "domain/permissions.py",
+      "lineRange": [
+        61,
+        63
+      ],
+      "summary": "Trả về list permission string cho role (chuẩn hóa lowercase/strip).",
+      "tags": [
+        "security",
+        "utility",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/deps.py",
+      "type": "file",
+      "name": "deps.py",
+      "filePath": "presentation/deps.py",
+      "summary": "FastAPI dependencies: trích JWT, user hiện tại, SSE token và factory `require_permission`.",
+      "tags": [
+        "middleware",
+        "security",
+        "api-handler"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/deps.py:client_info",
+      "type": "function",
+      "name": "client_info",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        23,
+        27
+      ],
+      "summary": "Hàm `client_info` trong `presentation/deps.py`.",
+      "tags": [
+        "middleware",
+        "security",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/deps.py:_claims_from_token",
+      "type": "function",
+      "name": "_claims_from_token",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        30,
+        39
+      ],
+      "summary": "Hàm `_claims_from_token` trong `presentation/deps.py`.",
+      "tags": [
+        "middleware",
+        "security",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/deps.py:_bearer_token",
+      "type": "function",
+      "name": "_bearer_token",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        42,
+        47
+      ],
+      "summary": "Hàm `_bearer_token` trong `presentation/deps.py`.",
+      "tags": [
+        "middleware",
+        "security",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/deps.py:_sse_token",
+      "type": "function",
+      "name": "_sse_token",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        50,
+        61
+      ],
+      "summary": "Hàm `_sse_token` trong `presentation/deps.py`.",
+      "tags": [
+        "middleware",
+        "security",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/deps.py:current_user",
+      "type": "function",
+      "name": "current_user",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        64,
+        71
+      ],
+      "summary": "Hàm `current_user` trong `presentation/deps.py`.",
+      "tags": [
+        "middleware",
+        "security",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/deps.py:current_user_sse",
+      "type": "function",
+      "name": "current_user_sse",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        74,
+        76
+      ],
+      "summary": "Hàm `current_user_sse` trong `presentation/deps.py`.",
+      "tags": [
+        "middleware",
+        "security",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/deps.py:require_permission",
+      "type": "function",
+      "name": "require_permission",
+      "filePath": "presentation/deps.py",
+      "lineRange": [
+        79,
+        92
+      ],
+      "summary": "Dependency factory kiểm tra user có permission trước khi vào route handler.",
+      "tags": [
+        "middleware",
+        "security",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:presentation/http_v1.py",
+      "type": "file",
+      "name": "http_v1.py",
+      "filePath": "presentation/http_v1.py",
+      "summary": "Helper chuyển UseCaseResult sang JSONResponse, audit log và phân trang cho router v1.",
+      "tags": [
+        "utility",
+        "api-handler",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/http_v1.py:data_or_error",
+      "type": "function",
+      "name": "data_or_error",
+      "filePath": "presentation/http_v1.py",
+      "lineRange": [
+        19,
+        30
+      ],
+      "summary": "Map UseCaseResult sang JSON hoặc HTTPException theo mã lỗi use case.",
+      "tags": [
+        "utility",
+        "serialization",
+        "api-handler"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/http_v1.py:audited_or_error",
+      "type": "function",
+      "name": "audited_or_error",
+      "filePath": "presentation/http_v1.py",
+      "lineRange": [
+        33,
+        66
+      ],
+      "summary": "Hàm `audited_or_error` trong `presentation/http_v1.py`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/http_v1.py:system_audited_or_error",
+      "type": "function",
+      "name": "system_audited_or_error",
+      "filePath": "presentation/http_v1.py",
+      "lineRange": [
+        69,
+        89
+      ],
+      "summary": "Hàm `system_audited_or_error` trong `presentation/http_v1.py`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/http_v1.py:jpeg_or_error",
+      "type": "function",
+      "name": "jpeg_or_error",
+      "filePath": "presentation/http_v1.py",
+      "lineRange": [
+        92,
+        98
+      ],
+      "summary": "Hàm `jpeg_or_error` trong `presentation/http_v1.py`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/http_v1.py:sdp_or_error",
+      "type": "function",
+      "name": "sdp_or_error",
+      "filePath": "presentation/http_v1.py",
+      "lineRange": [
+        101,
+        117
+      ],
+      "summary": "Hàm `sdp_or_error` trong `presentation/http_v1.py`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/http_v1.py:paged",
+      "type": "function",
+      "name": "paged",
+      "filePath": "presentation/http_v1.py",
+      "lineRange": [
+        120,
+        122
+      ],
+      "summary": "Hàm `paged` trong `presentation/http_v1.py`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/openapi_responses.py",
+      "type": "file",
+      "name": "openapi_responses.py",
+      "filePath": "presentation/openapi_responses.py",
+      "summary": "Mô tả response OpenAPI chuẩn (401/403/404/422) và merge vào decorator route.",
+      "tags": [
+        "type-definition",
+        "api-handler",
+        "documentation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/openapi_responses.py:_desc",
+      "type": "function",
+      "name": "_desc",
+      "filePath": "presentation/openapi_responses.py",
+      "lineRange": [
+        12,
+        13
+      ],
+      "summary": "Hỗ trợ mô tả OpenAPI: `_desc`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/openapi_responses.py:merge",
+      "type": "function",
+      "name": "merge",
+      "filePath": "presentation/openapi_responses.py",
+      "lineRange": [
+        16,
+        21
+      ],
+      "summary": "Hỗ trợ mô tả OpenAPI: `merge`.",
+      "tags": [
+        "utility",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "presentation/routes/v1/__init__.py",
+      "summary": "Barrel gom tất cả APIRouter v1 (auth, cameras, dispatch, runtime, …) để mount vào app.",
+      "tags": [
+        "barrel",
+        "entry-point",
+        "api-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/auth.py",
+      "type": "file",
+      "name": "auth.py",
+      "filePath": "presentation/routes/v1/auth.py",
+      "summary": "Route đăng nhập, refresh, logout và `/me` — facade tới use case auth trong container.",
+      "tags": [
+        "api-handler",
+        "security",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/auth.py:login",
+      "type": "function",
+      "name": "login",
+      "filePath": "presentation/routes/v1/auth.py",
+      "lineRange": [
+        22,
+        26
+      ],
+      "summary": "Handler FastAPI `login` — login qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/auth.py:logout",
+      "type": "function",
+      "name": "logout",
+      "filePath": "presentation/routes/v1/auth.py",
+      "lineRange": [
+        34,
+        41
+      ],
+      "summary": "Handler FastAPI `logout` — logout qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/auth.py:get_me",
+      "type": "function",
+      "name": "get_me",
+      "filePath": "presentation/routes/v1/auth.py",
+      "lineRange": [
+        45,
+        46
+      ],
+      "summary": "Handler FastAPI `get_me` — get me qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/auth.py:refresh_token",
+      "type": "function",
+      "name": "refresh_token",
+      "filePath": "presentation/routes/v1/auth.py",
+      "lineRange": [
+        54,
+        55
+      ],
+      "summary": "Handler FastAPI `refresh_token` — refresh token qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/cameras.py",
+      "type": "file",
+      "name": "cameras.py",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "summary": "API camera: WebRTC WHEP, preview, snapshot, ROI và cấu hình camera cho frontend.",
+      "tags": [
+        "api-handler",
+        "service",
+        "component"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:webrtc_status",
+      "type": "function",
+      "name": "webrtc_status",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        38,
+        41
+      ],
+      "summary": "Handler FastAPI `webrtc_status` — webrtc status qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:webrtc_ice",
+      "type": "function",
+      "name": "webrtc_ice",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        48,
+        51
+      ],
+      "summary": "Handler FastAPI `webrtc_ice` — webrtc ice qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:preview_meta",
+      "type": "function",
+      "name": "preview_meta",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        59,
+        66
+      ],
+      "summary": "Handler FastAPI `preview_meta` — preview meta qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:whep_preview",
+      "type": "function",
+      "name": "whep_preview",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        74,
+        85
+      ],
+      "summary": "Handler FastAPI `whep_preview` — whep preview qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:whep_detect",
+      "type": "function",
+      "name": "whep_detect",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        93,
+        104
+      ],
+      "summary": "Handler FastAPI `whep_detect` — whep detect qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:whep_hangup",
+      "type": "function",
+      "name": "whep_hangup",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        112,
+        120
+      ],
+      "summary": "Handler FastAPI `whep_hangup` — whep hangup qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:get_cameras",
+      "type": "function",
+      "name": "get_cameras",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        127,
+        130
+      ],
+      "summary": "Handler FastAPI `get_cameras` — get cameras qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:get_snapshot",
+      "type": "function",
+      "name": "get_snapshot",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        139,
+        143
+      ],
+      "summary": "Handler FastAPI `get_snapshot` — get snapshot qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:get_rois",
+      "type": "function",
+      "name": "get_rois",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        150,
+        154
+      ],
+      "summary": "Handler FastAPI `get_rois` — get rois qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:set_camera_status",
+      "type": "function",
+      "name": "set_camera_status",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        161,
+        171
+      ],
+      "summary": "Handler FastAPI `set_camera_status` — set camera status qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:create_camera",
+      "type": "function",
+      "name": "create_camera",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        178,
+        192
+      ],
+      "summary": "Handler FastAPI `create_camera` — create camera qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:update_camera",
+      "type": "function",
+      "name": "update_camera",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        199,
+        214
+      ],
+      "summary": "Handler FastAPI `update_camera` — update camera qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:delete_camera",
+      "type": "function",
+      "name": "delete_camera",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        221,
+        229
+      ],
+      "summary": "Handler FastAPI `delete_camera` — delete camera qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:create_roi",
+      "type": "function",
+      "name": "create_roi",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        233,
+        243
+      ],
+      "summary": "Handler FastAPI `create_roi` — create roi qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:update_roi",
+      "type": "function",
+      "name": "update_roi",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        247,
+        256
+      ],
+      "summary": "Handler FastAPI `update_roi` — update roi qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/cameras.py:delete_roi",
+      "type": "function",
+      "name": "delete_roi",
+      "filePath": "presentation/routes/v1/cameras.py",
+      "lineRange": [
+        260,
+        272
+      ],
+      "summary": "Handler FastAPI `delete_roi` — delete roi qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/dispatch.py",
+      "type": "file",
+      "name": "dispatch.py",
+      "filePath": "presentation/routes/v1/dispatch.py",
+      "summary": "Endpoint active tasks và SSE dispatch events cho luồng điều phối AMR.",
+      "tags": [
+        "api-handler",
+        "event-handler",
+        "service"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/dispatch.py:get_active_tasks",
+      "type": "function",
+      "name": "get_active_tasks",
+      "filePath": "presentation/routes/v1/dispatch.py",
+      "lineRange": [
+        23,
+        26
+      ],
+      "summary": "Handler FastAPI `get_active_tasks` — get active tasks qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/dispatch.py:dispatch_events",
+      "type": "function",
+      "name": "dispatch_events",
+      "filePath": "presentation/routes/v1/dispatch.py",
+      "lineRange": [
+        34,
+        37
+      ],
+      "summary": "Handler FastAPI `dispatch_events` — dispatch events qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/external_server.py",
+      "type": "file",
+      "name": "external_server.py",
+      "filePath": "presentation/routes/v1/external_server.py",
+      "summary": "Webhook unlock theo order status từ hệ thống bên ngoài (ICS/external server).",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/external_server.py:unlock_by_order_status",
+      "type": "function",
+      "name": "unlock_by_order_status",
+      "filePath": "presentation/routes/v1/external_server.py",
+      "lineRange": [
+        21,
+        33
+      ],
+      "summary": "Handler FastAPI `unlock_by_order_status` — unlock by order status qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/logs.py",
+      "type": "file",
+      "name": "logs.py",
+      "filePath": "presentation/routes/v1/logs.py",
+      "summary": "Truy vấn audit log, user action log và system action log có phân quyền.",
+      "tags": [
+        "api-handler",
+        "service",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/logs.py:get_audit_logs",
+      "type": "function",
+      "name": "get_audit_logs",
+      "filePath": "presentation/routes/v1/logs.py",
+      "lineRange": [
+        17,
+        28
+      ],
+      "summary": "Handler FastAPI `get_audit_logs` — get audit logs qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/logs.py:get_user_action_logs",
+      "type": "function",
+      "name": "get_user_action_logs",
+      "filePath": "presentation/routes/v1/logs.py",
+      "lineRange": [
+        32,
+        43
+      ],
+      "summary": "Handler FastAPI `get_user_action_logs` — get user action logs qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/logs.py:get_system_action_logs",
+      "type": "function",
+      "name": "get_system_action_logs",
+      "filePath": "presentation/routes/v1/logs.py",
+      "lineRange": [
+        50,
+        61
+      ],
+      "summary": "Handler FastAPI `get_system_action_logs` — get system action logs qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/maps.py",
+      "type": "file",
+      "name": "maps.py",
+      "filePath": "presentation/routes/v1/maps.py",
+      "summary": "Import/quản lý bản đồ nén (map zip), phiên bản và tải file compress cho robot.",
+      "tags": [
+        "api-handler",
+        "service",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:presentation/routes/v1/maps.py:SetActiveMapPayload",
+      "type": "class",
+      "name": "SetActiveMapPayload",
+      "filePath": "presentation/routes/v1/maps.py",
+      "lineRange": [
+        18,
+        19
+      ],
+      "summary": "Handler FastAPI `SetActiveMapPayload` — SetActiveMapPayload qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/maps.py:import_map",
+      "type": "function",
+      "name": "import_map",
+      "filePath": "presentation/routes/v1/maps.py",
+      "lineRange": [
+        26,
+        41
+      ],
+      "summary": "Handler FastAPI `import_map` — import map qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/maps.py:list_map_versions",
+      "type": "function",
+      "name": "list_map_versions",
+      "filePath": "presentation/routes/v1/maps.py",
+      "lineRange": [
+        45,
+        48
+      ],
+      "summary": "Handler FastAPI `list_map_versions` — list map versions qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/maps.py:set_active_map",
+      "type": "function",
+      "name": "set_active_map",
+      "filePath": "presentation/routes/v1/maps.py",
+      "lineRange": [
+        52,
+        60
+      ],
+      "summary": "Handler FastAPI `set_active_map` — set active map qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/maps.py:get_compress",
+      "type": "function",
+      "name": "get_compress",
+      "filePath": "presentation/routes/v1/maps.py",
+      "lineRange": [
+        67,
+        71
+      ],
+      "summary": "Handler FastAPI `get_compress` — get compress qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/maps.py:download_map_zip",
+      "type": "function",
+      "name": "download_map_zip",
+      "filePath": "presentation/routes/v1/maps.py",
+      "lineRange": [
+        79,
+        93
+      ],
+      "summary": "Handler FastAPI `download_map_zip` — download map zip qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:presentation/routes/v1/nodes.py",
+      "type": "file",
+      "name": "nodes.py",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "summary": "CRUD trạng thái node AMR: runtime view, maintenance, lock/unlock theo user.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/nodes.py:get_runtime_state",
+      "type": "function",
+      "name": "get_runtime_state",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "lineRange": [
+        28,
+        35
+      ],
+      "summary": "Handler FastAPI `get_runtime_state` — get runtime state qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/nodes.py:get_nodes",
+      "type": "function",
+      "name": "get_nodes",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "lineRange": [
+        42,
+        46
+      ],
+      "summary": "Handler FastAPI `get_nodes` — get nodes qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/nodes.py:update_node",
+      "type": "function",
+      "name": "update_node",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "lineRange": [
+        53,
+        67
+      ],
+      "summary": "Handler FastAPI `update_node` — update node qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/nodes.py:set_maintenance",
+      "type": "function",
+      "name": "set_maintenance",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "lineRange": [
+        74,
+        86
+      ],
+      "summary": "Handler FastAPI `set_maintenance` — set maintenance qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/nodes.py:set_lock",
+      "type": "function",
+      "name": "set_lock",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "lineRange": [
+        93,
+        101
+      ],
+      "summary": "Handler FastAPI `set_lock` — set lock qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/nodes.py:unlock_by_user",
+      "type": "function",
+      "name": "unlock_by_user",
+      "filePath": "presentation/routes/v1/nodes.py",
+      "lineRange": [
+        108,
+        116
+      ],
+      "summary": "Handler FastAPI `unlock_by_user` — unlock by user qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/notifications.py",
+      "type": "file",
+      "name": "notifications.py",
+      "filePath": "presentation/routes/v1/notifications.py",
+      "summary": "Danh sách thông báo và đánh dấu đã đọc (một hoặc tất cả).",
+      "tags": [
+        "api-handler",
+        "service",
+        "event-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/routes/v1/notifications.py:MarkReadPayload",
+      "type": "class",
+      "name": "MarkReadPayload",
+      "filePath": "presentation/routes/v1/notifications.py",
+      "lineRange": [
+        17,
+        18
+      ],
+      "summary": "Handler FastAPI `MarkReadPayload` — MarkReadPayload qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/notifications.py:get_notifications",
+      "type": "function",
+      "name": "get_notifications",
+      "filePath": "presentation/routes/v1/notifications.py",
+      "lineRange": [
+        25,
+        39
+      ],
+      "summary": "Handler FastAPI `get_notifications` — get notifications qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/notifications.py:mark_read",
+      "type": "function",
+      "name": "mark_read",
+      "filePath": "presentation/routes/v1/notifications.py",
+      "lineRange": [
+        43,
+        49
+      ],
+      "summary": "Handler FastAPI `mark_read` — mark read qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/notifications.py:mark_all_read",
+      "type": "function",
+      "name": "mark_all_read",
+      "filePath": "presentation/routes/v1/notifications.py",
+      "lineRange": [
+        53,
+        58
+      ],
+      "summary": "Handler FastAPI `mark_all_read` — mark all read qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/pairs.py",
+      "type": "file",
+      "name": "pairs.py",
+      "filePath": "presentation/routes/v1/pairs.py",
+      "summary": "Quản lý cặp camera–node (pair): list, tạo, sửa, xóa và bật/tắt.",
+      "tags": [
+        "api-handler",
+        "service",
+        "data-model"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/pairs.py:get_pairs",
+      "type": "function",
+      "name": "get_pairs",
+      "filePath": "presentation/routes/v1/pairs.py",
+      "lineRange": [
+        26,
+        29
+      ],
+      "summary": "Handler FastAPI `get_pairs` — get pairs qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/pairs.py:create_pair",
+      "type": "function",
+      "name": "create_pair",
+      "filePath": "presentation/routes/v1/pairs.py",
+      "lineRange": [
+        36,
+        51
+      ],
+      "summary": "Handler FastAPI `create_pair` — create pair qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/pairs.py:update_pair",
+      "type": "function",
+      "name": "update_pair",
+      "filePath": "presentation/routes/v1/pairs.py",
+      "lineRange": [
+        58,
+        75
+      ],
+      "summary": "Handler FastAPI `update_pair` — update pair qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/pairs.py:delete_pair",
+      "type": "function",
+      "name": "delete_pair",
+      "filePath": "presentation/routes/v1/pairs.py",
+      "lineRange": [
+        82,
+        94
+      ],
+      "summary": "Handler FastAPI `delete_pair` — delete pair qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/pairs.py:set_pair_enabled",
+      "type": "function",
+      "name": "set_pair_enabled",
+      "filePath": "presentation/routes/v1/pairs.py",
+      "lineRange": [
+        101,
+        114
+      ],
+      "summary": "Handler FastAPI `set_pair_enabled` — set pair enabled qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/poll.py",
+      "type": "file",
+      "name": "poll.py",
+      "filePath": "presentation/routes/v1/poll.py",
+      "summary": "Long-poll snapshot tổng hợp cho FE (include flags) — giảm số request riêng lẻ.",
+      "tags": [
+        "api-handler",
+        "service",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/poll.py:_parse_include",
+      "type": "function",
+      "name": "_parse_include",
+      "filePath": "presentation/routes/v1/poll.py",
+      "lineRange": [
+        16,
+        21
+      ],
+      "summary": "Handler FastAPI `_parse_include` —  parse include qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/poll.py:get_snapshot",
+      "type": "function",
+      "name": "get_snapshot",
+      "filePath": "presentation/routes/v1/poll.py",
+      "lineRange": [
+        29,
+        56
+      ],
+      "summary": "Handler FastAPI `get_snapshot` — get snapshot qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:presentation/routes/v1/runtime.py",
+      "type": "file",
+      "name": "runtime.py",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "summary": "Điều khiển runtime scan/dispatch: start, confirm, pending pairs, pause và SSE runtime.",
+      "tags": [
+        "api-handler",
+        "service",
+        "event-handler"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:get_status",
+      "type": "function",
+      "name": "get_status",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        29,
+        32
+      ],
+      "summary": "Handler FastAPI `get_status` — get status qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:reload_runtime",
+      "type": "function",
+      "name": "reload_runtime",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        39,
+        45
+      ],
+      "summary": "Handler FastAPI `reload_runtime` — reload runtime qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:start_scan",
+      "type": "function",
+      "name": "start_scan",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        53,
+        56
+      ],
+      "summary": "Handler FastAPI `start_scan` — start scan qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:confirm_dispatch",
+      "type": "function",
+      "name": "confirm_dispatch",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        64,
+        67
+      ],
+      "summary": "Handler FastAPI `confirm_dispatch` — confirm dispatch qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:get_pending_pairs",
+      "type": "function",
+      "name": "get_pending_pairs",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        75,
+        78
+      ],
+      "summary": "Handler FastAPI `get_pending_pairs` — get pending pairs qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:cancel_batch",
+      "type": "function",
+      "name": "cancel_batch",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        86,
+        89
+      ],
+      "summary": "Handler FastAPI `cancel_batch` — cancel batch qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:pause_scan",
+      "type": "function",
+      "name": "pause_scan",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        96,
+        99
+      ],
+      "summary": "Handler FastAPI `pause_scan` — pause scan qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/runtime.py:runtime_events",
+      "type": "function",
+      "name": "runtime_events",
+      "filePath": "presentation/routes/v1/runtime.py",
+      "lineRange": [
+        107,
+        110
+      ],
+      "summary": "Handler FastAPI `runtime_events` — runtime events qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/sandbox.py",
+      "type": "file",
+      "name": "sandbox.py",
+      "filePath": "presentation/routes/v1/sandbox.py",
+      "summary": "API sandbox mô phỏng node/order cho dev/test, gọi RuntimeService và smoke trail.",
+      "tags": [
+        "api-handler",
+        "test",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/sandbox.py:_sandbox",
+      "type": "function",
+      "name": "_sandbox",
+      "filePath": "presentation/routes/v1/sandbox.py",
+      "lineRange": [
+        20,
+        25
+      ],
+      "summary": "Handler FastAPI `_sandbox` —  sandbox qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/sandbox.py:get_nodes",
+      "type": "function",
+      "name": "get_nodes",
+      "filePath": "presentation/routes/v1/sandbox.py",
+      "lineRange": [
+        29,
+        33
+      ],
+      "summary": "Handler FastAPI `get_nodes` — get nodes qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/sandbox.py:set_node_state",
+      "type": "function",
+      "name": "set_node_state",
+      "filePath": "presentation/routes/v1/sandbox.py",
+      "lineRange": [
+        37,
+        75
+      ],
+      "summary": "Handler FastAPI `set_node_state` — set node state qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:presentation/routes/v1/sandbox.py:get_orders",
+      "type": "function",
+      "name": "get_orders",
+      "filePath": "presentation/routes/v1/sandbox.py",
+      "lineRange": [
+        79,
+        83
+      ],
+      "summary": "Handler FastAPI `get_orders` — get orders qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "type": "function",
+      "name": "set_order_status",
+      "filePath": "presentation/routes/v1/sandbox.py",
+      "lineRange": [
+        90,
+        130
+      ],
+      "summary": "Handler FastAPI `set_order_status` — set order status qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:presentation/routes/v1/snapshots.py",
+      "type": "file",
+      "name": "snapshots.py",
+      "filePath": "presentation/routes/v1/snapshots.py",
+      "summary": "Phục vụ ảnh snapshot theo id hoặc theo order cho UI và audit.",
+      "tags": [
+        "api-handler",
+        "service",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/snapshots.py:get_image",
+      "type": "function",
+      "name": "get_image",
+      "filePath": "presentation/routes/v1/snapshots.py",
+      "lineRange": [
+        22,
+        30
+      ],
+      "summary": "Handler FastAPI `get_image` — get image qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/snapshots.py:get_by_order",
+      "type": "function",
+      "name": "get_by_order",
+      "filePath": "presentation/routes/v1/snapshots.py",
+      "lineRange": [
+        37,
+        41
+      ],
+      "summary": "Handler FastAPI `get_by_order` — get by order qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/system.py",
+      "type": "file",
+      "name": "system.py",
+      "filePath": "presentation/routes/v1/system.py",
+      "summary": "Health check và lệnh start/stop toàn bộ camera runtime (system scope).",
+      "tags": [
+        "api-handler",
+        "service",
+        "monitoring"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/system.py:get_health",
+      "type": "function",
+      "name": "get_health",
+      "filePath": "presentation/routes/v1/system.py",
+      "lineRange": [
+        27,
+        35
+      ],
+      "summary": "Handler FastAPI `get_health` — get health qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/system.py:start_all",
+      "type": "function",
+      "name": "start_all",
+      "filePath": "presentation/routes/v1/system.py",
+      "lineRange": [
+        43,
+        49
+      ],
+      "summary": "Handler FastAPI `start_all` — start all qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/system.py:stop_all",
+      "type": "function",
+      "name": "stop_all",
+      "filePath": "presentation/routes/v1/system.py",
+      "lineRange": [
+        57,
+        63
+      ],
+      "summary": "Handler FastAPI `stop_all` — stop all qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/routes/v1/zones.py",
+      "type": "file",
+      "name": "zones.py",
+      "filePath": "presentation/routes/v1/zones.py",
+      "summary": "Liệt kê zone và start/stop camera theo vùng địa lý.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/zones.py:get_zones",
+      "type": "function",
+      "name": "get_zones",
+      "filePath": "presentation/routes/v1/zones.py",
+      "lineRange": [
+        22,
+        25
+      ],
+      "summary": "Handler FastAPI `get_zones` — get zones qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/zones.py:start_zone",
+      "type": "function",
+      "name": "start_zone",
+      "filePath": "presentation/routes/v1/zones.py",
+      "lineRange": [
+        33,
+        40
+      ],
+      "summary": "Handler FastAPI `start_zone` — start zone qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/routes/v1/zones.py:stop_zone",
+      "type": "function",
+      "name": "stop_zone",
+      "filePath": "presentation/routes/v1/zones.py",
+      "lineRange": [
+        48,
+        55
+      ],
+      "summary": "Handler FastAPI `stop_zone` — stop zone qua container/use case.",
+      "tags": [
+        "api-handler",
+        "service",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/schemas.py",
+      "type": "file",
+      "name": "schemas.py",
+      "filePath": "presentation/schemas.py",
+      "summary": "Pydantic payload/response cho toàn bộ REST v1: auth, camera, pair, node, sandbox, webhook.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-handler"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:presentation/schemas.py:LoginPayload",
+      "type": "class",
+      "name": "LoginPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        6,
+        8
+      ],
+      "summary": "Model Pydantic `LoginPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:RefreshPayload",
+      "type": "class",
+      "name": "RefreshPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        11,
+        13
+      ],
+      "summary": "Model Pydantic `RefreshPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:ZoneControlPayload",
+      "type": "class",
+      "name": "ZoneControlPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        16,
+        17
+      ],
+      "summary": "Model Pydantic `ZoneControlPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:SetCameraStatusPayload",
+      "type": "class",
+      "name": "SetCameraStatusPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        20,
+        22
+      ],
+      "summary": "Model Pydantic `SetCameraStatusPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:CreateCameraPayload",
+      "type": "class",
+      "name": "CreateCameraPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        25,
+        31
+      ],
+      "summary": "Model Pydantic `CreateCameraPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:UpdateCameraPayload",
+      "type": "class",
+      "name": "UpdateCameraPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        34,
+        41
+      ],
+      "summary": "Model Pydantic `UpdateCameraPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:DeleteCameraPayload",
+      "type": "class",
+      "name": "DeleteCameraPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        44,
+        45
+      ],
+      "summary": "Model Pydantic `DeleteCameraPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:CreateRoiPayload",
+      "type": "class",
+      "name": "CreateRoiPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        48,
+        51
+      ],
+      "summary": "Model Pydantic `CreateRoiPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:UpdateRoiItemPayload",
+      "type": "class",
+      "name": "UpdateRoiItemPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        54,
+        59
+      ],
+      "summary": "Model Pydantic `UpdateRoiItemPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:UpdateRoiPayload",
+      "type": "class",
+      "name": "UpdateRoiPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        62,
+        87
+      ],
+      "summary": "Model Pydantic `UpdateRoiPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:presentation/schemas.py:DeleteRoiPayload",
+      "type": "class",
+      "name": "DeleteRoiPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        90,
+        93
+      ],
+      "summary": "Model Pydantic `DeleteRoiPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:SetMaintenancePayload",
+      "type": "class",
+      "name": "SetMaintenancePayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        96,
+        99
+      ],
+      "summary": "Model Pydantic `SetMaintenancePayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:UpdateNodePayload",
+      "type": "class",
+      "name": "UpdateNodePayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        102,
+        108
+      ],
+      "summary": "Model Pydantic `UpdateNodePayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:CreatePairPayload",
+      "type": "class",
+      "name": "CreatePairPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        111,
+        118
+      ],
+      "summary": "Model Pydantic `CreatePairPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:UpdatePairPayload",
+      "type": "class",
+      "name": "UpdatePairPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        121,
+        147
+      ],
+      "summary": "Model Pydantic `UpdatePairPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:presentation/schemas.py:DeletePairPayload",
+      "type": "class",
+      "name": "DeletePairPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        150,
+        159
+      ],
+      "summary": "Model Pydantic `DeletePairPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:SetPairEnabledPayload",
+      "type": "class",
+      "name": "SetPairEnabledPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        162,
+        172
+      ],
+      "summary": "Model Pydantic `SetPairEnabledPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:SetLockPayload",
+      "type": "class",
+      "name": "SetLockPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        175,
+        177
+      ],
+      "summary": "Model Pydantic `SetLockPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:UnlockByUserPayload",
+      "type": "class",
+      "name": "UnlockByUserPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        180,
+        183
+      ],
+      "summary": "Model Pydantic `UnlockByUserPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:SandboxNodeStatePayload",
+      "type": "class",
+      "name": "SandboxNodeStatePayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        186,
+        190
+      ],
+      "summary": "Model Pydantic `SandboxNodeStatePayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:OrderStatusWebhookPayload",
+      "type": "class",
+      "name": "OrderStatusWebhookPayload",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        193,
+        203
+      ],
+      "summary": "Model Pydantic `OrderStatusWebhookPayload` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:CameraConfigCreate",
+      "type": "class",
+      "name": "CameraConfigCreate",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        206,
+        209
+      ],
+      "summary": "Model Pydantic `CameraConfigCreate` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:presentation/schemas.py:CameraConfigUpdate",
+      "type": "class",
+      "name": "CameraConfigUpdate",
+      "filePath": "presentation/schemas.py",
+      "lineRange": [
+        212,
+        214
+      ],
+      "summary": "Model Pydantic `CameraConfigUpdate` cho body/query response API v1.",
+      "tags": [
+        "type-definition",
+        "validation",
+        "api-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:presentation/sse.py",
+      "type": "file",
+      "name": "sse.py",
+      "filePath": "presentation/sse.py",
+      "summary": "Wrapper StreamingResponse cho Server-Sent Events với header cache/no-buffer phù hợp proxy.",
+      "tags": [
+        "utility",
+        "event-handler",
+        "api-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:presentation/sse.py:sse_response",
+      "type": "function",
+      "name": "sse_response",
+      "filePath": "presentation/sse.py",
+      "lineRange": [
+        21,
+        41
+      ],
+      "summary": "Tạo StreamingResponse SSE từ async generator events.",
+      "tags": [
+        "event-handler",
+        "utility",
+        "api-handler"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:application/container.py",
+      "target": "class:application/container.py:AppContainer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "class:application/container.py:AppContainer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/permissions.py",
+      "target": "function:domain/permissions.py:permissions_for_role",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/permissions.py",
+      "target": "function:domain/permissions.py:permissions_for_role",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:client_info",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:client_info",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:_claims_from_token",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:_claims_from_token",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:_bearer_token",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:_bearer_token",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:_sse_token",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:_sse_token",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:current_user",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:current_user",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:current_user_sse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:current_user_sse",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:require_permission",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "function:presentation/deps.py:require_permission",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:data_or_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:data_or_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:audited_or_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:audited_or_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:system_audited_or_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:system_audited_or_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:jpeg_or_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:jpeg_or_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:sdp_or_error",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:sdp_or_error",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:paged",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "function:presentation/http_v1.py:paged",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/openapi_responses.py",
+      "target": "function:presentation/openapi_responses.py:_desc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/openapi_responses.py",
+      "target": "function:presentation/openapi_responses.py:_desc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/openapi_responses.py",
+      "target": "function:presentation/openapi_responses.py:merge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/openapi_responses.py",
+      "target": "function:presentation/openapi_responses.py:merge",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:login",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:login",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:logout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:logout",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:get_me",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:get_me",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:refresh_token",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "function:presentation/routes/v1/auth.py:refresh_token",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:webrtc_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:webrtc_status",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:webrtc_ice",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:webrtc_ice",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:preview_meta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:preview_meta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:whep_preview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:whep_preview",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:whep_detect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:whep_detect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:whep_hangup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:whep_hangup",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:get_cameras",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:get_cameras",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:get_snapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:get_snapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:get_rois",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:get_rois",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:set_camera_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:set_camera_status",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:create_camera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:create_camera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:update_camera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:update_camera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:delete_camera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:delete_camera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:create_roi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:create_roi",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:update_roi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:update_roi",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:delete_roi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "function:presentation/routes/v1/cameras.py:delete_roi",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "function:presentation/routes/v1/dispatch.py:get_active_tasks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "function:presentation/routes/v1/dispatch.py:get_active_tasks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "function:presentation/routes/v1/dispatch.py:dispatch_events",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "function:presentation/routes/v1/dispatch.py:dispatch_events",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/external_server.py",
+      "target": "function:presentation/routes/v1/external_server.py:unlock_by_order_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/external_server.py",
+      "target": "function:presentation/routes/v1/external_server.py:unlock_by_order_status",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "function:presentation/routes/v1/logs.py:get_audit_logs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "function:presentation/routes/v1/logs.py:get_audit_logs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "function:presentation/routes/v1/logs.py:get_user_action_logs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "function:presentation/routes/v1/logs.py:get_user_action_logs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "function:presentation/routes/v1/logs.py:get_system_action_logs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "function:presentation/routes/v1/logs.py:get_system_action_logs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "class:presentation/routes/v1/maps.py:SetActiveMapPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "class:presentation/routes/v1/maps.py:SetActiveMapPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:import_map",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:import_map",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:list_map_versions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:list_map_versions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:set_active_map",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:set_active_map",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:get_compress",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:get_compress",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:download_map_zip",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "function:presentation/routes/v1/maps.py:download_map_zip",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:get_runtime_state",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:get_runtime_state",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:get_nodes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:get_nodes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:update_node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:update_node",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:set_maintenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:set_maintenance",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:set_lock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:set_lock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:unlock_by_user",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "function:presentation/routes/v1/nodes.py:unlock_by_user",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "class:presentation/routes/v1/notifications.py:MarkReadPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "class:presentation/routes/v1/notifications.py:MarkReadPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "function:presentation/routes/v1/notifications.py:get_notifications",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "function:presentation/routes/v1/notifications.py:get_notifications",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "function:presentation/routes/v1/notifications.py:mark_read",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "function:presentation/routes/v1/notifications.py:mark_read",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "function:presentation/routes/v1/notifications.py:mark_all_read",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "function:presentation/routes/v1/notifications.py:mark_all_read",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:get_pairs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:get_pairs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:create_pair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:create_pair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:update_pair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:update_pair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:delete_pair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:delete_pair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:set_pair_enabled",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "function:presentation/routes/v1/pairs.py:set_pair_enabled",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "function:presentation/routes/v1/poll.py:_parse_include",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "function:presentation/routes/v1/poll.py:_parse_include",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "function:presentation/routes/v1/poll.py:get_snapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "function:presentation/routes/v1/poll.py:get_snapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:get_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:get_status",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:reload_runtime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:reload_runtime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:start_scan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:start_scan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:confirm_dispatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:confirm_dispatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:get_pending_pairs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:get_pending_pairs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:cancel_batch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:cancel_batch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:pause_scan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:pause_scan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:runtime_events",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "function:presentation/routes/v1/runtime.py:runtime_events",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:_sandbox",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:_sandbox",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:get_nodes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:get_nodes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:set_node_state",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:set_node_state",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:get_orders",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:get_orders",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "function:presentation/routes/v1/snapshots.py:get_image",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "function:presentation/routes/v1/snapshots.py:get_image",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "function:presentation/routes/v1/snapshots.py:get_by_order",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "function:presentation/routes/v1/snapshots.py:get_by_order",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "function:presentation/routes/v1/system.py:get_health",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "function:presentation/routes/v1/system.py:get_health",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "function:presentation/routes/v1/system.py:start_all",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "function:presentation/routes/v1/system.py:start_all",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "function:presentation/routes/v1/system.py:stop_all",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "function:presentation/routes/v1/system.py:stop_all",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "function:presentation/routes/v1/zones.py:get_zones",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "function:presentation/routes/v1/zones.py:get_zones",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "function:presentation/routes/v1/zones.py:start_zone",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "function:presentation/routes/v1/zones.py:start_zone",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "function:presentation/routes/v1/zones.py:stop_zone",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "function:presentation/routes/v1/zones.py:stop_zone",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:LoginPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:LoginPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:RefreshPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:RefreshPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:ZoneControlPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:ZoneControlPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetCameraStatusPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetCameraStatusPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CreateCameraPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CreateCameraPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateCameraPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateCameraPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:DeleteCameraPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:DeleteCameraPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CreateRoiPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CreateRoiPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateRoiItemPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateRoiItemPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateRoiPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateRoiPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:DeleteRoiPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:DeleteRoiPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetMaintenancePayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetMaintenancePayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateNodePayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdateNodePayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CreatePairPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CreatePairPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdatePairPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UpdatePairPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:DeletePairPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:DeletePairPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetPairEnabledPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetPairEnabledPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetLockPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SetLockPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UnlockByUserPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:UnlockByUserPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SandboxNodeStatePayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:SandboxNodeStatePayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:OrderStatusWebhookPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:OrderStatusWebhookPayload",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CameraConfigCreate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CameraConfigCreate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CameraConfigUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/schemas.py",
+      "target": "class:presentation/schemas.py:CameraConfigUpdate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:presentation/sse.py",
+      "target": "function:presentation/sse.py:sse_response",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:presentation/sse.py",
+      "target": "function:presentation/sse.py:sse_response",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/auth/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/cameras/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/dispatch/active_task_hub.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/dispatch/active_tasks.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/dispatch/dispatch_gate.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/dispatch/pending_pairs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/fe_api/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/null_ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/runtime/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/scan_session.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/container.py",
+      "target": "file:application/state/reset_flags.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/deps.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/http_v1.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/auth.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/cameras.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/dispatch.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/external_server.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/logs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/maps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/nodes.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/notifications.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/pairs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/poll.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/runtime.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/sandbox.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/snapshots.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/system.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/__init__.py",
+      "target": "file:presentation/routes/v1/zones.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/auth.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:application/cameras/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/cameras.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/dispatch.py",
+      "target": "file:presentation/sse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/external_server.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/external_server.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/external_server.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/external_server.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/logs.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/maps.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/nodes.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/notifications.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/pairs.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/poll.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/runtime.py",
+      "target": "file:presentation/sse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:application/runtime/runtime_service.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:domain/dispatch/active_task.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:infrastructure/sandbox/smoke_trail.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/sandbox.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/snapshots.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/system.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "file:presentation/deps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "file:presentation/http_v1.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:presentation/routes/v1/zones.py",
+      "target": "file:presentation/schemas.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_node_state",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:inference_paused",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_node_state",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:emit",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_node_state",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:node_runtime_view",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "target": "function:domain/dispatch/active_task.py:parse_order_id",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:emit",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:node_runtime_view",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:presentation/routes/v1/sandbox.py:set_order_status",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:inference_paused",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

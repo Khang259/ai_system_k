@@ -1,0 +1,31 @@
+{
+  "issues": [
+    "Dropped 20 invalid section nodes",
+    "Retyped 0 PascalCase symbols from function to class",
+    "Normalized references edges to related"
+  ],
+  "warnings": [
+    "Some calls edges dropped earlier due to class/method ID mismatches",
+    "Import recovery skipped some paths without whole-file nodes"
+  ],
+  "stats": {
+    "totalNodes": 614,
+    "totalEdges": 1516,
+    "nodeTypes": {
+      "file": 164,
+      "function": 228,
+      "class": 219,
+      "document": 2,
+      "config": 1
+    },
+    "edgeTypes": {
+      "contains": 447,
+      "exports": 447,
+      "imports": 402,
+      "calls": 210,
+      "documents": 6,
+      "configures": 2,
+      "related": 2
+    }
+  }
+}

@@ -1,0 +1,2398 @@
+{
+  "nodes": [
+    {
+      "id": "file:infrastructure/storage/snapshot_fs.py",
+      "type": "file",
+      "name": "snapshot_fs.py",
+      "filePath": "infrastructure/storage/snapshot_fs.py",
+      "summary": "Lưu snapshot JPEG cặp camera khi dispatch thành công: pull frame từ FrameProvider, overlay, ghi filesystem và index metadata tùy chọn.",
+      "tags": [
+        "storage",
+        "snapshot",
+        "filesystem",
+        "opencv",
+        "service"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Thread-safe với Lock; tích hợp CUDA event sync khi chốt frame GPU."
+    },
+    {
+      "id": "function:infrastructure/storage/snapshot_fs.py:_sanitize_for_filename",
+      "type": "function",
+      "name": "_sanitize_for_filename",
+      "filePath": "infrastructure/storage/snapshot_fs.py",
+      "lineRange": [
+        20,
+        23
+      ],
+      "summary": "Chuẩn hóa chuỗi thành segment tên file an toàn trên Windows.",
+      "tags": [
+        "utility",
+        "sanitization",
+        "filename"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "type": "class",
+      "name": "SnapshotFsStore",
+      "filePath": "infrastructure/storage/snapshot_fs.py",
+      "lineRange": [
+        26,
+        313
+      ],
+      "summary": "Store snapshot pull-model: capture_pair, save_pair_snapshots, retention cleanup_old_snapshots.",
+      "tags": [
+        "storage",
+        "snapshot",
+        "jpeg",
+        "dispatch"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/storage/snapshot_indexer.py",
+      "type": "file",
+      "name": "snapshot_indexer.py",
+      "filePath": "infrastructure/storage/snapshot_indexer.py",
+      "summary": "Ghi metadata snapshot vào Mongo qua asyncio loop; có NullSnapshotIndexer no-op khi không bật index.",
+      "tags": [
+        "storage",
+        "mongodb",
+        "indexer",
+        "async"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/storage/snapshot_indexer.py:SnapshotIndexer",
+      "type": "class",
+      "name": "SnapshotIndexer",
+      "filePath": "infrastructure/storage/snapshot_indexer.py",
+      "lineRange": [
+        17,
+        67
+      ],
+      "summary": "Bind event loop và record basename snapshot sau khi ghi đĩa.",
+      "tags": [
+        "mongodb",
+        "indexer",
+        "async"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/storage/snapshot_indexer.py:NullSnapshotIndexer",
+      "type": "class",
+      "name": "NullSnapshotIndexer",
+      "filePath": "infrastructure/storage/snapshot_indexer.py",
+      "lineRange": [
+        70,
+        75
+      ],
+      "summary": "No-op indexer khi không cấu hình persistence snapshot.",
+      "tags": [
+        "null-object",
+        "indexer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/vision/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "infrastructure/vision/__init__.py",
+      "summary": "Barrel package vision: re-export CameraManager và InferenceEngine cho runtime.",
+      "tags": [
+        "barrel",
+        "vision",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/vision/annexb_pipe.py",
+      "type": "file",
+      "name": "annexb_pipe.py",
+      "filePath": "infrastructure/vision/annexb_pipe.py",
+      "summary": "Tách NAL unit H.264 Annex-B từ byte stream RTSP để feed NVDEC.",
+      "tags": [
+        "h264",
+        "annex-b",
+        "nal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/vision/annexb_pipe.py:_nal_type",
+      "type": "function",
+      "name": "_nal_type",
+      "filePath": "infrastructure/vision/annexb_pipe.py",
+      "lineRange": [
+        4,
+        8
+      ],
+      "summary": "Thành phần _nal_type trong infrastructure/vision/annexb_pipe.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/annexb_pipe.py:pull_aus",
+      "type": "function",
+      "name": "pull_aus",
+      "filePath": "infrastructure/vision/annexb_pipe.py",
+      "lineRange": [
+        11,
+        37
+      ],
+      "summary": "Yield access unit (AU) từ buffer Annex-B theo start code.",
+      "tags": [
+        "h264",
+        "parser",
+        "streaming"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/vision/camera_manager.py",
+      "type": "file",
+      "name": "camera_manager.py",
+      "filePath": "infrastructure/vision/camera_manager.py",
+      "summary": "Orchestrator camera: map node↔camera, start/stop thread CameraProcessor, preview JPEG/meta, capture_for_node cho dispatch.",
+      "tags": [
+        "camera",
+        "orchestration",
+        "rtsp",
+        "threading",
+        "service"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Điều phối InferenceEngine, PreviewStore và cấu hình zone enable."
+    },
+    {
+      "id": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "type": "class",
+      "name": "CameraManager",
+      "filePath": "infrastructure/vision/camera_manager.py",
+      "lineRange": [
+        14,
+        291
+      ],
+      "summary": "Quản lý vòng đời processor từng camera và API preview/capture theo node.",
+      "tags": [
+        "camera",
+        "manager",
+        "runtime"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/vision/camera_processor.py",
+      "type": "file",
+      "name": "camera_processor.py",
+      "filePath": "infrastructure/vision/camera_processor.py",
+      "summary": "Luồng xử lý một camera: GPUVideoDecoder, ROI detection async, đẩy frame vào InferenceEngine và preview.",
+      "tags": [
+        "camera",
+        "pipeline",
+        "gpu",
+        "detection"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "type": "class",
+      "name": "CameraProcessor",
+      "filePath": "infrastructure/vision/camera_processor.py",
+      "lineRange": [
+        21,
+        274
+      ],
+      "summary": "Thread loop decode → ROI → inference queue; publish preview khi có watcher.",
+      "tags": [
+        "camera",
+        "processor",
+        "gpu"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/vision/cuda_decode_pool.py",
+      "type": "file",
+      "name": "cuda_decode_pool.py",
+      "filePath": "infrastructure/vision/cuda_decode_pool.py",
+      "summary": "Pool CUDA stream decode theo camera index từ settings, tránh tranh chấp NVDEC.",
+      "tags": [
+        "cuda",
+        "nvdec",
+        "pool",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/vision/cuda_decode_pool.py:get_decode_stream",
+      "type": "function",
+      "name": "get_decode_stream",
+      "filePath": "infrastructure/vision/cuda_decode_pool.py",
+      "lineRange": [
+        12,
+        22
+      ],
+      "summary": "Trả về torch.cuda.Stream cho index camera (round-robin / modulo).",
+      "tags": [
+        "cuda",
+        "stream",
+        "decode"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/vision/detection.py",
+      "type": "file",
+      "name": "detection.py",
+      "filePath": "infrastructure/vision/detection.py",
+      "summary": "Kiểm tra object trong ROI batch trên tensor CUDA từ kết quả YOLO.",
+      "tags": [
+        "detection",
+        "roi",
+        "cuda",
+        "yolo"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/detection.py:_require_cuda_tensor",
+      "type": "function",
+      "name": "_require_cuda_tensor",
+      "filePath": "infrastructure/vision/detection.py",
+      "lineRange": [
+        16,
+        32
+      ],
+      "summary": "Thành phần _require_cuda_tensor trong infrastructure/vision/detection.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "type": "function",
+      "name": "has_object_in_rois_batch",
+      "filePath": "infrastructure/vision/detection.py",
+      "lineRange": [
+        35,
+        83
+      ],
+      "summary": "Vector hóa overlap detection giữa bbox và danh sách ROI.",
+      "tags": [
+        "detection",
+        "roi",
+        "batch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/vision/frame_queue.py",
+      "type": "file",
+      "name": "frame_queue.py",
+      "filePath": "infrastructure/vision/frame_queue.py",
+      "summary": "Hàng đợi frame pre-allocated tensor tránh alloc GPU trong hot path inference.",
+      "tags": [
+        "queue",
+        "gpu",
+        "inference",
+        "performance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/vision/frame_queue.py:PreAllocatedFrameQueue",
+      "type": "class",
+      "name": "PreAllocatedFrameQueue",
+      "filePath": "infrastructure/vision/frame_queue.py",
+      "lineRange": [
+        13,
+        91
+      ],
+      "summary": "Queue cố định kích thước với put_nowait/get và drop policy.",
+      "tags": [
+        "queue",
+        "tensor",
+        "inference"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/vision/gpu_frame.py",
+      "type": "file",
+      "name": "gpu_frame.py",
+      "filePath": "infrastructure/vision/gpu_frame.py",
+      "summary": "Chuyển decoded frame NVDEC (NV12) sang RGB CHW tensor trên GPU.",
+      "tags": [
+        "gpu",
+        "nv12",
+        "color-conversion",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/gpu_frame.py:_infer_hw",
+      "type": "function",
+      "name": "_infer_hw",
+      "filePath": "infrastructure/vision/gpu_frame.py",
+      "lineRange": [
+        6,
+        13
+      ],
+      "summary": "Thành phần _infer_hw trong infrastructure/vision/gpu_frame.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/gpu_frame.py:decoded_frame_to_rgb",
+      "type": "function",
+      "name": "decoded_frame_to_rgb",
+      "filePath": "infrastructure/vision/gpu_frame.py",
+      "lineRange": [
+        16,
+        43
+      ],
+      "summary": "Entry point chuyển PyNvCodec frame sang tensor RGB cho pipeline vision.",
+      "tags": [
+        "gpu",
+        "rgb",
+        "decode"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/gpu_frame.py:_as_rgb_chw",
+      "type": "function",
+      "name": "_as_rgb_chw",
+      "filePath": "infrastructure/vision/gpu_frame.py",
+      "lineRange": [
+        46,
+        51
+      ],
+      "summary": "Thành phần _as_rgb_chw trong infrastructure/vision/gpu_frame.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/gpu_frame.py:_upsample_uv",
+      "type": "function",
+      "name": "_upsample_uv",
+      "filePath": "infrastructure/vision/gpu_frame.py",
+      "lineRange": [
+        54,
+        61
+      ],
+      "summary": "Thành phần _upsample_uv trong infrastructure/vision/gpu_frame.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/gpu_frame.py:_nv12_to_rgb_chw",
+      "type": "function",
+      "name": "_nv12_to_rgb_chw",
+      "filePath": "infrastructure/vision/gpu_frame.py",
+      "lineRange": [
+        64,
+        77
+      ],
+      "summary": "Thành phần _nv12_to_rgb_chw trong infrastructure/vision/gpu_frame.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/vision/gpu_video_decoder.py",
+      "type": "file",
+      "name": "gpu_video_decoder.py",
+      "filePath": "infrastructure/vision/gpu_video_decoder.py",
+      "summary": "Wrapper NVDEC/PyNvCodec: decode loop RTSP Annex-B, API read() tương thích OpenCV.",
+      "tags": [
+        "nvdec",
+        "gpu",
+        "rtsp",
+        "decoder"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:infrastructure/vision/gpu_video_decoder.py:_submit_au",
+      "type": "function",
+      "name": "_submit_au",
+      "filePath": "infrastructure/vision/gpu_video_decoder.py",
+      "lineRange": [
+        14,
+        23
+      ],
+      "summary": "Thành phần _submit_au trong infrastructure/vision/gpu_video_decoder.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "type": "class",
+      "name": "GPUVideoDecoder",
+      "filePath": "infrastructure/vision/gpu_video_decoder.py",
+      "lineRange": [
+        26,
+        176
+      ],
+      "summary": "Thread decode loop, submit AU, expose width/height và release tài nguyên.",
+      "tags": [
+        "nvdec",
+        "decoder",
+        "threading"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/vision/inference_engine.py",
+      "type": "file",
+      "name": "inference_engine.py",
+      "filePath": "infrastructure/vision/inference_engine.py",
+      "summary": "Engine inference TensorRT YOLO: batching, multi-slot async, pause/resume, phân phối kết quả theo camera.",
+      "tags": [
+        "tensorrt",
+        "yolo",
+        "inference",
+        "gpu",
+        "service"
+      ],
+      "complexity": "complex",
+      "languageNotes": "PreAllocatedFrameQueue + TrtYoloEngine; slot busy tracking."
+    },
+    {
+      "id": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "type": "class",
+      "name": "InferenceEngine",
+      "filePath": "infrastructure/vision/inference_engine.py",
+      "lineRange": [
+        18,
+        336
+      ],
+      "summary": "Vòng run() poll batch, infer async, distribute detections về camera callbacks.",
+      "tags": [
+        "inference",
+        "tensorrt",
+        "batching"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/vision/preview_draw.py",
+      "type": "file",
+      "name": "preview_draw.py",
+      "filePath": "infrastructure/vision/preview_draw.py",
+      "summary": "Vẽ overlay bbox/ROI và encode JPEG preview từ frame GPU hoặc numpy.",
+      "tags": [
+        "preview",
+        "jpeg",
+        "opencv",
+        "visualization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/preview_draw.py:frame_to_bgr",
+      "type": "function",
+      "name": "frame_to_bgr",
+      "filePath": "infrastructure/vision/preview_draw.py",
+      "lineRange": [
+        6,
+        22
+      ],
+      "summary": "Chuyển frame tensor hoặc array sang BGR uint8 cho OpenCV.",
+      "tags": [
+        "color-conversion",
+        "opencv",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/vision/preview_draw.py:encode_jpeg",
+      "type": "function",
+      "name": "encode_jpeg",
+      "filePath": "infrastructure/vision/preview_draw.py",
+      "lineRange": [
+        25,
+        29
+      ],
+      "summary": "Thành phần encode_jpeg trong infrastructure/vision/preview_draw.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/preview_draw.py:_as_numpy_dets",
+      "type": "function",
+      "name": "_as_numpy_dets",
+      "filePath": "infrastructure/vision/preview_draw.py",
+      "lineRange": [
+        32,
+        40
+      ],
+      "summary": "Thành phần _as_numpy_dets trong infrastructure/vision/preview_draw.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "type": "function",
+      "name": "overlay_meta",
+      "filePath": "infrastructure/vision/preview_draw.py",
+      "lineRange": [
+        43,
+        75
+      ],
+      "summary": "Thành phần overlay_meta trong infrastructure/vision/preview_draw.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "type": "function",
+      "name": "draw_overlay",
+      "filePath": "infrastructure/vision/preview_draw.py",
+      "lineRange": [
+        78,
+        110
+      ],
+      "summary": "Vẽ detection và ROI lên frame BGR cho snapshot/preview.",
+      "tags": [
+        "overlay",
+        "visualization",
+        "opencv"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/vision/preview_store.py",
+      "type": "file",
+      "name": "preview_store.py",
+      "filePath": "infrastructure/vision/preview_store.py",
+      "summary": "Lưu JPEG preview mới nhất và meta; hỗ trợ watch flag và get_wait cho HTTP long-poll.",
+      "tags": [
+        "preview",
+        "jpeg",
+        "store",
+        "webrtc"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/vision/preview_store.py:PreviewStore",
+      "type": "class",
+      "name": "PreviewStore",
+      "filePath": "infrastructure/vision/preview_store.py",
+      "lineRange": [
+        6,
+        57
+      ],
+      "summary": "Thread-safe store preview theo camera với Event notify watcher.",
+      "tags": [
+        "preview",
+        "store",
+        "threading"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/vision/trt_yolo_engine.py",
+      "type": "file",
+      "name": "trt_yolo_engine.py",
+      "filePath": "infrastructure/vision/trt_yolo_engine.py",
+      "summary": "Load TensorRT engine YOLO, copy batch GPU, infer async và NMS trên CUDA stream.",
+      "tags": [
+        "tensorrt",
+        "yolo",
+        "gpu",
+        "inference"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:infrastructure/vision/trt_yolo_engine.py:_engine_bytes",
+      "type": "function",
+      "name": "_engine_bytes",
+      "filePath": "infrastructure/vision/trt_yolo_engine.py",
+      "lineRange": [
+        17,
+        26
+      ],
+      "summary": "Thành phần _engine_bytes trong infrastructure/vision/trt_yolo_engine.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "type": "class",
+      "name": "TrtExecSlot",
+      "filePath": "infrastructure/vision/trt_yolo_engine.py",
+      "lineRange": [
+        29,
+        103
+      ],
+      "summary": "Một execution context + buffers cho batch infer và post-NMS.",
+      "tags": [
+        "tensorrt",
+        "slot",
+        "cuda"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/vision/trt_yolo_engine.py:TrtYoloEngine",
+      "type": "class",
+      "name": "TrtYoloEngine",
+      "filePath": "infrastructure/vision/trt_yolo_engine.py",
+      "lineRange": [
+        106,
+        176
+      ],
+      "summary": "Facade TensorRT với shared engine bytes và TrtExecSlot pool.",
+      "tags": [
+        "tensorrt",
+        "yolo",
+        "engine"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/webrtc/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "infrastructure/webrtc/__init__.py",
+      "summary": "Barrel WebRTC/MediaMTX: export gateway và runner cho app lifespan.",
+      "tags": [
+        "barrel",
+        "webrtc",
+        "mediamtx"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "type": "file",
+      "name": "mediamtx_gateway.py",
+      "filePath": "infrastructure/webrtc/mediamtx_gateway.py",
+      "summary": "Client HTTP WHEP tới MediaMTX: offer SDP, hangup, ICE servers; có NullWebrtcGateway stub.",
+      "tags": [
+        "webrtc",
+        "whep",
+        "mediamtx",
+        "gateway"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/webrtc/mediamtx_gateway.py:path_name",
+      "type": "function",
+      "name": "path_name",
+      "filePath": "infrastructure/webrtc/mediamtx_gateway.py",
+      "lineRange": [
+        11,
+        12
+      ],
+      "summary": "Thành phần path_name trong infrastructure/webrtc/mediamtx_gateway.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/webrtc/mediamtx_gateway.py:MediaMtxGateway",
+      "type": "class",
+      "name": "MediaMtxGateway",
+      "filePath": "infrastructure/webrtc/mediamtx_gateway.py",
+      "lineRange": [
+        15,
+        90
+      ],
+      "summary": "Đảm bảo path RTSP, proxy WHEP offer/hangup tới MediaMTX API.",
+      "tags": [
+        "webrtc",
+        "gateway",
+        "whep"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/webrtc/mediamtx_gateway.py:NullWebrtcGateway",
+      "type": "class",
+      "name": "NullWebrtcGateway",
+      "filePath": "infrastructure/webrtc/mediamtx_gateway.py",
+      "lineRange": [
+        93,
+        104
+      ],
+      "summary": "Stub gateway khi WebRTC/MediaMTX tắt trong môi trường dev.",
+      "tags": [
+        "null-object",
+        "webrtc"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "type": "file",
+      "name": "mediamtx_runner.py",
+      "filePath": "infrastructure/webrtc/mediamtx_runner.py",
+      "summary": "Spawn và watchdog process MediaMTX binary; expose status cho health check.",
+      "tags": [
+        "mediamtx",
+        "subprocess",
+        "webrtc",
+        "infrastructure"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/webrtc/mediamtx_runner.py:_resolve_bin",
+      "type": "function",
+      "name": "_resolve_bin",
+      "filePath": "infrastructure/webrtc/mediamtx_runner.py",
+      "lineRange": [
+        28,
+        47
+      ],
+      "summary": "Thành phần _resolve_bin trong infrastructure/webrtc/mediamtx_runner.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/webrtc/mediamtx_runner.py:MediaMtxRunner",
+      "type": "class",
+      "name": "MediaMtxRunner",
+      "filePath": "infrastructure/webrtc/mediamtx_runner.py",
+      "lineRange": [
+        50,
+        209
+      ],
+      "summary": "Start/stop MediaMTX, probe binary, watchdog loop restart khi crash.",
+      "tags": [
+        "mediamtx",
+        "runner",
+        "process"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/export_engine.py",
+      "type": "file",
+      "name": "export_engine.py",
+      "filePath": "scripts/export_engine.py",
+      "summary": "CLI export ONNX và build TensorRT engine YOLO từ settings; inspect engine metadata.",
+      "tags": [
+        "script",
+        "tensorrt",
+        "onnx",
+        "yolo"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/export_engine.py:export_onnx",
+      "type": "function",
+      "name": "export_onnx",
+      "filePath": "scripts/export_engine.py",
+      "lineRange": [
+        29,
+        42
+      ],
+      "summary": "Xuất model Ultralytics sang ONNX theo cấu hình input size.",
+      "tags": [
+        "onnx",
+        "export",
+        "yolo"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/export_engine.py:build_engine",
+      "type": "function",
+      "name": "build_engine",
+      "filePath": "scripts/export_engine.py",
+      "lineRange": [
+        45,
+        88
+      ],
+      "summary": "Build file .engine TensorRT từ ONNX với workspace/precision settings.",
+      "tags": [
+        "tensorrt",
+        "build",
+        "engine"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/export_engine.py:inspect_engine",
+      "type": "function",
+      "name": "inspect_engine",
+      "filePath": "scripts/export_engine.py",
+      "lineRange": [
+        91,
+        103
+      ],
+      "summary": "In thông tin binding/layer của engine TensorRT đã build.",
+      "tags": [
+        "tensorrt",
+        "debug",
+        "inspect"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/seed_sandbox.py",
+      "type": "file",
+      "name": "seed_sandbox.py",
+      "filePath": "scripts/seed_sandbox.py",
+      "summary": "Seed Mongo sandbox: nodes, cameras, ROI docs và priority metadata cho demo dispatch.",
+      "tags": [
+        "script",
+        "mongodb",
+        "seed",
+        "sandbox"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/seed_sandbox.py:_roi_doc",
+      "type": "function",
+      "name": "_roi_doc",
+      "filePath": "scripts/seed_sandbox.py",
+      "lineRange": [
+        34,
+        41
+      ],
+      "summary": "Thành phần _roi_doc trong scripts/seed_sandbox.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/seed_sandbox.py:_node_doc",
+      "type": "function",
+      "name": "_node_doc",
+      "filePath": "scripts/seed_sandbox.py",
+      "lineRange": [
+        44,
+        55
+      ],
+      "summary": "Thành phần _node_doc trong scripts/seed_sandbox.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/seed_sandbox.py:_camera_doc",
+      "type": "function",
+      "name": "_camera_doc",
+      "filePath": "scripts/seed_sandbox.py",
+      "lineRange": [
+        58,
+        66
+      ],
+      "summary": "Thành phần _camera_doc trong scripts/seed_sandbox.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/seed_sandbox.py:build_docs",
+      "type": "function",
+      "name": "build_docs",
+      "filePath": "scripts/seed_sandbox.py",
+      "lineRange": [
+        69,
+        93
+      ],
+      "summary": "Tạo danh sách document Mongo từ template node/camera/ROI.",
+      "tags": [
+        "seed",
+        "mongodb",
+        "builder"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/seed_sandbox.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/seed_sandbox.py",
+      "lineRange": [
+        96,
+        123
+      ],
+      "summary": "Entry CLI: kết nối DB, upsert sandbox collections.",
+      "tags": [
+        "cli",
+        "seed",
+        "entry-point"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:utils/overlap_utils.py",
+      "type": "file",
+      "name": "overlap_utils.py",
+      "filePath": "utils/overlap_utils.py",
+      "summary": "Tính coverage bbox trong ROI (multi-ROI) phục vụ logic detection.",
+      "tags": [
+        "geometry",
+        "roi",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:utils/overlap_utils.py:calculate_coverage_multi_rois",
+      "type": "function",
+      "name": "calculate_coverage_multi_rois",
+      "filePath": "utils/overlap_utils.py",
+      "lineRange": [
+        10,
+        67
+      ],
+      "summary": "Tính tỉ lệ overlap giữa một bbox và nhiều polygon ROI.",
+      "tags": [
+        "overlap",
+        "roi",
+        "geometry"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:utils/rtsp_url.py",
+      "type": "file",
+      "name": "rtsp_url.py",
+      "filePath": "utils/rtsp_url.py",
+      "summary": "Encode user/password trong URL RTSP an toàn cho ffmpeg/PyNvCodec.",
+      "tags": [
+        "rtsp",
+        "url",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:utils/rtsp_url.py:encode_rtsp_userinfo",
+      "type": "function",
+      "name": "encode_rtsp_userinfo",
+      "filePath": "utils/rtsp_url.py",
+      "lineRange": [
+        12,
+        52
+      ],
+      "summary": "Percent-encode credentials và ghép lại URL RTSP.",
+      "tags": [
+        "rtsp",
+        "encoding",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:utils/setup_log.py",
+      "type": "file",
+      "name": "setup_log.py",
+      "filePath": "utils/setup_log.py",
+      "summary": "Factory logger RotatingFileHandler thống nhất cho toàn project.",
+      "tags": [
+        "logging",
+        "utility",
+        "infrastructure"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:utils/setup_log.py:_resolve_level",
+      "type": "function",
+      "name": "_resolve_level",
+      "filePath": "utils/setup_log.py",
+      "lineRange": [
+        6,
+        18
+      ],
+      "summary": "Thành phần _resolve_level trong utils/setup_log.py.",
+      "tags": [
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:utils/setup_log.py:setup_logger",
+      "type": "function",
+      "name": "setup_logger",
+      "filePath": "utils/setup_log.py",
+      "lineRange": [
+        21,
+        36
+      ],
+      "summary": "Tạo logger named với file log riêng và level từ env.",
+      "tags": [
+        "logging",
+        "factory"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:infrastructure/storage/snapshot_fs.py",
+      "target": "function:infrastructure/storage/snapshot_fs.py:_sanitize_for_filename",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_fs.py",
+      "target": "function:infrastructure/storage/snapshot_fs.py:_sanitize_for_filename",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_fs.py",
+      "target": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_fs.py",
+      "target": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_indexer.py",
+      "target": "class:infrastructure/storage/snapshot_indexer.py:SnapshotIndexer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_indexer.py",
+      "target": "class:infrastructure/storage/snapshot_indexer.py:SnapshotIndexer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_indexer.py",
+      "target": "class:infrastructure/storage/snapshot_indexer.py:NullSnapshotIndexer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_indexer.py",
+      "target": "class:infrastructure/storage/snapshot_indexer.py:NullSnapshotIndexer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/annexb_pipe.py",
+      "target": "function:infrastructure/vision/annexb_pipe.py:_nal_type",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/annexb_pipe.py",
+      "target": "function:infrastructure/vision/annexb_pipe.py:_nal_type",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/annexb_pipe.py",
+      "target": "function:infrastructure/vision/annexb_pipe.py:pull_aus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/annexb_pipe.py",
+      "target": "function:infrastructure/vision/annexb_pipe.py:pull_aus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/cuda_decode_pool.py",
+      "target": "function:infrastructure/vision/cuda_decode_pool.py:get_decode_stream",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/cuda_decode_pool.py",
+      "target": "function:infrastructure/vision/cuda_decode_pool.py:get_decode_stream",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "function:infrastructure/vision/detection.py:_require_cuda_tensor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "function:infrastructure/vision/detection.py:_require_cuda_tensor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/frame_queue.py",
+      "target": "class:infrastructure/vision/frame_queue.py:PreAllocatedFrameQueue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/frame_queue.py",
+      "target": "class:infrastructure/vision/frame_queue.py:PreAllocatedFrameQueue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_infer_hw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_infer_hw",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:decoded_frame_to_rgb",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:decoded_frame_to_rgb",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_as_rgb_chw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_as_rgb_chw",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_upsample_uv",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_upsample_uv",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_nv12_to_rgb_chw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_nv12_to_rgb_chw",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:_submit_au",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:_submit_au",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/inference_engine.py",
+      "target": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/inference_engine.py",
+      "target": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:frame_to_bgr",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:frame_to_bgr",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:encode_jpeg",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:encode_jpeg",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:_as_numpy_dets",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:_as_numpy_dets",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/preview_draw.py",
+      "target": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/preview_store.py",
+      "target": "class:infrastructure/vision/preview_store.py:PreviewStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/preview_store.py",
+      "target": "class:infrastructure/vision/preview_store.py:PreviewStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "function:infrastructure/vision/trt_yolo_engine.py:_engine_bytes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "function:infrastructure/vision/trt_yolo_engine.py:_engine_bytes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "class:infrastructure/vision/trt_yolo_engine.py:TrtYoloEngine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "class:infrastructure/vision/trt_yolo_engine.py:TrtYoloEngine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "function:infrastructure/webrtc/mediamtx_gateway.py:path_name",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "function:infrastructure/webrtc/mediamtx_gateway.py:path_name",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "class:infrastructure/webrtc/mediamtx_gateway.py:MediaMtxGateway",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "class:infrastructure/webrtc/mediamtx_gateway.py:MediaMtxGateway",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "class:infrastructure/webrtc/mediamtx_gateway.py:NullWebrtcGateway",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "class:infrastructure/webrtc/mediamtx_gateway.py:NullWebrtcGateway",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:_resolve_bin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:_resolve_bin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "target": "class:infrastructure/webrtc/mediamtx_runner.py:MediaMtxRunner",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "target": "class:infrastructure/webrtc/mediamtx_runner.py:MediaMtxRunner",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "function:scripts/export_engine.py:export_onnx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "function:scripts/export_engine.py:export_onnx",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "function:scripts/export_engine.py:build_engine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "function:scripts/export_engine.py:build_engine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "function:scripts/export_engine.py:inspect_engine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "function:scripts/export_engine.py:inspect_engine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:_roi_doc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:_roi_doc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:_node_doc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:_node_doc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:_camera_doc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:_camera_doc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:build_docs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:build_docs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "function:scripts/seed_sandbox.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:utils/overlap_utils.py",
+      "target": "function:utils/overlap_utils.py:calculate_coverage_multi_rois",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:utils/overlap_utils.py",
+      "target": "function:utils/overlap_utils.py:calculate_coverage_multi_rois",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:utils/rtsp_url.py",
+      "target": "function:utils/rtsp_url.py:encode_rtsp_userinfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:utils/rtsp_url.py",
+      "target": "function:utils/rtsp_url.py:encode_rtsp_userinfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:utils/setup_log.py",
+      "target": "function:utils/setup_log.py:_resolve_level",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:utils/setup_log.py",
+      "target": "function:utils/setup_log.py:_resolve_level",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:utils/setup_log.py",
+      "target": "function:utils/setup_log.py:setup_logger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:utils/setup_log.py",
+      "target": "function:utils/setup_log.py:setup_logger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_fs.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/storage/snapshot_indexer.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/__init__.py",
+      "target": "file:infrastructure/vision/camera_manager.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/__init__.py",
+      "target": "file:infrastructure/vision/inference_engine.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "file:infrastructure/vision/camera_processor.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "file:infrastructure/vision/preview_store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "file:utils/rtsp_url.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_manager.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "file:infrastructure/vision/detection.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "file:infrastructure/vision/gpu_video_decoder.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "file:infrastructure/vision/preview_draw.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/camera_processor.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/cuda_decode_pool.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "file:utils/overlap_utils.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/detection.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/frame_queue.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "file:infrastructure/vision/annexb_pipe.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "file:infrastructure/vision/cuda_decode_pool.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "file:infrastructure/vision/gpu_frame.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_video_decoder.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/inference_engine.py",
+      "target": "file:infrastructure/vision/frame_queue.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/inference_engine.py",
+      "target": "file:infrastructure/vision/trt_yolo_engine.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/inference_engine.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/vision/trt_yolo_engine.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/webrtc/__init__.py",
+      "target": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/webrtc/__init__.py",
+      "target": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_gateway.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/webrtc/mediamtx_runner.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/export_engine.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/seed_sandbox.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "target": "function:infrastructure/vision/preview_draw.py:frame_to_bgr",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "target": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/storage/snapshot_fs.py:SnapshotFsStore",
+      "target": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/annexb_pipe.py:pull_aus",
+      "target": "function:infrastructure/vision/annexb_pipe.py:_nal_type",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "class:infrastructure/vision/preview_store.py:PreviewStore",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "function:utils/rtsp_url.py:encode_rtsp_userinfo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:start",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "function:infrastructure/vision/camera_processor.py:_is_enabled",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_manager.py:CameraManager",
+      "target": "function:infrastructure/vision/camera_processor.py:get_latest_capture",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:__init__",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/preview_draw.py:frame_to_bgr",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/preview_draw.py:encode_jpeg",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:release",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:isOpened",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:wait_ready",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/camera_processor.py:CameraProcessor",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:read",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "target": "function:infrastructure/vision/detection.py:_require_cuda_tensor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/detection.py:has_object_in_rois_batch",
+      "target": "function:utils/overlap_utils.py:calculate_coverage_multi_rois",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_infer_hw",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/vision/gpu_frame.py",
+      "target": "function:infrastructure/vision/gpu_frame.py:_as_rgb_chw",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/gpu_frame.py:_as_rgb_chw",
+      "target": "function:infrastructure/vision/gpu_frame.py:_nv12_to_rgb_chw",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/gpu_frame.py:_nv12_to_rgb_chw",
+      "target": "function:infrastructure/vision/gpu_frame.py:_upsample_uv",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:start",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:read",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "target": "function:infrastructure/vision/annexb_pipe.py:pull_aus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "target": "function:infrastructure/vision/gpu_video_decoder.py:_submit_au",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/gpu_video_decoder.py:GPUVideoDecoder",
+      "target": "function:infrastructure/vision/gpu_frame.py:decoded_frame_to_rgb",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:__init__",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "target": "class:infrastructure/vision/frame_queue.py:PreAllocatedFrameQueue",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "target": "function:infrastructure/vision/frame_queue.py:put_nowait",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "target": "function:infrastructure/vision/frame_queue.py:get_nowait",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/inference_engine.py:InferenceEngine",
+      "target": "class:infrastructure/vision/trt_yolo_engine.py:TrtYoloEngine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/preview_draw.py:overlay_meta",
+      "target": "function:infrastructure/vision/preview_draw.py:_as_numpy_dets",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/vision/preview_draw.py:draw_overlay",
+      "target": "function:infrastructure/vision/preview_draw.py:_as_numpy_dets",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/preview_store.py:PreviewStore",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "target": "function:infrastructure/vision/frame_queue.py:empty",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "target": "function:infrastructure/storage/snapshot_indexer.py:record",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "target": "function:infrastructure/vision/trt_yolo_engine.py:_engine_bytes",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "target": "class:infrastructure/vision/trt_yolo_engine.py:TrtExecSlot",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/webrtc/mediamtx_gateway.py:MediaMtxGateway",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/webrtc/mediamtx_gateway.py:MediaMtxGateway",
+      "target": "function:infrastructure/webrtc/mediamtx_gateway.py:path_name",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/webrtc/mediamtx_runner.py:MediaMtxRunner",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/webrtc/mediamtx_runner.py:MediaMtxRunner",
+      "target": "function:infrastructure/webrtc/mediamtx_runner.py:_resolve_bin",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:_camera_doc",
+      "target": "function:scripts/seed_sandbox.py:_roi_doc",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:build_docs",
+      "target": "function:scripts/seed_sandbox.py:_camera_doc",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:build_docs",
+      "target": "function:scripts/seed_sandbox.py:_node_doc",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:main",
+      "target": "function:scripts/seed_sandbox.py:build_docs",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:main",
+      "target": "function:domain/dispatch/priority.py:start_meta_from_docs",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:main",
+      "target": "function:infrastructure/vision/frame_queue.py:get",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_sandbox.py:main",
+      "target": "function:domain/dispatch/priority.py:start_sort_key",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:utils/setup_log.py:setup_logger",
+      "target": "function:utils/setup_log.py:_resolve_level",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

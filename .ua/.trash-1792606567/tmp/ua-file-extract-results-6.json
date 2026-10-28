@@ -1,0 +1,2108 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 14,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 14,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 14,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "application/cameras/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 35,
+      "metrics": {
+        "importCount": 11,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "application/cameras/cancel_batch.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "CancelBatch",
+          "startLine": 6,
+          "endLine": 32,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CancelBatch",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._scan.get",
+          "lineNumber": 13
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 15
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 19
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.reset",
+          "lineNumber": 20
+        },
+        {
+          "caller": "execute",
+          "callee": "emit",
+          "lineNumber": 21
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 24
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 30
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/cameras/confirm_dispatch.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 85,
+      "nonEmptyLines": 77,
+      "classes": [
+        {
+          "name": "ConfirmDispatch",
+          "startLine": 14,
+          "endLine": 85,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConfirmDispatch",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_ready",
+          "lineNumber": 33
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.is_ready",
+          "lineNumber": 33
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.warning",
+          "lineNumber": 34
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 35
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_paused",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.warning",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 41
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.warning",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 50
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 51
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 54
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.ready_starts",
+          "lineNumber": 59
+        },
+        {
+          "caller": "execute",
+          "callee": "dispatchable_starts",
+          "lineNumber": 60
+        },
+        {
+          "caller": "execute",
+          "callee": "self._state.get_validate_pairs",
+          "lineNumber": 60
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.warning",
+          "lineNumber": 62
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 65
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 67
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.start",
+          "lineNumber": 72
+        },
+        {
+          "caller": "execute",
+          "callee": "self._start_meta",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "start_sort_key",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.info",
+          "lineNumber": 75
+        },
+        {
+          "caller": "execute",
+          "callee": "emit",
+          "lineNumber": 80
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 81
+        }
+      ],
+      "metrics": {
+        "importCount": 7,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/cameras/on_dispatch_success.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 50,
+      "nonEmptyLines": 44,
+      "classes": [
+        {
+          "name": "OnDispatchSuccess",
+          "startLine": 9,
+          "endLine": 50,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "OnDispatchSuccess",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._scan.get",
+          "lineNumber": 16
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.debug",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.record_success",
+          "lineNumber": 23
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.info",
+          "lineNumber": 24
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 30
+        },
+        {
+          "caller": "execute",
+          "callee": "should_auto_pause",
+          "lineNumber": 32
+        },
+        {
+          "caller": "execute",
+          "callee": "sorted",
+          "lineNumber": 34
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.reset",
+          "lineNumber": 35
+        },
+        {
+          "caller": "execute",
+          "callee": "logger.info",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "emit",
+          "lineNumber": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/cameras/pause_scan.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "PauseScan",
+          "startLine": 7,
+          "endLine": 22,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PauseScan",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_ready",
+          "lineNumber": 13
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 14
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.pause",
+          "lineNumber": 15
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.reset",
+          "lineNumber": 16
+        },
+        {
+          "caller": "execute",
+          "callee": "emit",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/cameras/start_scan.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 23,
+      "classes": [
+        {
+          "name": "StartScan",
+          "startLine": 6,
+          "endLine": 29,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "StartScan",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 14
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_ready",
+          "lineNumber": 14
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 15
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status().get",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 19
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.resume",
+          "lineNumber": 23
+        },
+        {
+          "caller": "execute",
+          "callee": "emit",
+          "lineNumber": 24
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/cameras/start_stop.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 88,
+      "functions": [
+        {
+          "name": "_streaming_warnings",
+          "startLine": 81,
+          "endLine": 88,
+          "params": [
+            "cameras"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "StartAllCameras",
+          "startLine": 11,
+          "endLine": 78,
+          "methods": [
+            "__init__",
+            "execute",
+            "_ok",
+            "_status_payload"
+          ],
+          "properties": []
+        },
+        {
+          "name": "StopAllCameras",
+          "startLine": 91,
+          "endLine": 104,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "StartAllCameras",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "_streaming_warnings",
+          "line": 81,
+          "isDefault": false
+        },
+        {
+          "name": "StopAllCameras",
+          "line": 91,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 27
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_ready",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 30
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_model_loaded",
+          "lineNumber": 32
+        },
+        {
+          "caller": "execute",
+          "callee": "asyncio.to_thread",
+          "lineNumber": 33
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.load_error",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 38
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.start_all",
+          "lineNumber": 40
+        },
+        {
+          "caller": "execute",
+          "callee": "time.monotonic",
+          "lineNumber": 43
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status",
+          "lineNumber": 44
+        },
+        {
+          "caller": "execute",
+          "callee": "time.monotonic",
+          "lineNumber": 45
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status",
+          "lineNumber": 46
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "status.get",
+          "lineNumber": 47
+        },
+        {
+          "caller": "execute",
+          "callee": "self._ok",
+          "lineNumber": 48
+        },
+        {
+          "caller": "execute",
+          "callee": "emit",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 52
+        },
+        {
+          "caller": "execute",
+          "callee": "status.get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 53
+        },
+        {
+          "caller": "execute",
+          "callee": "status.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "execute",
+          "callee": "asyncio.sleep",
+          "lineNumber": 57
+        },
+        {
+          "caller": "execute",
+          "callee": "self._status_payload",
+          "lineNumber": 59
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_ok",
+          "callee": "self._status_payload",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_ok",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "list",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "status.get",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "_streaming_warnings",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "int",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "status.get",
+          "lineNumber": 73
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "int",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "status.get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "int",
+          "lineNumber": 75
+        },
+        {
+          "caller": "_status_payload",
+          "callee": "status.get",
+          "lineNumber": 75
+        },
+        {
+          "caller": "_streaming_warnings",
+          "callee": "cam.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_streaming_warnings",
+          "callee": "cam.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_streaming_warnings",
+          "callee": "cam.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "_streaming_warnings",
+          "callee": "cam.get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "_streaming_warnings",
+          "callee": "warnings.append",
+          "lineNumber": 87
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 98
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 99
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.stop_all",
+          "lineNumber": 100
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_ready",
+          "lineNumber": 101
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.pause",
+          "lineNumber": 102
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.reset",
+          "lineNumber": 103
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 104
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "application/cameras/webrtc_sessions.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 55,
+      "nonEmptyLines": 45,
+      "classes": [
+        {
+          "name": "WebrtcSessionRegistry",
+          "startLine": 9,
+          "endLine": 55,
+          "methods": [
+            "__init__",
+            "create",
+            "set_remote",
+            "pop",
+            "delete",
+            "count",
+            "drain",
+            "clear"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "WebrtcSessionRegistry",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "max",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "int",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 12
+        },
+        {
+          "caller": "create",
+          "callee": "len",
+          "lineNumber": 17
+        },
+        {
+          "caller": "create",
+          "callee": "uuid.uuid4",
+          "lineNumber": 19
+        },
+        {
+          "caller": "create",
+          "callee": "int",
+          "lineNumber": 22
+        },
+        {
+          "caller": "pop",
+          "callee": "self._sessions.get",
+          "lineNumber": 35
+        },
+        {
+          "caller": "pop",
+          "callee": "int",
+          "lineNumber": 36
+        },
+        {
+          "caller": "pop",
+          "callee": "int",
+          "lineNumber": 36
+        },
+        {
+          "caller": "delete",
+          "callee": "self.pop",
+          "lineNumber": 42
+        },
+        {
+          "caller": "count",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "drain",
+          "callee": "list",
+          "lineNumber": 50
+        },
+        {
+          "caller": "drain",
+          "callee": "self._sessions.values",
+          "lineNumber": 50
+        },
+        {
+          "caller": "drain",
+          "callee": "self._sessions.clear",
+          "lineNumber": 51
+        },
+        {
+          "caller": "clear",
+          "callee": "self.drain",
+          "lineNumber": 55
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/cameras/webrtc_signaling.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 84,
+      "nonEmptyLines": 69,
+      "classes": [
+        {
+          "name": "OfferWebrtc",
+          "startLine": 7,
+          "endLine": 55,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "DeleteWebrtcSession",
+          "startLine": 58,
+          "endLine": 73,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetWebrtcGrid",
+          "startLine": 76,
+          "endLine": 84,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "OfferWebrtc",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteWebrtcSession",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "GetWebrtcGrid",
+          "line": 76,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 17
+        },
+        {
+          "caller": "execute",
+          "callee": "(sdp_offer or \"\").strip",
+          "lineNumber": 18
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 19
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 21
+        },
+        {
+          "caller": "execute",
+          "callee": "self._gateway.is_ready",
+          "lineNumber": 22
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_rtsp_url",
+          "lineNumber": 24
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 26
+        },
+        {
+          "caller": "execute",
+          "callee": "self._registry.create",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 30
+        },
+        {
+          "caller": "execute",
+          "callee": "self._gateway.whep_offer",
+          "lineNumber": 37
+        },
+        {
+          "caller": "execute",
+          "callee": "self._registry.delete",
+          "lineNumber": 39
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 40
+        },
+        {
+          "caller": "execute",
+          "callee": "str",
+          "lineNumber": 40
+        },
+        {
+          "caller": "execute",
+          "callee": "self._registry.set_remote",
+          "lineNumber": 41
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 42
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 49
+        },
+        {
+          "caller": "execute",
+          "callee": "self._registry.pop",
+          "lineNumber": 64
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 64
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 66
+        },
+        {
+          "caller": "execute",
+          "callee": "info.get",
+          "lineNumber": 67
+        },
+        {
+          "caller": "execute",
+          "callee": "self._gateway.hangup",
+          "lineNumber": 70
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "int",
+          "lineNumber": 73
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "self._registry.count",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "application/cameras/zone.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "StartZoneCameras",
+          "startLine": 6,
+          "endLine": 16,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "StopZoneCameras",
+          "startLine": 19,
+          "endLine": 37,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "StartZoneCameras",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "StopZoneCameras",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 11
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 12
+        },
+        {
+          "caller": "execute",
+          "callee": "zone.upper",
+          "lineNumber": 13
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.set_zone_enabled",
+          "lineNumber": 14
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status().get",
+          "lineNumber": 15
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status",
+          "lineNumber": 15
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 16
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.is_ready",
+          "lineNumber": 28
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 29
+        },
+        {
+          "caller": "execute",
+          "callee": "zone.upper",
+          "lineNumber": 30
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.set_zone_enabled",
+          "lineNumber": 31
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status().get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "execute",
+          "callee": "self._cameras.get_status",
+          "lineNumber": 32
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.is_ready",
+          "lineNumber": 34
+        },
+        {
+          "caller": "execute",
+          "callee": "self._inference.pause",
+          "lineNumber": 35
+        },
+        {
+          "caller": "execute",
+          "callee": "self._scan.reset",
+          "lineNumber": 36
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "application/dispatch/dispatch_gate.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 95,
+      "nonEmptyLines": 85,
+      "classes": [
+        {
+          "name": "DispatchGate",
+          "startLine": 22,
+          "endLine": 95,
+          "methods": [
+            "__init__",
+            "filter"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DispatchGate",
+          "line": 22,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "filter",
+          "callee": "self._scan.get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "filter",
+          "callee": "logger.debug",
+          "lineNumber": 40
+        },
+        {
+          "caller": "filter",
+          "callee": "len",
+          "lineNumber": 42
+        },
+        {
+          "caller": "filter",
+          "callee": "list",
+          "lineNumber": 46
+        },
+        {
+          "caller": "filter",
+          "callee": "find_new_nodes",
+          "lineNumber": 47
+        },
+        {
+          "caller": "filter",
+          "callee": "self._scan.reset",
+          "lineNumber": 49
+        },
+        {
+          "caller": "filter",
+          "callee": "sorted",
+          "lineNumber": 50
+        },
+        {
+          "caller": "filter",
+          "callee": "sorted",
+          "lineNumber": 51
+        },
+        {
+          "caller": "filter",
+          "callee": "logger.info",
+          "lineNumber": 52
+        },
+        {
+          "caller": "filter",
+          "callee": "emit",
+          "lineNumber": 58
+        },
+        {
+          "caller": "filter",
+          "callee": "self._start_meta",
+          "lineNumber": 68
+        },
+        {
+          "caller": "filter",
+          "callee": "list",
+          "lineNumber": 69
+        },
+        {
+          "caller": "filter",
+          "callee": "allowed_pairs",
+          "lineNumber": 70
+        },
+        {
+          "caller": "filter",
+          "callee": "len",
+          "lineNumber": 76
+        },
+        {
+          "caller": "filter",
+          "callee": "len",
+          "lineNumber": 76
+        },
+        {
+          "caller": "filter",
+          "callee": "logger.info",
+          "lineNumber": 77
+        },
+        {
+          "caller": "filter",
+          "callee": "len",
+          "lineNumber": 80
+        },
+        {
+          "caller": "filter",
+          "callee": "len",
+          "lineNumber": 81
+        },
+        {
+          "caller": "filter",
+          "callee": "zone_heads",
+          "lineNumber": 82
+        },
+        {
+          "caller": "filter",
+          "callee": "sorted",
+          "lineNumber": 83
+        },
+        {
+          "caller": "filter",
+          "callee": "busy_zones",
+          "lineNumber": 83
+        },
+        {
+          "caller": "filter",
+          "callee": "sorted",
+          "lineNumber": 84
+        },
+        {
+          "caller": "filter",
+          "callee": "sorted",
+          "lineNumber": 85
+        },
+        {
+          "caller": "filter",
+          "callee": "sorted",
+          "lineNumber": 87
+        },
+        {
+          "caller": "filter",
+          "callee": "logger.debug",
+          "lineNumber": 90
+        },
+        {
+          "caller": "filter",
+          "callee": "len",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/scan_session.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 55,
+      "nonEmptyLines": 45,
+      "classes": [
+        {
+          "name": "ScanSession",
+          "startLine": 15,
+          "endLine": 55,
+          "methods": [
+            "__init__",
+            "reset",
+            "start",
+            "record_success",
+            "get",
+            "status"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ScanSession",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 17
+        },
+        {
+          "caller": "__init__",
+          "callee": "idle_batch",
+          "lineNumber": 18
+        },
+        {
+          "caller": "__init__",
+          "callee": "frozenset",
+          "lineNumber": 20
+        },
+        {
+          "caller": "reset",
+          "callee": "idle_batch",
+          "lineNumber": 24
+        },
+        {
+          "caller": "reset",
+          "callee": "frozenset",
+          "lineNumber": 26
+        },
+        {
+          "caller": "start",
+          "callee": "start_batch",
+          "lineNumber": 30
+        },
+        {
+          "caller": "start",
+          "callee": "frozenset",
+          "lineNumber": 32
+        },
+        {
+          "caller": "record_success",
+          "callee": "record_dispatch_success",
+          "lineNumber": 37
+        },
+        {
+          "caller": "status",
+          "callee": "sorted",
+          "lineNumber": 50
+        },
+        {
+          "caller": "status",
+          "callee": "sorted",
+          "lineNumber": 51
+        },
+        {
+          "caller": "status",
+          "callee": "max",
+          "lineNumber": 52
+        },
+        {
+          "caller": "status",
+          "callee": "sorted",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "domain/batch_policy.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 182,
+      "nonEmptyLines": 145,
+      "functions": [
+        {
+          "name": "start_batch",
+          "startLine": 36,
+          "endLine": 38,
+          "params": [
+            "ready_nodes"
+          ]
+        },
+        {
+          "name": "record_dispatch_success",
+          "startLine": 41,
+          "endLine": 53,
+          "params": [
+            "batch",
+            "node_id"
+          ]
+        },
+        {
+          "name": "should_auto_pause",
+          "startLine": 56,
+          "endLine": 58,
+          "params": [
+            "batch"
+          ]
+        },
+        {
+          "name": "_zone_of",
+          "startLine": 61,
+          "endLine": 62,
+          "params": [
+            "node_id",
+            "start_meta"
+          ]
+        },
+        {
+          "name": "zone_heads",
+          "startLine": 65,
+          "endLine": 79,
+          "params": [
+            "batch",
+            "start_meta"
+          ]
+        },
+        {
+          "name": "busy_zones",
+          "startLine": 82,
+          "endLine": 86,
+          "params": [
+            "locked_starts",
+            "start_meta"
+          ]
+        },
+        {
+          "name": "waiting_for",
+          "startLine": 89,
+          "endLine": 104,
+          "params": [
+            "batch",
+            "start_meta",
+            "ready_starts",
+            "locked_starts"
+          ]
+        },
+        {
+          "name": "stuck_nodes",
+          "startLine": 107,
+          "endLine": 112,
+          "params": [
+            "batch",
+            "ready_starts"
+          ]
+        },
+        {
+          "name": "allowed_pairs",
+          "startLine": 115,
+          "endLine": 137,
+          "params": [
+            "batch",
+            "pairs",
+            "start_meta",
+            "locked_starts"
+          ]
+        },
+        {
+          "name": "dispatchable_starts",
+          "startLine": 140,
+          "endLine": 145,
+          "params": [
+            "ready_starts",
+            "validate_pairs"
+          ]
+        },
+        {
+          "name": "find_new_nodes",
+          "startLine": 148,
+          "endLine": 153,
+          "params": [
+            "current_nodes",
+            "snapshot_nodes"
+          ]
+        },
+        {
+          "name": "should_pause_for_new_nodes",
+          "startLine": 156,
+          "endLine": 165,
+          "params": [
+            "current_nodes",
+            "snapshot_nodes"
+          ]
+        },
+        {
+          "name": "idle_batch",
+          "startLine": 168,
+          "endLine": 170,
+          "params": []
+        },
+        {
+          "name": "locked_start_ids",
+          "startLine": 173,
+          "endLine": 182,
+          "params": [
+            "snapshot"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "BatchSnapshot",
+          "startLine": 21,
+          "endLine": 33,
+          "methods": [
+            "size",
+            "remaining"
+          ],
+          "properties": [
+            "nodes",
+            "sum_request",
+            "active",
+            "dispatched"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BatchSnapshot",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "start_batch",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "record_dispatch_success",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "should_auto_pause",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "_zone_of",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "zone_heads",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "busy_zones",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "waiting_for",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "stuck_nodes",
+          "line": 107,
+          "isDefault": false
+        },
+        {
+          "name": "allowed_pairs",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "dispatchable_starts",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "find_new_nodes",
+          "line": 148,
+          "isDefault": false
+        },
+        {
+          "name": "should_pause_for_new_nodes",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "idle_batch",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "locked_start_ids",
+          "line": 173,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "size",
+          "callee": "len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "start_batch",
+          "callee": "BatchSnapshot",
+          "lineNumber": 38
+        },
+        {
+          "caller": "start_batch",
+          "callee": "frozenset",
+          "lineNumber": 38
+        },
+        {
+          "caller": "record_dispatch_success",
+          "callee": "BatchSnapshot",
+          "lineNumber": 48
+        },
+        {
+          "caller": "_zone_of",
+          "callee": "str",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_zone_of",
+          "callee": "((start_meta or {}).get(node_id) or {}).get",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_zone_of",
+          "callee": "(start_meta or {}).get",
+          "lineNumber": 62
+        },
+        {
+          "caller": "zone_heads",
+          "callee": "by_zone.setdefault(_zone_of(nid, start_meta), []).append",
+          "lineNumber": 75
+        },
+        {
+          "caller": "zone_heads",
+          "callee": "by_zone.setdefault",
+          "lineNumber": 75
+        },
+        {
+          "caller": "zone_heads",
+          "callee": "_zone_of",
+          "lineNumber": 75
+        },
+        {
+          "caller": "zone_heads",
+          "callee": "min",
+          "lineNumber": 77
+        },
+        {
+          "caller": "zone_heads",
+          "callee": "start_sort_key",
+          "lineNumber": 77
+        },
+        {
+          "caller": "zone_heads",
+          "callee": "by_zone.items",
+          "lineNumber": 78
+        },
+        {
+          "caller": "busy_zones",
+          "callee": "_zone_of",
+          "lineNumber": 86
+        },
+        {
+          "caller": "waiting_for",
+          "callee": "set",
+          "lineNumber": 98
+        },
+        {
+          "caller": "waiting_for",
+          "callee": "busy_zones",
+          "lineNumber": 99
+        },
+        {
+          "caller": "waiting_for",
+          "callee": "sorted",
+          "lineNumber": 102
+        },
+        {
+          "caller": "waiting_for",
+          "callee": "zone_heads(batch, start_meta).items",
+          "lineNumber": 102
+        },
+        {
+          "caller": "waiting_for",
+          "callee": "zone_heads",
+          "lineNumber": 102
+        },
+        {
+          "caller": "stuck_nodes",
+          "callee": "set",
+          "lineNumber": 111
+        },
+        {
+          "caller": "stuck_nodes",
+          "callee": "sorted",
+          "lineNumber": 112
+        },
+        {
+          "caller": "allowed_pairs",
+          "callee": "set",
+          "lineNumber": 130
+        },
+        {
+          "caller": "allowed_pairs",
+          "callee": "zone_heads(batch, start_meta).values",
+          "lineNumber": 130
+        },
+        {
+          "caller": "allowed_pairs",
+          "callee": "zone_heads",
+          "lineNumber": 130
+        },
+        {
+          "caller": "allowed_pairs",
+          "callee": "busy_zones",
+          "lineNumber": 131
+        },
+        {
+          "caller": "allowed_pairs",
+          "callee": "_zone_of",
+          "lineNumber": 135
+        },
+        {
+          "caller": "dispatchable_starts",
+          "callee": "len",
+          "lineNumber": 144
+        },
+        {
+          "caller": "dispatchable_starts",
+          "callee": "set",
+          "lineNumber": 145
+        },
+        {
+          "caller": "find_new_nodes",
+          "callee": "set",
+          "lineNumber": 153
+        },
+        {
+          "caller": "find_new_nodes",
+          "callee": "set",
+          "lineNumber": 153
+        },
+        {
+          "caller": "should_pause_for_new_nodes",
+          "callee": "find_new_nodes",
+          "lineNumber": 164
+        },
+        {
+          "caller": "idle_batch",
+          "callee": "BatchSnapshot",
+          "lineNumber": 170
+        },
+        {
+          "caller": "idle_batch",
+          "callee": "frozenset",
+          "lineNumber": 170
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "set",
+          "lineNumber": 175
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "snapshot.items",
+          "lineNumber": 176
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "str(nid).startswith",
+          "lineNumber": 177
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "str",
+          "lineNumber": 177
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "data.get",
+          "lineNumber": 179
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "lock.get",
+          "lineNumber": 180
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "out.add",
+          "lineNumber": 181
+        },
+        {
+          "caller": "locked_start_ids",
+          "callee": "str",
+          "lineNumber": 181
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 15,
+        "functionCount": 14,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/sandbox/smoke_trail.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "_enabled",
+          "startLine": 19,
+          "endLine": 20,
+          "params": []
+        },
+        {
+          "name": "emit",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "source",
+            "action"
+          ]
+        },
+        {
+          "name": "node_runtime_view",
+          "startLine": 39,
+          "endLine": 57,
+          "params": [
+            "state"
+          ]
+        },
+        {
+          "name": "inference_paused",
+          "startLine": 60,
+          "endLine": 71,
+          "params": [
+            "inference"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_enabled",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "emit",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "node_runtime_view",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "inference_paused",
+          "line": 60,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "emit",
+          "callee": "_enabled",
+          "lineNumber": 28
+        },
+        {
+          "caller": "emit",
+          "callee": "datetime.now(timezone.utc).isoformat",
+          "lineNumber": 31
+        },
+        {
+          "caller": "emit",
+          "callee": "datetime.now",
+          "lineNumber": 31
+        },
+        {
+          "caller": "emit",
+          "callee": "detail.items",
+          "lineNumber": 34
+        },
+        {
+          "caller": "emit",
+          "callee": "_logger.info",
+          "lineNumber": 36
+        },
+        {
+          "caller": "emit",
+          "callee": "json.dumps",
+          "lineNumber": 36
+        },
+        {
+          "caller": "node_runtime_view",
+          "callee": "getattr",
+          "lineNumber": 41
+        },
+        {
+          "caller": "node_runtime_view",
+          "callee": "state.snapshot_points",
+          "lineNumber": 44
+        },
+        {
+          "caller": "node_runtime_view",
+          "callee": "snap.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "node_runtime_view",
+          "callee": "p.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "node_runtime_view",
+          "callee": "p.get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "node_runtime_view",
+          "callee": "p.get",
+          "lineNumber": 55
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "hasattr",
+          "lineNumber": 64
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "bool",
+          "lineNumber": 65
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "inference.is_paused",
+          "lineNumber": 65
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "getattr",
+          "lineNumber": 66
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "hasattr",
+          "lineNumber": 67
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "bool",
+          "lineNumber": 68
+        },
+        {
+          "caller": "inference_paused",
+          "callee": "paused.is_set",
+          "lineNumber": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    }
+  ]
+}

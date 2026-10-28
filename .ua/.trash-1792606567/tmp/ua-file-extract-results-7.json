@@ -1,0 +1,1811 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 8,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 8,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 8,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "application/dispatch/active_task_hub.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 89,
+      "nonEmptyLines": 74,
+      "classes": [
+        {
+          "name": "ActiveTaskHub",
+          "startLine": 21,
+          "endLine": 89,
+          "methods": [
+            "__init__",
+            "list_items",
+            "upsert",
+            "set_status",
+            "remove",
+            "replace_all",
+            "subscribe",
+            "unsubscribe",
+            "_publish"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveTaskHub",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 23
+        },
+        {
+          "caller": "list_items",
+          "callee": "dict",
+          "lineNumber": 29
+        },
+        {
+          "caller": "list_items",
+          "callee": "self._items.values",
+          "lineNumber": 29
+        },
+        {
+          "caller": "list_items",
+          "callee": "sort_active_tasks",
+          "lineNumber": 30
+        },
+        {
+          "caller": "upsert",
+          "callee": "dict",
+          "lineNumber": 34
+        },
+        {
+          "caller": "upsert",
+          "callee": "self._publish",
+          "lineNumber": 35
+        },
+        {
+          "caller": "upsert",
+          "callee": "dict",
+          "lineNumber": 35
+        },
+        {
+          "caller": "set_status",
+          "callee": "self._items.get",
+          "lineNumber": 40
+        },
+        {
+          "caller": "set_status",
+          "callee": "self._publish",
+          "lineNumber": 45
+        },
+        {
+          "caller": "set_status",
+          "callee": "dict",
+          "lineNumber": 45
+        },
+        {
+          "caller": "remove",
+          "callee": "self._items.pop",
+          "lineNumber": 50
+        },
+        {
+          "caller": "remove",
+          "callee": "self._publish",
+          "lineNumber": 51
+        },
+        {
+          "caller": "replace_all",
+          "callee": "self.remove",
+          "lineNumber": 59
+        },
+        {
+          "caller": "replace_all",
+          "callee": "self.upsert",
+          "lineNumber": 61
+        },
+        {
+          "caller": "subscribe",
+          "callee": "queue.Queue",
+          "lineNumber": 64
+        },
+        {
+          "caller": "subscribe",
+          "callee": "self._subs.append",
+          "lineNumber": 66
+        },
+        {
+          "caller": "unsubscribe",
+          "callee": "self._subs.remove",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_publish",
+          "callee": "list",
+          "lineNumber": 76
+        },
+        {
+          "caller": "_publish",
+          "callee": "q.put_nowait",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_publish",
+          "callee": "q.get_nowait",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_publish",
+          "callee": "q.put_nowait",
+          "lineNumber": 87
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "application/dispatch/active_tasks.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 123,
+      "nonEmptyLines": 101,
+      "classes": [
+        {
+          "name": "_ResetFlags",
+          "startLine": 20,
+          "endLine": 21,
+          "methods": [
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "StartPriorityReader",
+          "startLine": 24,
+          "endLine": 39,
+          "methods": [
+            "__init__",
+            "read"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TrackDispatchedTask",
+          "startLine": 42,
+          "endLine": 54,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "GetActiveTasks",
+          "startLine": 57,
+          "endLine": 90,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        },
+        {
+          "name": "UnlockByOrderStatus",
+          "startLine": 93,
+          "endLine": 123,
+          "methods": [
+            "__init__",
+            "execute"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_ResetFlags",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "StartPriorityReader",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "TrackDispatchedTask",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "GetActiveTasks",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "UnlockByOrderStatus",
+          "line": 93,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "read",
+          "callee": "self._runtime_meta",
+          "lineNumber": 36
+        },
+        {
+          "caller": "read",
+          "callee": "start_meta_from_docs",
+          "lineNumber": 39
+        },
+        {
+          "caller": "read",
+          "callee": "self._nodes.get_all",
+          "lineNumber": 39
+        },
+        {
+          "caller": "execute",
+          "callee": "build_active_task",
+          "lineNumber": 50
+        },
+        {
+          "caller": "execute",
+          "callee": "status_label",
+          "lineNumber": 51
+        },
+        {
+          "caller": "execute",
+          "callee": "self._runtime_meta",
+          "lineNumber": 51
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hub.upsert",
+          "lineNumber": 54
+        },
+        {
+          "caller": "execute",
+          "callee": "asyncio.to_thread",
+          "lineNumber": 72
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.fail",
+          "lineNumber": 74
+        },
+        {
+          "caller": "execute",
+          "callee": "self._priorities.read",
+          "lineNumber": 78
+        },
+        {
+          "caller": "execute",
+          "callee": "status_label",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "task.get",
+          "lineNumber": 81
+        },
+        {
+          "caller": "execute",
+          "callee": "build_active_task",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "task.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "execute",
+          "callee": "sort_active_tasks",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "items.values",
+          "lineNumber": 88
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hub.replace_all",
+          "lineNumber": 89
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 90
+        },
+        {
+          "caller": "execute",
+          "callee": "OrderStatus.clears_order",
+          "lineNumber": 105
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hub.remove",
+          "lineNumber": 107
+        },
+        {
+          "caller": "execute",
+          "callee": "self._reset.execute",
+          "lineNumber": 108
+        },
+        {
+          "caller": "execute",
+          "callee": "status_label",
+          "lineNumber": 110
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 112
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hub.set_status",
+          "lineNumber": 116
+        },
+        {
+          "caller": "execute",
+          "callee": "build_active_task",
+          "lineNumber": 118
+        },
+        {
+          "caller": "execute",
+          "callee": "self._priorities.read",
+          "lineNumber": 118
+        },
+        {
+          "caller": "execute",
+          "callee": "self._hub.upsert",
+          "lineNumber": 120
+        },
+        {
+          "caller": "execute",
+          "callee": "UseCaseResult.ok",
+          "lineNumber": 121
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 5
+      }
+    },
+    {
+      "path": "application/null_ports.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 430,
+      "nonEmptyLines": 291,
+      "classes": [
+        {
+          "name": "NullCameraRuntime",
+          "startLine": 9,
+          "endLine": 35,
+          "methods": [
+            "is_ready",
+            "start_all",
+            "stop_all",
+            "set_zone_enabled",
+            "set_camera_enabled_by_id",
+            "get_status",
+            "get_preview_jpeg",
+            "get_preview_meta",
+            "get_rtsp_url"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullInference",
+          "startLine": 38,
+          "endLine": 58,
+          "methods": [
+            "is_ready",
+            "pause",
+            "resume",
+            "is_paused",
+            "is_model_loaded",
+            "wait_model_ready",
+            "load_error"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullNodeStateStore",
+          "startLine": 61,
+          "endLine": 110,
+          "methods": [
+            "is_ready",
+            "update_detection",
+            "has_node",
+            "discard_from_ready",
+            "get_detected_start_nodes",
+            "snapshot_points",
+            "apply_reset",
+            "ready_starts",
+            "ready_ends",
+            "get_validate_pairs",
+            "set_pair_used",
+            "process_starts",
+            "process_ends",
+            "apply_persisted_lock",
+            "clear_system_by_order_id",
+            "lock_view"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullDispatchGateway",
+          "startLine": 112,
+          "endLine": 114,
+          "methods": [
+            "send"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullIcsOrderQuery",
+          "startLine": 117,
+          "endLine": 119,
+          "methods": [
+            "get_order_list"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullDbHealth",
+          "startLine": 122,
+          "endLine": 124,
+          "methods": [
+            "ping"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullWebrtcRunner",
+          "startLine": 127,
+          "endLine": 129,
+          "methods": [
+            "status"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullUserRepo",
+          "startLine": 132,
+          "endLine": 137,
+          "methods": [
+            "get_by_username",
+            "get_by_id"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullRefreshTokenStore",
+          "startLine": 140,
+          "endLine": 148,
+          "methods": [
+            "save",
+            "find",
+            "revoke_user"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullAuthAudit",
+          "startLine": 151,
+          "endLine": 156,
+          "methods": [
+            "log_event",
+            "count_recent_failures"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullActionAudit",
+          "startLine": 159,
+          "endLine": 161,
+          "methods": [
+            "log"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullSystemActionAudit",
+          "startLine": 164,
+          "endLine": 194,
+          "methods": [
+            "bind_loop",
+            "log",
+            "log_outbound"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullPasswordHasher",
+          "startLine": 197,
+          "endLine": 207,
+          "methods": [
+            "hash",
+            "verify",
+            "dummy_hash"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullTokenIssuer",
+          "startLine": 210,
+          "endLine": 221,
+          "methods": [
+            "issue_access",
+            "decode_access",
+            "new_refresh",
+            "hash_refresh"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullFrameProvider",
+          "startLine": 224,
+          "endLine": 226,
+          "methods": [
+            "capture_for_node"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullRuntimeControl",
+          "startLine": 229,
+          "endLine": 240,
+          "methods": [
+            "start",
+            "stop",
+            "status",
+            "reload"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullCameraConfigRepo",
+          "startLine": 243,
+          "endLine": 269,
+          "methods": [
+            "get_all",
+            "get_by_area",
+            "get_by_id",
+            "create",
+            "update_by_camera_id",
+            "delete_by_camera_id",
+            "set_enabled",
+            "upsert_roi",
+            "delete_roi"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullPairsRepo",
+          "startLine": 272,
+          "endLine": 298,
+          "methods": [
+            "get_by_zone",
+            "list_all",
+            "set_enabled",
+            "create",
+            "delete",
+            "find_by_key",
+            "update_by_key",
+            "get_as_tuples",
+            "list_containing_node"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullNodeRepo",
+          "startLine": 301,
+          "endLine": 348,
+          "methods": [
+            "get_all",
+            "get_by_zone",
+            "get_by_id",
+            "get_by_camera",
+            "set_enabled",
+            "set_maintenance",
+            "set_lock",
+            "clear_system_lock_by_order",
+            "list_with_lock",
+            "set_camera_nodes_enabled",
+            "set_zone_by_camera",
+            "update_priority",
+            "find_start_by_zone_priority",
+            "update_by_node_id",
+            "create",
+            "delete_by_node_id"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullZoneRepo",
+          "startLine": 351,
+          "endLine": 353,
+          "methods": [
+            "get_all"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullPagedLogStore",
+          "startLine": 356,
+          "endLine": 358,
+          "methods": [
+            "find_page"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullSnapshotDocStore",
+          "startLine": 361,
+          "endLine": 363,
+          "methods": [
+            "get_by_order"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullNotificationStore",
+          "startLine": 366,
+          "endLine": 389,
+          "methods": [
+            "create",
+            "list_for_user",
+            "mark_read",
+            "mark_all_read",
+            "count_unread"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullMapVersionStore",
+          "startLine": 392,
+          "endLine": 418,
+          "methods": [
+            "__init__",
+            "insert_version",
+            "get_by_version_id",
+            "list_newest_first",
+            "list_oldest_first",
+            "delete_by_version_id",
+            "count_all"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NullMapStateStore",
+          "startLine": 421,
+          "endLine": 429,
+          "methods": [
+            "__init__",
+            "get_active_version_id",
+            "set_active_version_id"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NullCameraRuntime",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "NullInference",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "NullNodeStateStore",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "NullDispatchGateway",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "NullIcsOrderQuery",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "NullDbHealth",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "NullWebrtcRunner",
+          "line": 127,
+          "isDefault": false
+        },
+        {
+          "name": "NullUserRepo",
+          "line": 132,
+          "isDefault": false
+        },
+        {
+          "name": "NullRefreshTokenStore",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "NullAuthAudit",
+          "line": 151,
+          "isDefault": false
+        },
+        {
+          "name": "NullActionAudit",
+          "line": 159,
+          "isDefault": false
+        },
+        {
+          "name": "NullSystemActionAudit",
+          "line": 164,
+          "isDefault": false
+        },
+        {
+          "name": "NullPasswordHasher",
+          "line": 197,
+          "isDefault": false
+        },
+        {
+          "name": "NullTokenIssuer",
+          "line": 210,
+          "isDefault": false
+        },
+        {
+          "name": "NullFrameProvider",
+          "line": 224,
+          "isDefault": false
+        },
+        {
+          "name": "NullRuntimeControl",
+          "line": 229,
+          "isDefault": false
+        },
+        {
+          "name": "NullCameraConfigRepo",
+          "line": 243,
+          "isDefault": false
+        },
+        {
+          "name": "NullPairsRepo",
+          "line": 272,
+          "isDefault": false
+        },
+        {
+          "name": "NullNodeRepo",
+          "line": 301,
+          "isDefault": false
+        },
+        {
+          "name": "NullZoneRepo",
+          "line": 351,
+          "isDefault": false
+        },
+        {
+          "name": "NullPagedLogStore",
+          "line": 356,
+          "isDefault": false
+        },
+        {
+          "name": "NullSnapshotDocStore",
+          "line": 361,
+          "isDefault": false
+        },
+        {
+          "name": "NullNotificationStore",
+          "line": 366,
+          "isDefault": false
+        },
+        {
+          "name": "NullMapVersionStore",
+          "line": 392,
+          "isDefault": false
+        },
+        {
+          "name": "NullMapStateStore",
+          "line": 421,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "get_detected_start_nodes",
+          "callee": "set",
+          "lineNumber": 75
+        },
+        {
+          "caller": "apply_reset",
+          "callee": "ResetResult",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ready_starts",
+          "callee": "set",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ready_ends",
+          "callee": "set",
+          "lineNumber": 87
+        },
+        {
+          "caller": "get_order_list",
+          "callee": "RuntimeError",
+          "lineNumber": 119
+        },
+        {
+          "caller": "insert_version",
+          "callee": "self.rows.append",
+          "lineNumber": 397
+        },
+        {
+          "caller": "insert_version",
+          "callee": "dict",
+          "lineNumber": 397
+        },
+        {
+          "caller": "get_by_version_id",
+          "callee": "r.get",
+          "lineNumber": 402
+        },
+        {
+          "caller": "get_by_version_id",
+          "callee": "dict",
+          "lineNumber": 403
+        },
+        {
+          "caller": "list_newest_first",
+          "callee": "list",
+          "lineNumber": 407
+        },
+        {
+          "caller": "list_newest_first",
+          "callee": "reversed",
+          "lineNumber": 407
+        },
+        {
+          "caller": "list_oldest_first",
+          "callee": "list",
+          "lineNumber": 410
+        },
+        {
+          "caller": "delete_by_version_id",
+          "callee": "len",
+          "lineNumber": 413
+        },
+        {
+          "caller": "delete_by_version_id",
+          "callee": "r.get",
+          "lineNumber": 414
+        },
+        {
+          "caller": "delete_by_version_id",
+          "callee": "len",
+          "lineNumber": 415
+        },
+        {
+          "caller": "count_all",
+          "callee": "len",
+          "lineNumber": 418
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 25,
+        "functionCount": 0,
+        "classCount": 25
+      }
+    },
+    {
+      "path": "domain/dispatch/active_task.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 47,
+      "functions": [
+        {
+          "name": "parse_order_id",
+          "startLine": 16,
+          "endLine": 24,
+          "params": [
+            "order_id"
+          ]
+        },
+        {
+          "name": "status_label",
+          "startLine": 27,
+          "endLine": 32,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "build_active_task",
+          "startLine": 35,
+          "endLine": 51,
+          "params": [
+            "order_id",
+            "status",
+            "start_meta"
+          ]
+        },
+        {
+          "name": "sort_active_tasks",
+          "startLine": 54,
+          "endLine": 59,
+          "params": [
+            "items"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "parse_order_id",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "status_label",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "build_active_task",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "sort_active_tasks",
+          "line": 54,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parse_order_id",
+          "callee": "str(order_id or \"\").split",
+          "lineNumber": 18
+        },
+        {
+          "caller": "parse_order_id",
+          "callee": "str",
+          "lineNumber": 18
+        },
+        {
+          "caller": "parse_order_id",
+          "callee": "len",
+          "lineNumber": 19
+        },
+        {
+          "caller": "parse_order_id",
+          "callee": "start_num.isdigit",
+          "lineNumber": 22
+        },
+        {
+          "caller": "parse_order_id",
+          "callee": "end_num.isdigit",
+          "lineNumber": 22
+        },
+        {
+          "caller": "status_label",
+          "callee": "STATUS_LABELS.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "status_label",
+          "callee": "OrderStatus",
+          "lineNumber": 30
+        },
+        {
+          "caller": "status_label",
+          "callee": "int",
+          "lineNumber": 30
+        },
+        {
+          "caller": "build_active_task",
+          "callee": "parse_order_id",
+          "lineNumber": 40
+        },
+        {
+          "caller": "build_active_task",
+          "callee": "(start_meta or {}).get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "build_active_task",
+          "callee": "str",
+          "lineNumber": 46
+        },
+        {
+          "caller": "build_active_task",
+          "callee": "meta.get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "sort_active_tasks",
+          "callee": "sorted",
+          "lineNumber": 56
+        },
+        {
+          "caller": "sort_active_tasks",
+          "callee": "resolve_priority",
+          "lineNumber": 58
+        },
+        {
+          "caller": "sort_active_tasks",
+          "callee": "it.get",
+          "lineNumber": 58
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "domain/models.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 48,
+      "classes": [
+        {
+          "name": "NodeType",
+          "startLine": 9,
+          "endLine": 11,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "DispatchType",
+          "startLine": 14,
+          "endLine": 17,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "OrderStatus",
+          "startLine": 20,
+          "endLine": 34,
+          "methods": [
+            "clears_order"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NodePoint",
+          "startLine": 38,
+          "endLine": 42,
+          "methods": [],
+          "properties": [
+            "node_id",
+            "state",
+            "flag",
+            "frame"
+          ]
+        },
+        {
+          "name": "DispatchPair",
+          "startLine": 46,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "start_point",
+            "end_point",
+            "order_id",
+            "dispatch_type",
+            "empty_car"
+          ]
+        },
+        {
+          "name": "RuntimeStatus",
+          "startLine": 55,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "running",
+            "area",
+            "cameras_total",
+            "cameras_enabled",
+            "cameras_alive",
+            "inference_paused",
+            "started_at"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NodeType",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "DispatchType",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "OrderStatus",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "NodePoint",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "DispatchPair",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "RuntimeStatus",
+          "line": 54,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "domain/reset_policy.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "reset_flags_by_order",
+          "startLine": 26,
+          "endLine": 44,
+          "params": [
+            "state",
+            "order_id",
+            "status"
+          ]
+        },
+        {
+          "name": "_clear_pair",
+          "startLine": 47,
+          "endLine": 55,
+          "params": [
+            "state",
+            "start",
+            "end"
+          ]
+        },
+        {
+          "name": "_reset_all",
+          "startLine": 58,
+          "endLine": 70,
+          "params": [
+            "state",
+            "order_id",
+            "pairs"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ResetResult",
+          "startLine": 18,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "success",
+            "message",
+            "order_id",
+            "reset_pairs",
+            "error"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ResetResult",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "reset_flags_by_order",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "_clear_pair",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "_reset_all",
+          "line": 58,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "reset_flags_by_order",
+          "callee": "state.order_mapping.get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "reset_flags_by_order",
+          "callee": "ResetResult",
+          "lineNumber": 29
+        },
+        {
+          "caller": "reset_flags_by_order",
+          "callee": "OrderStatus.clears_order",
+          "lineNumber": 36
+        },
+        {
+          "caller": "reset_flags_by_order",
+          "callee": "_reset_all",
+          "lineNumber": 37
+        },
+        {
+          "caller": "reset_flags_by_order",
+          "callee": "ResetResult",
+          "lineNumber": 39
+        },
+        {
+          "caller": "_clear_pair",
+          "callee": "hasattr",
+          "lineNumber": 48
+        },
+        {
+          "caller": "_clear_pair",
+          "callee": "state.clear_system_lock",
+          "lineNumber": 49
+        },
+        {
+          "caller": "_clear_pair",
+          "callee": "state.ready_start_list.discard",
+          "lineNumber": 53
+        },
+        {
+          "caller": "_clear_pair",
+          "callee": "state.ready_end_list.discard",
+          "lineNumber": 54
+        },
+        {
+          "caller": "_clear_pair",
+          "callee": "state.pair_mapping.pop",
+          "lineNumber": 55
+        },
+        {
+          "caller": "_reset_all",
+          "callee": "_clear_pair",
+          "lineNumber": 61
+        },
+        {
+          "caller": "_reset_all",
+          "callee": "reset_pairs.append",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_reset_all",
+          "callee": "ResetResult",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/adapters.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 178,
+      "nonEmptyLines": 129,
+      "classes": [
+        {
+          "name": "CameraRuntimeAdapter",
+          "startLine": 9,
+          "endLine": 38,
+          "methods": [
+            "__init__",
+            "is_ready",
+            "start_all",
+            "stop_all",
+            "set_zone_enabled",
+            "set_camera_enabled_by_id",
+            "get_status",
+            "get_preview_jpeg",
+            "get_preview_meta",
+            "get_rtsp_url"
+          ],
+          "properties": []
+        },
+        {
+          "name": "InferenceAdapter",
+          "startLine": 41,
+          "endLine": 76,
+          "methods": [
+            "__init__",
+            "is_ready",
+            "pause",
+            "resume",
+            "is_paused",
+            "is_model_loaded",
+            "wait_model_ready",
+            "load_error"
+          ],
+          "properties": []
+        },
+        {
+          "name": "NodeStateAdapter",
+          "startLine": 79,
+          "endLine": 161,
+          "methods": [
+            "__init__",
+            "is_ready",
+            "update_detection",
+            "has_node",
+            "discard_from_ready",
+            "get_detected_start_nodes",
+            "snapshot_points",
+            "apply_reset",
+            "ready_starts",
+            "ready_ends",
+            "get_validate_pairs",
+            "set_pair_used",
+            "process_starts",
+            "process_ends",
+            "set_user_lock",
+            "clear_system_lock",
+            "clear_system_by_order_id",
+            "apply_persisted_lock",
+            "lock_view"
+          ],
+          "properties": []
+        },
+        {
+          "name": "RuntimeControlAdapter",
+          "startLine": 164,
+          "endLine": 178,
+          "methods": [
+            "__init__",
+            "start",
+            "stop",
+            "status",
+            "reload"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CameraRuntimeAdapter",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "InferenceAdapter",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "NodeStateAdapter",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "RuntimeControlAdapter",
+          "line": 164,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "start_all",
+          "callee": "self._mgr.start_all_cameras",
+          "lineNumber": 17
+        },
+        {
+          "caller": "stop_all",
+          "callee": "self._mgr.stop_all_cameras",
+          "lineNumber": 20
+        },
+        {
+          "caller": "set_zone_enabled",
+          "callee": "self._mgr.set_zone_enabled",
+          "lineNumber": 23
+        },
+        {
+          "caller": "set_camera_enabled_by_id",
+          "callee": "bool",
+          "lineNumber": 26
+        },
+        {
+          "caller": "set_camera_enabled_by_id",
+          "callee": "self._mgr.set_camera_enabled_by_id",
+          "lineNumber": 26
+        },
+        {
+          "caller": "get_status",
+          "callee": "self._mgr.get_status",
+          "lineNumber": 29
+        },
+        {
+          "caller": "get_preview_jpeg",
+          "callee": "self._mgr.get_preview_jpeg",
+          "lineNumber": 32
+        },
+        {
+          "caller": "get_preview_meta",
+          "callee": "self._mgr.get_preview_meta",
+          "lineNumber": 35
+        },
+        {
+          "caller": "get_rtsp_url",
+          "callee": "self._mgr.get_rtsp_url",
+          "lineNumber": 38
+        },
+        {
+          "caller": "pause",
+          "callee": "self._eng.pause",
+          "lineNumber": 49
+        },
+        {
+          "caller": "resume",
+          "callee": "self._eng.resume",
+          "lineNumber": 52
+        },
+        {
+          "caller": "is_paused",
+          "callee": "bool",
+          "lineNumber": 56
+        },
+        {
+          "caller": "is_paused",
+          "callee": "getattr(self._eng, \"_paused\").is_set",
+          "lineNumber": 56
+        },
+        {
+          "caller": "is_paused",
+          "callee": "getattr",
+          "lineNumber": 56
+        },
+        {
+          "caller": "is_model_loaded",
+          "callee": "bool",
+          "lineNumber": 62
+        },
+        {
+          "caller": "is_model_loaded",
+          "callee": "self._eng.is_model_loaded",
+          "lineNumber": 62
+        },
+        {
+          "caller": "wait_model_ready",
+          "callee": "bool",
+          "lineNumber": 68
+        },
+        {
+          "caller": "wait_model_ready",
+          "callee": "self._eng.wait_model_ready",
+          "lineNumber": 68
+        },
+        {
+          "caller": "load_error",
+          "callee": "self._eng.load_error",
+          "lineNumber": 74
+        },
+        {
+          "caller": "update_detection",
+          "callee": "self._sm.get_state_nodes",
+          "lineNumber": 92
+        },
+        {
+          "caller": "discard_from_ready",
+          "callee": "self._sm.discard_from_ready",
+          "lineNumber": 98
+        },
+        {
+          "caller": "get_detected_start_nodes",
+          "callee": "self._sm.get_detected_start_nodes",
+          "lineNumber": 101
+        },
+        {
+          "caller": "snapshot_points",
+          "callee": "self._sm.snapshot_points",
+          "lineNumber": 104
+        },
+        {
+          "caller": "apply_reset",
+          "callee": "reset_flags_by_order",
+          "lineNumber": 107
+        },
+        {
+          "caller": "apply_reset",
+          "callee": "self._lock_sync.clear_system_by_order",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ready_starts",
+          "callee": "set",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ready_ends",
+          "callee": "set",
+          "lineNumber": 116
+        },
+        {
+          "caller": "set_pair_used",
+          "callee": "self._sm.set_pair_used",
+          "lineNumber": 124
+        },
+        {
+          "caller": "set_pair_used",
+          "callee": "self._lock_sync.set_system_pair",
+          "lineNumber": 126
+        },
+        {
+          "caller": "process_starts",
+          "callee": "self._sm.process_starts",
+          "lineNumber": 129
+        },
+        {
+          "caller": "process_ends",
+          "callee": "self._sm.process_ends",
+          "lineNumber": 132
+        },
+        {
+          "caller": "process_ends",
+          "callee": "self._lock_sync.clear_system",
+          "lineNumber": 134
+        },
+        {
+          "caller": "set_user_lock",
+          "callee": "self._sm.set_user_lock",
+          "lineNumber": 137
+        },
+        {
+          "caller": "set_user_lock",
+          "callee": "self._lock_sync.set_user",
+          "lineNumber": 139
+        },
+        {
+          "caller": "clear_system_lock",
+          "callee": "self._sm.clear_system_lock",
+          "lineNumber": 143
+        },
+        {
+          "caller": "clear_system_lock",
+          "callee": "self._lock_sync.clear_system",
+          "lineNumber": 145
+        },
+        {
+          "caller": "clear_system_by_order_id",
+          "callee": "self._sm.clear_system_by_order_id",
+          "lineNumber": 148
+        },
+        {
+          "caller": "clear_system_by_order_id",
+          "callee": "self._lock_sync.clear_system_by_order",
+          "lineNumber": 150
+        },
+        {
+          "caller": "apply_persisted_lock",
+          "callee": "self._sm.apply_persisted_lock",
+          "lineNumber": 156
+        },
+        {
+          "caller": "lock_view",
+          "callee": "self._sm.lock_view",
+          "lineNumber": 161
+        },
+        {
+          "caller": "start",
+          "callee": "self._rt.start",
+          "lineNumber": 169
+        },
+        {
+          "caller": "stop",
+          "callee": "self._rt.stop",
+          "lineNumber": 172
+        },
+        {
+          "caller": "status",
+          "callee": "self._rt.status",
+          "lineNumber": 175
+        },
+        {
+          "caller": "reload",
+          "callee": "self._rt.reload",
+          "lineNumber": 178
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "infrastructure/sandbox/sandbox_ics.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 67,
+      "classes": [
+        {
+          "name": "SandboxIcs",
+          "startLine": 20,
+          "endLine": 79,
+          "methods": [
+            "__init__",
+            "bind_state_provider",
+            "send",
+            "get_order_list",
+            "set_status",
+            "get_orders"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SandboxIcs",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 24
+        },
+        {
+          "caller": "send",
+          "callee": "str",
+          "lineNumber": 31
+        },
+        {
+          "caller": "send",
+          "callee": "payload.get",
+          "lineNumber": 31
+        },
+        {
+          "caller": "send",
+          "callee": "len",
+          "lineNumber": 33
+        },
+        {
+          "caller": "send",
+          "callee": "d.get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "send",
+          "callee": "payload.get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "send",
+          "callee": "int",
+          "lineNumber": 38
+        },
+        {
+          "caller": "send",
+          "callee": "time.time",
+          "lineNumber": 39
+        },
+        {
+          "caller": "send",
+          "callee": "logger.info",
+          "lineNumber": 41
+        },
+        {
+          "caller": "send",
+          "callee": "parse_order_id",
+          "lineNumber": 45
+        },
+        {
+          "caller": "send",
+          "callee": "self._state_provider",
+          "lineNumber": 48
+        },
+        {
+          "caller": "send",
+          "callee": "emit",
+          "lineNumber": 49
+        },
+        {
+          "caller": "send",
+          "callee": "d.get",
+          "lineNumber": 56
+        },
+        {
+          "caller": "send",
+          "callee": "payload.get",
+          "lineNumber": 56
+        },
+        {
+          "caller": "send",
+          "callee": "node_runtime_view",
+          "lineNumber": 57
+        },
+        {
+          "caller": "get_order_list",
+          "callee": "self._orders.values",
+          "lineNumber": 66
+        },
+        {
+          "caller": "set_status",
+          "callee": "self._orders.get",
+          "lineNumber": 71
+        },
+        {
+          "caller": "set_status",
+          "callee": "int",
+          "lineNumber": 74
+        },
+        {
+          "caller": "get_orders",
+          "callee": "dict",
+          "lineNumber": 79
+        },
+        {
+          "caller": "get_orders",
+          "callee": "self._orders.values",
+          "lineNumber": 79
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

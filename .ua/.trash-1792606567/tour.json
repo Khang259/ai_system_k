@@ -1,0 +1,101 @@
+[
+  {
+    "order": 1,
+    "title": "Tổng quan dự án",
+    "description": "Bắt đầu với README để nắm mục tiêu: backend FastAPI điều phối camera AI (GPU/TensorRT) và API /api/v1 cho frontend AMR.",
+    "nodeIds": [
+      "document:README.md",
+      "config:pyproject.toml"
+    ]
+  },
+  {
+    "order": 2,
+    "title": "Điểm vào FastAPI",
+    "description": "app.py tạo ứng dụng, lifespan khởi tạo DI/runtime; main.py là entry chạy uvicorn.",
+    "nodeIds": [
+      "file:app.py",
+      "file:main.py"
+    ]
+  },
+  {
+    "order": 3,
+    "title": "Tầng presentation — REST API",
+    "description": "Router v1 gắn endpoint auth, cameras, nodes, pairs, runtime, sandbox. Schemas và deps kiểm soát request/JWT.",
+    "nodeIds": [
+      "file:presentation/http_v1.py",
+      "file:presentation/deps.py",
+      "file:presentation/schemas.py",
+      "file:presentation/routes/v1/__init__.py",
+      "file:presentation/routes/v1/cameras.py"
+    ]
+  },
+  {
+    "order": 4,
+    "title": "Tầng application — use case & ports",
+    "description": "AppContainer wire dependency; ports định nghĩa hợp đồng; fe_api và cameras use-case thực thi nghiệp vụ.",
+    "nodeIds": [
+      "file:application/container.py",
+      "file:application/ports.py",
+      "file:application/fe_api/__init__.py",
+      "file:application/cameras/start_scan.py",
+      "file:application/dispatch/dispatch_service.py"
+    ]
+  },
+  {
+    "order": 5,
+    "title": "Tầng domain — quy tắc nghiệp vụ",
+    "description": "Domain giữ pure logic: pairing, priority, batch policy, node state, permissions — không import infrastructure.",
+    "nodeIds": [
+      "file:domain/models.py",
+      "file:domain/node_state.py",
+      "file:domain/batch_policy.py",
+      "file:domain/permissions.py",
+      "file:domain/dispatch/pairing.py"
+    ]
+  },
+  {
+    "order": 6,
+    "title": "Hạ tầng persistence & auth",
+    "description": "MongoDB qua Motor: repository, JWT, password hasher, audit — hiện thực ports của application.",
+    "nodeIds": [
+      "file:infrastructure/persistence/db.py",
+      "file:infrastructure/persistence/base_repository.py",
+      "file:infrastructure/auth/jwt_service.py",
+      "file:infrastructure/adapters.py"
+    ]
+  },
+  {
+    "order": 7,
+    "title": "Pipeline vision GPU",
+    "description": "CameraManager → CameraProcessor → GPU decode + TensorRT YOLO; snapshot/storage và MediaMTX WebRTC preview.",
+    "nodeIds": [
+      "file:infrastructure/vision/camera_manager.py",
+      "file:infrastructure/vision/camera_processor.py",
+      "file:infrastructure/vision/inference_engine.py",
+      "file:infrastructure/vision/trt_yolo_engine.py",
+      "file:infrastructure/webrtc/mediamtx_runner.py"
+    ]
+  },
+  {
+    "order": 8,
+    "title": "Điều phối AMR / ICS",
+    "description": "DispatchService + DispatchGate quyết định gửi task; ICS HTTP gateway gọi hệ thống AMR bên ngoài.",
+    "nodeIds": [
+      "file:application/dispatch/dispatch_service.py",
+      "file:application/dispatch/dispatch_gate.py",
+      "file:infrastructure/ics/http_dispatch_gateway.py",
+      "file:infrastructure/dispatch/pair_manager.py"
+    ]
+  },
+  {
+    "order": 9,
+    "title": "Cấu hình & vận hành",
+    "description": "Settings từ env; script seed users/DB và sandbox giúp chạy demo/stress không cần camera thật.",
+    "nodeIds": [
+      "file:config/settings.py",
+      "file:scripts/seed_users.py",
+      "file:scripts/seed_sandbox.py",
+      "file:infrastructure/sandbox/sandbox_camera_manager.py"
+    ]
+  }
+]

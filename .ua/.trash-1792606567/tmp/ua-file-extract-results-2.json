@@ -1,0 +1,3072 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 25,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 25,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "app.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 195,
+      "nonEmptyLines": 176,
+      "functions": [
+        {
+          "name": "lifespan",
+          "startLine": 70,
+          "endLine": 150,
+          "params": [
+            "app"
+          ]
+        },
+        {
+          "name": "create_app",
+          "startLine": 153,
+          "endLine": 195,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "lifespan",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "create_app",
+          "line": 153,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "lifespan",
+          "callee": "connect",
+          "lineNumber": 72
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_repos",
+          "lineNumber": 73
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_db_health",
+          "lineNumber": 79
+        },
+        {
+          "caller": "lifespan",
+          "callee": "MongoHealthAdapter",
+          "lineNumber": 79
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_ics_order_query",
+          "lineNumber": 80
+        },
+        {
+          "caller": "lifespan",
+          "callee": "HttpOrderQuery",
+          "lineNumber": 80
+        },
+        {
+          "caller": "lifespan",
+          "callee": "ensure_auth_indexes",
+          "lineNumber": 82
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_auth",
+          "lineNumber": 83
+        },
+        {
+          "caller": "lifespan",
+          "callee": "AuthAuditAdapter",
+          "lineNumber": 86
+        },
+        {
+          "caller": "lifespan",
+          "callee": "BcryptHasher",
+          "lineNumber": 87
+        },
+        {
+          "caller": "lifespan",
+          "callee": "JwtTokenService",
+          "lineNumber": 88
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_action_audit",
+          "lineNumber": 95
+        },
+        {
+          "caller": "lifespan",
+          "callee": "ActionAuditAdapter",
+          "lineNumber": 95
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_system_action_audit",
+          "lineNumber": 96
+        },
+        {
+          "caller": "lifespan",
+          "callee": "SystemActionAuditAdapter",
+          "lineNumber": 96
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_log_stores",
+          "lineNumber": 97
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_snapshot_indexer",
+          "lineNumber": 103
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_node_lock_sync",
+          "lineNumber": 104
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_event_loop",
+          "lineNumber": 105
+        },
+        {
+          "caller": "lifespan",
+          "callee": "asyncio.get_running_loop",
+          "lineNumber": 105
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_map",
+          "lineNumber": 106
+        },
+        {
+          "caller": "lifespan",
+          "callee": "MapZipStore",
+          "lineNumber": 109
+        },
+        {
+          "caller": "lifespan",
+          "callee": "RetentionRunner",
+          "lineNumber": 112
+        },
+        {
+          "caller": "lifespan",
+          "callee": "partial",
+          "lineNumber": 113
+        },
+        {
+          "caller": "lifespan",
+          "callee": "retention.start",
+          "lineNumber": 116
+        },
+        {
+          "caller": "lifespan",
+          "callee": "MediaMtxRunner",
+          "lineNumber": 118
+        },
+        {
+          "caller": "lifespan",
+          "callee": "mediamtx.start",
+          "lineNumber": 125
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_webrtc",
+          "lineNumber": 126
+        },
+        {
+          "caller": "lifespan",
+          "callee": "MediaMtxGateway",
+          "lineNumber": 127
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.webrtc_gateway.apply_ice_servers",
+          "lineNumber": 132
+        },
+        {
+          "caller": "lifespan",
+          "callee": "ice_servers_for_mediamtx",
+          "lineNumber": 132
+        },
+        {
+          "caller": "lifespan",
+          "callee": "container.bind_runtime_control",
+          "lineNumber": 135
+        },
+        {
+          "caller": "lifespan",
+          "callee": "runtime_service.start",
+          "lineNumber": 137
+        },
+        {
+          "caller": "lifespan",
+          "callee": "logger.error",
+          "lineNumber": 143
+        },
+        {
+          "caller": "lifespan",
+          "callee": "runtime_service.stop",
+          "lineNumber": 147
+        },
+        {
+          "caller": "lifespan",
+          "callee": "mediamtx.stop",
+          "lineNumber": 148
+        },
+        {
+          "caller": "lifespan",
+          "callee": "retention.stop",
+          "lineNumber": 149
+        },
+        {
+          "caller": "lifespan",
+          "callee": "disconnect",
+          "lineNumber": 150
+        },
+        {
+          "caller": "create_app",
+          "callee": "FastAPI",
+          "lineNumber": 154
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.add_middleware",
+          "lineNumber": 160
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.exception_handler",
+          "lineNumber": 168
+        },
+        {
+          "caller": "http_error_as_message",
+          "callee": "JSONResponse",
+          "lineNumber": 175
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 177
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 178
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 179
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 180
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 181
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 182
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 183
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 184
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 185
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 186
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 187
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 188
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 189
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 191
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 193
+        }
+      ],
+      "metrics": {
+        "importCount": 20,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/auth/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 14,
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/auth/action_audit_adapter.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "_redact",
+          "startLine": 11,
+          "endLine": 21,
+          "params": [
+            "payload"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ActionAuditAdapter",
+          "startLine": 24,
+          "endLine": 44,
+          "methods": [
+            "log"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_redact",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ActionAuditAdapter",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_redact",
+          "callee": "(payload or {}).items",
+          "lineNumber": 13
+        },
+        {
+          "caller": "_redact",
+          "callee": "k.lower",
+          "lineNumber": 14
+        },
+        {
+          "caller": "_redact",
+          "callee": "isinstance",
+          "lineNumber": 17
+        },
+        {
+          "caller": "_redact",
+          "callee": "_redact",
+          "lineNumber": 18
+        },
+        {
+          "caller": "log",
+          "callee": "action_log_repository.log",
+          "lineNumber": 35
+        },
+        {
+          "caller": "log",
+          "callee": "_redact",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/auth/audit_adapter.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "AuthAuditAdapter",
+          "startLine": 11,
+          "endLine": 24,
+          "methods": [
+            "log_event",
+            "count_recent_failures"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuthAuditAdapter",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "log_event",
+          "callee": "audit_log_repository.log",
+          "lineNumber": 15
+        },
+        {
+          "caller": "count_recent_failures",
+          "callee": "audit_log_repository.count_failed_logins_for",
+          "lineNumber": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/auth/indexes.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "ensure_auth_indexes",
+          "startLine": 14,
+          "endLine": 32,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ensure_auth_indexes",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "get_collection",
+          "lineNumber": 16
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "users.create_index",
+          "lineNumber": 17
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "users.create_index",
+          "lineNumber": 18
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "get_collection",
+          "lineNumber": 20
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "tokens.create_index",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "tokens.create_index",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "tokens.create_index",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "logger.info",
+          "lineNumber": 28
+        },
+        {
+          "caller": "ensure_auth_indexes",
+          "callee": "logger.error",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/auth/jwt_service.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 82,
+      "nonEmptyLines": 70,
+      "classes": [
+        {
+          "name": "JwtTokenService",
+          "startLine": 22,
+          "endLine": 82,
+          "methods": [
+            "__init__",
+            "issue_access",
+            "decode_access",
+            "new_refresh",
+            "hash_refresh"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "JwtTokenService",
+          "line": 22,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "secrets.token_urlsafe",
+          "lineNumber": 34
+        },
+        {
+          "caller": "__init__",
+          "callee": "logger.warning",
+          "lineNumber": 35
+        },
+        {
+          "caller": "__init__",
+          "callee": "timedelta",
+          "lineNumber": 43
+        },
+        {
+          "caller": "__init__",
+          "callee": "timedelta",
+          "lineNumber": 44
+        },
+        {
+          "caller": "issue_access",
+          "callee": "datetime.now",
+          "lineNumber": 48
+        },
+        {
+          "caller": "issue_access",
+          "callee": "user.get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "issue_access",
+          "callee": "user.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "issue_access",
+          "callee": "list",
+          "lineNumber": 54
+        },
+        {
+          "caller": "issue_access",
+          "callee": "user.get",
+          "lineNumber": 54
+        },
+        {
+          "caller": "issue_access",
+          "callee": "int",
+          "lineNumber": 55
+        },
+        {
+          "caller": "issue_access",
+          "callee": "now.timestamp",
+          "lineNumber": 55
+        },
+        {
+          "caller": "issue_access",
+          "callee": "int",
+          "lineNumber": 56
+        },
+        {
+          "caller": "issue_access",
+          "callee": "expires_at.timestamp",
+          "lineNumber": 56
+        },
+        {
+          "caller": "issue_access",
+          "callee": "jwt.encode",
+          "lineNumber": 58
+        },
+        {
+          "caller": "issue_access",
+          "callee": "int",
+          "lineNumber": 59
+        },
+        {
+          "caller": "issue_access",
+          "callee": "self._access_ttl.total_seconds",
+          "lineNumber": 59
+        },
+        {
+          "caller": "decode_access",
+          "callee": "jwt.decode",
+          "lineNumber": 64
+        },
+        {
+          "caller": "new_refresh",
+          "callee": "secrets.token_urlsafe",
+          "lineNumber": 70
+        },
+        {
+          "caller": "new_refresh",
+          "callee": "self.hash_refresh",
+          "lineNumber": 73
+        },
+        {
+          "caller": "new_refresh",
+          "callee": "datetime.now",
+          "lineNumber": 74
+        },
+        {
+          "caller": "hash_refresh",
+          "callee": "hashlib.sha256(raw.encode(\"utf-8\")).hexdigest",
+          "lineNumber": 82
+        },
+        {
+          "caller": "hash_refresh",
+          "callee": "hashlib.sha256",
+          "lineNumber": 82
+        },
+        {
+          "caller": "hash_refresh",
+          "callee": "raw.encode",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/auth/password_hasher.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 25,
+      "classes": [
+        {
+          "name": "BcryptHasher",
+          "startLine": 18,
+          "endLine": 32,
+          "methods": [
+            "hash",
+            "verify",
+            "dummy_hash"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "BcryptHasher",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "hash",
+          "callee": "bcrypt.hashpw(password.encode(\"utf-8\"), bcrypt.gensalt()).decode",
+          "lineNumber": 20
+        },
+        {
+          "caller": "hash",
+          "callee": "bcrypt.hashpw",
+          "lineNumber": 20
+        },
+        {
+          "caller": "hash",
+          "callee": "password.encode",
+          "lineNumber": 20
+        },
+        {
+          "caller": "hash",
+          "callee": "bcrypt.gensalt",
+          "lineNumber": 20
+        },
+        {
+          "caller": "verify",
+          "callee": "bcrypt.checkpw",
+          "lineNumber": 26
+        },
+        {
+          "caller": "verify",
+          "callee": "password.encode",
+          "lineNumber": 26
+        },
+        {
+          "caller": "verify",
+          "callee": "hashed.encode",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/auth/system_action_audit_adapter.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 90,
+      "nonEmptyLines": 80,
+      "classes": [
+        {
+          "name": "SystemActionAuditAdapter",
+          "startLine": 15,
+          "endLine": 90,
+          "methods": [
+            "__init__",
+            "bind_loop",
+            "log",
+            "log_outbound"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SystemActionAuditAdapter",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "log",
+          "callee": "int",
+          "lineNumber": 35
+        },
+        {
+          "caller": "log",
+          "callee": "dispatch_log_repository.create",
+          "lineNumber": 36
+        },
+        {
+          "caller": "log",
+          "callee": "_now",
+          "lineNumber": 42
+        },
+        {
+          "caller": "log_outbound",
+          "callee": "self.log",
+          "lineNumber": 64
+        },
+        {
+          "caller": "log_outbound",
+          "callee": "loop.is_running",
+          "lineNumber": 76
+        },
+        {
+          "caller": "log_outbound",
+          "callee": "logger.warning",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_done",
+          "callee": "fut.result",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_done",
+          "callee": "logger.exception",
+          "lineNumber": 84
+        },
+        {
+          "caller": "log_outbound",
+          "callee": "asyncio.run_coroutine_threadsafe",
+          "lineNumber": 87
+        },
+        {
+          "caller": "log_outbound",
+          "callee": "fut.add_done_callback",
+          "lineNumber": 88
+        },
+        {
+          "caller": "log_outbound",
+          "callee": "logger.exception",
+          "lineNumber": 90
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 40,
+      "metrics": {
+        "importCount": 13,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/persistence/base_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 88,
+      "nonEmptyLines": 71,
+      "functions": [
+        {
+          "name": "_now",
+          "startLine": 12,
+          "endLine": 13,
+          "params": []
+        },
+        {
+          "name": "_serialize",
+          "startLine": 16,
+          "endLine": 23,
+          "params": [
+            "doc"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "BaseRepository",
+          "startLine": 26,
+          "endLine": 88,
+          "methods": [
+            "__init__",
+            "_col",
+            "find_one",
+            "find_many",
+            "find_page",
+            "insert_one",
+            "update_one",
+            "delete_one",
+            "count"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_now",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "_serialize",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "BaseRepository",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_now",
+          "callee": "datetime.now",
+          "lineNumber": 13
+        },
+        {
+          "caller": "_serialize",
+          "callee": "dict",
+          "lineNumber": 20
+        },
+        {
+          "caller": "_serialize",
+          "callee": "str",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_serialize",
+          "callee": "out.pop",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_col",
+          "callee": "get_collection",
+          "lineNumber": 31
+        },
+        {
+          "caller": "find_one",
+          "callee": "self._col().find_one",
+          "lineNumber": 34
+        },
+        {
+          "caller": "find_one",
+          "callee": "self._col",
+          "lineNumber": 34
+        },
+        {
+          "caller": "find_many",
+          "callee": "self._col().find",
+          "lineNumber": 43
+        },
+        {
+          "caller": "find_many",
+          "callee": "self._col",
+          "lineNumber": 43
+        },
+        {
+          "caller": "find_many",
+          "callee": "cursor.sort",
+          "lineNumber": 45
+        },
+        {
+          "caller": "find_many",
+          "callee": "cursor.limit",
+          "lineNumber": 47
+        },
+        {
+          "caller": "find_many",
+          "callee": "cursor.to_list",
+          "lineNumber": 48
+        },
+        {
+          "caller": "find_page",
+          "callee": "max",
+          "lineNumber": 62
+        },
+        {
+          "caller": "find_page",
+          "callee": "int",
+          "lineNumber": 62
+        },
+        {
+          "caller": "find_page",
+          "callee": "max",
+          "lineNumber": 63
+        },
+        {
+          "caller": "find_page",
+          "callee": "min",
+          "lineNumber": 63
+        },
+        {
+          "caller": "find_page",
+          "callee": "int",
+          "lineNumber": 63
+        },
+        {
+          "caller": "find_page",
+          "callee": "self.count",
+          "lineNumber": 65
+        },
+        {
+          "caller": "find_page",
+          "callee": "self._col().find",
+          "lineNumber": 66
+        },
+        {
+          "caller": "find_page",
+          "callee": "self._col",
+          "lineNumber": 66
+        },
+        {
+          "caller": "find_page",
+          "callee": "cursor.sort",
+          "lineNumber": 68
+        },
+        {
+          "caller": "find_page",
+          "callee": "cursor.skip(skip).limit",
+          "lineNumber": 69
+        },
+        {
+          "caller": "find_page",
+          "callee": "cursor.skip",
+          "lineNumber": 69
+        },
+        {
+          "caller": "find_page",
+          "callee": "cursor.to_list",
+          "lineNumber": 70
+        },
+        {
+          "caller": "find_page",
+          "callee": "_serialize",
+          "lineNumber": 71
+        },
+        {
+          "caller": "insert_one",
+          "callee": "_now",
+          "lineNumber": 74
+        },
+        {
+          "caller": "insert_one",
+          "callee": "self._col().insert_one",
+          "lineNumber": 75
+        },
+        {
+          "caller": "insert_one",
+          "callee": "self._col",
+          "lineNumber": 75
+        },
+        {
+          "caller": "insert_one",
+          "callee": "str",
+          "lineNumber": 76
+        },
+        {
+          "caller": "update_one",
+          "callee": "_now",
+          "lineNumber": 79
+        },
+        {
+          "caller": "update_one",
+          "callee": "self._col().update_one",
+          "lineNumber": 80
+        },
+        {
+          "caller": "update_one",
+          "callee": "self._col",
+          "lineNumber": 80
+        },
+        {
+          "caller": "delete_one",
+          "callee": "self._col().delete_one",
+          "lineNumber": 84
+        },
+        {
+          "caller": "delete_one",
+          "callee": "self._col",
+          "lineNumber": 84
+        },
+        {
+          "caller": "count",
+          "callee": "self._col().count_documents",
+          "lineNumber": 88
+        },
+        {
+          "caller": "count",
+          "callee": "self._col",
+          "lineNumber": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/camera_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 76,
+      "nonEmptyLines": 58,
+      "classes": [
+        {
+          "name": "CameraRepository",
+          "startLine": 9,
+          "endLine": 73,
+          "methods": [
+            "__init__",
+            "get_all",
+            "get_by_area",
+            "get_by_zone",
+            "get_by_id",
+            "create",
+            "update_by_camera_id",
+            "delete_by_camera_id",
+            "set_enabled",
+            "set_zone_enabled",
+            "upsert_roi",
+            "update_roi",
+            "delete_roi"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CameraRepository",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 11
+        },
+        {
+          "caller": "get_all",
+          "callee": "self.find_many",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_area",
+          "callee": "self.find_many",
+          "lineNumber": 17
+        },
+        {
+          "caller": "get_by_area",
+          "callee": "area.upper",
+          "lineNumber": 17
+        },
+        {
+          "caller": "get_by_zone",
+          "callee": "self.find_many",
+          "lineNumber": 20
+        },
+        {
+          "caller": "get_by_zone",
+          "callee": "zone_id.upper",
+          "lineNumber": 20
+        },
+        {
+          "caller": "get_by_id",
+          "callee": "self.find_one",
+          "lineNumber": 23
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 26
+        },
+        {
+          "caller": "update_by_camera_id",
+          "callee": "self.update_one",
+          "lineNumber": 29
+        },
+        {
+          "caller": "delete_by_camera_id",
+          "callee": "self.delete_one",
+          "lineNumber": 32
+        },
+        {
+          "caller": "set_enabled",
+          "callee": "self.update_one",
+          "lineNumber": 35
+        },
+        {
+          "caller": "set_zone_enabled",
+          "callee": "self._col().update_many",
+          "lineNumber": 38
+        },
+        {
+          "caller": "set_zone_enabled",
+          "callee": "self._col",
+          "lineNumber": 38
+        },
+        {
+          "caller": "set_zone_enabled",
+          "callee": "zone_id.upper",
+          "lineNumber": 39
+        },
+        {
+          "caller": "upsert_roi",
+          "callee": "self.update_one",
+          "lineNumber": 48
+        },
+        {
+          "caller": "update_roi",
+          "callee": "self.upsert_roi",
+          "lineNumber": 55
+        },
+        {
+          "caller": "update_roi",
+          "callee": "list",
+          "lineNumber": 59
+        },
+        {
+          "caller": "update_roi",
+          "callee": "str(node_id).startswith",
+          "lineNumber": 60
+        },
+        {
+          "caller": "update_roi",
+          "callee": "str",
+          "lineNumber": 60
+        },
+        {
+          "caller": "update_roi",
+          "callee": "str(node_id).startswith",
+          "lineNumber": 61
+        },
+        {
+          "caller": "update_roi",
+          "callee": "str",
+          "lineNumber": 61
+        },
+        {
+          "caller": "delete_roi",
+          "callee": "self._col().update_one",
+          "lineNumber": 66
+        },
+        {
+          "caller": "delete_roi",
+          "callee": "self._col",
+          "lineNumber": 66
+        },
+        {
+          "caller": "delete_roi",
+          "callee": "_now",
+          "lineNumber": 70
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/db.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 29,
+      "functions": [
+        {
+          "name": "connect",
+          "startLine": 17,
+          "endLine": 21,
+          "params": [
+            "url",
+            "db_name"
+          ]
+        },
+        {
+          "name": "disconnect",
+          "startLine": 24,
+          "endLine": 30,
+          "params": []
+        },
+        {
+          "name": "get_db",
+          "startLine": 33,
+          "endLine": 36,
+          "params": []
+        },
+        {
+          "name": "get_collection",
+          "startLine": 39,
+          "endLine": 40,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "connect",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "disconnect",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "get_db",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "get_collection",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "connect",
+          "callee": "AsyncIOMotorClient",
+          "lineNumber": 19
+        },
+        {
+          "caller": "connect",
+          "callee": "logger.info",
+          "lineNumber": 21
+        },
+        {
+          "caller": "disconnect",
+          "callee": "_client.close",
+          "lineNumber": 27
+        },
+        {
+          "caller": "disconnect",
+          "callee": "logger.info",
+          "lineNumber": 30
+        },
+        {
+          "caller": "get_db",
+          "callee": "RuntimeError",
+          "lineNumber": 35
+        },
+        {
+          "caller": "get_collection",
+          "callee": "get_db",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "infrastructure/persistence/db_health.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 10,
+      "classes": [
+        {
+          "name": "MongoHealthAdapter",
+          "startLine": 7,
+          "endLine": 13,
+          "methods": [
+            "ping"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "MongoHealthAdapter",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ping",
+          "callee": "get_db().command",
+          "lineNumber": 10
+        },
+        {
+          "caller": "ping",
+          "callee": "get_db",
+          "lineNumber": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/dispatch_log_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 95,
+      "nonEmptyLines": 77,
+      "classes": [
+        {
+          "name": "DispatchLogRepository",
+          "startLine": 10,
+          "endLine": 92,
+          "methods": [
+            "__init__",
+            "create",
+            "mark_completed",
+            "mark_failed",
+            "count_today",
+            "count_last_n_days",
+            "get_pair_performance"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DispatchLogRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 12
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 12
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 15
+        },
+        {
+          "caller": "mark_completed",
+          "callee": "_now",
+          "lineNumber": 18
+        },
+        {
+          "caller": "mark_completed",
+          "callee": "self.find_one",
+          "lineNumber": 19
+        },
+        {
+          "caller": "mark_completed",
+          "callee": "doc.get",
+          "lineNumber": 23
+        },
+        {
+          "caller": "mark_completed",
+          "callee": "int",
+          "lineNumber": 26
+        },
+        {
+          "caller": "mark_completed",
+          "callee": "(completed_at - dispatched_at).total_seconds",
+          "lineNumber": 26
+        },
+        {
+          "caller": "mark_completed",
+          "callee": "self.update_one",
+          "lineNumber": 28
+        },
+        {
+          "caller": "mark_failed",
+          "callee": "self.update_one",
+          "lineNumber": 34
+        },
+        {
+          "caller": "count_today",
+          "callee": "datetime.now(timezone.utc).replace",
+          "lineNumber": 40
+        },
+        {
+          "caller": "count_today",
+          "callee": "datetime.now",
+          "lineNumber": 40
+        },
+        {
+          "caller": "count_today",
+          "callee": "zone_id.upper",
+          "lineNumber": 45
+        },
+        {
+          "caller": "count_today",
+          "callee": "self.count",
+          "lineNumber": 47
+        },
+        {
+          "caller": "count_today",
+          "callee": "self.count",
+          "lineNumber": 48
+        },
+        {
+          "caller": "count_today",
+          "callee": "self.count",
+          "lineNumber": 49
+        },
+        {
+          "caller": "count_today",
+          "callee": "round",
+          "lineNumber": 55
+        },
+        {
+          "caller": "count_last_n_days",
+          "callee": "datetime.now",
+          "lineNumber": 59
+        },
+        {
+          "caller": "count_last_n_days",
+          "callee": "timedelta",
+          "lineNumber": 59
+        },
+        {
+          "caller": "count_last_n_days",
+          "callee": "zone_id.upper",
+          "lineNumber": 62
+        },
+        {
+          "caller": "count_last_n_days",
+          "callee": "self._col().aggregate(pipeline).to_list",
+          "lineNumber": 75
+        },
+        {
+          "caller": "count_last_n_days",
+          "callee": "self._col().aggregate",
+          "lineNumber": 75
+        },
+        {
+          "caller": "count_last_n_days",
+          "callee": "self._col",
+          "lineNumber": 75
+        },
+        {
+          "caller": "get_pair_performance",
+          "callee": "zone_id.upper",
+          "lineNumber": 80
+        },
+        {
+          "caller": "get_pair_performance",
+          "callee": "self._col().aggregate(pipeline).to_list",
+          "lineNumber": 92
+        },
+        {
+          "caller": "get_pair_performance",
+          "callee": "self._col().aggregate",
+          "lineNumber": 92
+        },
+        {
+          "caller": "get_pair_performance",
+          "callee": "self._col",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/log_repositories.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 98,
+      "nonEmptyLines": 82,
+      "classes": [
+        {
+          "name": "ActionLogRepository",
+          "startLine": 13,
+          "endLine": 47,
+          "methods": [
+            "__init__",
+            "log",
+            "get_by_user",
+            "get_recent"
+          ],
+          "properties": []
+        },
+        {
+          "name": "AuditLogRepository",
+          "startLine": 50,
+          "endLine": 94,
+          "methods": [
+            "__init__",
+            "log",
+            "get_by_user",
+            "count_failed_logins_for",
+            "get_failed_logins",
+            "get_all"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActionLogRepository",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "AuditLogRepository",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 15
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 15
+        },
+        {
+          "caller": "log",
+          "callee": "self.insert_one",
+          "lineNumber": 28
+        },
+        {
+          "caller": "get_by_user",
+          "callee": "datetime.now",
+          "lineNumber": 40
+        },
+        {
+          "caller": "get_by_user",
+          "callee": "timedelta",
+          "lineNumber": 40
+        },
+        {
+          "caller": "get_by_user",
+          "callee": "self.find_many",
+          "lineNumber": 41
+        },
+        {
+          "caller": "get_recent",
+          "callee": "self.find_many",
+          "lineNumber": 47
+        },
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 52
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 52
+        },
+        {
+          "caller": "log",
+          "callee": "self.insert_one",
+          "lineNumber": 62
+        },
+        {
+          "caller": "get_by_user",
+          "callee": "self.find_many",
+          "lineNumber": 71
+        },
+        {
+          "caller": "count_failed_logins_for",
+          "callee": "datetime.now",
+          "lineNumber": 79
+        },
+        {
+          "caller": "count_failed_logins_for",
+          "callee": "timedelta",
+          "lineNumber": 79
+        },
+        {
+          "caller": "count_failed_logins_for",
+          "callee": "self.count",
+          "lineNumber": 80
+        },
+        {
+          "caller": "get_failed_logins",
+          "callee": "datetime.now",
+          "lineNumber": 87
+        },
+        {
+          "caller": "get_failed_logins",
+          "callee": "timedelta",
+          "lineNumber": 87
+        },
+        {
+          "caller": "get_failed_logins",
+          "callee": "self.find_many",
+          "lineNumber": 88
+        },
+        {
+          "caller": "get_all",
+          "callee": "self.find_many",
+          "lineNumber": 94
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "infrastructure/persistence/map_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 47,
+      "classes": [
+        {
+          "name": "MapVersionRepository",
+          "startLine": 9,
+          "endLine": 29,
+          "methods": [
+            "__init__",
+            "insert_version",
+            "get_by_version_id",
+            "list_newest_first",
+            "list_oldest_first",
+            "delete_by_version_id",
+            "count_all"
+          ],
+          "properties": []
+        },
+        {
+          "name": "MapStateRepository",
+          "startLine": 32,
+          "endLine": 61,
+          "methods": [
+            "__init__",
+            "get_active_version_id",
+            "set_active_version_id"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "MapVersionRepository",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "MapStateRepository",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 11
+        },
+        {
+          "caller": "insert_version",
+          "callee": "self.insert_one",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_version_id",
+          "callee": "self.find_one",
+          "lineNumber": 17
+        },
+        {
+          "caller": "list_newest_first",
+          "callee": "self.find_many",
+          "lineNumber": 20
+        },
+        {
+          "caller": "list_oldest_first",
+          "callee": "self.find_many",
+          "lineNumber": 23
+        },
+        {
+          "caller": "delete_by_version_id",
+          "callee": "self.delete_one",
+          "lineNumber": 26
+        },
+        {
+          "caller": "count_all",
+          "callee": "self.count",
+          "lineNumber": 29
+        },
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 38
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 38
+        },
+        {
+          "caller": "get_active_version_id",
+          "callee": "self.find_one",
+          "lineNumber": 41
+        },
+        {
+          "caller": "get_active_version_id",
+          "callee": "doc.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "set_active_version_id",
+          "callee": "self._col",
+          "lineNumber": 47
+        },
+        {
+          "caller": "set_active_version_id",
+          "callee": "col.update_one",
+          "lineNumber": 48
+        },
+        {
+          "caller": "set_active_version_id",
+          "callee": "_now",
+          "lineNumber": 53
+        },
+        {
+          "caller": "set_active_version_id",
+          "callee": "_now",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "infrastructure/persistence/node_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 163,
+      "nonEmptyLines": 138,
+      "classes": [
+        {
+          "name": "NodeRepository",
+          "startLine": 9,
+          "endLine": 160,
+          "methods": [
+            "__init__",
+            "get_all",
+            "get_by_zone",
+            "get_starts_by_zone",
+            "get_ends_by_zone",
+            "get_by_id",
+            "get_by_camera",
+            "create",
+            "set_enabled",
+            "set_maintenance",
+            "set_lock",
+            "clear_system_lock_by_order",
+            "list_with_lock",
+            "set_camera_nodes_enabled",
+            "set_zone_by_camera",
+            "update_priority",
+            "find_start_by_zone_priority",
+            "update_by_node_id",
+            "delete_by_node_id",
+            "get_node_ids_by_zone"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NodeRepository",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 11
+        },
+        {
+          "caller": "get_all",
+          "callee": "self.find_many",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_zone",
+          "callee": "self.find_many",
+          "lineNumber": 20
+        },
+        {
+          "caller": "get_by_zone",
+          "callee": "zone_id.upper",
+          "lineNumber": 21
+        },
+        {
+          "caller": "get_starts_by_zone",
+          "callee": "self.find_many",
+          "lineNumber": 26
+        },
+        {
+          "caller": "get_starts_by_zone",
+          "callee": "zone_id.upper",
+          "lineNumber": 27
+        },
+        {
+          "caller": "get_ends_by_zone",
+          "callee": "self.find_many",
+          "lineNumber": 32
+        },
+        {
+          "caller": "get_ends_by_zone",
+          "callee": "zone_id.upper",
+          "lineNumber": 33
+        },
+        {
+          "caller": "get_by_id",
+          "callee": "self.find_one",
+          "lineNumber": 37
+        },
+        {
+          "caller": "get_by_camera",
+          "callee": "self.find_many",
+          "lineNumber": 40
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 43
+        },
+        {
+          "caller": "set_enabled",
+          "callee": "self.update_one",
+          "lineNumber": 46
+        },
+        {
+          "caller": "set_maintenance",
+          "callee": "self.update_one",
+          "lineNumber": 55
+        },
+        {
+          "caller": "set_lock",
+          "callee": "self.get_by_id",
+          "lineNumber": 69
+        },
+        {
+          "caller": "set_lock",
+          "callee": "doc.get",
+          "lineNumber": 72
+        },
+        {
+          "caller": "set_lock",
+          "callee": "isinstance",
+          "lineNumber": 72
+        },
+        {
+          "caller": "set_lock",
+          "callee": "doc.get",
+          "lineNumber": 72
+        },
+        {
+          "caller": "set_lock",
+          "callee": "bool",
+          "lineNumber": 74
+        },
+        {
+          "caller": "set_lock",
+          "callee": "prev.get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "set_lock",
+          "callee": "bool",
+          "lineNumber": 75
+        },
+        {
+          "caller": "set_lock",
+          "callee": "prev.get",
+          "lineNumber": 75
+        },
+        {
+          "caller": "set_lock",
+          "callee": "prev.get",
+          "lineNumber": 76
+        },
+        {
+          "caller": "set_lock",
+          "callee": "bool",
+          "lineNumber": 79
+        },
+        {
+          "caller": "set_lock",
+          "callee": "bool",
+          "lineNumber": 81
+        },
+        {
+          "caller": "set_lock",
+          "callee": "self.update_one",
+          "lineNumber": 88
+        },
+        {
+          "caller": "clear_system_lock_by_order",
+          "callee": "self.find_many",
+          "lineNumber": 94
+        },
+        {
+          "caller": "clear_system_lock_by_order",
+          "callee": "doc.get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "clear_system_lock_by_order",
+          "callee": "self.set_lock",
+          "lineNumber": 102
+        },
+        {
+          "caller": "clear_system_lock_by_order",
+          "callee": "cleared.append",
+          "lineNumber": 104
+        },
+        {
+          "caller": "list_with_lock",
+          "callee": "self.find_many",
+          "lineNumber": 109
+        },
+        {
+          "caller": "set_camera_nodes_enabled",
+          "callee": "self._col().update_many",
+          "lineNumber": 119
+        },
+        {
+          "caller": "set_camera_nodes_enabled",
+          "callee": "self._col",
+          "lineNumber": 119
+        },
+        {
+          "caller": "set_zone_by_camera",
+          "callee": "self._col().update_many",
+          "lineNumber": 127
+        },
+        {
+          "caller": "set_zone_by_camera",
+          "callee": "self._col",
+          "lineNumber": 127
+        },
+        {
+          "caller": "set_zone_by_camera",
+          "callee": "zone_id.upper",
+          "lineNumber": 129
+        },
+        {
+          "caller": "update_priority",
+          "callee": "self.update_one",
+          "lineNumber": 134
+        },
+        {
+          "caller": "find_start_by_zone_priority",
+          "callee": "self.find_one",
+          "lineNumber": 140
+        },
+        {
+          "caller": "find_start_by_zone_priority",
+          "callee": "zone_id.upper",
+          "lineNumber": 142
+        },
+        {
+          "caller": "find_start_by_zone_priority",
+          "callee": "int",
+          "lineNumber": 144
+        },
+        {
+          "caller": "update_by_node_id",
+          "callee": "self.update_one",
+          "lineNumber": 149
+        },
+        {
+          "caller": "delete_by_node_id",
+          "callee": "self.delete_one",
+          "lineNumber": 152
+        },
+        {
+          "caller": "get_node_ids_by_zone",
+          "callee": "self.get_starts_by_zone",
+          "lineNumber": 155
+        },
+        {
+          "caller": "get_node_ids_by_zone",
+          "callee": "self.get_ends_by_zone",
+          "lineNumber": 156
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/notification_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 90,
+      "nonEmptyLines": 78,
+      "classes": [
+        {
+          "name": "NotificationRepository",
+          "startLine": 10,
+          "endLine": 87,
+          "methods": [
+            "__init__",
+            "create",
+            "list_for_user",
+            "mark_read",
+            "mark_all_read",
+            "count_unread"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 12
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 12
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 24
+        },
+        {
+          "caller": "list_for_user",
+          "callee": "self.find_page",
+          "lineNumber": 50
+        },
+        {
+          "caller": "mark_read",
+          "callee": "ObjectId",
+          "lineNumber": 58
+        },
+        {
+          "caller": "mark_read",
+          "callee": "self._col().update_one",
+          "lineNumber": 61
+        },
+        {
+          "caller": "mark_read",
+          "callee": "self._col",
+          "lineNumber": 61
+        },
+        {
+          "caller": "mark_read",
+          "callee": "_now",
+          "lineNumber": 67
+        },
+        {
+          "caller": "mark_read",
+          "callee": "_now",
+          "lineNumber": 67
+        },
+        {
+          "caller": "mark_all_read",
+          "callee": "self._col().update_many",
+          "lineNumber": 72
+        },
+        {
+          "caller": "mark_all_read",
+          "callee": "self._col",
+          "lineNumber": 72
+        },
+        {
+          "caller": "mark_all_read",
+          "callee": "_now",
+          "lineNumber": 77
+        },
+        {
+          "caller": "mark_all_read",
+          "callee": "_now",
+          "lineNumber": 77
+        },
+        {
+          "caller": "mark_all_read",
+          "callee": "int",
+          "lineNumber": 79
+        },
+        {
+          "caller": "count_unread",
+          "callee": "self.count",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/pairs_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 82,
+      "nonEmptyLines": 65,
+      "classes": [
+        {
+          "name": "PairsRepository",
+          "startLine": 9,
+          "endLine": 79,
+          "methods": [
+            "__init__",
+            "get_all",
+            "list_all",
+            "get_by_zone",
+            "get_as_tuples",
+            "get_by_start",
+            "create",
+            "set_enabled",
+            "delete",
+            "find_by_key",
+            "update_by_key",
+            "list_containing_node"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PairsRepository",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 11
+        },
+        {
+          "caller": "get_all",
+          "callee": "self.find_many",
+          "lineNumber": 15
+        },
+        {
+          "caller": "list_all",
+          "callee": "self.find_many",
+          "lineNumber": 18
+        },
+        {
+          "caller": "get_by_zone",
+          "callee": "self.find_many",
+          "lineNumber": 21
+        },
+        {
+          "caller": "get_by_zone",
+          "callee": "zone_id.upper",
+          "lineNumber": 21
+        },
+        {
+          "caller": "get_as_tuples",
+          "callee": "self.get_all",
+          "lineNumber": 24
+        },
+        {
+          "caller": "get_as_tuples",
+          "callee": "result.append",
+          "lineNumber": 28
+        },
+        {
+          "caller": "get_as_tuples",
+          "callee": "result.append",
+          "lineNumber": 30
+        },
+        {
+          "caller": "get_by_start",
+          "callee": "self.find_many",
+          "lineNumber": 34
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 37
+        },
+        {
+          "caller": "set_enabled",
+          "callee": "self.update_one",
+          "lineNumber": 43
+        },
+        {
+          "caller": "delete",
+          "callee": "self.delete_one",
+          "lineNumber": 51
+        },
+        {
+          "caller": "find_by_key",
+          "callee": "self.find_one",
+          "lineNumber": 57
+        },
+        {
+          "caller": "update_by_key",
+          "callee": "self.update_one",
+          "lineNumber": 66
+        },
+        {
+          "caller": "list_containing_node",
+          "callee": "self.find_many",
+          "lineNumber": 72
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/refresh_token_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 35,
+      "classes": [
+        {
+          "name": "RefreshTokenRepository",
+          "startLine": 15,
+          "endLine": 42,
+          "methods": [
+            "__init__",
+            "save",
+            "find",
+            "revoke_user"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "RefreshTokenRepository",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 17
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 17
+        },
+        {
+          "caller": "save",
+          "callee": "self._col().replace_one",
+          "lineNumber": 27
+        },
+        {
+          "caller": "save",
+          "callee": "self._col",
+          "lineNumber": 27
+        },
+        {
+          "caller": "save",
+          "callee": "_now",
+          "lineNumber": 33
+        },
+        {
+          "caller": "find",
+          "callee": "self.find_one",
+          "lineNumber": 39
+        },
+        {
+          "caller": "revoke_user",
+          "callee": "self._col().delete_many",
+          "lineNumber": 42
+        },
+        {
+          "caller": "revoke_user",
+          "callee": "self._col",
+          "lineNumber": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/snapshot_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 65,
+      "classes": [
+        {
+          "name": "SnapshotRepository",
+          "startLine": 10,
+          "endLine": 75,
+          "methods": [
+            "__init__",
+            "create",
+            "mark_validated",
+            "get_false_positives",
+            "get_false_positive_rate",
+            "get_by_order"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SnapshotRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 12
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 12
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 23
+        },
+        {
+          "caller": "create",
+          "callee": "zone_id.upper",
+          "lineNumber": 27
+        },
+        {
+          "caller": "mark_validated",
+          "callee": "self.update_one",
+          "lineNumber": 37
+        },
+        {
+          "caller": "mark_validated",
+          "callee": "_now",
+          "lineNumber": 41
+        },
+        {
+          "caller": "get_false_positives",
+          "callee": "datetime.now",
+          "lineNumber": 51
+        },
+        {
+          "caller": "get_false_positives",
+          "callee": "timedelta",
+          "lineNumber": 51
+        },
+        {
+          "caller": "get_false_positives",
+          "callee": "zone_id.upper",
+          "lineNumber": 57
+        },
+        {
+          "caller": "get_false_positives",
+          "callee": "self.find_many",
+          "lineNumber": 58
+        },
+        {
+          "caller": "get_false_positive_rate",
+          "callee": "zone_id.upper",
+          "lineNumber": 63
+        },
+        {
+          "caller": "get_false_positive_rate",
+          "callee": "self.count",
+          "lineNumber": 65
+        },
+        {
+          "caller": "get_false_positive_rate",
+          "callee": "self.count",
+          "lineNumber": 66
+        },
+        {
+          "caller": "get_false_positive_rate",
+          "callee": "round",
+          "lineNumber": 71
+        },
+        {
+          "caller": "get_by_order",
+          "callee": "self.find_many",
+          "lineNumber": 75
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/user_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 22,
+      "classes": [
+        {
+          "name": "UserRepository",
+          "startLine": 9,
+          "endLine": 31,
+          "methods": [
+            "__init__",
+            "get_by_username",
+            "get_by_id",
+            "get_all",
+            "create",
+            "set_enabled",
+            "set_password"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserRepository",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 11
+        },
+        {
+          "caller": "get_by_username",
+          "callee": "self.find_one",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_username",
+          "callee": "username.lower().strip",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_username",
+          "callee": "username.lower",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_id",
+          "callee": "self.find_one",
+          "lineNumber": 17
+        },
+        {
+          "caller": "get_all",
+          "callee": "self.find_many",
+          "lineNumber": 20
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 23
+        },
+        {
+          "caller": "set_enabled",
+          "callee": "self.update_one",
+          "lineNumber": 26
+        },
+        {
+          "caller": "set_password",
+          "callee": "self.update_one",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "infrastructure/persistence/zone_repository.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "ZoneRepository",
+          "startLine": 9,
+          "endLine": 34,
+          "methods": [
+            "__init__",
+            "get_all",
+            "get_by_id",
+            "create",
+            "set_enabled",
+            "is_enabled"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ZoneRepository",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "super().__init__",
+          "lineNumber": 11
+        },
+        {
+          "caller": "__init__",
+          "callee": "super",
+          "lineNumber": 11
+        },
+        {
+          "caller": "get_all",
+          "callee": "self.find_many",
+          "lineNumber": 14
+        },
+        {
+          "caller": "get_by_id",
+          "callee": "self.find_one",
+          "lineNumber": 17
+        },
+        {
+          "caller": "get_by_id",
+          "callee": "zone_id.upper",
+          "lineNumber": 17
+        },
+        {
+          "caller": "create",
+          "callee": "self.insert_one",
+          "lineNumber": 20
+        },
+        {
+          "caller": "create",
+          "callee": "zone_id.upper",
+          "lineNumber": 21
+        },
+        {
+          "caller": "set_enabled",
+          "callee": "self.update_one",
+          "lineNumber": 27
+        },
+        {
+          "caller": "set_enabled",
+          "callee": "zone_id.upper",
+          "lineNumber": 28
+        },
+        {
+          "caller": "is_enabled",
+          "callee": "self.find_one",
+          "lineNumber": 33
+        },
+        {
+          "caller": "is_enabled",
+          "callee": "zone_id.upper",
+          "lineNumber": 33
+        },
+        {
+          "caller": "is_enabled",
+          "callee": "doc.get",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "main.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/seed_users.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 151,
+      "nonEmptyLines": 123,
+      "functions": [
+        {
+          "name": "_read_password",
+          "startLine": 39,
+          "endLine": 47,
+          "params": []
+        },
+        {
+          "name": "_build_doc",
+          "startLine": 50,
+          "endLine": 61,
+          "params": [
+            "spec",
+            "password_hash"
+          ]
+        },
+        {
+          "name": "_perm_diff",
+          "startLine": 64,
+          "endLine": 66,
+          "params": [
+            "old",
+            "new"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 69,
+          "endLine": 147,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_read_password",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "_build_doc",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "_perm_diff",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "main",
+          "line": 69,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_read_password",
+          "callee": "getpass",
+          "lineNumber": 40
+        },
+        {
+          "caller": "_read_password",
+          "callee": "len",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_read_password",
+          "callee": "print",
+          "lineNumber": 42
+        },
+        {
+          "caller": "_read_password",
+          "callee": "getpass",
+          "lineNumber": 44
+        },
+        {
+          "caller": "_read_password",
+          "callee": "print",
+          "lineNumber": 45
+        },
+        {
+          "caller": "_build_doc",
+          "callee": "uuid4",
+          "lineNumber": 53
+        },
+        {
+          "caller": "_build_doc",
+          "callee": "permissions_for_role",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_build_doc",
+          "callee": "datetime.now",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_perm_diff",
+          "callee": "set",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_perm_diff",
+          "callee": "set",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_perm_diff",
+          "callee": "sorted",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_perm_diff",
+          "callee": "sorted",
+          "lineNumber": 66
+        },
+        {
+          "caller": "main",
+          "callee": "MongoClient",
+          "lineNumber": 70
+        },
+        {
+          "caller": "main",
+          "callee": "users.find_one",
+          "lineNumber": 76
+        },
+        {
+          "caller": "main",
+          "callee": "_read_password",
+          "lineNumber": 81
+        },
+        {
+          "caller": "main",
+          "callee": "client.close",
+          "lineNumber": 83
+        },
+        {
+          "caller": "main",
+          "callee": "BcryptHasher().hash",
+          "lineNumber": 85
+        },
+        {
+          "caller": "main",
+          "callee": "BcryptHasher",
+          "lineNumber": 85
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 87
+        },
+        {
+          "caller": "main",
+          "callee": "permissions_for_role",
+          "lineNumber": 96
+        },
+        {
+          "caller": "main",
+          "callee": "users.find_one",
+          "lineNumber": 97
+        },
+        {
+          "caller": "main",
+          "callee": "list",
+          "lineNumber": 100
+        },
+        {
+          "caller": "main",
+          "callee": "existing.get",
+          "lineNumber": 100
+        },
+        {
+          "caller": "main",
+          "callee": "_perm_diff",
+          "lineNumber": 101
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 103
+        },
+        {
+          "caller": "main",
+          "callee": "users.update_one",
+          "lineNumber": 107
+        },
+        {
+          "caller": "main",
+          "callee": "datetime.now",
+          "lineNumber": 114
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 118
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 120
+        },
+        {
+          "caller": "main",
+          "callee": "', '.join",
+          "lineNumber": 120
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 122
+        },
+        {
+          "caller": "main",
+          "callee": "', '.join",
+          "lineNumber": 122
+        },
+        {
+          "caller": "main",
+          "callee": "_build_doc",
+          "lineNumber": 126
+        },
+        {
+          "caller": "main",
+          "callee": "users.insert_one",
+          "lineNumber": 127
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 128
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 129
+        },
+        {
+          "caller": "main",
+          "callee": "', '.join",
+          "lineNumber": 129
+        },
+        {
+          "caller": "main",
+          "callee": "client.close",
+          "lineNumber": 132
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 134
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 136
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 141
+        },
+        {
+          "caller": "main",
+          "callee": "print",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,458 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe3d"
+    },
+    "start_point": "start_10000056",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe3e"
+    },
+    "start_point": "start_10000057",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe3f"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000058",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe40"
+    },
+    "start_point": "start_10000059",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe41"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000069",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe42"
+    },
+    "start_point": "start_10000073",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe43"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000076",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe44"
+    },
+    "start_point": "start_10000081",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe45"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000084",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe46"
+    },
+    "start_point": "start_10000087",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe47"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000090",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe48"
+    },
+    "start_point": "start_10000093",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe49"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000096",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe4a"
+    },
+    "start_point": "start_10000100",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe4b"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000103",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe4c"
+    },
+    "start_point": "start_10000106",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe4d"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000109",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe4e"
+    },
+    "start_point": "start_10000112",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe4f"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000146",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe50"
+    },
+    "start_point": "start_10000151",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe51"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000154",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe52"
+    },
+    "start_point": "start_10000157",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe53"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000160",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe54"
+    },
+    "start_point": "start_10000163",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe55"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000166",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe56"
+    },
+    "start_point": "start_10000169",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe57"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000172",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe58"
+    },
+    "start_point": "start_10000177",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe59"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000180",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe5a"
+    },
+    "start_point": "start_10000183",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe5b"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000186",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe5c"
+    },
+    "start_point": "start_10000189",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe5d"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000193",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe5e"
+    },
+    "start_point": "start_10000196",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe5f"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000199",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe60"
+    },
+    "start_point": "start_10000202",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe61"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000205",
+    "auto_dispatch": true,
+    "enabled": false,
+    "pair_type": "normal",
+    "updated_at": {
+      "$date": "2026-10-27T12:41:12.620Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe62"
+    },
+    "start_point": "start_10000208",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": false,
+    "pair_type": "normal",
+    "updated_at": {
+      "$date": "2026-10-27T13:07:30.832Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe63"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000211",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe64"
+    },
+    "start_point": "start_10000214",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe65"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000217",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe66"
+    },
+    "start_point": "start_10000220",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe67"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000223",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe68"
+    },
+    "start_point": "start_10000226",
+    "end_point": "end_10000013",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  },
+  {
+    "_id": {
+      "$oid": "6ae076b1f3b3388f4f0cbe69"
+    },
+    "end_point": "end_10000013",
+    "start_point": "start_10000229",
+    "auto_dispatch": true,
+    "enabled": true,
+    "pair_type": "normal"
+  }
+]

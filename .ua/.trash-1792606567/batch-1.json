@@ -1,0 +1,5084 @@
+{
+  "nodes": [
+    {
+      "id": "file:application/auth/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "application/auth/__init__.py",
+      "summary": "Barrel package xác thực: re-export các use case session từ session.py cho container và presentation.",
+      "tags": [
+        "barrel",
+        "auth",
+        "entry-point",
+        "session"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Python __init__ re-export pattern cho lớp application."
+    },
+    {
+      "id": "file:application/auth/session.py",
+      "type": "file",
+      "name": "session.py",
+      "filePath": "application/auth/session.py",
+      "summary": "Use case đăng nhập, đăng xuất, refresh token và lấy thông tin user; tích hợp audit và rate-limit thất bại.",
+      "tags": [
+        "auth",
+        "session",
+        "use-case",
+        "jwt"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/auth/session.py:public_user",
+      "type": "function",
+      "name": "public_user",
+      "filePath": "application/auth/session.py",
+      "lineRange": [
+        26,
+        33
+      ],
+      "summary": "Map document user Mongo sang dict public (ẩn hash, thêm permissions).",
+      "tags": [
+        "auth",
+        "mapper",
+        "user"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/auth/session.py:_is_expired",
+      "type": "function",
+      "name": "_is_expired",
+      "filePath": "application/auth/session.py",
+      "lineRange": [
+        36,
+        45
+      ],
+      "summary": "Kiểm tra refresh token đã hết hạn so với UTC now.",
+      "tags": [
+        "auth",
+        "token",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/auth/session.py:Login",
+      "type": "class",
+      "name": "Login",
+      "filePath": "application/auth/session.py",
+      "lineRange": [
+        48,
+        109
+      ],
+      "summary": "Use case đăng nhập: validate user, hash password, audit và phát token.",
+      "tags": [
+        "auth",
+        "login",
+        "use-case"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/auth/session.py:Logout",
+      "type": "class",
+      "name": "Logout",
+      "filePath": "application/auth/session.py",
+      "lineRange": [
+        112,
+        129
+      ],
+      "summary": "Use case đăng xuất và thu hồi refresh token.",
+      "tags": [
+        "auth",
+        "logout",
+        "use-case"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/auth/session.py:RefreshSession",
+      "type": "class",
+      "name": "RefreshSession",
+      "filePath": "application/auth/session.py",
+      "lineRange": [
+        132,
+        173
+      ],
+      "summary": "Use case đổi refresh token lấy access token mới.",
+      "tags": [
+        "auth",
+        "refresh",
+        "use-case"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/auth/session.py:GetMe",
+      "type": "class",
+      "name": "GetMe",
+      "filePath": "application/auth/session.py",
+      "lineRange": [
+        176,
+        184
+      ],
+      "summary": "Use case trả profile user hiện tại sau xác thực.",
+      "tags": [
+        "auth",
+        "profile",
+        "use-case"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/cameras/preview.py",
+      "type": "file",
+      "name": "preview.py",
+      "filePath": "application/cameras/preview.py",
+      "summary": "Use case lấy frame preview và metadata stream camera qua port FrameProvider cho UI giám sát.",
+      "tags": [
+        "camera",
+        "preview",
+        "use-case",
+        "webrtc"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/cameras/preview.py:GetCameraPreview",
+      "type": "class",
+      "name": "GetCameraPreview",
+      "filePath": "application/cameras/preview.py",
+      "lineRange": [
+        5,
+        17
+      ],
+      "summary": "Use case đọc CameraPreview cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/cameras/preview.py:GetCameraPreviewMeta",
+      "type": "class",
+      "name": "GetCameraPreviewMeta",
+      "filePath": "application/cameras/preview.py",
+      "lineRange": [
+        20,
+        32
+      ],
+      "summary": "Use case đọc CameraPreviewMeta cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/fe_api/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "application/fe_api/__init__.py",
+      "summary": "Barrel tập trung toàn bộ use case frontend /api/v1: camera, map, log, node, pair, poll, zone.",
+      "tags": [
+        "barrel",
+        "fe-api",
+        "use-case",
+        "entry-point"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/cameras.py",
+      "type": "file",
+      "name": "cameras.py",
+      "filePath": "application/fe_api/cameras.py",
+      "summary": "Barrel gom các use case camera/ROI từ module con để presentation import một điểm.",
+      "tags": [
+        "barrel",
+        "camera",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/fe_api/cameras_crud.py",
+      "type": "file",
+      "name": "cameras_crud.py",
+      "filePath": "application/fe_api/cameras_crud.py",
+      "summary": "Use case tạo và xóa camera: validate RTSP, priority start, đồng bộ node/pair và audit.",
+      "tags": [
+        "camera",
+        "crud",
+        "use-case",
+        "validation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/cameras_crud.py:CreateCamera",
+      "type": "class",
+      "name": "CreateCamera",
+      "filePath": "application/fe_api/cameras_crud.py",
+      "lineRange": [
+        30,
+        187
+      ],
+      "summary": "Use case ghi cấu hình CreateCamera qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/cameras_crud.py:DeleteCamera",
+      "type": "class",
+      "name": "DeleteCamera",
+      "filePath": "application/fe_api/cameras_crud.py",
+      "lineRange": [
+        191,
+        244
+      ],
+      "summary": "Use case xóa Camera kèm cascade rule khi cần.",
+      "tags": [
+        "use-case",
+        "delete",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/fe_api/cameras_helpers.py",
+      "type": "file",
+      "name": "cameras_helpers.py",
+      "filePath": "application/fe_api/cameras_helpers.py",
+      "summary": "Helper nội bộ cho luồng camera: chuẩn hóa node quan sát, priority, kiểm tra RTSP trùng.",
+      "tags": [
+        "camera",
+        "helper",
+        "validation",
+        "priority"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/cameras_helpers.py:_kind_from_node_id",
+      "type": "function",
+      "name": "_kind_from_node_id",
+      "filePath": "application/fe_api/cameras_helpers.py",
+      "lineRange": [
+        15,
+        20
+      ],
+      "summary": "Hàm nội bộ _kind_from_node_id hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/cameras_helpers.py:_normalize_observed_ids",
+      "type": "function",
+      "name": "_normalize_observed_ids",
+      "filePath": "application/fe_api/cameras_helpers.py",
+      "lineRange": [
+        23,
+        42
+      ],
+      "summary": "Hàm nội bộ _normalize_observed_ids hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/cameras_helpers.py:_priority_for_new_node",
+      "type": "function",
+      "name": "_priority_for_new_node",
+      "filePath": "application/fe_api/cameras_helpers.py",
+      "lineRange": [
+        45,
+        75
+      ],
+      "summary": "Hàm nội bộ _priority_for_new_node hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/cameras_helpers.py:_reject_duplicate_rtsp",
+      "type": "function",
+      "name": "_reject_duplicate_rtsp",
+      "filePath": "application/fe_api/cameras_helpers.py",
+      "lineRange": [
+        78,
+        99
+      ],
+      "summary": "Hàm nội bộ _reject_duplicate_rtsp hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/cameras_read.py",
+      "type": "file",
+      "name": "cameras_read.py",
+      "filePath": "application/fe_api/cameras_read.py",
+      "summary": "Use case đọc danh sách camera và ROI, map sang DTO cho frontend.",
+      "tags": [
+        "camera",
+        "read",
+        "use-case",
+        "mapper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/cameras_read.py:GetCameras",
+      "type": "class",
+      "name": "GetCameras",
+      "filePath": "application/fe_api/cameras_read.py",
+      "lineRange": [
+        11,
+        52
+      ],
+      "summary": "Use case đọc Cameras cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/cameras_read.py:GetRois",
+      "type": "class",
+      "name": "GetRois",
+      "filePath": "application/fe_api/cameras_read.py",
+      "lineRange": [
+        55,
+        100
+      ],
+      "summary": "Use case đọc Rois cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/fe_api/cameras_status.py",
+      "type": "file",
+      "name": "cameras_status.py",
+      "filePath": "application/fe_api/cameras_status.py",
+      "summary": "Use case bật/tắt camera và cascade rule đồng bộ inference/node khi đổi trạng thái.",
+      "tags": [
+        "camera",
+        "status",
+        "use-case",
+        "sync-rules"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/cameras_status.py:SetCameraStatus",
+      "type": "class",
+      "name": "SetCameraStatus",
+      "filePath": "application/fe_api/cameras_status.py",
+      "lineRange": [
+        19,
+        70
+      ],
+      "summary": "Use case ghi cấu hình SetCameraStatus qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/fe_api/cameras_update.py",
+      "type": "file",
+      "name": "cameras_update.py",
+      "filePath": "application/fe_api/cameras_update.py",
+      "summary": "Use case cập nhật cấu hình camera: zone, RTSP, priority và đồng bộ node liên quan.",
+      "tags": [
+        "camera",
+        "update",
+        "use-case",
+        "validation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/cameras_update.py:UpdateCamera",
+      "type": "class",
+      "name": "UpdateCamera",
+      "filePath": "application/fe_api/cameras_update.py",
+      "lineRange": [
+        30,
+        271
+      ],
+      "summary": "Use case ghi cấu hình UpdateCamera qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/fe_api/log_mappers.py",
+      "type": "file",
+      "name": "log_mappers.py",
+      "filePath": "application/fe_api/log_mappers.py",
+      "summary": "Pure mapper chuyển document Mongo/audit sang payload JSON cho màn hình log và notification.",
+      "tags": [
+        "mapper",
+        "logs",
+        "serialization",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:iso_utc",
+      "type": "function",
+      "name": "iso_utc",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        9,
+        16
+      ],
+      "summary": "Hàm iso_utc xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:parse_iso",
+      "type": "function",
+      "name": "parse_iso",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        19,
+        31
+      ],
+      "summary": "Hàm parse_iso xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:parse_device",
+      "type": "function",
+      "name": "parse_device",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        34,
+        58
+      ],
+      "summary": "Hàm parse_device xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:map_audit",
+      "type": "function",
+      "name": "map_audit",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        61,
+        70
+      ],
+      "summary": "Hàm map_audit xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:map_user_action",
+      "type": "function",
+      "name": "map_user_action",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        73,
+        88
+      ],
+      "summary": "Hàm map_user_action xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:map_dispatch",
+      "type": "function",
+      "name": "map_dispatch",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        91,
+        108
+      ],
+      "summary": "Hàm map_dispatch xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:snapshot_image_url",
+      "type": "function",
+      "name": "snapshot_image_url",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        111,
+        118
+      ],
+      "summary": "Hàm snapshot_image_url xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/log_mappers.py:map_notification",
+      "type": "function",
+      "name": "map_notification",
+      "filePath": "application/fe_api/log_mappers.py",
+      "lineRange": [
+        121,
+        131
+      ],
+      "summary": "Hàm map_notification xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/fe_api/logs.py",
+      "type": "file",
+      "name": "logs.py",
+      "filePath": "application/fe_api/logs.py",
+      "summary": "Use case paginate audit, user action, system action, notification và snapshot theo order.",
+      "tags": [
+        "logs",
+        "audit",
+        "use-case",
+        "pagination"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/logs.py:_paged",
+      "type": "function",
+      "name": "_paged",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        34,
+        35
+      ],
+      "summary": "Hàm nội bộ _paged hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/logs.py:_time_query",
+      "type": "function",
+      "name": "_time_query",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        37,
+        50
+      ],
+      "summary": "Hàm nội bộ _time_query hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:PagedLogStore",
+      "type": "class",
+      "name": "PagedLogStore",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        18,
+        21
+      ],
+      "summary": "Lớp/port hỗ trợ persistence hoặc adapter cho PagedLogStore.",
+      "tags": [
+        "adapter",
+        "persistence",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:NotificationStore",
+      "type": "class",
+      "name": "NotificationStore",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        24,
+        31
+      ],
+      "summary": "Lớp/port hỗ trợ persistence hoặc adapter cho NotificationStore.",
+      "tags": [
+        "adapter",
+        "persistence",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:GetAuditLogs",
+      "type": "class",
+      "name": "GetAuditLogs",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        53,
+        71
+      ],
+      "summary": "Use case đọc AuditLogs cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:GetUserActionLogs",
+      "type": "class",
+      "name": "GetUserActionLogs",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        74,
+        93
+      ],
+      "summary": "Use case đọc UserActionLogs cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:GetSystemActionLogs",
+      "type": "class",
+      "name": "GetSystemActionLogs",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        96,
+        122
+      ],
+      "summary": "Use case đọc SystemActionLogs cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:GetNotifications",
+      "type": "class",
+      "name": "GetNotifications",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        125,
+        142
+      ],
+      "summary": "Use case đọc Notifications cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:MarkNotificationRead",
+      "type": "class",
+      "name": "MarkNotificationRead",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        145,
+        153
+      ],
+      "summary": "Lớp use case hoặc helper MarkNotificationRead trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:MarkAllNotificationsRead",
+      "type": "class",
+      "name": "MarkAllNotificationsRead",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        156,
+        162
+      ],
+      "summary": "Lớp use case hoặc helper MarkAllNotificationsRead trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:SnapshotDocStore",
+      "type": "class",
+      "name": "SnapshotDocStore",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        165,
+        166
+      ],
+      "summary": "Lớp/port hỗ trợ persistence hoặc adapter cho SnapshotDocStore.",
+      "tags": [
+        "adapter",
+        "persistence",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:GetSnapshotImage",
+      "type": "class",
+      "name": "GetSnapshotImage",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        169,
+        194
+      ],
+      "summary": "Use case đọc SnapshotImage cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/logs.py:GetSnapshotsByOrder",
+      "type": "class",
+      "name": "GetSnapshotsByOrder",
+      "filePath": "application/fe_api/logs.py",
+      "lineRange": [
+        197,
+        229
+      ],
+      "summary": "Use case đọc SnapshotsByOrder cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/mappers.py",
+      "type": "file",
+      "name": "mappers.py",
+      "filePath": "application/fe_api/mappers.py",
+      "summary": "Mapper dùng chung cho node label, trạng thái camera và ROI bounding box.",
+      "tags": [
+        "mapper",
+        "fe-api",
+        "validation",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/mappers.py:node_label",
+      "type": "function",
+      "name": "node_label",
+      "filePath": "application/fe_api/mappers.py",
+      "lineRange": [
+        7,
+        14
+      ],
+      "summary": "Hàm node_label xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/mappers.py:camera_status",
+      "type": "function",
+      "name": "camera_status",
+      "filePath": "application/fe_api/mappers.py",
+      "lineRange": [
+        17,
+        32
+      ],
+      "summary": "Hàm camera_status xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/mappers.py:parse_roi_id",
+      "type": "function",
+      "name": "parse_roi_id",
+      "filePath": "application/fe_api/mappers.py",
+      "lineRange": [
+        35,
+        43
+      ],
+      "summary": "Hàm parse_roi_id xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/mappers.py:roi_item",
+      "type": "function",
+      "name": "roi_item",
+      "filePath": "application/fe_api/mappers.py",
+      "lineRange": [
+        46,
+        81
+      ],
+      "summary": "Hàm roi_item xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/mappers.py:validate_box",
+      "type": "function",
+      "name": "validate_box",
+      "filePath": "application/fe_api/mappers.py",
+      "lineRange": [
+        84,
+        97
+      ],
+      "summary": "Hàm validate_box xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/fe_api/maps.py",
+      "type": "file",
+      "name": "maps.py",
+      "filePath": "application/fe_api/maps.py",
+      "summary": "Use case import/list/active map bản đồ AMR, nén zip và tải xuống qua MapZipStore.",
+      "tags": [
+        "map",
+        "use-case",
+        "storage",
+        "amr"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/maps.py:_iso",
+      "type": "function",
+      "name": "_iso",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        26,
+        31
+      ],
+      "summary": "Hàm nội bộ _iso hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/maps.py:_public_version",
+      "type": "function",
+      "name": "_public_version",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        34,
+        44
+      ],
+      "summary": "Hàm nội bộ _public_version hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:MapVersionStore",
+      "type": "class",
+      "name": "MapVersionStore",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        12,
+        18
+      ],
+      "summary": "Lớp/port hỗ trợ persistence hoặc adapter cho MapVersionStore.",
+      "tags": [
+        "adapter",
+        "persistence",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:MapStateStore",
+      "type": "class",
+      "name": "MapStateStore",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        21,
+        23
+      ],
+      "summary": "Lớp/port hỗ trợ persistence hoặc adapter cho MapStateStore.",
+      "tags": [
+        "adapter",
+        "persistence",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:ImportMap",
+      "type": "class",
+      "name": "ImportMap",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        47,
+        123
+      ],
+      "summary": "Lớp use case hoặc helper ImportMap trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:ListMapVersions",
+      "type": "class",
+      "name": "ListMapVersions",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        126,
+        135
+      ],
+      "summary": "Lớp use case hoặc helper ListMapVersions trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:SetActiveMap",
+      "type": "class",
+      "name": "SetActiveMap",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        138,
+        148
+      ],
+      "summary": "Use case ghi cấu hình SetActiveMap qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:GetCompress",
+      "type": "class",
+      "name": "GetCompress",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        151,
+        175
+      ],
+      "summary": "Use case đọc Compress cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/maps.py:DownloadMapZip",
+      "type": "class",
+      "name": "DownloadMapZip",
+      "filePath": "application/fe_api/maps.py",
+      "lineRange": [
+        178,
+        206
+      ],
+      "summary": "Lớp use case hoặc helper DownloadMapZip trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/nodes.py",
+      "type": "file",
+      "name": "nodes.py",
+      "filePath": "application/fe_api/nodes.py",
+      "summary": "Use case quản lý node AMR: đọc, maintenance, khóa user/system và cập nhật priority.",
+      "tags": [
+        "node",
+        "dispatch",
+        "use-case",
+        "lock"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/nodes.py:_lock_from_doc",
+      "type": "function",
+      "name": "_lock_from_doc",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        12,
+        18
+      ],
+      "summary": "Hàm nội bộ _lock_from_doc hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/nodes.py:_node_item",
+      "type": "function",
+      "name": "_node_item",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        21,
+        38
+      ],
+      "summary": "Hàm nội bộ _node_item hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/nodes.py:GetNodes",
+      "type": "class",
+      "name": "GetNodes",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        41,
+        50
+      ],
+      "summary": "Use case đọc Nodes cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/nodes.py:SetMaintenance",
+      "type": "class",
+      "name": "SetMaintenance",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        53,
+        87
+      ],
+      "summary": "Use case ghi cấu hình SetMaintenance qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/nodes.py:SetLock",
+      "type": "class",
+      "name": "SetLock",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        90,
+        115
+      ],
+      "summary": "Use case ghi cấu hình SetLock qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/nodes.py:Unlock",
+      "type": "class",
+      "name": "Unlock",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        118,
+        152
+      ],
+      "summary": "Lớp use case hoặc helper Unlock trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/nodes.py:UpdateNode",
+      "type": "class",
+      "name": "UpdateNode",
+      "filePath": "application/fe_api/nodes.py",
+      "lineRange": [
+        155,
+        214
+      ],
+      "summary": "Use case ghi cấu hình UpdateNode qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/fe_api/pairs.py",
+      "type": "file",
+      "name": "pairs.py",
+      "filePath": "application/fe_api/pairs.py",
+      "summary": "Use case CRUD cặp start/end node cho điều phối, validate node và sync rule khi bật/tắt.",
+      "tags": [
+        "pair",
+        "dispatch",
+        "use-case",
+        "validation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:application/fe_api/pairs.py:parse_pair_id",
+      "type": "function",
+      "name": "parse_pair_id",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        20,
+        29
+      ],
+      "summary": "Hàm parse_pair_id xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/pairs.py:make_pair_id",
+      "type": "function",
+      "name": "make_pair_id",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        32,
+        33
+      ],
+      "summary": "Hàm make_pair_id xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/pairs.py:_resolve_key",
+      "type": "function",
+      "name": "_resolve_key",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        36,
+        51
+      ],
+      "summary": "Hàm nội bộ _resolve_key hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/pairs.py:_validate_nodes_for_pair",
+      "type": "function",
+      "name": "_validate_nodes_for_pair",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        54,
+        72
+      ],
+      "summary": "Hàm nội bộ _validate_nodes_for_pair hỗ trợ validation hoặc map dữ liệu.",
+      "tags": [
+        "helper",
+        "internal",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/pairs.py:GetNodePairs",
+      "type": "class",
+      "name": "GetNodePairs",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        75,
+        144
+      ],
+      "summary": "Use case đọc NodePairs cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/pairs.py:CreatePairFe",
+      "type": "class",
+      "name": "CreatePairFe",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        147,
+        207
+      ],
+      "summary": "Use case ghi cấu hình CreatePairFe qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/pairs.py:UpdatePairFe",
+      "type": "class",
+      "name": "UpdatePairFe",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        210,
+        322
+      ],
+      "summary": "Use case ghi cấu hình UpdatePairFe qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/pairs.py:DeletePairFe",
+      "type": "class",
+      "name": "DeletePairFe",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        325,
+        360
+      ],
+      "summary": "Use case xóa PairFe kèm cascade rule khi cần.",
+      "tags": [
+        "use-case",
+        "delete",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/pairs.py:SetPairEnabledFe",
+      "type": "class",
+      "name": "SetPairEnabledFe",
+      "filePath": "application/fe_api/pairs.py",
+      "lineRange": [
+        363,
+        400
+      ],
+      "summary": "Use case ghi cấu hình SetPairEnabledFe qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/poll.py",
+      "type": "file",
+      "name": "poll.py",
+      "filePath": "application/fe_api/poll.py",
+      "summary": "Use case long-poll snapshot gộp camera, zone, notification, map state và runtime node với ETag.",
+      "tags": [
+        "poll",
+        "fe-api",
+        "etag",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/poll.py:compute_etag",
+      "type": "function",
+      "name": "compute_etag",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        37,
+        39
+      ],
+      "summary": "Tính ETag hash từ snapshot poll để client cache có điều kiện.",
+      "tags": [
+        "poll",
+        "etag",
+        "hash"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/poll.py:_CamerasUC",
+      "type": "class",
+      "name": "_CamerasUC",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        17,
+        18
+      ],
+      "summary": "Lớp use case hoặc helper _CamerasUC trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/poll.py:_ZonesUC",
+      "type": "class",
+      "name": "_ZonesUC",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        21,
+        22
+      ],
+      "summary": "Lớp use case hoặc helper _ZonesUC trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/poll.py:_NotifStore",
+      "type": "class",
+      "name": "_NotifStore",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        25,
+        26
+      ],
+      "summary": "Lớp/port hỗ trợ persistence hoặc adapter cho _NotifStore.",
+      "tags": [
+        "adapter",
+        "persistence",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/poll.py:_MapState",
+      "type": "class",
+      "name": "_MapState",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        29,
+        30
+      ],
+      "summary": "Lớp use case hoặc helper _MapState trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/poll.py:_RuntimeNodesUC",
+      "type": "class",
+      "name": "_RuntimeNodesUC",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        33,
+        34
+      ],
+      "summary": "Lớp use case hoặc helper _RuntimeNodesUC trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/poll.py:GetPollSnapshot",
+      "type": "class",
+      "name": "GetPollSnapshot",
+      "filePath": "application/fe_api/poll.py",
+      "lineRange": [
+        42,
+        135
+      ],
+      "summary": "Gom dữ liệu poll từ nhiều use case con và trả snapshot + etag.",
+      "tags": [
+        "poll",
+        "snapshot",
+        "use-case"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/fe_api/priority_rules.py",
+      "type": "file",
+      "name": "priority_rules.py",
+      "filePath": "application/fe_api/priority_rules.py",
+      "summary": "Rule kiểm tra priority start/end unique theo zone trước khi tạo hoặc sửa node/camera.",
+      "tags": [
+        "priority",
+        "validation",
+        "rule",
+        "zone"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/priority_rules.py:find_start_conflict",
+      "type": "function",
+      "name": "find_start_conflict",
+      "filePath": "application/fe_api/priority_rules.py",
+      "lineRange": [
+        10,
+        24
+      ],
+      "summary": "Hàm find_start_conflict xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/priority_rules.py:ensure_start_priority_unique",
+      "type": "function",
+      "name": "ensure_start_priority_unique",
+      "filePath": "application/fe_api/priority_rules.py",
+      "lineRange": [
+        27,
+        50
+      ],
+      "summary": "Hàm ensure_start_priority_unique xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/priority_rules.py:parse_required_start_priority",
+      "type": "function",
+      "name": "parse_required_start_priority",
+      "filePath": "application/fe_api/priority_rules.py",
+      "lineRange": [
+        53,
+        75
+      ],
+      "summary": "Hàm parse_required_start_priority xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/priority_rules.py:parse_optional_end_priority",
+      "type": "function",
+      "name": "parse_optional_end_priority",
+      "filePath": "application/fe_api/priority_rules.py",
+      "lineRange": [
+        78,
+        89
+      ],
+      "summary": "Hàm parse_optional_end_priority xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/fe_api/rois.py",
+      "type": "file",
+      "name": "rois.py",
+      "filePath": "application/fe_api/rois.py",
+      "summary": "Use case tạo/sửa/xóa ROI gắn camera-node, validate box và đồng bộ khi inference đang chạy.",
+      "tags": [
+        "roi",
+        "camera",
+        "use-case",
+        "validation"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/rois.py:_RoiWriteBase",
+      "type": "class",
+      "name": "_RoiWriteBase",
+      "filePath": "application/fe_api/rois.py",
+      "lineRange": [
+        21,
+        65
+      ],
+      "summary": "Lớp use case hoặc helper _RoiWriteBase trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/rois.py:CreateRoi",
+      "type": "class",
+      "name": "CreateRoi",
+      "filePath": "application/fe_api/rois.py",
+      "lineRange": [
+        68,
+        113
+      ],
+      "summary": "Use case ghi cấu hình CreateRoi qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/rois.py:UpdateRoi",
+      "type": "class",
+      "name": "UpdateRoi",
+      "filePath": "application/fe_api/rois.py",
+      "lineRange": [
+        116,
+        194
+      ],
+      "summary": "Use case ghi cấu hình UpdateRoi qua port repository và rule đồng bộ.",
+      "tags": [
+        "use-case",
+        "write",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/fe_api/rois.py:DeleteRoi",
+      "type": "class",
+      "name": "DeleteRoi",
+      "filePath": "application/fe_api/rois.py",
+      "lineRange": [
+        197,
+        224
+      ],
+      "summary": "Use case xóa Roi kèm cascade rule khi cần.",
+      "tags": [
+        "use-case",
+        "delete",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/runtime_nodes.py",
+      "type": "file",
+      "name": "runtime_nodes.py",
+      "filePath": "application/fe_api/runtime_nodes.py",
+      "summary": "Use case đọc trạng thái runtime node từ RuntimeStateHub cho dashboard frontend.",
+      "tags": [
+        "runtime",
+        "node",
+        "use-case",
+        "hub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/fe_api/runtime_nodes.py:GetNodeRuntimeState",
+      "type": "class",
+      "name": "GetNodeRuntimeState",
+      "filePath": "application/fe_api/runtime_nodes.py",
+      "lineRange": [
+        11,
+        29
+      ],
+      "summary": "Use case đọc NodeRuntimeState cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/sync_rules.py",
+      "type": "file",
+      "name": "sync_rules.py",
+      "filePath": "application/fe_api/sync_rules.py",
+      "summary": "Rule đồng bộ side-effect: pause inference, cascade xóa node/pair khi cấu hình thay đổi.",
+      "tags": [
+        "sync-rules",
+        "cascade",
+        "inference",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/sync_rules.py:require_inference_paused",
+      "type": "function",
+      "name": "require_inference_paused",
+      "filePath": "application/fe_api/sync_rules.py",
+      "lineRange": [
+        25,
+        35
+      ],
+      "summary": "Hàm require_inference_paused xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/sync_rules.py:cascade_delete_pairs_for_node",
+      "type": "function",
+      "name": "cascade_delete_pairs_for_node",
+      "filePath": "application/fe_api/sync_rules.py",
+      "lineRange": [
+        38,
+        50
+      ],
+      "summary": "Hàm cascade_delete_pairs_for_node xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:application/fe_api/sync_rules.py:cascade_delete_node",
+      "type": "function",
+      "name": "cascade_delete_node",
+      "filePath": "application/fe_api/sync_rules.py",
+      "lineRange": [
+        53,
+        95
+      ],
+      "summary": "Hàm cascade_delete_node xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:application/fe_api/sync_rules.py:set_pairs_enabled_for_nodes",
+      "type": "function",
+      "name": "set_pairs_enabled_for_nodes",
+      "filePath": "application/fe_api/sync_rules.py",
+      "lineRange": [
+        98,
+        118
+      ],
+      "summary": "Hàm set_pairs_enabled_for_nodes xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/fe_api/sync_rules.py:require_node_ready_for_pair",
+      "type": "function",
+      "name": "require_node_ready_for_pair",
+      "filePath": "application/fe_api/sync_rules.py",
+      "lineRange": [
+        121,
+        153
+      ],
+      "summary": "Hàm require_node_ready_for_pair xử lý logic nghiệp vụ hoặc map dữ liệu cho FE API.",
+      "tags": [
+        "utility",
+        "fe-api",
+        "helper"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/fe_api/zones.py",
+      "type": "file",
+      "name": "zones.py",
+      "filePath": "application/fe_api/zones.py",
+      "summary": "Use case liệt kê zone phục vụ cấu hình camera và node trên frontend.",
+      "tags": [
+        "zone",
+        "read",
+        "use-case",
+        "fe-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/fe_api/zones.py:GetZones",
+      "type": "class",
+      "name": "GetZones",
+      "filePath": "application/fe_api/zones.py",
+      "lineRange": [
+        15,
+        85
+      ],
+      "summary": "Use case đọc Zones cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/ports.py",
+      "type": "file",
+      "name": "ports.py",
+      "filePath": "application/ports.py",
+      "summary": "Tập Protocol (port) hexagonal: repository, runtime, auth, dispatch — infrastructure implement.",
+      "tags": [
+        "ports",
+        "protocol",
+        "hexagonal",
+        "type-definition"
+      ],
+      "complexity": "complex",
+      "languageNotes": "typing.Protocol tách application khỏi Mongo, YOLO và HTTP cụ thể."
+    },
+    {
+      "id": "class:application/ports.py:CameraConfigRepository",
+      "type": "class",
+      "name": "CameraConfigRepository",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        13,
+        24
+      ],
+      "summary": "Port truy cập cấu hình camera và ROI trong persistence.",
+      "tags": [
+        "port",
+        "camera",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:PairsRepositoryPort",
+      "type": "class",
+      "name": "PairsRepositoryPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        27,
+        45
+      ],
+      "summary": "Port CRUD và truy vấn cặp node start/end theo zone.",
+      "tags": [
+        "port",
+        "pair",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/ports.py:NodeRepositoryPort",
+      "type": "class",
+      "name": "NodeRepositoryPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        48,
+        75
+      ],
+      "summary": "Port quản lý node AMR: lock, maintenance, priority và zone.",
+      "tags": [
+        "port",
+        "node",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/ports.py:ZoneRepositoryPort",
+      "type": "class",
+      "name": "ZoneRepositoryPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        78,
+        79
+      ],
+      "summary": "Port đọc danh sách zone cấu hình.",
+      "tags": [
+        "port",
+        "zone",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:ActionAuditPort",
+      "type": "class",
+      "name": "ActionAuditPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        82,
+        93
+      ],
+      "summary": "Port ghi audit hành động người dùng trên hệ thống.",
+      "tags": [
+        "port",
+        "audit",
+        "logging"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:SystemActionAuditPort",
+      "type": "class",
+      "name": "SystemActionAuditPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        96,
+        125
+      ],
+      "summary": "Port ghi log hành động hệ thống tự động.",
+      "tags": [
+        "port",
+        "audit",
+        "system"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/ports.py:CameraRuntime",
+      "type": "class",
+      "name": "CameraRuntime",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        128,
+        137
+      ],
+      "summary": "Port điều khiển vòng đời stream/camera runtime.",
+      "tags": [
+        "port",
+        "camera",
+        "runtime"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:InferencePort",
+      "type": "class",
+      "name": "InferencePort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        140,
+        147
+      ],
+      "summary": "Port bật/tắt và trạng thái pipeline inference GPU.",
+      "tags": [
+        "port",
+        "inference",
+        "gpu"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:NodeStateStore",
+      "type": "class",
+      "name": "NodeStateStore",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        150,
+        165
+      ],
+      "summary": "Port lưu trạng thái node realtime cho dispatch.",
+      "tags": [
+        "port",
+        "node",
+        "state"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/ports.py:DispatchGateway",
+      "type": "class",
+      "name": "DispatchGateway",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        168,
+        170
+      ],
+      "summary": "Port gửi lệnh dispatch tới ICS/AMR backend.",
+      "tags": [
+        "port",
+        "dispatch",
+        "gateway"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:IcsOrderQueryPort",
+      "type": "class",
+      "name": "IcsOrderQueryPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        173,
+        175
+      ],
+      "summary": "Port truy vấn trạng thái order từ ICS.",
+      "tags": [
+        "port",
+        "ics",
+        "order"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:RuntimeControl",
+      "type": "class",
+      "name": "RuntimeControl",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        178,
+        182
+      ],
+      "summary": "Port điều khiển start/stop/reload runtime service.",
+      "tags": [
+        "port",
+        "runtime",
+        "control"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:DbHealthPort",
+      "type": "class",
+      "name": "DbHealthPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        185,
+        187
+      ],
+      "summary": "Port ping kết nối database.",
+      "tags": [
+        "port",
+        "health",
+        "database"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:WebrtcRunnerPort",
+      "type": "class",
+      "name": "WebrtcRunnerPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        190,
+        192
+      ],
+      "summary": "Port quản lý session WebRTC preview.",
+      "tags": [
+        "port",
+        "webrtc",
+        "preview"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:UserRepositoryPort",
+      "type": "class",
+      "name": "UserRepositoryPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        195,
+        197
+      ],
+      "summary": "Port truy cập user và credential.",
+      "tags": [
+        "port",
+        "auth",
+        "user"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:RefreshTokenStore",
+      "type": "class",
+      "name": "RefreshTokenStore",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        200,
+        209
+      ],
+      "summary": "Port lưu và thu hồi refresh token.",
+      "tags": [
+        "port",
+        "auth",
+        "token"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:PasswordHasher",
+      "type": "class",
+      "name": "PasswordHasher",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        212,
+        217
+      ],
+      "summary": "Port hash và verify mật khẩu.",
+      "tags": [
+        "port",
+        "auth",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:TokenIssuer",
+      "type": "class",
+      "name": "TokenIssuer",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        220,
+        225
+      ],
+      "summary": "Port phát access/refresh JWT.",
+      "tags": [
+        "port",
+        "auth",
+        "jwt"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:AuthAuditPort",
+      "type": "class",
+      "name": "AuthAuditPort",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        228,
+        233
+      ],
+      "summary": "Port audit sự kiện đăng nhập/đăng xuất.",
+      "tags": [
+        "port",
+        "auth",
+        "audit"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/ports.py:FrameProvider",
+      "type": "class",
+      "name": "FrameProvider",
+      "filePath": "application/ports.py",
+      "lineRange": [
+        236,
+        257
+      ],
+      "summary": "Port lấy frame hoặc metadata preview camera.",
+      "tags": [
+        "port",
+        "camera",
+        "preview"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/result.py",
+      "type": "file",
+      "name": "result.py",
+      "filePath": "application/result.py",
+      "summary": "Dataclass UseCaseResult chuẩn hóa success/error/data và map sang JSON HTTP cho presentation.",
+      "tags": [
+        "result",
+        "use-case",
+        "serialization",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/result.py:UseCaseResult",
+      "type": "class",
+      "name": "UseCaseResult",
+      "filePath": "application/result.py",
+      "lineRange": [
+        9,
+        28
+      ],
+      "summary": "Kết quả chuẩn use case với factory ok/fail và to_http().",
+      "tags": [
+        "result",
+        "dataclass",
+        "http"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/runtime/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "application/runtime/__init__.py",
+      "summary": "Barrel runtime: re-export control, health và RuntimeStateHub cho container.",
+      "tags": [
+        "barrel",
+        "runtime",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/runtime/control.py",
+      "type": "file",
+      "name": "control.py",
+      "filePath": "application/runtime/control.py",
+      "summary": "Use case start/stop/reload pipeline inference và truy vấn trạng thái runtime GPU.",
+      "tags": [
+        "runtime",
+        "control",
+        "use-case",
+        "inference"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/runtime/control.py:StartRuntime",
+      "type": "class",
+      "name": "StartRuntime",
+      "filePath": "application/runtime/control.py",
+      "lineRange": [
+        5,
+        11
+      ],
+      "summary": "Lớp use case hoặc helper StartRuntime trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/runtime/control.py:StopRuntime",
+      "type": "class",
+      "name": "StopRuntime",
+      "filePath": "application/runtime/control.py",
+      "lineRange": [
+        14,
+        20
+      ],
+      "summary": "Lớp use case hoặc helper StopRuntime trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/runtime/control.py:GetRuntimeStatus",
+      "type": "class",
+      "name": "GetRuntimeStatus",
+      "filePath": "application/runtime/control.py",
+      "lineRange": [
+        23,
+        28
+      ],
+      "summary": "Use case đọc RuntimeStatus cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/runtime/control.py:ReloadRuntime",
+      "type": "class",
+      "name": "ReloadRuntime",
+      "filePath": "application/runtime/control.py",
+      "lineRange": [
+        31,
+        37
+      ],
+      "summary": "Lớp use case hoặc helper ReloadRuntime trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:application/runtime/health.py",
+      "type": "file",
+      "name": "health.py",
+      "filePath": "application/runtime/health.py",
+      "summary": "Use case health check tổng hợp DB và runtime cho endpoint /health.",
+      "tags": [
+        "health",
+        "runtime",
+        "use-case",
+        "monitoring"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/runtime/health.py:GetHealth",
+      "type": "class",
+      "name": "GetHealth",
+      "filePath": "application/runtime/health.py",
+      "lineRange": [
+        13,
+        56
+      ],
+      "summary": "Use case đọc Health cho frontend, trả về UseCaseResult.",
+      "tags": [
+        "use-case",
+        "read",
+        "fe-api"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/runtime/runtime_state_hub.py",
+      "type": "file",
+      "name": "runtime_state_hub.py",
+      "filePath": "application/runtime/runtime_state_hub.py",
+      "summary": "Hub in-memory giữ snapshot trạng thái node runtime và map sang item cho poll API.",
+      "tags": [
+        "runtime",
+        "hub",
+        "state",
+        "singleton"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:application/runtime/runtime_state_hub.py:map_runtime_item",
+      "type": "function",
+      "name": "map_runtime_item",
+      "filePath": "application/runtime/runtime_state_hub.py",
+      "lineRange": [
+        14,
+        25
+      ],
+      "summary": "Map bản ghi runtime nội bộ sang dict cho API poll.",
+      "tags": [
+        "runtime",
+        "mapper",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/runtime/runtime_state_hub.py:RuntimeStateHub",
+      "type": "class",
+      "name": "RuntimeStateHub",
+      "filePath": "application/runtime/runtime_state_hub.py",
+      "lineRange": [
+        28,
+        94
+      ],
+      "summary": "Singleton hub cập nhật và đọc map trạng thái node runtime.",
+      "tags": [
+        "runtime",
+        "hub",
+        "state"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:application/state/reset_flags.py",
+      "type": "file",
+      "name": "reset_flags.py",
+      "filePath": "application/state/reset_flags.py",
+      "summary": "Use case ghi/clear cờ reset theo order_id phục vụ luồng hủy batch dispatch.",
+      "tags": [
+        "reset",
+        "dispatch",
+        "use-case",
+        "state"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/state/reset_flags.py:ResetFlagsByOrder",
+      "type": "class",
+      "name": "ResetFlagsByOrder",
+      "filePath": "application/state/reset_flags.py",
+      "lineRange": [
+        5,
+        28
+      ],
+      "summary": "Lớp use case hoặc helper ResetFlagsByOrder trong lớp application.",
+      "tags": [
+        "use-case",
+        "class",
+        "application"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:application/auth/session.py",
+      "target": "function:application/auth/session.py:public_user",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "function:application/auth/session.py:public_user",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "function:application/auth/session.py:_is_expired",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "function:application/auth/session.py:_is_expired",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:Login",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:Login",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:Logout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:Logout",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:RefreshSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:RefreshSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:GetMe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "class:application/auth/session.py:GetMe",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/cameras/preview.py",
+      "target": "class:application/cameras/preview.py:GetCameraPreview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/cameras/preview.py",
+      "target": "class:application/cameras/preview.py:GetCameraPreview",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/cameras/preview.py",
+      "target": "class:application/cameras/preview.py:GetCameraPreviewMeta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/cameras/preview.py",
+      "target": "class:application/cameras/preview.py:GetCameraPreviewMeta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "class:application/fe_api/cameras_crud.py:CreateCamera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "class:application/fe_api/cameras_crud.py:CreateCamera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "class:application/fe_api/cameras_crud.py:DeleteCamera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "class:application/fe_api/cameras_crud.py:DeleteCamera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_kind_from_node_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_kind_from_node_id",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_normalize_observed_ids",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_normalize_observed_ids",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_priority_for_new_node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_priority_for_new_node",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_reject_duplicate_rtsp",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "function:application/fe_api/cameras_helpers.py:_reject_duplicate_rtsp",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "class:application/fe_api/cameras_read.py:GetCameras",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "class:application/fe_api/cameras_read.py:GetCameras",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "class:application/fe_api/cameras_read.py:GetRois",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "class:application/fe_api/cameras_read.py:GetRois",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_status.py",
+      "target": "class:application/fe_api/cameras_status.py:SetCameraStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_status.py",
+      "target": "class:application/fe_api/cameras_status.py:SetCameraStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "class:application/fe_api/cameras_update.py:UpdateCamera",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "class:application/fe_api/cameras_update.py:UpdateCamera",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:iso_utc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:iso_utc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:parse_iso",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:parse_iso",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:parse_device",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:parse_device",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_audit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_audit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_user_action",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_user_action",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_dispatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_dispatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:snapshot_image_url",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:snapshot_image_url",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_notification",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/log_mappers.py",
+      "target": "function:application/fe_api/log_mappers.py:map_notification",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "function:application/fe_api/logs.py:_paged",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "function:application/fe_api/logs.py:_paged",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "function:application/fe_api/logs.py:_time_query",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "function:application/fe_api/logs.py:_time_query",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:PagedLogStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:PagedLogStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:NotificationStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:NotificationStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetAuditLogs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetAuditLogs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetUserActionLogs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetUserActionLogs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetSystemActionLogs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetSystemActionLogs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetNotifications",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetNotifications",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:MarkNotificationRead",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:MarkNotificationRead",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:MarkAllNotificationsRead",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:MarkAllNotificationsRead",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:SnapshotDocStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:SnapshotDocStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetSnapshotImage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetSnapshotImage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetSnapshotsByOrder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "class:application/fe_api/logs.py:GetSnapshotsByOrder",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:node_label",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:node_label",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:camera_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:camera_status",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:parse_roi_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:parse_roi_id",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:roi_item",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:roi_item",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:validate_box",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/mappers.py",
+      "target": "function:application/fe_api/mappers.py:validate_box",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:application/fe_api/maps.py:_iso",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:application/fe_api/maps.py:_iso",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:application/fe_api/maps.py:_public_version",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:application/fe_api/maps.py:_public_version",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:MapVersionStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:MapVersionStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:MapStateStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:MapStateStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:ImportMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:ImportMap",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:ListMapVersions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:ListMapVersions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:SetActiveMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:SetActiveMap",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:GetCompress",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:GetCompress",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:DownloadMapZip",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "class:application/fe_api/maps.py:DownloadMapZip",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "function:application/fe_api/nodes.py:_lock_from_doc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "function:application/fe_api/nodes.py:_lock_from_doc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "function:application/fe_api/nodes.py:_node_item",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "function:application/fe_api/nodes.py:_node_item",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:GetNodes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:GetNodes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:SetMaintenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:SetMaintenance",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:SetLock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:SetLock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:Unlock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:Unlock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:UpdateNode",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "class:application/fe_api/nodes.py:UpdateNode",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:parse_pair_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:parse_pair_id",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:make_pair_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:make_pair_id",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:_resolve_key",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:_resolve_key",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:_validate_nodes_for_pair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "function:application/fe_api/pairs.py:_validate_nodes_for_pair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:GetNodePairs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:GetNodePairs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:CreatePairFe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:CreatePairFe",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:UpdatePairFe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:UpdatePairFe",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:DeletePairFe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:DeletePairFe",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:SetPairEnabledFe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "class:application/fe_api/pairs.py:SetPairEnabledFe",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "function:application/fe_api/poll.py:compute_etag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "function:application/fe_api/poll.py:compute_etag",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_CamerasUC",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_CamerasUC",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_ZonesUC",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_ZonesUC",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_NotifStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_NotifStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_MapState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_MapState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_RuntimeNodesUC",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:_RuntimeNodesUC",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:GetPollSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "class:application/fe_api/poll.py:GetPollSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:find_start_conflict",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:find_start_conflict",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:ensure_start_priority_unique",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:ensure_start_priority_unique",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:parse_required_start_priority",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:parse_required_start_priority",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:parse_optional_end_priority",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "function:application/fe_api/priority_rules.py:parse_optional_end_priority",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:_RoiWriteBase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:_RoiWriteBase",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:CreateRoi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:CreateRoi",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:UpdateRoi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:UpdateRoi",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:DeleteRoi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "class:application/fe_api/rois.py:DeleteRoi",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/runtime_nodes.py",
+      "target": "class:application/fe_api/runtime_nodes.py:GetNodeRuntimeState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/runtime_nodes.py",
+      "target": "class:application/fe_api/runtime_nodes.py:GetNodeRuntimeState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:require_inference_paused",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:require_inference_paused",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:cascade_delete_pairs_for_node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:cascade_delete_pairs_for_node",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:cascade_delete_node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:cascade_delete_node",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:set_pairs_enabled_for_nodes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:set_pairs_enabled_for_nodes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:require_node_ready_for_pair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "function:application/fe_api/sync_rules.py:require_node_ready_for_pair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/zones.py",
+      "target": "class:application/fe_api/zones.py:GetZones",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/fe_api/zones.py",
+      "target": "class:application/fe_api/zones.py:GetZones",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:CameraConfigRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:CameraConfigRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:PairsRepositoryPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:PairsRepositoryPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:NodeRepositoryPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:NodeRepositoryPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:ZoneRepositoryPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:ZoneRepositoryPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:ActionAuditPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:ActionAuditPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:SystemActionAuditPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:SystemActionAuditPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:CameraRuntime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:CameraRuntime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:InferencePort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:InferencePort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:NodeStateStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:NodeStateStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:DispatchGateway",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:DispatchGateway",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:IcsOrderQueryPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:IcsOrderQueryPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:RuntimeControl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:RuntimeControl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:DbHealthPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:DbHealthPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:WebrtcRunnerPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:WebrtcRunnerPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:UserRepositoryPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:UserRepositoryPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:RefreshTokenStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:RefreshTokenStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:PasswordHasher",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:PasswordHasher",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:TokenIssuer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:TokenIssuer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:AuthAuditPort",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:AuthAuditPort",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:FrameProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "class:application/ports.py:FrameProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/result.py",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/result.py",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:StartRuntime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:StartRuntime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:StopRuntime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:StopRuntime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:GetRuntimeStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:GetRuntimeStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:ReloadRuntime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "class:application/runtime/control.py:ReloadRuntime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/health.py",
+      "target": "class:application/runtime/health.py:GetHealth",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/health.py",
+      "target": "class:application/runtime/health.py:GetHealth",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/runtime_state_hub.py",
+      "target": "function:application/runtime/runtime_state_hub.py:map_runtime_item",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/runtime_state_hub.py",
+      "target": "function:application/runtime/runtime_state_hub.py:map_runtime_item",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/runtime/runtime_state_hub.py",
+      "target": "class:application/runtime/runtime_state_hub.py:RuntimeStateHub",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/runtime/runtime_state_hub.py",
+      "target": "class:application/runtime/runtime_state_hub.py:RuntimeStateHub",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/state/reset_flags.py",
+      "target": "class:application/state/reset_flags.py:ResetFlagsByOrder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/state/reset_flags.py",
+      "target": "class:application/state/reset_flags.py:ResetFlagsByOrder",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/auth/__init__.py",
+      "target": "file:application/auth/session.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/auth/session.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/cameras/preview.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/cameras/preview.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/cameras.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/logs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/maps.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/nodes.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/pairs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/poll.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/runtime_nodes.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/__init__.py",
+      "target": "file:application/fe_api/zones.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras.py",
+      "target": "file:application/fe_api/cameras_crud.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras.py",
+      "target": "file:application/fe_api/cameras_read.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras.py",
+      "target": "file:application/fe_api/cameras_status.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras.py",
+      "target": "file:application/fe_api/cameras_update.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras.py",
+      "target": "file:application/fe_api/rois.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "file:application/fe_api/cameras_helpers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "file:application/fe_api/mappers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "file:application/fe_api/priority_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "file:application/fe_api/sync_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_crud.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "file:application/fe_api/priority_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_helpers.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "file:application/fe_api/mappers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_read.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_status.py",
+      "target": "file:application/fe_api/sync_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_status.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_status.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "file:application/fe_api/cameras_helpers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "file:application/fe_api/mappers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "file:application/fe_api/priority_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "file:application/fe_api/sync_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/cameras_update.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "file:application/fe_api/log_mappers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/logs.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "file:infrastructure/storage/map_zip_store.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "file:application/fe_api/mappers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "file:application/fe_api/priority_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/nodes.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "file:application/fe_api/sync_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/pairs.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/poll.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/priority_rules.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "file:application/fe_api/mappers.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "file:application/fe_api/sync_rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/rois.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/runtime_nodes.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/runtime_nodes.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/runtime_nodes.py",
+      "target": "file:application/runtime/runtime_state_hub.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/sync_rules.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/zones.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/fe_api/zones.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/ports.py",
+      "target": "file:domain/reset_policy.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/__init__.py",
+      "target": "file:application/runtime/control.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/__init__.py",
+      "target": "file:application/runtime/health.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/__init__.py",
+      "target": "file:application/runtime/runtime_state_hub.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/control.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/health.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/runtime/health.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/state/reset_flags.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/state/reset_flags.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "class:application/auth/session.py:Login",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/auth/session.py:Logout",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/auth/session.py:RefreshSession",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/auth/session.py:GetMe",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/cameras/preview.py:GetCameraPreview",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/cameras/preview.py:GetCameraPreviewMeta",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/cameras_crud.py:CreateCamera",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/cameras_crud.py:DeleteCamera",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/cameras_helpers.py:_normalize_observed_ids",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/cameras_helpers.py:_priority_for_new_node",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/cameras_helpers.py:_reject_duplicate_rtsp",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/cameras_read.py:GetCameras",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/cameras_read.py:GetRois",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/cameras_status.py:SetCameraStatus",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/cameras_update.py:UpdateCamera",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:GetAuditLogs",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:GetUserActionLogs",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:GetSystemActionLogs",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:GetNotifications",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:MarkNotificationRead",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:MarkAllNotificationsRead",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:GetSnapshotImage",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/logs.py:GetSnapshotsByOrder",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/maps.py:ImportMap",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/maps.py:ListMapVersions",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/maps.py:SetActiveMap",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/maps.py:GetCompress",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/maps.py:DownloadMapZip",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/nodes.py:GetNodes",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/nodes.py:SetMaintenance",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/nodes.py:SetLock",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/nodes.py:Unlock",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/nodes.py:UpdateNode",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/pairs.py:GetNodePairs",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/pairs.py:CreatePairFe",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/pairs.py:UpdatePairFe",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/pairs.py:DeletePairFe",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/pairs.py:SetPairEnabledFe",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/pairs.py:_resolve_key",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/pairs.py:_validate_nodes_for_pair",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/poll.py:_CamerasUC",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/poll.py:_ZonesUC",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/poll.py:_RuntimeNodesUC",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/poll.py:GetPollSnapshot",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/priority_rules.py:ensure_start_priority_unique",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/priority_rules.py:parse_required_start_priority",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/rois.py:CreateRoi",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/rois.py:UpdateRoi",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/rois.py:DeleteRoi",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/runtime_nodes.py:GetNodeRuntimeState",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/sync_rules.py:require_inference_paused",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:application/fe_api/sync_rules.py:require_node_ready_for_pair",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/fe_api/zones.py:GetZones",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/runtime/control.py:StartRuntime",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/runtime/control.py:StopRuntime",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/runtime/control.py:GetRuntimeStatus",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/runtime/control.py:ReloadRuntime",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/runtime/health.py:GetHealth",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/state/reset_flags.py:ResetFlagsByOrder",
+      "target": "class:application/result.py:UseCaseResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:find_compress_entry",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:validate_zip_has_compress",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/fe_api/maps.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:MapZipStore",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

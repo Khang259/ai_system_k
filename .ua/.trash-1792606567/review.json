@@ -1,0 +1,41 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'file:.github/CODEOWNERS' has no edges (orphan)",
+    "Node 'file:.python-version' has no edges (orphan)",
+    "Node 'file:application/__init__.py' has no edges (orphan)",
+    "Node 'file:application/dispatch/__init__.py' has no edges (orphan)",
+    "Node 'file:application/state/__init__.py' has no edges (orphan)",
+    "Node 'file:config/__init__.py' has no edges (orphan)",
+    "Node 'file:config/mediamtx.yml' has no edges (orphan)",
+    "Node 'file:domain/__init__.py' has no edges (orphan)",
+    "Node 'file:infrastructure/__init__.py' has no edges (orphan)",
+    "Node 'file:infrastructure/storage/.gitkeep' has no edges (orphan)",
+    "Node 'file:infrastructure/vision/.gitkeep' has no edges (orphan)",
+    "Node 'file:presentation/__init__.py' has no edges (orphan)",
+    "Node 'file:presentation/routes/__init__.py' has no edges (orphan)",
+    "Node 'file:utils/__init__.py' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 614,
+    "totalEdges": 1516,
+    "totalLayers": 9,
+    "tourSteps": 9,
+    "nodeTypes": {
+      "file": 164,
+      "function": 228,
+      "class": 219,
+      "document": 2,
+      "config": 1
+    },
+    "edgeTypes": {
+      "contains": 447,
+      "exports": 447,
+      "imports": 402,
+      "calls": 210,
+      "documents": 6,
+      "configures": 2,
+      "related": 2
+    }
+  }
+}

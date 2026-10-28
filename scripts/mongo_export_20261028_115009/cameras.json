@@ -1,0 +1,644 @@
+[
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0165"
+    },
+    "cameraId": 8,
+    "name": "CAM-08",
+    "url": "rtsp://admin:Kortek2026#@192.168.50.118:554/Streaming/Channels/102",
+    "zone_id": "X",
+    "enabled": true,
+    "rois": {
+      "start_10000205": {
+        "roi": [
+          421.5,
+          336.522,
+          81.5,
+          88.696
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000208": {
+        "roi": [
+          421.5,
+          237.391,
+          80.0,
+          91.957
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000211": {
+        "roi": [
+          412.0,
+          142.174,
+          81.5,
+          80.217
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000057": {
+        "roi": [
+          344.0,
+          350.217,
+          73.5,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000056": {
+        "roi": [
+          337.5,
+          245.217,
+          77.5,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000069": {
+        "roi": [
+          333.5,
+          148.696,
+          78.5,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000059": {
+        "roi": [
+          254.5,
+          347.609,
+          80.0,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000058": {
+        "roi": [
+          250.5,
+          243.913,
+          82.5,
+          99.13
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000093": {
+        "roi": [
+          248.0,
+          140.87,
+          80.0,
+          95.87
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      }
+    },
+    "updated_at": {
+      "$date": "2026-10-27T09:22:15.576Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0166"
+    },
+    "cameraId": 9,
+    "name": "CAM-09",
+    "url": "rtsp://admin:Kortek2026#@192.168.50.119:554/Streaming/Channels/102",
+    "zone_id": "X",
+    "enabled": true,
+    "rois": {
+      "start_10000146": {
+        "roi": [
+          130.5,
+          214.565,
+          61.5,
+          101.087
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000151": {
+        "roi": [
+          201.5,
+          216.522,
+          68.0,
+          91.957
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000154": {
+        "roi": [
+          280.0,
+          194.348,
+          72.0,
+          112.826
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000157": {
+        "roi": [
+          364.0,
+          198.913,
+          72.0,
+          104.348
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000163": {
+        "roi": [
+          445.5,
+          191.087,
+          64.0,
+          106.304
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000177": {
+        "roi": [
+          128.0,
+          101.739,
+          60.0,
+          106.304
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000180": {
+        "roi": [
+          200.0,
+          97.174,
+          68.0,
+          107.609
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000183": {
+        "roi": [
+          277.5,
+          89.348,
+          70.5,
+          104.348
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000186": {
+        "roi": [
+          356.0,
+          86.739,
+          73.5,
+          102.391
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000189": {
+        "roi": [
+          437.5,
+          84.783,
+          75.5,
+          98.478
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      }
+    },
+    "updated_at": {
+      "$date": "2026-10-27T09:18:34.948Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0167"
+    },
+    "cameraId": 11,
+    "name": "CAM-11",
+    "url": "rtsp://admin:Kortek2026#@192.168.50.121:554/Streaming/Channels/102",
+    "zone_id": "X",
+    "enabled": true,
+    "rois": {
+      "start_10000214": {
+        "roi": [
+          400.0,
+          306.522,
+          74.5,
+          83.478
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000217": {
+        "roi": [
+          400.0,
+          209.348,
+          70.5,
+          80.217
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000220": {
+        "roi": [
+          393.5,
+          110.87,
+          74.5,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000073": {
+        "roi": [
+          317.5,
+          310.435,
+          80.0,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000076": {
+        "roi": [
+          317.5,
+          208.696,
+          78.5,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000081": {
+        "roi": [
+          310.5,
+          101.739,
+          82.5,
+          99.13
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000096": {
+        "roi": [
+          237.5,
+          311.087,
+          74.5,
+          90.652
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000100": {
+        "roi": [
+          228.0,
+          207.391,
+          81.5,
+          85.435
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000103": {
+        "roi": [
+          230.5,
+          109.565,
+          74.5,
+          83.478
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      }
+    },
+    "updated_at": {
+      "$date": "2026-10-27T09:23:45.523Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0168"
+    },
+    "cameraId": 13,
+    "name": "CAM-13",
+    "url": "rtsp://admin:Kortek2026#@192.168.50.123:554/Streaming/Channels/102",
+    "zone_id": "X",
+    "enabled": true,
+    "rois": {
+      "start_10000223": {
+        "roi": [
+          376.5,
+          292.826,
+          78.5,
+          88.696
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000226": {
+        "roi": [
+          375.5,
+          185.217,
+          92.0,
+          101.087
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000229": {
+        "roi": [
+          383.5,
+          79.565,
+          84.0,
+          99.13
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000084": {
+        "roi": [
+          300.5,
+          292.826,
+          74.5,
+          95.87
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000087": {
+        "roi": [
+          294.0,
+          185.87,
+          77.5,
+          102.391
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000090": {
+        "roi": [
+          300.5,
+          87.391,
+          80.0,
+          88.696
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000106": {
+        "roi": [
+          218.0,
+          293.478,
+          76.0,
+          88.696
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000109": {
+        "roi": [
+          206.0,
+          183.261,
+          84.0,
+          99.13
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000112": {
+        "roi": [
+          211.5,
+          73.043,
+          81.5,
+          95.87
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      }
+    },
+    "updated_at": {
+      "$date": "2026-10-27T09:24:59.766Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d0169"
+    },
+    "cameraId": 14,
+    "name": "CAM-14",
+    "url": "rtsp://admin:Kortek2026#@192.168.50.124:554/Streaming/Channels/102",
+    "zone_id": "X",
+    "enabled": true,
+    "rois": {
+      "start_10000160": {
+        "roi": [
+          394.5,
+          200.87,
+          61.5,
+          106.304
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000166": {
+        "roi": [
+          309.5,
+          195.652,
+          72.0,
+          116.739
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000169": {
+        "roi": [
+          228.0,
+          201.522,
+          74.5,
+          106.304
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000172": {
+        "roi": [
+          153.5,
+          198.913,
+          68.0,
+          112.826
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000193": {
+        "roi": [
+          394.5,
+          321.522,
+          57.5,
+          93.913
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000196": {
+        "roi": [
+          310.5,
+          326.087,
+          68.0,
+          93.913
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000199": {
+        "roi": [
+          230.5,
+          324.783,
+          72.0,
+          93.913
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      },
+      "start_10000202": {
+        "roi": [
+          154.5,
+          324.13,
+          69.5,
+          97.174
+        ],
+        "start": true,
+        "end": false,
+        "ref_width": 640,
+        "ref_height": 480
+      }
+    },
+    "updated_at": {
+      "$date": "2026-10-27T09:21:08.074Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ae049dfa50164e6528d016a"
+    },
+    "cameraId": 15,
+    "name": "CAM-15",
+    "url": "rtsp://admin:Kortek2026#@192.168.50.125:554/Streaming/Channels/102",
+    "zone_id": "X",
+    "enabled": true,
+    "rois": {
+      "end_10000013": {
+        "roi": [
+          262.0,
+          271.957,
+          102.5,
+          144.13
+        ],
+        "start": false,
+        "end": true,
+        "ref_width": 640,
+        "ref_height": 480
+      }
+    },
+    "updated_at": {
+      "$date": "2026-10-27T09:25:09.040Z"
+    }
+  }
+]

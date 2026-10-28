@@ -1,0 +1,585 @@
+{
+  "nodes": [
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Tài liệu onboarding AMR Camera Dispatch: yêu cầu GPU/CUDA/TensorRT, uv sync, `.env`, MongoDB, seed user/camera và chạy FastAPI (`uvicorn app:app`). Mô tả kiến trúc layered và link runbook/tài liệu FE.",
+      "tags": [
+        "documentation",
+        "onboarding",
+        "fastapi",
+        "gpu",
+        "mongodb",
+        "uv"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Markdown tiếng Việt; tham chiếu `config/settings.py` và scripts seed."
+    },
+    {
+      "id": "section:README.md:amr-camera-dispatch-system-layered-architecture",
+      "type": "section",
+      "name": "AMR Camera Dispatch System — Layered Architecture",
+      "filePath": "README.md",
+      "lineRange": [
+        1,
+        1
+      ],
+      "summary": "Giới thiệu hệ thống dispatch camera AMR và API `/api/v1`.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:yêu-cầu-thiết-bị-mới",
+      "type": "section",
+      "name": "Yêu cầu thiết bị mới",
+      "filePath": "README.md",
+      "lineRange": [
+        5,
+        5
+      ],
+      "summary": "Bảng yêu cầu phần cứng/phần mềm: Windows, Python, uv, MongoDB, GPU CUDA, TensorRT, FFmpeg NVDEC.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:chạy-lần-đầu",
+      "type": "section",
+      "name": "Chạy lần đầu",
+      "filePath": "README.md",
+      "lineRange": [
+        18,
+        18
+      ],
+      "summary": "Quy trình setup từ clone repo đến chạy API lần đầu.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:1-clone-vào-thư-mục",
+      "type": "section",
+      "name": "1. Clone & vào thư mục",
+      "filePath": "README.md",
+      "lineRange": [
+        20,
+        20
+      ],
+      "summary": "Quy trình setup từ clone repo đến chạy API lần đầu.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:2-cài-dependency",
+      "type": "section",
+      "name": "2. Cài dependency",
+      "filePath": "README.md",
+      "lineRange": [
+        27,
+        27
+      ],
+      "summary": "Hướng dẫn `uv sync` và cài PyTorch wheel CUDA 128.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:3-tạo-file-env",
+      "type": "section",
+      "name": "3. Tạo file `.env`",
+      "filePath": "README.md",
+      "lineRange": [
+        39,
+        39
+      ],
+      "summary": "Mẫu biến môi trường server, Mongo, JWT, MODEL_PATH và ghi chú ICS.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:4-bật-mongodb",
+      "type": "section",
+      "name": "4. Bật MongoDB",
+      "filePath": "README.md",
+      "lineRange": [
+        64,
+        64
+      ],
+      "summary": "Yêu cầu MongoDB local đúng port (mặc định 27018).",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:5-seed-user-đăng-nhập",
+      "type": "section",
+      "name": "5. Seed user đăng nhập",
+      "filePath": "README.md",
+      "lineRange": [
+        68,
+        68
+      ],
+      "summary": "Tạo user admin/operator/viewer qua `scripts/seed_users.py`.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:6-tuỳ-chọn-seed-camera-mock",
+      "type": "section",
+      "name": "6. (Tuỳ chọn) Seed camera mock",
+      "filePath": "README.md",
+      "lineRange": [
+        78,
+        78
+      ],
+      "summary": "Seed dữ liệu camera giả tùy chọn với `scripts/seed_db.py`.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:7-chạy-api",
+      "type": "section",
+      "name": "7. Chạy API",
+      "filePath": "README.md",
+      "lineRange": [
+        86,
+        86
+      ],
+      "summary": "Lệnh `uv run uvicorn app:app` và endpoint Swagger/login.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:kiểm-tra-nhanh-sau-khi-lên",
+      "type": "section",
+      "name": "Kiểm tra nhanh sau khi lên",
+      "filePath": "README.md",
+      "lineRange": [
+        95,
+        95
+      ],
+      "summary": "Smoke test health, login và điều kiện inference GPU.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:cấu-trúc-thư-mục-tóm-tắt",
+      "type": "section",
+      "name": "Cấu trúc thư mục (tóm tắt)",
+      "filePath": "README.md",
+      "lineRange": [
+        101,
+        101
+      ],
+      "summary": "Bảng tóm tắt thư mục domain/application/infrastructure/presentation.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:tài-liệu-fe",
+      "type": "section",
+      "name": "Tài liệu FE",
+      "filePath": "README.md",
+      "lineRange": [
+        115,
+        115
+      ],
+      "summary": "Link tài liệu zone runtime flags cho frontend.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:vận-hành",
+      "type": "section",
+      "name": "Vận hành",
+      "filePath": "README.md",
+      "lineRange": [
+        119,
+        119
+      ],
+      "summary": "Link runbook runtime product (start-scan, degraded, sự cố).",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:README.md:ghi-chú",
+      "type": "section",
+      "name": "Ghi chú",
+      "filePath": "README.md",
+      "lineRange": [
+        123,
+        123
+      ],
+      "summary": "Cảnh báo `.env`/model, hạn chế thiếu CUDA và JWT dev.",
+      "tags": [
+        "section",
+        "documentation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Metadata dự án `kortek` (Python ≥3.10): pin dependency runtime (FastAPI, Motor, TensorRT cu12, Torch CUDA 128 qua uv index, Ultralytics, …) và pytest `testpaths=tests`.",
+      "tags": [
+        "uv",
+        "dependencies",
+        "pytest",
+        "pytorch-cu128",
+        "packaging"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Nguồn chính cho `uv sync`; `readme` trỏ README.md."
+    },
+    {
+      "id": "section:pyproject.toml:project",
+      "type": "section",
+      "name": "project",
+      "filePath": "pyproject.toml",
+      "lineRange": [
+        1,
+        1
+      ],
+      "summary": "Tên package, version, requires-python và mảng dependencies runtime.",
+      "tags": [
+        "section",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:pyproject.toml:project-optional-dependencies",
+      "type": "section",
+      "name": "project.optional-dependencies",
+      "filePath": "pyproject.toml",
+      "lineRange": [
+        34,
+        34
+      ],
+      "summary": "Nhóm dev dependency (pytest).",
+      "tags": [
+        "section",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:pyproject.toml:tool-uv-index",
+      "type": "section",
+      "name": "[[tool.uv.index]]",
+      "filePath": "pyproject.toml",
+      "lineRange": [
+        39,
+        39
+      ],
+      "summary": "Index PyTorch CUDA 128 explicit cho uv.",
+      "tags": [
+        "section",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:pyproject.toml:tool-uv-sources",
+      "type": "section",
+      "name": "tool.uv.sources",
+      "filePath": "pyproject.toml",
+      "lineRange": [
+        44,
+        44
+      ],
+      "summary": "Ánh xạ torch/torchvision/torchaudio sang index pytorch-cu128.",
+      "tags": [
+        "section",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "section:pyproject.toml:tool-pytest-ini_options",
+      "type": "section",
+      "name": "tool.pytest.ini_options",
+      "filePath": "pyproject.toml",
+      "lineRange": [
+        49,
+        49
+      ],
+      "summary": "Cấu hình pytest: testpaths tests, pythonpath root.",
+      "tags": [
+        "section",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:requirements.txt",
+      "type": "document",
+      "name": "requirements.txt",
+      "filePath": "requirements.txt",
+      "summary": "Danh sách pip-style (legacy/tham khảo): AI vision, API stack, Mongo, Pillow; ghi chú cài Torch CUDA và FFmpeg NVDEC/TensorRT thủ công. Một số version khác `pyproject.toml` (vd. ultralytics 8.3.0).",
+      "tags": [
+        "documentation",
+        "dependencies",
+        "pip",
+        "legacy",
+        "cuda"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Bỏ qua bởi extract; đọc trực tiếp từ repo (~30 dòng comment + pins)."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:amr-camera-dispatch-system-layered-architecture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:yêu-cầu-thiết-bị-mới",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:chạy-lần-đầu",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:1-clone-vào-thư-mục",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:2-cài-dependency",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:3-tạo-file-env",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:4-bật-mongodb",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:5-seed-user-đăng-nhập",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:6-tuỳ-chọn-seed-camera-mock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:7-chạy-api",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:kiểm-tra-nhanh-sau-khi-lên",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:cấu-trúc-thư-mục-tóm-tắt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:tài-liệu-fe",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:vận-hành",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "section:README.md:ghi-chú",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "section:pyproject.toml:project",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "section:pyproject.toml:project-optional-dependencies",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "section:pyproject.toml:tool-uv-index",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "section:pyproject.toml:tool-uv-sources",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "section:pyproject.toml:tool-pytest-ini_options",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:main.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.85
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:config/settings.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:scripts/seed_users.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.85
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:scripts/seed_db.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.75
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:app.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "file:main.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "config:pyproject.toml",
+      "target": "document:README.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "document:requirements.txt",
+      "target": "file:app.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "document:requirements.txt",
+      "target": "config:pyproject.toml",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.65
+    }
+  ]
+}

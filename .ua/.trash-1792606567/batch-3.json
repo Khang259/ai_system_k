@@ -1,0 +1,1725 @@
+{
+  "nodes": [
+    {
+      "id": "file:application/cameras/webrtc_ice.py",
+      "type": "file",
+      "name": "webrtc_ice.py",
+      "path": "application/cameras/webrtc_ice.py",
+      "summary": "Helper WebRTC ICE/STUN/TURN từ settings cho browser và MediaMTX.",
+      "complexity": "simple",
+      "tags": [
+        "webrtc",
+        "ice",
+        "stun-turn",
+        "camera"
+      ],
+      "languageNotes": "Đọc WEBRTC_* từ config.settings."
+    },
+    {
+      "id": "function:application/cameras/webrtc_ice.py:ice_servers_for_browser",
+      "type": "function",
+      "name": "ice_servers_for_browser",
+      "path": "application/cameras/webrtc_ice.py",
+      "summary": "Trả danh sách ICE servers cho trình duyệt WebRTC (STUN/TURN + credential).",
+      "complexity": "simple",
+      "tags": [
+        "webrtc",
+        "browser",
+        "ice",
+        "stun"
+      ],
+      "startLine": 7,
+      "endLine": 20
+    },
+    {
+      "id": "function:application/cameras/webrtc_ice.py:ice_servers_for_mediamtx",
+      "type": "function",
+      "name": "ice_servers_for_mediamtx",
+      "path": "application/cameras/webrtc_ice.py",
+      "summary": "Format ICE servers cho MediaMTX (username/credential riêng).",
+      "complexity": "simple",
+      "tags": [
+        "webrtc",
+        "mediamtx",
+        "ice",
+        "turn"
+      ],
+      "startLine": 23,
+      "endLine": 36
+    },
+    {
+      "id": "file:application/dispatch/dispatch_service.py",
+      "type": "file",
+      "name": "dispatch_service.py",
+      "path": "application/dispatch/dispatch_service.py",
+      "summary": "Application service gửi lệnh ICS (single/empty/double), ghép cặp và audit callback.",
+      "complexity": "complex",
+      "tags": [
+        "dispatch",
+        "ics",
+        "application-layer",
+        "pairing"
+      ],
+      "languageNotes": "Không thread; PairManager gọi trong loop."
+    },
+    {
+      "id": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "type": "class",
+      "name": "DispatchService",
+      "path": "application/dispatch/dispatch_service.py",
+      "summary": "Orchestrate dispatch_single/empty/double, build_pairs và callback audit/task.",
+      "complexity": "complex",
+      "tags": [
+        "dispatch-service",
+        "ics",
+        "callbacks",
+        "application"
+      ],
+      "startLine": 32,
+      "endLine": 364
+    },
+    {
+      "id": "file:application/dispatch/ics_payload.py",
+      "type": "file",
+      "name": "ics_payload.py",
+      "path": "application/dispatch/ics_payload.py",
+      "summary": "Dựng JSON payload outbound ICS theo loại dispatch và settings.",
+      "complexity": "moderate",
+      "tags": [
+        "ics",
+        "payload",
+        "dispatch",
+        "json"
+      ],
+      "languageNotes": "Pure builder, không HTTP."
+    },
+    {
+      "id": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "function",
+      "name": "_digits",
+      "path": "application/dispatch/ics_payload.py",
+      "summary": "Lọc chuỗi chỉ giữ chữ số cho order id ICS.",
+      "complexity": "simple",
+      "tags": [
+        "helper",
+        "ics",
+        "sanitize"
+      ],
+      "startLine": 10,
+      "endLine": 11
+    },
+    {
+      "id": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "type": "function",
+      "name": "build_single_payload",
+      "path": "application/dispatch/ics_payload.py",
+      "summary": "Payload ICS cho dispatch single (start→end).",
+      "complexity": "moderate",
+      "tags": [
+        "ics",
+        "payload",
+        "single-dispatch"
+      ],
+      "startLine": 14,
+      "endLine": 23
+    },
+    {
+      "id": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "type": "function",
+      "name": "build_empty_payload",
+      "path": "application/dispatch/ics_payload.py",
+      "summary": "Payload ICS cho empty dispatch tới END_POINT_EMPTY.",
+      "complexity": "moderate",
+      "tags": [
+        "ics",
+        "payload",
+        "empty-dispatch"
+      ],
+      "startLine": 26,
+      "endLine": 35
+    },
+    {
+      "id": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "type": "function",
+      "name": "build_double_payload",
+      "path": "application/dispatch/ics_payload.py",
+      "summary": "Payload ICS gom hai cặp trong một lệnh double.",
+      "complexity": "moderate",
+      "tags": [
+        "ics",
+        "payload",
+        "double-dispatch"
+      ],
+      "startLine": 38,
+      "endLine": 57
+    },
+    {
+      "id": "file:application/dispatch/pending_pairs.py",
+      "type": "file",
+      "name": "pending_pairs.py",
+      "path": "application/dispatch/pending_pairs.py",
+      "summary": "Use case xem trước cặp dispatch tiếp theo cho FE trước confirm.",
+      "complexity": "moderate",
+      "tags": [
+        "pending-pairs",
+        "use-case",
+        "scan-session",
+        "fe-preview"
+      ],
+      "languageNotes": "Trả UseCaseResult; dùng batch_policy và pairing domain."
+    },
+    {
+      "id": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "type": "class",
+      "name": "GetPendingPairs",
+      "path": "application/dispatch/pending_pairs.py",
+      "summary": "execute() tính readyStarts, nextPairs và trạng thái batch cho UI.",
+      "complexity": "moderate",
+      "tags": [
+        "use-case",
+        "pending",
+        "fe-api",
+        "preview"
+      ],
+      "startLine": 23,
+      "endLine": 102
+    },
+    {
+      "id": "file:application/runtime/runtime_service.py",
+      "type": "file",
+      "name": "runtime_service.py",
+      "path": "application/runtime/runtime_service.py",
+      "summary": "Composition root: khởi động/dừng camera, inference, PairManager và NodeState.",
+      "complexity": "complex",
+      "tags": [
+        "runtime",
+        "lifespan",
+        "composition-root",
+        "startup"
+      ],
+      "languageNotes": "Wire sandbox hoặc production từ settings.SANDBOX_MODE."
+    },
+    {
+      "id": "class:application/runtime/runtime_service.py:RuntimeService",
+      "type": "class",
+      "name": "RuntimeService",
+      "path": "application/runtime/runtime_service.py",
+      "summary": "start/stop toàn bộ runtime: repos, vision, dispatch thread, snapshot store.",
+      "complexity": "complex",
+      "tags": [
+        "runtime",
+        "startup",
+        "shutdown",
+        "wiring"
+      ],
+      "startLine": 30,
+      "endLine": 275
+    },
+    {
+      "id": "file:config/settings.py",
+      "type": "file",
+      "name": "settings.py",
+      "path": "config/settings.py",
+      "summary": "Pydantic Settings đọc env/.env — ICS, Mongo, WebRTC, sandbox, retention.",
+      "complexity": "moderate",
+      "tags": [
+        "settings",
+        "pydantic",
+        "env-config",
+        "fastapi"
+      ],
+      "languageNotes": "Kế thừa domain settings constants."
+    },
+    {
+      "id": "class:config/settings.py:Settings",
+      "type": "class",
+      "name": "Settings",
+      "path": "config/settings.py",
+      "summary": "Central config: DB, ICS, WebRTC, paths, sandbox flags từ environment.",
+      "complexity": "moderate",
+      "tags": [
+        "settings",
+        "pydantic",
+        "env",
+        "config"
+      ],
+      "startLine": 16,
+      "endLine": 121
+    },
+    {
+      "id": "file:domain/dispatch/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "path": "domain/dispatch/__init__.py",
+      "summary": "Barrel re-export pairing và priority helpers.",
+      "complexity": "simple",
+      "tags": [
+        "barrel",
+        "dispatch-domain",
+        "re-export"
+      ],
+      "languageNotes": "Package domain.dispatch."
+    },
+    {
+      "id": "file:domain/dispatch/pairing.py",
+      "type": "file",
+      "name": "pairing.py",
+      "path": "domain/dispatch/pairing.py",
+      "summary": "Luật ghép cặp start/end thuần domain từ ready sets và validate_pairs.",
+      "complexity": "moderate",
+      "tags": [
+        "pairing",
+        "domain",
+        "pure-logic",
+        "priority-sort"
+      ],
+      "languageNotes": "Không ICS/HTTP/thread."
+    },
+    {
+      "id": "function:domain/dispatch/pairing.py:build_dispatch_pairs",
+      "type": "function",
+      "name": "build_dispatch_pairs",
+      "path": "domain/dispatch/pairing.py",
+      "summary": "Ghép start/end theo validate_pairs, sort priority, mỗi node dùng một lần.",
+      "complexity": "moderate",
+      "tags": [
+        "pairing",
+        "algorithm",
+        "domain",
+        "dispatch"
+      ],
+      "startLine": 13,
+      "endLine": 59
+    },
+    {
+      "id": "file:domain/dispatch/priority.py",
+      "type": "file",
+      "name": "priority.py",
+      "path": "domain/dispatch/priority.py",
+      "summary": "Sắp xếp start node theo priority Mongo và build StartMetaMap.",
+      "complexity": "simple",
+      "tags": [
+        "priority",
+        "start-meta",
+        "domain",
+        "sort-key"
+      ],
+      "languageNotes": "PRIORITY_FALLBACK từ domain.settings."
+    },
+    {
+      "id": "function:domain/dispatch/priority.py:resolve_priority",
+      "type": "function",
+      "name": "resolve_priority",
+      "path": "domain/dispatch/priority.py",
+      "summary": "Chuẩn hóa priority Mongo sang int với fallback.",
+      "complexity": "simple",
+      "tags": [
+        "priority",
+        "parse",
+        "domain"
+      ],
+      "startLine": 13,
+      "endLine": 20
+    },
+    {
+      "id": "function:domain/dispatch/priority.py:start_meta_from_docs",
+      "type": "function",
+      "name": "start_meta_from_docs",
+      "path": "domain/dispatch/priority.py",
+      "summary": "Build map node_id→{priority, zone_id} từ node documents.",
+      "complexity": "moderate",
+      "tags": [
+        "start-meta",
+        "mongodb",
+        "domain"
+      ],
+      "startLine": 23,
+      "endLine": 36
+    },
+    {
+      "id": "function:domain/dispatch/priority.py:start_sort_key",
+      "type": "function",
+      "name": "start_sort_key",
+      "path": "domain/dispatch/priority.py",
+      "summary": "Tuple sort key: priority ASC, zone_id, node_id cho ready starts.",
+      "complexity": "simple",
+      "tags": [
+        "sort",
+        "priority",
+        "start-node"
+      ],
+      "startLine": 39,
+      "endLine": 51
+    },
+    {
+      "id": "file:domain/node_state.py",
+      "type": "file",
+      "name": "node_state.py",
+      "path": "domain/node_state.py",
+      "summary": "In-memory trạng thái node/pair, lock và refresh cho dispatch loop.",
+      "complexity": "complex",
+      "tags": [
+        "node-state",
+        "domain",
+        "lock",
+        "runtime-state"
+      ],
+      "languageNotes": "NodeState là core state machine cho AMR nodes."
+    },
+    {
+      "id": "function:domain/node_state.py:_refresh_flag",
+      "type": "function",
+      "name": "_refresh_flag",
+      "path": "domain/node_state.py",
+      "summary": "Helper cập nhật cờ refresh trên node entry.",
+      "complexity": "simple",
+      "tags": [
+        "node-state",
+        "helper",
+        "flag"
+      ],
+      "startLine": 26,
+      "endLine": 27
+    },
+    {
+      "id": "function:domain/node_state.py:_is_blocked",
+      "type": "function",
+      "name": "_is_blocked",
+      "path": "domain/node_state.py",
+      "summary": "Kiểm tra node bị block bởi lock hoặc trạng thái.",
+      "complexity": "simple",
+      "tags": [
+        "node-state",
+        "block",
+        "helper"
+      ],
+      "startLine": 30,
+      "endLine": 31
+    },
+    {
+      "id": "class:domain/node_state.py:NodeState",
+      "type": "class",
+      "name": "NodeState",
+      "path": "domain/node_state.py",
+      "summary": "Quản lý ready lists, locks, pairs đang chạy và transition dispatch.",
+      "complexity": "complex",
+      "tags": [
+        "node-state",
+        "state-machine",
+        "dispatch",
+        "lock"
+      ],
+      "startLine": 34,
+      "endLine": 256
+    },
+    {
+      "id": "file:domain/settings.py",
+      "type": "file",
+      "name": "settings.py",
+      "path": "domain/settings.py",
+      "summary": "Hằng số domain (priority fallback) tách khỏi config env.",
+      "complexity": "simple",
+      "tags": [
+        "domain-constants",
+        "priority",
+        "shared"
+      ],
+      "languageNotes": "Không phụ thuộc Pydantic."
+    },
+    {
+      "id": "file:infrastructure/auth/notification_publisher.py",
+      "type": "file",
+      "name": "notification_publisher.py",
+      "path": "infrastructure/auth/notification_publisher.py",
+      "summary": "Port publish notification SSE; Null impl khi tắt.",
+      "complexity": "simple",
+      "tags": [
+        "notification",
+        "sse",
+        "auth-infra",
+        "null-object"
+      ],
+      "languageNotes": "bind_loop gắn asyncio loop."
+    },
+    {
+      "id": "class:infrastructure/auth/notification_publisher.py:NotificationPublisher",
+      "type": "class",
+      "name": "NotificationPublisher",
+      "path": "infrastructure/auth/notification_publisher.py",
+      "summary": "Gắn asyncio loop và publish event tới SSE subscribers.",
+      "complexity": "simple",
+      "tags": [
+        "notification",
+        "sse",
+        "publisher"
+      ],
+      "startLine": 16,
+      "endLine": 22
+    },
+    {
+      "id": "class:infrastructure/auth/notification_publisher.py:NullNotificationPublisher",
+      "type": "class",
+      "name": "NullNotificationPublisher",
+      "path": "infrastructure/auth/notification_publisher.py",
+      "summary": "No-op publisher khi feature notification tắt.",
+      "complexity": "simple",
+      "tags": [
+        "null-object",
+        "notification",
+        "stub"
+      ],
+      "startLine": 25,
+      "endLine": 27
+    },
+    {
+      "id": "file:infrastructure/dispatch/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "path": "infrastructure/dispatch/__init__.py",
+      "summary": "Barrel export PairManager và strategy dispatch.",
+      "complexity": "simple",
+      "tags": [
+        "barrel",
+        "dispatch-infra",
+        "pair-manager"
+      ]
+    },
+    {
+      "id": "file:infrastructure/dispatch/pair_manager.py",
+      "type": "file",
+      "name": "pair_manager.py",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "Thread loop ~1s gọi DispatchService qua strategy single/empty/double.",
+      "complexity": "complex",
+      "tags": [
+        "pair-manager",
+        "thread",
+        "strategy-pattern",
+        "dispatch-loop"
+      ],
+      "languageNotes": "Infrastructure bọc application DispatchService."
+    },
+    {
+      "id": "function:infrastructure/dispatch/pair_manager.py:get_validate_pairs",
+      "type": "function",
+      "name": "get_validate_pairs",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "Factory/helper lấy validate pairs từ repository (test hook).",
+      "complexity": "simple",
+      "tags": [
+        "pair-manager",
+        "helper",
+        "pairs"
+      ],
+      "startLine": 212,
+      "endLine": 213
+    },
+    {
+      "id": "class:infrastructure/dispatch/pair_manager.py:DispatchStrategy",
+      "type": "class",
+      "name": "DispatchStrategy",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "ABC strategy bọc DispatchService.execute theo loại dispatch.",
+      "complexity": "moderate",
+      "tags": [
+        "strategy",
+        "abc",
+        "dispatch"
+      ],
+      "startLine": 23,
+      "endLine": 39
+    },
+    {
+      "id": "class:infrastructure/dispatch/pair_manager.py:SingleDispatch",
+      "type": "class",
+      "name": "SingleDispatch",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "Strategy gọi dispatch_single cho runtime mặc định.",
+      "complexity": "moderate",
+      "tags": [
+        "single-dispatch",
+        "strategy"
+      ],
+      "startLine": 42,
+      "endLine": 60
+    },
+    {
+      "id": "class:infrastructure/dispatch/pair_manager.py:EmptyDispatch",
+      "type": "class",
+      "name": "EmptyDispatch",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "Strategy xử lý hàng đợi empty tới END_POINT_EMPTY.",
+      "complexity": "moderate",
+      "tags": [
+        "empty-dispatch",
+        "strategy"
+      ],
+      "startLine": 63,
+      "endLine": 83
+    },
+    {
+      "id": "class:infrastructure/dispatch/pair_manager.py:DoubleDispatch",
+      "type": "class",
+      "name": "DoubleDispatch",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "Strategy gửi hai cặp trong một vòng double dispatch.",
+      "complexity": "moderate",
+      "tags": [
+        "double-dispatch",
+        "strategy"
+      ],
+      "startLine": 86,
+      "endLine": 108
+    },
+    {
+      "id": "class:infrastructure/dispatch/pair_manager.py:PairManager",
+      "type": "class",
+      "name": "PairManager",
+      "path": "infrastructure/dispatch/pair_manager.py",
+      "summary": "Thread nền poll state và delegate strategy mỗi interval.",
+      "complexity": "complex",
+      "tags": [
+        "pair-manager",
+        "thread",
+        "loop",
+        "dispatch"
+      ],
+      "startLine": 111,
+      "endLine": 209
+    },
+    {
+      "id": "file:infrastructure/ics/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "path": "infrastructure/ics/__init__.py",
+      "summary": "Barrel HTTP gateway và order query ICS.",
+      "complexity": "simple",
+      "tags": [
+        "barrel",
+        "ics",
+        "http-client"
+      ]
+    },
+    {
+      "id": "file:infrastructure/ics/http_dispatch_gateway.py",
+      "type": "file",
+      "name": "http_dispatch_gateway.py",
+      "path": "infrastructure/ics/http_dispatch_gateway.py",
+      "summary": "POST payload sang ICS_URL qua httpx; implement DispatchGateway port.",
+      "complexity": "moderate",
+      "tags": [
+        "ics",
+        "http",
+        "gateway",
+        "outbound"
+      ],
+      "languageNotes": "Audit/log lỗi qua setup_logger."
+    },
+    {
+      "id": "class:infrastructure/ics/http_dispatch_gateway.py:HttpDispatchGateway",
+      "type": "class",
+      "name": "HttpDispatchGateway",
+      "path": "infrastructure/ics/http_dispatch_gateway.py",
+      "summary": "httpx POST JSON tới ICS; timeout và log lỗi HTTP.",
+      "complexity": "moderate",
+      "tags": [
+        "http",
+        "ics",
+        "gateway",
+        "httpx"
+      ],
+      "startLine": 14,
+      "endLine": 39
+    },
+    {
+      "id": "file:infrastructure/ics/http_order_query.py",
+      "type": "file",
+      "name": "http_order_query.py",
+      "path": "infrastructure/ics/http_order_query.py",
+      "summary": "GET trạng thái order ICS; implement IcsOrderQueryPort.",
+      "complexity": "simple",
+      "tags": [
+        "ics",
+        "order-query",
+        "http",
+        "port"
+      ]
+    },
+    {
+      "id": "class:infrastructure/ics/http_order_query.py:HttpOrderQuery",
+      "type": "class",
+      "name": "HttpOrderQuery",
+      "path": "infrastructure/ics/http_order_query.py",
+      "summary": "Query order status từ ICS REST endpoint.",
+      "complexity": "simple",
+      "tags": [
+        "ics",
+        "order",
+        "query",
+        "http"
+      ],
+      "startLine": 9,
+      "endLine": 20
+    },
+    {
+      "id": "file:infrastructure/persistence/node_lock_sync.py",
+      "type": "file",
+      "name": "node_lock_sync.py",
+      "path": "infrastructure/persistence/node_lock_sync.py",
+      "summary": "Đồng bộ lock node với Mongo; Null khi không cần persist lock.",
+      "complexity": "moderate",
+      "tags": [
+        "node-lock",
+        "mongodb",
+        "persistence",
+        "sync"
+      ]
+    },
+    {
+      "id": "class:infrastructure/persistence/node_lock_sync.py:NodeLockSync",
+      "type": "class",
+      "name": "NodeLockSync",
+      "path": "infrastructure/persistence/node_lock_sync.py",
+      "summary": "Persist/clear node locks trên Mongo đồng bộ với NodeState.",
+      "complexity": "moderate",
+      "tags": [
+        "mongodb",
+        "lock",
+        "sync",
+        "persistence"
+      ],
+      "startLine": 17,
+      "endLine": 66
+    },
+    {
+      "id": "class:infrastructure/persistence/node_lock_sync.py:NullNodeLockSync",
+      "type": "class",
+      "name": "NullNodeLockSync",
+      "path": "infrastructure/persistence/node_lock_sync.py",
+      "summary": "Bỏ qua persist lock — dùng khi chỉ in-memory.",
+      "complexity": "simple",
+      "tags": [
+        "null-object",
+        "lock",
+        "stub"
+      ],
+      "startLine": 69,
+      "endLine": 83
+    },
+    {
+      "id": "file:infrastructure/sandbox/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "path": "infrastructure/sandbox/__init__.py",
+      "summary": "Barrel sandbox camera, ICS, inference cho SANDBOX_MODE.",
+      "complexity": "simple",
+      "tags": [
+        "sandbox",
+        "barrel",
+        "dev-mode"
+      ],
+      "languageNotes": "Re-export từ sandbox_* modules."
+    },
+    {
+      "id": "file:infrastructure/sandbox/sandbox_camera_manager.py",
+      "type": "file",
+      "name": "sandbox_camera_manager.py",
+      "path": "infrastructure/sandbox/sandbox_camera_manager.py",
+      "summary": "CameraManager giả lập frame/video cho dev không GPU.",
+      "complexity": "moderate",
+      "tags": [
+        "sandbox",
+        "camera",
+        "mock",
+        "dev"
+      ],
+      "languageNotes": "Delegate pattern từ CameraManager base."
+    },
+    {
+      "id": "class:infrastructure/sandbox/sandbox_camera_manager.py:SandboxCameraManager",
+      "type": "class",
+      "name": "SandboxCameraManager",
+      "path": "infrastructure/sandbox/sandbox_camera_manager.py",
+      "summary": "Phát frame test/video thay camera thật trong sandbox mode.",
+      "complexity": "moderate",
+      "tags": [
+        "sandbox",
+        "camera",
+        "mock-stream"
+      ],
+      "startLine": 24,
+      "endLine": 159
+    },
+    {
+      "id": "file:infrastructure/sandbox/sandbox_inference.py",
+      "type": "file",
+      "name": "sandbox_inference.py",
+      "path": "infrastructure/sandbox/sandbox_inference.py",
+      "summary": "InferencePort trả detection giả cho pipeline sandbox.",
+      "complexity": "simple",
+      "tags": [
+        "sandbox",
+        "inference",
+        "mock",
+        "vision"
+      ]
+    },
+    {
+      "id": "class:infrastructure/sandbox/sandbox_inference.py:SandboxInference",
+      "type": "class",
+      "name": "SandboxInference",
+      "path": "infrastructure/sandbox/sandbox_inference.py",
+      "summary": "Trả detection cố định/giả lập cho pipeline không TensorRT.",
+      "complexity": "simple",
+      "tags": [
+        "sandbox",
+        "inference",
+        "mock"
+      ],
+      "startLine": 7,
+      "endLine": 36
+    },
+    {
+      "id": "file:infrastructure/storage/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "path": "infrastructure/storage/__init__.py",
+      "summary": "Barrel map zip store và retention runner.",
+      "complexity": "simple",
+      "tags": [
+        "storage",
+        "barrel",
+        "maps",
+        "retention"
+      ]
+    },
+    {
+      "id": "file:infrastructure/storage/map_zip_store.py",
+      "type": "file",
+      "name": "map_zip_store.py",
+      "path": "infrastructure/storage/map_zip_store.py",
+      "summary": "Đọc/ghi file map .zip và validate entry nén.",
+      "complexity": "moderate",
+      "tags": [
+        "map-zip",
+        "storage",
+        "filesystem",
+        "validation"
+      ]
+    },
+    {
+      "id": "function:infrastructure/storage/map_zip_store.py:find_compress_entry",
+      "type": "function",
+      "name": "find_compress_entry",
+      "path": "infrastructure/storage/map_zip_store.py",
+      "summary": "Tìm entry .compress trong zip map archive.",
+      "complexity": "simple",
+      "tags": [
+        "zip",
+        "map",
+        "helper"
+      ],
+      "startLine": 14,
+      "endLine": 20
+    },
+    {
+      "id": "function:infrastructure/storage/map_zip_store.py:validate_zip_has_compress",
+      "type": "function",
+      "name": "validate_zip_has_compress",
+      "path": "infrastructure/storage/map_zip_store.py",
+      "summary": "Validate cấu trúc zip map trước khi lưu/serve.",
+      "complexity": "moderate",
+      "tags": [
+        "validation",
+        "zip",
+        "map"
+      ],
+      "startLine": 23,
+      "endLine": 50
+    },
+    {
+      "id": "class:infrastructure/storage/map_zip_store.py:MapZipStore",
+      "type": "class",
+      "name": "MapZipStore",
+      "path": "infrastructure/storage/map_zip_store.py",
+      "summary": "CRUD file map .zip trên filesystem với kiểm tra compress.",
+      "complexity": "moderate",
+      "tags": [
+        "map-store",
+        "filesystem",
+        "zip"
+      ],
+      "startLine": 53,
+      "endLine": 88
+    },
+    {
+      "id": "file:infrastructure/storage/retention.py",
+      "type": "file",
+      "name": "retention.py",
+      "path": "infrastructure/storage/retention.py",
+      "summary": "Xóa log/snapshot cũ theo TTL; RetentionRunner chạy nền.",
+      "complexity": "moderate",
+      "tags": [
+        "retention",
+        "cleanup",
+        "logs",
+        "background"
+      ],
+      "languageNotes": "purge_old_logs quét thư mục logs."
+    },
+    {
+      "id": "function:infrastructure/storage/retention.py:purge_old_logs",
+      "type": "function",
+      "name": "purge_old_logs",
+      "path": "infrastructure/storage/retention.py",
+      "summary": "Xóa file log cũ hơn retention days trong thư mục cấu hình.",
+      "complexity": "moderate",
+      "tags": [
+        "retention",
+        "logs",
+        "cleanup"
+      ],
+      "startLine": 25,
+      "endLine": 92
+    },
+    {
+      "id": "class:infrastructure/storage/retention.py:RetentionRunner",
+      "type": "class",
+      "name": "RetentionRunner",
+      "path": "infrastructure/storage/retention.py",
+      "summary": "Thread/async runner gọi purge theo chu kỳ settings.",
+      "complexity": "moderate",
+      "tags": [
+        "retention",
+        "background",
+        "scheduler"
+      ],
+      "startLine": 95,
+      "endLine": 148
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:application/cameras/webrtc_ice.py",
+      "target": "function:application/cameras/webrtc_ice.py:ice_servers_for_browser",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/cameras/webrtc_ice.py",
+      "target": "function:application/cameras/webrtc_ice.py:ice_servers_for_browser",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/cameras/webrtc_ice.py",
+      "target": "function:application/cameras/webrtc_ice.py:ice_servers_for_mediamtx",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/cameras/webrtc_ice.py",
+      "target": "function:application/cameras/webrtc_ice.py:ice_servers_for_mediamtx",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "class:application/runtime/runtime_service.py:RuntimeService",
+      "type": "contains"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "class:application/runtime/runtime_service.py:RuntimeService",
+      "type": "exports"
+    },
+    {
+      "source": "file:config/settings.py",
+      "target": "class:config/settings.py:Settings",
+      "type": "contains"
+    },
+    {
+      "source": "file:config/settings.py",
+      "target": "class:config/settings.py:Settings",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/dispatch/pairing.py",
+      "target": "function:domain/dispatch/pairing.py:build_dispatch_pairs",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/dispatch/pairing.py",
+      "target": "function:domain/dispatch/pairing.py:build_dispatch_pairs",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "function:domain/dispatch/priority.py:resolve_priority",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "function:domain/dispatch/priority.py:resolve_priority",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "function:domain/dispatch/priority.py:start_meta_from_docs",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "function:domain/dispatch/priority.py:start_meta_from_docs",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "function:domain/dispatch/priority.py:start_sort_key",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "function:domain/dispatch/priority.py:start_sort_key",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "function:domain/node_state.py:_refresh_flag",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "function:domain/node_state.py:_refresh_flag",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "function:domain/node_state.py:_is_blocked",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "function:domain/node_state.py:_is_blocked",
+      "type": "exports"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "class:domain/node_state.py:NodeState",
+      "type": "contains"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "class:domain/node_state.py:NodeState",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/auth/notification_publisher.py",
+      "target": "class:infrastructure/auth/notification_publisher.py:NotificationPublisher",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/auth/notification_publisher.py",
+      "target": "class:infrastructure/auth/notification_publisher.py:NotificationPublisher",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/auth/notification_publisher.py",
+      "target": "class:infrastructure/auth/notification_publisher.py:NullNotificationPublisher",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/auth/notification_publisher.py",
+      "target": "class:infrastructure/auth/notification_publisher.py:NullNotificationPublisher",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "function:infrastructure/dispatch/pair_manager.py:get_validate_pairs",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "function:infrastructure/dispatch/pair_manager.py:get_validate_pairs",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:DispatchStrategy",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:DispatchStrategy",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:SingleDispatch",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:SingleDispatch",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:EmptyDispatch",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:EmptyDispatch",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:DoubleDispatch",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:DoubleDispatch",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:PairManager",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "class:infrastructure/dispatch/pair_manager.py:PairManager",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/ics/http_dispatch_gateway.py",
+      "target": "class:infrastructure/ics/http_dispatch_gateway.py:HttpDispatchGateway",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/ics/http_dispatch_gateway.py",
+      "target": "class:infrastructure/ics/http_dispatch_gateway.py:HttpDispatchGateway",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/ics/http_order_query.py",
+      "target": "class:infrastructure/ics/http_order_query.py:HttpOrderQuery",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/ics/http_order_query.py",
+      "target": "class:infrastructure/ics/http_order_query.py:HttpOrderQuery",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/persistence/node_lock_sync.py",
+      "target": "class:infrastructure/persistence/node_lock_sync.py:NodeLockSync",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/persistence/node_lock_sync.py",
+      "target": "class:infrastructure/persistence/node_lock_sync.py:NodeLockSync",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/persistence/node_lock_sync.py",
+      "target": "class:infrastructure/persistence/node_lock_sync.py:NullNodeLockSync",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/persistence/node_lock_sync.py",
+      "target": "class:infrastructure/persistence/node_lock_sync.py:NullNodeLockSync",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_camera_manager.py",
+      "target": "class:infrastructure/sandbox/sandbox_camera_manager.py:SandboxCameraManager",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_camera_manager.py",
+      "target": "class:infrastructure/sandbox/sandbox_camera_manager.py:SandboxCameraManager",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_inference.py",
+      "target": "class:infrastructure/sandbox/sandbox_inference.py:SandboxInference",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_inference.py",
+      "target": "class:infrastructure/sandbox/sandbox_inference.py:SandboxInference",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/storage/map_zip_store.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:find_compress_entry",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/storage/map_zip_store.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:find_compress_entry",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/storage/map_zip_store.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:validate_zip_has_compress",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/storage/map_zip_store.py",
+      "target": "function:infrastructure/storage/map_zip_store.py:validate_zip_has_compress",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/storage/map_zip_store.py",
+      "target": "class:infrastructure/storage/map_zip_store.py:MapZipStore",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/storage/map_zip_store.py",
+      "target": "class:infrastructure/storage/map_zip_store.py:MapZipStore",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/storage/retention.py",
+      "target": "function:infrastructure/storage/retention.py:purge_old_logs",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/storage/retention.py",
+      "target": "function:infrastructure/storage/retention.py:purge_old_logs",
+      "type": "exports"
+    },
+    {
+      "source": "file:infrastructure/storage/retention.py",
+      "target": "class:infrastructure/storage/retention.py:RetentionRunner",
+      "type": "contains"
+    },
+    {
+      "source": "file:infrastructure/storage/retention.py",
+      "target": "class:infrastructure/storage/retention.py:RetentionRunner",
+      "type": "exports"
+    },
+    {
+      "source": "file:application/cameras/webrtc_ice.py",
+      "target": "file:config/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "file:application/dispatch/ics_payload.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "file:application/ports.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "file:domain/dispatch/pairing.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/dispatch_service.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/ics_payload.py",
+      "target": "file:config/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:application/ports.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:application/result.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:application/scan_session.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:domain/batch_policy.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:domain/dispatch/pairing.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/dispatch/pending_pairs.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:application/container.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:application/dispatch/dispatch_service.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:config/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:domain/node_state.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/adapters.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/dispatch/pair_manager.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/ics/http_dispatch_gateway.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/persistence/camera_repository.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/persistence/pairs_repository.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/sandbox/__init__.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/storage/snapshot_fs.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/vision/camera_manager.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:infrastructure/vision/inference_engine.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:application/runtime/runtime_service.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:config/settings.py",
+      "target": "file:domain/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:domain/dispatch/__init__.py",
+      "target": "file:domain/dispatch/pairing.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:domain/dispatch/__init__.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:domain/dispatch/pairing.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:domain/dispatch/priority.py",
+      "target": "file:domain/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:domain/node_state.py",
+      "target": "file:domain/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/auth/notification_publisher.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/__init__.py",
+      "target": "file:infrastructure/dispatch/pair_manager.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "file:application/dispatch/dispatch_service.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "file:config/settings.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "file:domain/batch_policy.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/dispatch/pair_manager.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/ics/__init__.py",
+      "target": "file:infrastructure/ics/http_dispatch_gateway.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/ics/__init__.py",
+      "target": "file:infrastructure/ics/http_order_query.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/ics/http_dispatch_gateway.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/persistence/node_lock_sync.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/__init__.py",
+      "target": "file:infrastructure/sandbox/sandbox_camera_manager.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/__init__.py",
+      "target": "file:infrastructure/sandbox/sandbox_ics.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/__init__.py",
+      "target": "file:infrastructure/sandbox/sandbox_inference.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/__init__.py",
+      "target": "file:infrastructure/sandbox/smoke_trail.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_camera_manager.py",
+      "target": "file:infrastructure/vision/camera_manager.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_camera_manager.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/storage/__init__.py",
+      "target": "file:infrastructure/storage/map_zip_store.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/storage/__init__.py",
+      "target": "file:infrastructure/storage/retention.py",
+      "type": "imports"
+    },
+    {
+      "source": "file:infrastructure/storage/retention.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports"
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "type": "calls",
+      "lineNumber": 120
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "type": "calls",
+      "lineNumber": 176
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "type": "calls",
+      "lineNumber": 236
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "type": "calls",
+      "lineNumber": 268
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "type": "calls",
+      "lineNumber": 315
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:infrastructure/dispatch/pair_manager.py:get_validate_pairs",
+      "type": "calls",
+      "lineNumber": 349
+    },
+    {
+      "source": "class:application/dispatch/dispatch_service.py:DispatchService",
+      "target": "function:domain/dispatch/pairing.py:build_dispatch_pairs",
+      "type": "calls",
+      "lineNumber": 350
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 16
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_single_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 17
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 28
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_empty_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 29
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 45
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 46
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 47
+    },
+    {
+      "source": "function:application/dispatch/ics_payload.py:build_double_payload",
+      "target": "function:application/dispatch/ics_payload.py:_digits",
+      "type": "calls",
+      "lineNumber": 48
+    },
+    {
+      "source": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "target": "function:infrastructure/dispatch/pair_manager.py:get_validate_pairs",
+      "type": "calls",
+      "lineNumber": 49
+    },
+    {
+      "source": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "target": "function:domain/dispatch/priority.py:start_sort_key",
+      "type": "calls",
+      "lineNumber": 52
+    },
+    {
+      "source": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "target": "function:domain/dispatch/priority.py:resolve_priority",
+      "type": "calls",
+      "lineNumber": 59
+    },
+    {
+      "source": "class:application/dispatch/pending_pairs.py:GetPendingPairs",
+      "target": "function:domain/dispatch/pairing.py:build_dispatch_pairs",
+      "type": "calls",
+      "lineNumber": 67
+    },
+    {
+      "source": "class:application/runtime/runtime_service.py:RuntimeService",
+      "target": "function:domain/dispatch/priority.py:start_meta_from_docs",
+      "type": "calls",
+      "lineNumber": 52
+    },
+    {
+      "source": "function:domain/dispatch/pairing.py:build_dispatch_pairs",
+      "target": "function:domain/dispatch/priority.py:start_sort_key",
+      "type": "calls",
+      "lineNumber": 29
+    },
+    {
+      "source": "function:domain/dispatch/priority.py:start_sort_key",
+      "target": "function:domain/dispatch/priority.py:resolve_priority",
+      "type": "calls",
+      "lineNumber": 49
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_is_blocked",
+      "type": "calls",
+      "lineNumber": 93
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_is_blocked",
+      "type": "calls",
+      "lineNumber": 115
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_refresh_flag",
+      "type": "calls",
+      "lineNumber": 136
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_refresh_flag",
+      "type": "calls",
+      "lineNumber": 151
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_is_blocked",
+      "type": "calls",
+      "lineNumber": 167
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_refresh_flag",
+      "type": "calls",
+      "lineNumber": 171
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_is_blocked",
+      "type": "calls",
+      "lineNumber": 173
+    },
+    {
+      "source": "class:domain/node_state.py:NodeState",
+      "target": "function:domain/node_state.py:_refresh_flag",
+      "type": "calls",
+      "lineNumber": 188
+    },
+    {
+      "source": "function:infrastructure/storage/map_zip_store.py:validate_zip_has_compress",
+      "target": "function:infrastructure/storage/map_zip_store.py:find_compress_entry",
+      "type": "calls",
+      "lineNumber": 36
+    },
+    {
+      "source": "class:infrastructure/storage/map_zip_store.py:MapZipStore",
+      "target": "function:infrastructure/storage/map_zip_store.py:validate_zip_has_compress",
+      "type": "calls",
+      "lineNumber": 82
+    }
+  ]
+}

@@ -1,0 +1,1918 @@
+{
+  "nodes": [
+    {
+      "id": "file:application/dispatch/active_task_hub.py",
+      "type": "file",
+      "name": "active_task_hub.py",
+      "filePath": "application/dispatch/active_task_hub.py",
+      "summary": "Hub in-memory thread-safe cho danh sách active task dispatch: upsert, SSE subscribe qua queue.",
+      "tags": [
+        "dispatch",
+        "hub",
+        "sse",
+        "thread-safe",
+        "active-tasks"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Lock + Queue fan-out snapshot mỗi khi state đổi."
+    },
+    {
+      "id": "class:application/dispatch/active_task_hub.py:ActiveTaskHub",
+      "type": "class",
+      "name": "ActiveTaskHub",
+      "filePath": "application/dispatch/active_task_hub.py",
+      "lineRange": [
+        21,
+        89
+      ],
+      "summary": "Store dict order_id→task, publish snapshot cho subscriber SSE.",
+      "tags": [
+        "hub",
+        "dispatch",
+        "observer",
+        "thread-safe"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/dispatch/active_tasks.py",
+      "type": "file",
+      "name": "active_tasks.py",
+      "filePath": "application/dispatch/active_tasks.py",
+      "summary": "Use case dispatch: đọc priority, track task sau dispatch, list active tasks và unlock theo order status ICS.",
+      "tags": [
+        "use-case",
+        "dispatch",
+        "active-tasks",
+        "ics-unlock",
+        "application-layer"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/dispatch/active_tasks.py:_ResetFlags",
+      "type": "class",
+      "name": "_ResetFlags",
+      "filePath": "application/dispatch/active_tasks.py",
+      "lineRange": [
+        20,
+        21
+      ],
+      "summary": "Use case / helper `_ResetFlags` trong luồng active task dispatch.",
+      "tags": [
+        "use-case",
+        "dispatch",
+        "application-layer"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/dispatch/active_tasks.py:StartPriorityReader",
+      "type": "class",
+      "name": "StartPriorityReader",
+      "filePath": "application/dispatch/active_tasks.py",
+      "lineRange": [
+        24,
+        39
+      ],
+      "summary": "Đọc StartMetaMap từ NodeRepository + runtime meta cho sort active tasks.",
+      "tags": [
+        "use-case",
+        "priority",
+        "reader",
+        "start-meta"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/dispatch/active_tasks.py:TrackDispatchedTask",
+      "type": "class",
+      "name": "TrackDispatchedTask",
+      "filePath": "application/dispatch/active_tasks.py",
+      "lineRange": [
+        42,
+        54
+      ],
+      "summary": "Sau dispatch thành công — build ActiveTask và upsert vào hub.",
+      "tags": [
+        "use-case",
+        "track",
+        "dispatch",
+        "hub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/dispatch/active_tasks.py:GetActiveTasks",
+      "type": "class",
+      "name": "GetActiveTasks",
+      "filePath": "application/dispatch/active_tasks.py",
+      "lineRange": [
+        57,
+        90
+      ],
+      "summary": "Đồng bộ hub với ICS order list + priority reader; trả UseCaseResult list task.",
+      "tags": [
+        "use-case",
+        "active-tasks",
+        "sync",
+        "ics"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/dispatch/active_tasks.py:UnlockByOrderStatus",
+      "type": "class",
+      "name": "UnlockByOrderStatus",
+      "filePath": "application/dispatch/active_tasks.py",
+      "lineRange": [
+        93,
+        123
+      ],
+      "summary": "Webhook path: xóa task hoặc cập nhật status và reset flags khi order hoàn tất.",
+      "tags": [
+        "use-case",
+        "unlock",
+        "order-status",
+        "reset"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:application/null_ports.py",
+      "type": "file",
+      "name": "null_ports.py",
+      "filePath": "application/null_ports.py",
+      "summary": "Null Object implementations cho mọi application port — dùng khi chưa wire infrastructure (test/offline).",
+      "tags": [
+        "null-object",
+        "ports",
+        "test-double",
+        "dependency-injection",
+        "stub"
+      ],
+      "complexity": "complex",
+      "languageNotes": "NullNodeStateStore gọi ResetResult từ reset_policy."
+    },
+    {
+      "id": "class:application/null_ports.py:NullCameraRuntime",
+      "type": "class",
+      "name": "NullCameraRuntime",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        9,
+        35
+      ],
+      "summary": "Stub port `NullCameraRuntime` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullInference",
+      "type": "class",
+      "name": "NullInference",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        38,
+        58
+      ],
+      "summary": "Stub port `NullInference` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullNodeStateStore",
+      "type": "class",
+      "name": "NullNodeStateStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        61,
+        110
+      ],
+      "summary": "Stub port `NullNodeStateStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/null_ports.py:NullDispatchGateway",
+      "type": "class",
+      "name": "NullDispatchGateway",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        112,
+        114
+      ],
+      "summary": "Stub port `NullDispatchGateway` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullIcsOrderQuery",
+      "type": "class",
+      "name": "NullIcsOrderQuery",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        117,
+        119
+      ],
+      "summary": "Stub port `NullIcsOrderQuery` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullDbHealth",
+      "type": "class",
+      "name": "NullDbHealth",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        122,
+        124
+      ],
+      "summary": "Stub port `NullDbHealth` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullWebrtcRunner",
+      "type": "class",
+      "name": "NullWebrtcRunner",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        127,
+        129
+      ],
+      "summary": "Stub port `NullWebrtcRunner` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullUserRepo",
+      "type": "class",
+      "name": "NullUserRepo",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        132,
+        137
+      ],
+      "summary": "Stub port `NullUserRepo` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullRefreshTokenStore",
+      "type": "class",
+      "name": "NullRefreshTokenStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        140,
+        148
+      ],
+      "summary": "Stub port `NullRefreshTokenStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullAuthAudit",
+      "type": "class",
+      "name": "NullAuthAudit",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        151,
+        156
+      ],
+      "summary": "Stub port `NullAuthAudit` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullActionAudit",
+      "type": "class",
+      "name": "NullActionAudit",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        159,
+        161
+      ],
+      "summary": "Stub port `NullActionAudit` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullSystemActionAudit",
+      "type": "class",
+      "name": "NullSystemActionAudit",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        164,
+        194
+      ],
+      "summary": "Stub port `NullSystemActionAudit` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullPasswordHasher",
+      "type": "class",
+      "name": "NullPasswordHasher",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        197,
+        207
+      ],
+      "summary": "Stub port `NullPasswordHasher` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullTokenIssuer",
+      "type": "class",
+      "name": "NullTokenIssuer",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        210,
+        221
+      ],
+      "summary": "Stub port `NullTokenIssuer` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullFrameProvider",
+      "type": "class",
+      "name": "NullFrameProvider",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        224,
+        226
+      ],
+      "summary": "Stub port `NullFrameProvider` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullRuntimeControl",
+      "type": "class",
+      "name": "NullRuntimeControl",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        229,
+        240
+      ],
+      "summary": "Stub port `NullRuntimeControl` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullCameraConfigRepo",
+      "type": "class",
+      "name": "NullCameraConfigRepo",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        243,
+        269
+      ],
+      "summary": "Stub port `NullCameraConfigRepo` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullPairsRepo",
+      "type": "class",
+      "name": "NullPairsRepo",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        272,
+        298
+      ],
+      "summary": "Stub port `NullPairsRepo` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullNodeRepo",
+      "type": "class",
+      "name": "NullNodeRepo",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        301,
+        348
+      ],
+      "summary": "Stub port `NullNodeRepo` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:application/null_ports.py:NullZoneRepo",
+      "type": "class",
+      "name": "NullZoneRepo",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        351,
+        353
+      ],
+      "summary": "Stub port `NullZoneRepo` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullPagedLogStore",
+      "type": "class",
+      "name": "NullPagedLogStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        356,
+        358
+      ],
+      "summary": "Stub port `NullPagedLogStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullSnapshotDocStore",
+      "type": "class",
+      "name": "NullSnapshotDocStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        361,
+        363
+      ],
+      "summary": "Stub port `NullSnapshotDocStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:application/null_ports.py:NullNotificationStore",
+      "type": "class",
+      "name": "NullNotificationStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        366,
+        389
+      ],
+      "summary": "Stub port `NullNotificationStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullMapVersionStore",
+      "type": "class",
+      "name": "NullMapVersionStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        392,
+        418
+      ],
+      "summary": "Stub port `NullMapVersionStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:application/null_ports.py:NullMapStateStore",
+      "type": "class",
+      "name": "NullMapStateStore",
+      "filePath": "application/null_ports.py",
+      "lineRange": [
+        421,
+        429
+      ],
+      "summary": "Stub port `NullMapStateStore` — no-op hoặc raise khi gọi ngoài phạm vi test.",
+      "tags": [
+        "null-object",
+        "stub",
+        "ports"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:domain/dispatch/active_task.py",
+      "type": "file",
+      "name": "active_task.py",
+      "filePath": "domain/dispatch/active_task.py",
+      "summary": "Pure helpers build/sort ActiveTask view từ order_id, status và StartMeta priority.",
+      "tags": [
+        "domain",
+        "active-task",
+        "dispatch",
+        "pure-logic",
+        "sort"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/dispatch/active_task.py:parse_order_id",
+      "type": "function",
+      "name": "parse_order_id",
+      "filePath": "domain/dispatch/active_task.py",
+      "lineRange": [
+        16,
+        24
+      ],
+      "summary": "Hàm `parse_order_id` trong `domain/dispatch/active_task.py`.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/dispatch/active_task.py:status_label",
+      "type": "function",
+      "name": "status_label",
+      "filePath": "domain/dispatch/active_task.py",
+      "lineRange": [
+        27,
+        32
+      ],
+      "summary": "Hàm `status_label` trong `domain/dispatch/active_task.py`.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/dispatch/active_task.py:build_active_task",
+      "type": "function",
+      "name": "build_active_task",
+      "filePath": "domain/dispatch/active_task.py",
+      "lineRange": [
+        35,
+        51
+      ],
+      "summary": "Ghép parse_order_id, status label và priority từ StartMeta thành dict UI.",
+      "tags": [
+        "active-task",
+        "builder",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/dispatch/active_task.py:sort_active_tasks",
+      "type": "function",
+      "name": "sort_active_tasks",
+      "filePath": "domain/dispatch/active_task.py",
+      "lineRange": [
+        54,
+        59
+      ],
+      "summary": "Sắp xếp task theo resolve_priority và start_sort_key.",
+      "tags": [
+        "sort",
+        "priority",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:domain/models.py",
+      "type": "file",
+      "name": "models.py",
+      "filePath": "domain/models.py",
+      "summary": "Dataclass/enum lõi domain: NodeType, OrderStatus, DispatchPair, RuntimeStatus cho AMR dispatch.",
+      "tags": [
+        "domain",
+        "data-model",
+        "enum",
+        "dataclass",
+        "amr"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:domain/models.py:NodeType",
+      "type": "class",
+      "name": "NodeType",
+      "filePath": "domain/models.py",
+      "lineRange": [
+        9,
+        11
+      ],
+      "summary": "Model domain `NodeType` dùng chung dispatch và runtime.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:domain/models.py:DispatchType",
+      "type": "class",
+      "name": "DispatchType",
+      "filePath": "domain/models.py",
+      "lineRange": [
+        14,
+        17
+      ],
+      "summary": "Model domain `DispatchType` dùng chung dispatch và runtime.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:domain/models.py:OrderStatus",
+      "type": "class",
+      "name": "OrderStatus",
+      "filePath": "domain/models.py",
+      "lineRange": [
+        20,
+        34
+      ],
+      "summary": "Enum trạng thái order ICS; clears_order() xác định khi nào gỡ task/reset node.",
+      "tags": [
+        "enum",
+        "order-status",
+        "ics",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:domain/models.py:NodePoint",
+      "type": "class",
+      "name": "NodePoint",
+      "filePath": "domain/models.py",
+      "lineRange": [
+        38,
+        42
+      ],
+      "summary": "Model domain `NodePoint` dùng chung dispatch và runtime.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:domain/models.py:DispatchPair",
+      "type": "class",
+      "name": "DispatchPair",
+      "filePath": "domain/models.py",
+      "lineRange": [
+        46,
+        51
+      ],
+      "summary": "Model domain `DispatchPair` dùng chung dispatch và runtime.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:domain/models.py:RuntimeStatus",
+      "type": "class",
+      "name": "RuntimeStatus",
+      "filePath": "domain/models.py",
+      "lineRange": [
+        55,
+        62
+      ],
+      "summary": "Model domain `RuntimeStatus` dùng chung dispatch và runtime.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:domain/reset_policy.py",
+      "type": "file",
+      "name": "reset_policy.py",
+      "filePath": "domain/reset_policy.py",
+      "summary": "Luật reset flag/lock node khi order ICS đổi trạng thái (clears_order) — trả ResetResult.",
+      "tags": [
+        "domain",
+        "reset",
+        "order-status",
+        "node-lock",
+        "pure-logic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:domain/reset_policy.py:ResetResult",
+      "type": "class",
+      "name": "ResetResult",
+      "filePath": "domain/reset_policy.py",
+      "lineRange": [
+        18,
+        23
+      ],
+      "summary": "Kết quả reset: success, message, danh sách cặp đã clear.",
+      "tags": [
+        "data-model",
+        "reset",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/reset_policy.py:reset_flags_by_order",
+      "type": "function",
+      "name": "reset_flags_by_order",
+      "filePath": "domain/reset_policy.py",
+      "lineRange": [
+        26,
+        44
+      ],
+      "summary": "Entry reset: tra order_mapping, clears_order → _reset_all cặp liên quan.",
+      "tags": [
+        "reset",
+        "order-status",
+        "domain"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:domain/reset_policy.py:_clear_pair",
+      "type": "function",
+      "name": "_clear_pair",
+      "filePath": "domain/reset_policy.py",
+      "lineRange": [
+        47,
+        55
+      ],
+      "summary": "Hàm nội bộ `_clear_pair` — hỗ trợ logic trong module.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:domain/reset_policy.py:_reset_all",
+      "type": "function",
+      "name": "_reset_all",
+      "filePath": "domain/reset_policy.py",
+      "lineRange": [
+        58,
+        70
+      ],
+      "summary": "Hàm nội bộ `_reset_all` — hỗ trợ logic trong module.",
+      "tags": [
+        "domain",
+        "pure-logic",
+        "dispatch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/adapters.py",
+      "type": "file",
+      "name": "adapters.py",
+      "filePath": "infrastructure/adapters.py",
+      "summary": "Adapter bọc CameraManager, InferenceEngine, StateManager và RuntimeService thành application ports.",
+      "tags": [
+        "adapter",
+        "hexagonal",
+        "infrastructure",
+        "ports",
+        "runtime"
+      ],
+      "complexity": "complex",
+      "languageNotes": "NodeStateAdapter.apply_reset gọi reset_flags_by_order."
+    },
+    {
+      "id": "class:infrastructure/adapters.py:CameraRuntimeAdapter",
+      "type": "class",
+      "name": "CameraRuntimeAdapter",
+      "filePath": "infrastructure/adapters.py",
+      "lineRange": [
+        9,
+        38
+      ],
+      "summary": "Adapter `CameraRuntimeAdapter` — delegate sang infrastructure runtime tương ứng.",
+      "tags": [
+        "adapter",
+        "infrastructure",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/adapters.py:InferenceAdapter",
+      "type": "class",
+      "name": "InferenceAdapter",
+      "filePath": "infrastructure/adapters.py",
+      "lineRange": [
+        41,
+        76
+      ],
+      "summary": "Adapter `InferenceAdapter` — delegate sang infrastructure runtime tương ứng.",
+      "tags": [
+        "adapter",
+        "infrastructure",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/adapters.py:NodeStateAdapter",
+      "type": "class",
+      "name": "NodeStateAdapter",
+      "filePath": "infrastructure/adapters.py",
+      "lineRange": [
+        79,
+        161
+      ],
+      "summary": "Port NodeStateStore: delegate StateManager, sync lock Mongo qua NodeLockSync, apply reset policy.",
+      "tags": [
+        "adapter",
+        "node-state",
+        "lock-sync",
+        "reset"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:infrastructure/adapters.py:RuntimeControlAdapter",
+      "type": "class",
+      "name": "RuntimeControlAdapter",
+      "filePath": "infrastructure/adapters.py",
+      "lineRange": [
+        164,
+        178
+      ],
+      "summary": "Adapter `RuntimeControlAdapter` — delegate sang infrastructure runtime tương ứng.",
+      "tags": [
+        "adapter",
+        "infrastructure",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/sandbox/sandbox_ics.py",
+      "type": "file",
+      "name": "sandbox_ics.py",
+      "filePath": "infrastructure/sandbox/sandbox_ics.py",
+      "summary": "ICS giả lập in-memory: send dispatch, lưu order status cho sandbox API và smoke trail.",
+      "tags": [
+        "sandbox",
+        "ics",
+        "mock",
+        "dispatch",
+        "test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/sandbox/sandbox_ics.py:SandboxIcs",
+      "type": "class",
+      "name": "SandboxIcs",
+      "filePath": "infrastructure/sandbox/sandbox_ics.py",
+      "lineRange": [
+        20,
+        79
+      ],
+      "summary": "DispatchGateway + IcsOrderQuery sandbox: log send, emit smoke trail, dict orders thread-safe.",
+      "tags": [
+        "sandbox",
+        "ics",
+        "gateway",
+        "mock"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:application/dispatch/active_task_hub.py",
+      "target": "class:application/dispatch/active_task_hub.py:ActiveTaskHub",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/dispatch/active_task_hub.py",
+      "target": "class:application/dispatch/active_task_hub.py:ActiveTaskHub",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:_ResetFlags",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:_ResetFlags",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:StartPriorityReader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:StartPriorityReader",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:TrackDispatchedTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:TrackDispatchedTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:GetActiveTasks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:GetActiveTasks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:UnlockByOrderStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "class:application/dispatch/active_tasks.py:UnlockByOrderStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullCameraRuntime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullCameraRuntime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullInference",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullInference",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullNodeStateStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullNodeStateStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullDispatchGateway",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullDispatchGateway",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullIcsOrderQuery",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullIcsOrderQuery",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullDbHealth",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullDbHealth",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullWebrtcRunner",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullWebrtcRunner",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullUserRepo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullUserRepo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullRefreshTokenStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullRefreshTokenStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullAuthAudit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullAuthAudit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullActionAudit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullActionAudit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullSystemActionAudit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullSystemActionAudit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullPasswordHasher",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullPasswordHasher",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullTokenIssuer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullTokenIssuer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullFrameProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullFrameProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullRuntimeControl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullRuntimeControl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullCameraConfigRepo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullCameraConfigRepo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullPairsRepo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullPairsRepo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullNodeRepo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullNodeRepo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullZoneRepo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullZoneRepo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullPagedLogStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullPagedLogStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullSnapshotDocStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullSnapshotDocStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullNotificationStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullNotificationStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullMapVersionStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullMapVersionStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullMapStateStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "class:application/null_ports.py:NullMapStateStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:parse_order_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:parse_order_id",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:status_label",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:status_label",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:build_active_task",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:build_active_task",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:sort_active_tasks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "function:domain/dispatch/active_task.py:sort_active_tasks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:NodeType",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:NodeType",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:DispatchType",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:DispatchType",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:OrderStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:OrderStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:NodePoint",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:NodePoint",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:DispatchPair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:DispatchPair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:RuntimeStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/models.py",
+      "target": "class:domain/models.py:RuntimeStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "class:domain/reset_policy.py:ResetResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "class:domain/reset_policy.py:ResetResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "function:domain/reset_policy.py:reset_flags_by_order",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "function:domain/reset_policy.py:reset_flags_by_order",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "function:domain/reset_policy.py:_clear_pair",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "function:domain/reset_policy.py:_clear_pair",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "function:domain/reset_policy.py:_reset_all",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "function:domain/reset_policy.py:_reset_all",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:CameraRuntimeAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:CameraRuntimeAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:InferenceAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:InferenceAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:NodeStateAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:NodeStateAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:RuntimeControlAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "class:infrastructure/adapters.py:RuntimeControlAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_ics.py",
+      "target": "class:infrastructure/sandbox/sandbox_ics.py:SandboxIcs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_ics.py",
+      "target": "class:infrastructure/sandbox/sandbox_ics.py:SandboxIcs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:application/dispatch/active_task_hub.py",
+      "target": "file:domain/dispatch/active_task.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "file:application/dispatch/active_task_hub.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "file:application/ports.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "file:application/result.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "file:domain/dispatch/active_task.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/dispatch/active_tasks.py",
+      "target": "file:domain/models.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:application/null_ports.py",
+      "target": "file:domain/reset_policy.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "file:domain/dispatch/priority.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:domain/dispatch/active_task.py",
+      "target": "file:domain/models.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:domain/reset_policy.py",
+      "target": "file:domain/models.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/adapters.py",
+      "target": "file:domain/reset_policy.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_ics.py",
+      "target": "file:domain/dispatch/active_task.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_ics.py",
+      "target": "file:domain/models.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_ics.py",
+      "target": "file:infrastructure/sandbox/smoke_trail.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/sandbox/sandbox_ics.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "class:application/dispatch/active_task_hub.py:ActiveTaskHub",
+      "target": "function:domain/dispatch/active_task.py:sort_active_tasks",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/dispatch/active_tasks.py:StartPriorityReader",
+      "target": "function:domain/dispatch/priority.py:start_meta_from_docs",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/dispatch/active_tasks.py:UnlockByOrderStatus",
+      "target": "function:domain/dispatch/active_task.py:build_active_task",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/dispatch/active_tasks.py:UnlockByOrderStatus",
+      "target": "function:domain/dispatch/active_task.py:status_label",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/dispatch/active_tasks.py:UnlockByOrderStatus",
+      "target": "function:domain/dispatch/active_task.py:sort_active_tasks",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:application/null_ports.py:NullNodeStateStore",
+      "target": "class:domain/reset_policy.py:ResetResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/dispatch/active_task.py:status_label",
+      "target": "class:domain/models.py:OrderStatus",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/dispatch/active_task.py:build_active_task",
+      "target": "function:domain/dispatch/active_task.py:parse_order_id",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/dispatch/active_task.py:sort_active_tasks",
+      "target": "function:domain/dispatch/priority.py:resolve_priority",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/reset_policy.py:reset_flags_by_order",
+      "target": "class:domain/reset_policy.py:ResetResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/reset_policy.py:reset_flags_by_order",
+      "target": "function:domain/reset_policy.py:_reset_all",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/reset_policy.py:_reset_all",
+      "target": "function:domain/reset_policy.py:_clear_pair",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:domain/reset_policy.py:_reset_all",
+      "target": "class:domain/reset_policy.py:ResetResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/adapters.py:NodeStateAdapter",
+      "target": "function:domain/reset_policy.py:reset_flags_by_order",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/sandbox/sandbox_ics.py:SandboxIcs",
+      "target": "function:domain/dispatch/active_task.py:parse_order_id",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/sandbox/sandbox_ics.py:SandboxIcs",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:emit",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/sandbox/sandbox_ics.py:SandboxIcs",
+      "target": "function:infrastructure/sandbox/smoke_trail.py:node_runtime_view",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

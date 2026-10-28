@@ -1,0 +1,2085 @@
+{
+  "nodes": [
+    {
+      "id": "file:app.py",
+      "type": "file",
+      "name": "app.py",
+      "filePath": "app.py",
+      "summary": "Factory FastAPI: lifespan gắn MongoDB, auth, runtime, MediaMTX/WebRTC và mount router /api/v1.",
+      "tags": [
+        "entry-point",
+        "fastapi",
+        "lifespan",
+        "middleware"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Dùng asynccontextmanager cho startup/shutdown và CORSMiddleware."
+    },
+    {
+      "id": "function:app.py:lifespan",
+      "type": "function",
+      "name": "lifespan",
+      "filePath": "app.py",
+      "lineRange": [
+        70,
+        150
+      ],
+      "summary": "Startup/shutdown FastAPI: bind DI container, DB, auth, runtime, MediaMTX và retention.",
+      "tags": [
+        "lifespan",
+        "startup",
+        "dependency-injection"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:app.py:create_app",
+      "type": "function",
+      "name": "create_app",
+      "filePath": "app.py",
+      "lineRange": [
+        153,
+        195
+      ],
+      "summary": "Tạo FastAPI, CORS, handler lỗi JSON và gắn toàn bộ router v1.",
+      "tags": [
+        "fastapi",
+        "factory",
+        "routing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/auth/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "infrastructure/auth/__init__.py",
+      "summary": "Barrel package auth: re-export adapter JWT, bcrypt, audit và ensure_auth_indexes.",
+      "tags": [
+        "barrel",
+        "auth",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/auth/action_audit_adapter.py",
+      "type": "file",
+      "name": "action_audit_adapter.py",
+      "filePath": "infrastructure/auth/action_audit_adapter.py",
+      "summary": "Adapter ghi action log người dùng, redact field nhạy cảm trước khi lưu MongoDB.",
+      "tags": [
+        "auth",
+        "audit",
+        "adapter"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/auth/action_audit_adapter.py:_redact",
+      "type": "function",
+      "name": "_redact",
+      "filePath": "infrastructure/auth/action_audit_adapter.py",
+      "lineRange": [
+        11,
+        21
+      ],
+      "summary": "Loại bỏ/mask key password/token trong payload audit.",
+      "tags": [
+        "utility",
+        "security",
+        "redaction"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/auth/action_audit_adapter.py:ActionAuditAdapter",
+      "type": "class",
+      "name": "ActionAuditAdapter",
+      "filePath": "infrastructure/auth/action_audit_adapter.py",
+      "lineRange": [
+        24,
+        44
+      ],
+      "summary": "Ghi action log qua ActionLogRepository sau khi redact payload.",
+      "tags": [
+        "adapter",
+        "audit",
+        "logging"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/auth/audit_adapter.py",
+      "type": "file",
+      "name": "audit_adapter.py",
+      "filePath": "infrastructure/auth/audit_adapter.py",
+      "summary": "Adapter audit đăng nhập: log sự kiện và đếm failed login gần đây.",
+      "tags": [
+        "auth",
+        "audit",
+        "adapter"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/auth/audit_adapter.py:AuthAuditAdapter",
+      "type": "class",
+      "name": "AuthAuditAdapter",
+      "filePath": "infrastructure/auth/audit_adapter.py",
+      "lineRange": [
+        11,
+        24
+      ],
+      "summary": "Facade audit login gọi AuditLogRepository.",
+      "tags": [
+        "adapter",
+        "auth",
+        "audit"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/auth/indexes.py",
+      "type": "file",
+      "name": "indexes.py",
+      "filePath": "infrastructure/auth/indexes.py",
+      "summary": "Tạo MongoDB index cho users và refresh tokens khi app khởi động.",
+      "tags": [
+        "auth",
+        "mongodb",
+        "indexes"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/auth/indexes.py:ensure_auth_indexes",
+      "type": "function",
+      "name": "ensure_auth_indexes",
+      "filePath": "infrastructure/auth/indexes.py",
+      "lineRange": [
+        14,
+        32
+      ],
+      "summary": "Đảm bảo index unique username và TTL refresh token.",
+      "tags": [
+        "mongodb",
+        "indexes",
+        "auth"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/auth/jwt_service.py",
+      "type": "file",
+      "name": "jwt_service.py",
+      "filePath": "infrastructure/auth/jwt_service.py",
+      "summary": "JwtTokenService: phát access JWT, refresh token và hash refresh cho lưu DB.",
+      "tags": [
+        "auth",
+        "jwt",
+        "service"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Dùng PyJWT và secrets cho refresh token."
+    },
+    {
+      "id": "class:infrastructure/auth/jwt_service.py:JwtTokenService",
+      "type": "class",
+      "name": "JwtTokenService",
+      "filePath": "infrastructure/auth/jwt_service.py",
+      "lineRange": [
+        22,
+        82
+      ],
+      "summary": "Phát và decode JWT access; tạo/hash refresh token.",
+      "tags": [
+        "jwt",
+        "auth",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/auth/password_hasher.py",
+      "type": "file",
+      "name": "password_hasher.py",
+      "filePath": "infrastructure/auth/password_hasher.py",
+      "summary": "BcryptHasher bọc bcrypt hash/verify và dummy hash chống timing attack.",
+      "tags": [
+        "auth",
+        "bcrypt",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/auth/password_hasher.py:BcryptHasher",
+      "type": "class",
+      "name": "BcryptHasher",
+      "filePath": "infrastructure/auth/password_hasher.py",
+      "lineRange": [
+        18,
+        32
+      ],
+      "summary": "Hash và verify mật khẩu bằng bcrypt.",
+      "tags": [
+        "bcrypt",
+        "auth",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "type": "file",
+      "name": "system_action_audit_adapter.py",
+      "filePath": "infrastructure/auth/system_action_audit_adapter.py",
+      "summary": "Ghi dispatch/system action log async-safe từ thread/event loop khác.",
+      "tags": [
+        "audit",
+        "dispatch",
+        "adapter"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "run_coroutine_threadsafe khi log từ worker thread."
+    },
+    {
+      "id": "class:infrastructure/auth/system_action_audit_adapter.py:SystemActionAuditAdapter",
+      "type": "class",
+      "name": "SystemActionAuditAdapter",
+      "filePath": "infrastructure/auth/system_action_audit_adapter.py",
+      "lineRange": [
+        15,
+        90
+      ],
+      "summary": "Ghi dispatch log hệ thống, hỗ trợ gọi từ thread ngoài event loop.",
+      "tags": [
+        "audit",
+        "dispatch",
+        "async"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "infrastructure/persistence/__init__.py",
+      "summary": "Barrel persistence: singleton repo MongoDB và hàm connect/disconnect.",
+      "tags": [
+        "barrel",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/base_repository.py",
+      "type": "file",
+      "name": "base_repository.py",
+      "filePath": "infrastructure/persistence/base_repository.py",
+      "summary": "BaseRepository CRUD/pagination chung trên Motor collection.",
+      "tags": [
+        "mongodb",
+        "repository",
+        "data-access"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "function",
+      "name": "_now",
+      "filePath": "infrastructure/persistence/base_repository.py",
+      "lineRange": [
+        12,
+        13
+      ],
+      "summary": "Timestamp UTC hiện tại cho created_at/updated_at.",
+      "tags": [
+        "utility",
+        "datetime",
+        "mongodb"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/persistence/base_repository.py:_serialize",
+      "type": "function",
+      "name": "_serialize",
+      "filePath": "infrastructure/persistence/base_repository.py",
+      "lineRange": [
+        16,
+        23
+      ],
+      "summary": "Chuyển document MongoDB sang dict JSON-safe (ObjectId -> str).",
+      "tags": [
+        "serialization",
+        "mongodb",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/persistence/base_repository.py:BaseRepository",
+      "type": "class",
+      "name": "BaseRepository",
+      "filePath": "infrastructure/persistence/base_repository.py",
+      "lineRange": [
+        26,
+        88
+      ],
+      "summary": "Lớp cơ sở find/insert/update/delete/count cho mọi collection.",
+      "tags": [
+        "repository",
+        "mongodb",
+        "crud"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/camera_repository.py",
+      "type": "file",
+      "name": "camera_repository.py",
+      "filePath": "infrastructure/persistence/camera_repository.py",
+      "summary": "CRUD camera, ROI và bật/tắt theo zone trên collection cameras.",
+      "tags": [
+        "mongodb",
+        "camera",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/camera_repository.py:CameraRepository",
+      "type": "class",
+      "name": "CameraRepository",
+      "filePath": "infrastructure/persistence/camera_repository.py",
+      "lineRange": [
+        9,
+        73
+      ],
+      "summary": "Truy vấn và cập nhật camera/ROI theo area, zone và camera_id.",
+      "tags": [
+        "camera",
+        "repository",
+        "roi"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/db.py",
+      "type": "file",
+      "name": "db.py",
+      "filePath": "infrastructure/persistence/db.py",
+      "summary": "Kết nối AsyncIOMotorClient singleton và truy cập database/collection.",
+      "tags": [
+        "mongodb",
+        "motor",
+        "connection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/persistence/db.py:connect",
+      "type": "function",
+      "name": "connect",
+      "filePath": "infrastructure/persistence/db.py",
+      "lineRange": [
+        17,
+        21
+      ],
+      "summary": "Khởi tạo Motor client và chọn database.",
+      "tags": [
+        "mongodb",
+        "connection",
+        "motor"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/persistence/db.py:disconnect",
+      "type": "function",
+      "name": "disconnect",
+      "filePath": "infrastructure/persistence/db.py",
+      "lineRange": [
+        24,
+        30
+      ],
+      "summary": "Đóng Motor client khi app tắt.",
+      "tags": [
+        "mongodb",
+        "connection",
+        "shutdown"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/persistence/db.py:get_db",
+      "type": "function",
+      "name": "get_db",
+      "filePath": "infrastructure/persistence/db.py",
+      "lineRange": [
+        33,
+        36
+      ],
+      "summary": "Trả database handle hoặc RuntimeError nếu chưa connect.",
+      "tags": [
+        "mongodb",
+        "accessor",
+        "singleton"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:infrastructure/persistence/db.py:get_collection",
+      "type": "function",
+      "name": "get_collection",
+      "filePath": "infrastructure/persistence/db.py",
+      "lineRange": [
+        39,
+        40
+      ],
+      "summary": "Lấy collection theo tên qua get_db().",
+      "tags": [
+        "mongodb",
+        "accessor",
+        "collection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/persistence/db_health.py",
+      "type": "file",
+      "name": "db_health.py",
+      "filePath": "infrastructure/persistence/db_health.py",
+      "summary": "MongoHealthAdapter ping DB cho health check.",
+      "tags": [
+        "mongodb",
+        "health",
+        "adapter"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/persistence/db_health.py:MongoHealthAdapter",
+      "type": "class",
+      "name": "MongoHealthAdapter",
+      "filePath": "infrastructure/persistence/db_health.py",
+      "lineRange": [
+        7,
+        13
+      ],
+      "summary": "ping MongoDB command cho readiness probe.",
+      "tags": [
+        "health",
+        "mongodb",
+        "adapter"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "type": "file",
+      "name": "dispatch_log_repository.py",
+      "filePath": "infrastructure/persistence/dispatch_log_repository.py",
+      "summary": "Lưu log dispatch, thống kê theo ngày và hiệu năng cặp node.",
+      "tags": [
+        "dispatch",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Aggregation pipeline cho thống kê zone."
+    },
+    {
+      "id": "class:infrastructure/persistence/dispatch_log_repository.py:DispatchLogRepository",
+      "type": "class",
+      "name": "DispatchLogRepository",
+      "filePath": "infrastructure/persistence/dispatch_log_repository.py",
+      "lineRange": [
+        10,
+        92
+      ],
+      "summary": "Persistence log dispatch và metric hoàn thành/thất bại.",
+      "tags": [
+        "dispatch",
+        "repository",
+        "metrics"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/log_repositories.py",
+      "type": "file",
+      "name": "log_repositories.py",
+      "filePath": "infrastructure/persistence/log_repositories.py",
+      "summary": "ActionLogRepository và AuditLogRepository cho audit UI.",
+      "tags": [
+        "audit",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/log_repositories.py:ActionLogRepository",
+      "type": "class",
+      "name": "ActionLogRepository",
+      "filePath": "infrastructure/persistence/log_repositories.py",
+      "lineRange": [
+        13,
+        47
+      ],
+      "summary": "Lưu và truy vấn action log theo user/thời gian.",
+      "tags": [
+        "audit",
+        "repository",
+        "action-log"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/log_repositories.py:AuditLogRepository",
+      "type": "class",
+      "name": "AuditLogRepository",
+      "filePath": "infrastructure/persistence/log_repositories.py",
+      "lineRange": [
+        50,
+        94
+      ],
+      "summary": "Audit login: log sự kiện và truy vấn failed login.",
+      "tags": [
+        "audit",
+        "repository",
+        "login"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/map_repository.py",
+      "type": "file",
+      "name": "map_repository.py",
+      "filePath": "infrastructure/persistence/map_repository.py",
+      "summary": "MapVersionRepository và MapStateRepository quản lý bản đồ AMR.",
+      "tags": [
+        "map",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/map_repository.py:MapVersionRepository",
+      "type": "class",
+      "name": "MapVersionRepository",
+      "filePath": "infrastructure/persistence/map_repository.py",
+      "lineRange": [
+        9,
+        29
+      ],
+      "summary": "Quản lý phiên bản file map đã import.",
+      "tags": [
+        "map",
+        "repository",
+        "versioning"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/map_repository.py:MapStateRepository",
+      "type": "class",
+      "name": "MapStateRepository",
+      "filePath": "infrastructure/persistence/map_repository.py",
+      "lineRange": [
+        32,
+        61
+      ],
+      "summary": "Lưu map version đang active (singleton state doc).",
+      "tags": [
+        "map",
+        "repository",
+        "state"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/persistence/node_repository.py",
+      "type": "file",
+      "name": "node_repository.py",
+      "filePath": "infrastructure/persistence/node_repository.py",
+      "summary": "NodeRepository: node start/end, lock, priority và truy vấn theo zone/camera.",
+      "tags": [
+        "dispatch",
+        "node",
+        "repository"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Logic lock system vs manual trên document node."
+    },
+    {
+      "id": "class:infrastructure/persistence/node_repository.py:NodeRepository",
+      "type": "class",
+      "name": "NodeRepository",
+      "filePath": "infrastructure/persistence/node_repository.py",
+      "lineRange": [
+        9,
+        160
+      ],
+      "summary": "Toàn bộ thao tác node AMR: lock, priority, zone và camera mapping.",
+      "tags": [
+        "node",
+        "dispatch",
+        "repository"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:infrastructure/persistence/notification_repository.py",
+      "type": "file",
+      "name": "notification_repository.py",
+      "filePath": "infrastructure/persistence/notification_repository.py",
+      "summary": "Thông báo in-app: tạo, phân trang, đánh dấu đã đọc.",
+      "tags": [
+        "notification",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/notification_repository.py:NotificationRepository",
+      "type": "class",
+      "name": "NotificationRepository",
+      "filePath": "infrastructure/persistence/notification_repository.py",
+      "lineRange": [
+        10,
+        87
+      ],
+      "summary": "CRUD thông báo người dùng với phân trang và unread count.",
+      "tags": [
+        "notification",
+        "repository",
+        "mongodb"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/pairs_repository.py",
+      "type": "file",
+      "name": "pairs_repository.py",
+      "filePath": "infrastructure/persistence/pairs_repository.py",
+      "summary": "Quản lý cặp start-end dispatch theo zone và node.",
+      "tags": [
+        "dispatch",
+        "pair",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/pairs_repository.py:PairsRepository",
+      "type": "class",
+      "name": "PairsRepository",
+      "filePath": "infrastructure/persistence/pairs_repository.py",
+      "lineRange": [
+        9,
+        79
+      ],
+      "summary": "Quản lý cặp dispatch enabled/disabled theo zone.",
+      "tags": [
+        "pair",
+        "dispatch",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/refresh_token_repository.py",
+      "type": "file",
+      "name": "refresh_token_repository.py",
+      "filePath": "infrastructure/persistence/refresh_token_repository.py",
+      "summary": "Lưu/revoke refresh token hashed trong MongoDB.",
+      "tags": [
+        "auth",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/persistence/refresh_token_repository.py:RefreshTokenRepository",
+      "type": "class",
+      "name": "RefreshTokenRepository",
+      "filePath": "infrastructure/persistence/refresh_token_repository.py",
+      "lineRange": [
+        15,
+        42
+      ],
+      "summary": "replace_one refresh token và revoke theo user.",
+      "tags": [
+        "auth",
+        "repository",
+        "refresh-token"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/persistence/snapshot_repository.py",
+      "type": "file",
+      "name": "snapshot_repository.py",
+      "filePath": "infrastructure/persistence/snapshot_repository.py",
+      "summary": "Snapshot inference: lưu, validate và thống kê false positive.",
+      "tags": [
+        "vision",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:infrastructure/persistence/snapshot_repository.py:SnapshotRepository",
+      "type": "class",
+      "name": "SnapshotRepository",
+      "filePath": "infrastructure/persistence/snapshot_repository.py",
+      "lineRange": [
+        10,
+        75
+      ],
+      "summary": "Lưu snapshot YOLO và thống kê false positive theo zone.",
+      "tags": [
+        "vision",
+        "repository",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:infrastructure/persistence/user_repository.py",
+      "type": "file",
+      "name": "user_repository.py",
+      "filePath": "infrastructure/persistence/user_repository.py",
+      "summary": "UserRepository tra cứu và cập nhật tài khoản đăng nhập.",
+      "tags": [
+        "auth",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/persistence/user_repository.py:UserRepository",
+      "type": "class",
+      "name": "UserRepository",
+      "filePath": "infrastructure/persistence/user_repository.py",
+      "lineRange": [
+        9,
+        31
+      ],
+      "summary": "Truy cập collection users cho đăng nhập và quản trị.",
+      "tags": [
+        "auth",
+        "repository",
+        "user"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:infrastructure/persistence/zone_repository.py",
+      "type": "file",
+      "name": "zone_repository.py",
+      "filePath": "infrastructure/persistence/zone_repository.py",
+      "summary": "ZoneRepository CRUD zone và kiểm tra enabled.",
+      "tags": [
+        "zone",
+        "mongodb",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:infrastructure/persistence/zone_repository.py:ZoneRepository",
+      "type": "class",
+      "name": "ZoneRepository",
+      "filePath": "infrastructure/persistence/zone_repository.py",
+      "lineRange": [
+        9,
+        34
+      ],
+      "summary": "CRUD zone và kiểm tra cờ enabled.",
+      "tags": [
+        "zone",
+        "repository",
+        "mongodb"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:main.py",
+      "type": "file",
+      "name": "main.py",
+      "filePath": "main.py",
+      "summary": "Điểm chạy Uvicorn: import app từ app.py (wrapper mỏng).",
+      "tags": [
+        "entry-point",
+        "uvicorn",
+        "bootstrap"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/seed_users.py",
+      "type": "file",
+      "name": "seed_users.py",
+      "filePath": "scripts/seed_users.py",
+      "summary": "Script CLI seed/cập nhật user MongoDB theo role và permissions.",
+      "tags": [
+        "script",
+        "auth",
+        "seed"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Dùng pymongo sync (không Motor) cho tooling."
+    },
+    {
+      "id": "function:scripts/seed_users.py:_read_password",
+      "type": "function",
+      "name": "_read_password",
+      "filePath": "scripts/seed_users.py",
+      "lineRange": [
+        39,
+        47
+      ],
+      "summary": "Đọc mật khẩu qua getpass với xác nhận lần hai.",
+      "tags": [
+        "cli",
+        "security",
+        "input"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/seed_users.py:_build_doc",
+      "type": "function",
+      "name": "_build_doc",
+      "filePath": "scripts/seed_users.py",
+      "lineRange": [
+        50,
+        61
+      ],
+      "summary": "Dựng document user mới với UUID và permissions theo role.",
+      "tags": [
+        "seed",
+        "user",
+        "permissions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/seed_users.py:_perm_diff",
+      "type": "function",
+      "name": "_perm_diff",
+      "filePath": "scripts/seed_users.py",
+      "lineRange": [
+        64,
+        66
+      ],
+      "summary": "So sánh hai tập permission để log thay đổi khi update.",
+      "tags": [
+        "utility",
+        "permissions",
+        "seed"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/seed_users.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/seed_users.py",
+      "lineRange": [
+        69,
+        147
+      ],
+      "summary": "Vòng lặp seed: insert hoặc update user và in diff permissions.",
+      "tags": [
+        "cli",
+        "seed",
+        "mongodb"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:lifespan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:lifespan",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:create_app",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:app.py",
+      "target": "function:app.py:create_app",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/action_audit_adapter.py",
+      "target": "function:infrastructure/auth/action_audit_adapter.py:_redact",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/action_audit_adapter.py",
+      "target": "function:infrastructure/auth/action_audit_adapter.py:_redact",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/action_audit_adapter.py",
+      "target": "class:infrastructure/auth/action_audit_adapter.py:ActionAuditAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/action_audit_adapter.py",
+      "target": "class:infrastructure/auth/action_audit_adapter.py:ActionAuditAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/audit_adapter.py",
+      "target": "class:infrastructure/auth/audit_adapter.py:AuthAuditAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/audit_adapter.py",
+      "target": "class:infrastructure/auth/audit_adapter.py:AuthAuditAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/indexes.py",
+      "target": "function:infrastructure/auth/indexes.py:ensure_auth_indexes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/indexes.py",
+      "target": "function:infrastructure/auth/indexes.py:ensure_auth_indexes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/jwt_service.py",
+      "target": "class:infrastructure/auth/jwt_service.py:JwtTokenService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/jwt_service.py",
+      "target": "class:infrastructure/auth/jwt_service.py:JwtTokenService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/password_hasher.py",
+      "target": "class:infrastructure/auth/password_hasher.py:BcryptHasher",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/password_hasher.py",
+      "target": "class:infrastructure/auth/password_hasher.py:BcryptHasher",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "target": "class:infrastructure/auth/system_action_audit_adapter.py:SystemActionAuditAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "target": "class:infrastructure/auth/system_action_audit_adapter.py:SystemActionAuditAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "function:infrastructure/persistence/base_repository.py:_serialize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "function:infrastructure/persistence/base_repository.py:_serialize",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "class:infrastructure/persistence/base_repository.py:BaseRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "class:infrastructure/persistence/base_repository.py:BaseRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/camera_repository.py",
+      "target": "class:infrastructure/persistence/camera_repository.py:CameraRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/camera_repository.py",
+      "target": "class:infrastructure/persistence/camera_repository.py:CameraRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:connect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:disconnect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:disconnect",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:get_db",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:get_db",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:get_collection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "function:infrastructure/persistence/db.py:get_collection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/db_health.py",
+      "target": "class:infrastructure/persistence/db_health.py:MongoHealthAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/db_health.py",
+      "target": "class:infrastructure/persistence/db_health.py:MongoHealthAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "target": "class:infrastructure/persistence/dispatch_log_repository.py:DispatchLogRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "target": "class:infrastructure/persistence/dispatch_log_repository.py:DispatchLogRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/log_repositories.py",
+      "target": "class:infrastructure/persistence/log_repositories.py:ActionLogRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/log_repositories.py",
+      "target": "class:infrastructure/persistence/log_repositories.py:ActionLogRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/log_repositories.py",
+      "target": "class:infrastructure/persistence/log_repositories.py:AuditLogRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/log_repositories.py",
+      "target": "class:infrastructure/persistence/log_repositories.py:AuditLogRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/map_repository.py",
+      "target": "class:infrastructure/persistence/map_repository.py:MapVersionRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/map_repository.py",
+      "target": "class:infrastructure/persistence/map_repository.py:MapVersionRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/map_repository.py",
+      "target": "class:infrastructure/persistence/map_repository.py:MapStateRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/map_repository.py",
+      "target": "class:infrastructure/persistence/map_repository.py:MapStateRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/node_repository.py",
+      "target": "class:infrastructure/persistence/node_repository.py:NodeRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/node_repository.py",
+      "target": "class:infrastructure/persistence/node_repository.py:NodeRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/notification_repository.py",
+      "target": "class:infrastructure/persistence/notification_repository.py:NotificationRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/notification_repository.py",
+      "target": "class:infrastructure/persistence/notification_repository.py:NotificationRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/pairs_repository.py",
+      "target": "class:infrastructure/persistence/pairs_repository.py:PairsRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/pairs_repository.py",
+      "target": "class:infrastructure/persistence/pairs_repository.py:PairsRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/refresh_token_repository.py",
+      "target": "class:infrastructure/persistence/refresh_token_repository.py:RefreshTokenRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/refresh_token_repository.py",
+      "target": "class:infrastructure/persistence/refresh_token_repository.py:RefreshTokenRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/snapshot_repository.py",
+      "target": "class:infrastructure/persistence/snapshot_repository.py:SnapshotRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/snapshot_repository.py",
+      "target": "class:infrastructure/persistence/snapshot_repository.py:SnapshotRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/user_repository.py",
+      "target": "class:infrastructure/persistence/user_repository.py:UserRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/user_repository.py",
+      "target": "class:infrastructure/persistence/user_repository.py:UserRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:infrastructure/persistence/zone_repository.py",
+      "target": "class:infrastructure/persistence/zone_repository.py:ZoneRepository",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:infrastructure/persistence/zone_repository.py",
+      "target": "class:infrastructure/persistence/zone_repository.py:ZoneRepository",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:_read_password",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:_read_password",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:_build_doc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:_build_doc",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:_perm_diff",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:_perm_diff",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "function:scripts/seed_users.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:application/container.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:application/runtime/runtime_service.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/auth/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/ics/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/camera_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/node_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/notification_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/pairs_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/refresh_token_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/snapshot_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/user_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/persistence/zone_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/storage/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:infrastructure/webrtc/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:presentation/openapi_responses.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:presentation/routes/v1/__init__.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:app.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/__init__.py",
+      "target": "file:infrastructure/auth/action_audit_adapter.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/__init__.py",
+      "target": "file:infrastructure/auth/audit_adapter.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/__init__.py",
+      "target": "file:infrastructure/auth/indexes.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/__init__.py",
+      "target": "file:infrastructure/auth/jwt_service.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/__init__.py",
+      "target": "file:infrastructure/auth/password_hasher.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/__init__.py",
+      "target": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/action_audit_adapter.py",
+      "target": "file:infrastructure/persistence/log_repositories.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/audit_adapter.py",
+      "target": "file:infrastructure/persistence/log_repositories.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/indexes.py",
+      "target": "file:infrastructure/persistence/db.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/indexes.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/jwt_service.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "target": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/auth/system_action_audit_adapter.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/camera_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/db.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/db_health.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/log_repositories.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/map_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/node_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/notification_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/pairs_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/refresh_token_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/snapshot_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/user_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/__init__.py",
+      "target": "file:infrastructure/persistence/zone_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/base_repository.py",
+      "target": "file:infrastructure/persistence/db.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/camera_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/db.py",
+      "target": "file:utils/setup_log.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/db_health.py",
+      "target": "file:infrastructure/persistence/db.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/dispatch_log_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/log_repositories.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/map_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/node_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/notification_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/pairs_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/refresh_token_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/snapshot_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/user_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:infrastructure/persistence/zone_repository.py",
+      "target": "file:infrastructure/persistence/base_repository.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:main.py",
+      "target": "file:app.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "file:config/settings.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "file:domain/permissions.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/seed_users.py",
+      "target": "file:infrastructure/auth/password_hasher.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "function:infrastructure/persistence/db.py:connect",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:application/container.py:AppContainer",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/persistence/db_health.py:MongoHealthAdapter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/ics/http_order_query.py:HttpOrderQuery",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "function:infrastructure/auth/indexes.py:ensure_auth_indexes",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/auth/audit_adapter.py:AuthAuditAdapter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/auth/password_hasher.py:BcryptHasher",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/auth/jwt_service.py:JwtTokenService",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/auth/action_audit_adapter.py:ActionAuditAdapter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:infrastructure/auth/system_action_audit_adapter.py:SystemActionAuditAdapter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "function:infrastructure/persistence/db.py:disconnect",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/log_repositories.py:AuditLogRepository",
+      "target": "function:infrastructure/auth/action_audit_adapter.py:_redact",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/auth/indexes.py:ensure_auth_indexes",
+      "target": "function:infrastructure/persistence/db.py:get_collection",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/log_repositories.py:AuditLogRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/base_repository.py:BaseRepository",
+      "target": "function:infrastructure/persistence/db.py:get_collection",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/base_repository.py:BaseRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_serialize",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/base_repository.py:BaseRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/camera_repository.py:CameraRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/db.py:get_collection",
+      "target": "function:infrastructure/persistence/db.py:get_db",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/db_health.py:MongoHealthAdapter",
+      "target": "function:infrastructure/persistence/db.py:get_db",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/dispatch_log_repository.py:DispatchLogRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/map_repository.py:MapStateRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/notification_repository.py:NotificationRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/refresh_token_repository.py:RefreshTokenRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:infrastructure/persistence/snapshot_repository.py:SnapshotRepository",
+      "target": "function:infrastructure/persistence/base_repository.py:_now",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_users.py:_build_doc",
+      "target": "function:domain/permissions.py:permissions_for_role",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_users.py:main",
+      "target": "function:scripts/seed_users.py:_read_password",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_users.py:main",
+      "target": "class:infrastructure/auth/password_hasher.py:BcryptHasher",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_users.py:main",
+      "target": "function:domain/permissions.py:permissions_for_role",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_users.py:main",
+      "target": "function:scripts/seed_users.py:_perm_diff",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/seed_users.py:main",
+      "target": "function:scripts/seed_users.py:_build_doc",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:app.py:lifespan",
+      "target": "class:application/runtime/runtime_service.py:RuntimeService",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:infrastructure/auth/action_audit_adapter.py:ActionAuditAdapter",
+      "target": "function:infrastructure/auth/action_audit_adapter.py:_redact",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

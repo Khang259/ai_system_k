@@ -1,0 +1,15 @@
+[
+  {
+    "_id": {
+      "$oid": "6ad1ddd0f293a40860192ea5"
+    },
+    "state_id": "global",
+    "active_version_id": "a46a523cad4a493db9b4d96a99a14636",
+    "created_at": {
+      "$date": "2026-10-16T08:18:24.583Z"
+    },
+    "updated_at": {
+      "$date": "2026-10-27T06:45:01.275Z"
+    }
+  }
+]
