@@ -80,7 +80,19 @@ def test_stuck_nodes_informational():
     assert stuck_nodes(batch, {"start_2", "start_11"}) == ["start_1"]
 
 
+def test_filled_excluded_from_stuck():
+    from domain.batch_policy import filled_nodes
+
+    batch = start_batch(
+        ["start_1", "start_2", "start_11"],
+        filled=["start_1"],
+    )
+    assert filled_nodes(batch) == ["start_1"]
+    assert stuck_nodes(batch, {"start_2", "start_11"}) == []
+
+
 def test_idle_batch():
     batch = idle_batch()
     assert batch.active is False
     assert batch.size == 0
+    assert batch.filled == frozenset()

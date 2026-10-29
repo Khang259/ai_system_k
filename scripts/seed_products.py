@@ -1,17 +1,14 @@
 """
-Seed zone X: 45 start + 1 end + 6 cameras + 45 pairs.
-
-Chỉ xoá/ghi dữ liệu liên quan zone X (và cameraId trong danh sách),
-không wipe toàn bộ collection.
+Append seed cột F/G/H (Khang) vào zone X — KHÔNG xoá / đè dữ liệu cũ.
 
     # xem docs sẽ insert (không ghi DB)
-    uv run python scripts/seed_zone_x.py --dry-run
+    uv run python scripts/seed_products.py --dry-run
 
-    # ghi Mongo (cần --yes)
-    uv run python scripts/seed_zone_x.py --yes
+    # ghi Mongo (chỉ insert bản ghi chưa có; cần --yes)
+    uv run python scripts/seed_products.py --yes
 
-Node id = start_/end_ + content topo (vd. 146 → start_10000146).
-IP = 192.168.50.{100 + cameraId}  (cam 1 → .111).
+Priority tiếp từ 46 (sau A–E). End end_10000013 đã có — không insert lại.
+Cam mới: 7, 10, 12. Cam 8/11/13 đã có — giữ ROI.
 ROI để trống — vẽ sau trên FE.
 """
 from __future__ import annotations
@@ -34,9 +31,8 @@ from pymongo import MongoClient
 from config.settings import settings
 
 ZONE_ID = "X"
-ZONE_NAME = "Zone X"
 END_NODE = "end_10000013"
-END_CAMERA_ID = 15
+PRIORITY_START = 46
 
 RTSP_USER = "admin"
 RTSP_PASS = "Kortek2026#"
@@ -44,56 +40,40 @@ RTSP_PORT = 554
 RTSP_PATH = "/Streaming/Channels/102"
 IP_BASE = "192.168.50"
 
-# (suffix 3 số topo, cameraId) — priority = index + 1
-START_SEQ: list[tuple[int, int]] = [
-    (146, 9),
-    (151, 9),
-    (154, 9),
-    (157, 9),
-    (163, 9),
-    (160, 14),
-    (166, 14),
-    (169, 14),
-    (172, 14),
-    (177, 9),
-    (180, 9),
-    (183, 9),
-    (186, 9),
-    (189, 9),
-    (193, 14),
-    (196, 14),
-    (199, 14),
-    (202, 14),
-    (205, 8),
-    (208, 8),
-    (211, 8),
-    (214, 11),
-    (217, 11),
-    (220, 11),
-    (223, 13),
-    (226, 13),
-    (229, 13),
-    (57, 8),
-    (56, 8),
-    (69, 8),
-    (73, 11),
-    (76, 11),
-    (81, 11),
-    (84, 13),
-    (87, 13),
-    (90, 13),
-    (59, 8),
-    (58, 8),
-    (93, 8),
-    (96, 11),
-    (100, 11),
-    (103, 11),
-    (106, 13),
-    (109, 13),
-    (112, 13),
-]
+# Cameras chỉ insert nếu chưa có (8/11/13 đã có ROI — skip)
+NEW_CAMERA_IDS = (7, 10, 12)
 
-COLLECTIONS = ("zones", "cameras", "nodes", "pairs")
+# (suffix topo, col_id, camera_id) — thứ tự F → G → H
+# node_id = start_10000{suffix:03d}; priority = PRIORITY_START + index
+KHANG_SEQ: list[tuple[int, str, int]] = [
+    (118, "F", 8),
+    (121, "F", 8),
+    (124, "F", 8),
+    (127, "F", 11),
+    (130, "F", 11),
+    (133, "F", 11),
+    (136, "F", 13),
+    (139, "F", 13),
+    (142, "F", 13),
+    (257, "G", 7),
+    (260, "G", 7),
+    (264, "G", 7),
+    (267, "G", 10),
+    (270, "G", 10),
+    (273, "G", 10),
+    (276, "G", 12),
+    (279, "G", 12),
+    (282, "G", 12),
+    (285, "H", 7),
+    (287, "H", 7),
+    (288, "H", 7),
+    (290, "H", 10),
+    (292, "H", 10),
+    (294, "H", 10),
+    (296, "H", 12),
+    (298, "H", 12),
+    (300, "H", 12),
+]
 
 
 def _start_node_id(suffix: int) -> str:
@@ -112,14 +92,15 @@ def _rtsp_url(camera_id: int) -> str:
 
 
 def _node_doc(
-    node_id: str, node_type: str, camera_id: int, priority: int
+    node_id: str, camera_id: int, priority: int, col_id: str
 ) -> dict:
     return {
         "node_id": node_id,
-        "node_type": node_type,
+        "node_type": "start",
         "zone_id": ZONE_ID,
         "camera_id": camera_id,
         "priority": priority,
+        "col_id": col_id,
         "enabled": True,
         "is_under_maintenance": False,
         "maintenance_reason": "",
@@ -139,18 +120,17 @@ def _camera_doc(camera_id: int) -> dict:
 
 
 def build_docs() -> dict:
-    starts: list[tuple[int, str, int]] = []
-    for priority, (suffix, camera_id) in enumerate(START_SEQ, start=1):
-        starts.append((priority, _start_node_id(suffix), camera_id))
+    starts: list[tuple[int, str, str, int]] = []
+    for i, (suffix, col_id, camera_id) in enumerate(KHANG_SEQ):
+        priority = PRIORITY_START + i
+        starts.append(
+            (priority, _start_node_id(suffix), col_id, camera_id)
+        )
 
     nodes = [
-        _node_doc(nid, "start", cam, pri) for pri, nid, cam in starts
+        _node_doc(nid, cam, pri, col) for pri, nid, col, cam in starts
     ]
-    nodes.append(_node_doc(END_NODE, "end", END_CAMERA_ID, 1))
-
-    camera_ids = sorted({cam for _, _, cam in starts} | {END_CAMERA_ID})
-    cameras = [_camera_doc(cid) for cid in camera_ids]
-
+    cameras = [_camera_doc(cid) for cid in NEW_CAMERA_IDS]
     pairs = [
         {
             "start_point": nid,
@@ -159,68 +139,104 @@ def build_docs() -> dict:
             "enabled": True,
             "auto_dispatch": True,
         }
-        for _, nid, _ in starts
+        for _, nid, _, _ in starts
     ]
-
-    zones = [{"zone_id": ZONE_ID, "name": ZONE_NAME, "enabled": True}]
     return {
-        "zones": zones,
         "cameras": cameras,
         "nodes": nodes,
         "pairs": pairs,
         "_starts": starts,
-        "_camera_ids": camera_ids,
     }
 
 
 def _print_summary(docs: dict) -> None:
+    print(f"zone={ZONE_ID}  end={END_NODE} (reuse, khong insert)")
+    print(
+        f"cameras_new={len(docs['cameras'])}  "
+        f"nodes={len(docs['nodes'])}  pairs={len(docs['pairs'])}"
+    )
+    print(
+        f"\n{'#':>2} {'prio':>4} {'col':3} {'node_id':22} "
+        f"{'cam':>3}  pair_end"
+    )
+    for i, (pri, nid, col, cam) in enumerate(docs["_starts"], start=1):
+        print(f"{i:2d} {pri:4d} {col:3} {nid:22} {cam:3d}  {END_NODE}")
+
     by_cam: dict[int, list[str]] = defaultdict(list)
-    for pri, nid, cam in docs["_starts"]:
-        by_cam[cam].append(f"P{pri}:{nid}")
+    for pri, nid, col, cam in docs["_starts"]:
+        by_cam[cam].append(f"P{pri}:{col}:{nid}")
 
-    print(f"zone={ZONE_ID}  end={END_NODE} (cam {END_CAMERA_ID})")
-    print(f"cameras={len(docs['cameras'])}  nodes={len(docs['nodes'])}  "
-          f"pairs={len(docs['pairs'])}")
     print("\nRTSP / nodes theo camera:")
-    for cid in docs["_camera_ids"]:
-        print(f"  cam {cid:2d}  {_rtsp_url(cid)}")
-        if cid == END_CAMERA_ID:
-            print(f"           -> {END_NODE}")
-        else:
-            for item in by_cam[cid]:
-                print(f"           -> {item}")
+    all_cams = sorted({cam for *_, cam in docs["_starts"]})
+    for cid in all_cams:
+        tag = "NEW" if cid in NEW_CAMERA_IDS else "SKIP(exist)"
+        print(f"  cam {cid:2d}  [{tag}]  {_rtsp_url(cid)}")
+        for item in by_cam[cid]:
+            print(f"           -> {item}")
 
 
-def _purge_zone(db) -> None:
-    """Xoá dữ liệu cũ của zone X + camera/pair liên quan trước khi insert."""
-    start_ids = [_start_node_id(s) for s, _ in START_SEQ]
-    camera_ids = sorted({c for _, c in START_SEQ} | {END_CAMERA_ID})
-
-    db["zones"].delete_many({"zone_id": ZONE_ID})
-    db["cameras"].delete_many(
-        {"$or": [{"zone_id": ZONE_ID}, {"cameraId": {"$in": camera_ids}}]}
+def _append_only(db, docs: dict) -> None:
+    """Chỉ insert bản ghi chưa có — không xoá / không đè."""
+    existing_cams = {
+        d["cameraId"]
+        for d in db["cameras"].find(
+            {"cameraId": {"$in": list(NEW_CAMERA_IDS)}},
+            {"cameraId": 1},
+        )
+    }
+    cams_to_insert = [
+        c for c in docs["cameras"] if c["cameraId"] not in existing_cams
+    ]
+    if cams_to_insert:
+        db["cameras"].insert_many(cams_to_insert)
+    print(
+        f"[ok] cameras: insert {len(cams_to_insert)} "
+        f"(skip {len(docs['cameras']) - len(cams_to_insert)})"
     )
-    db["nodes"].delete_many(
-        {
-            "$or": [
-                {"zone_id": ZONE_ID},
-                {"node_id": {"$in": start_ids + [END_NODE]}},
-                {"camera_id": {"$in": camera_ids}},
-            ]
-        }
+
+    node_ids = [n["node_id"] for n in docs["nodes"]]
+    existing_nodes = {
+        d["node_id"]
+        for d in db["nodes"].find(
+            {"node_id": {"$in": node_ids}}, {"node_id": 1}
+        )
+    }
+    nodes_to_insert = [
+        n for n in docs["nodes"] if n["node_id"] not in existing_nodes
+    ]
+    if nodes_to_insert:
+        db["nodes"].insert_many(nodes_to_insert)
+    print(
+        f"[ok] nodes: insert {len(nodes_to_insert)} "
+        f"(skip {len(docs['nodes']) - len(nodes_to_insert)})"
     )
-    db["pairs"].delete_many(
-        {
-            "$or": [
-                {"start_point": {"$in": start_ids}},
-                {"end_point": END_NODE},
-            ]
-        }
+
+    start_ids = [p["start_point"] for p in docs["pairs"]]
+    existing_pairs = {
+        d["start_point"]
+        for d in db["pairs"].find(
+            {
+                "start_point": {"$in": start_ids},
+                "end_point": END_NODE,
+            },
+            {"start_point": 1},
+        )
+    }
+    pairs_to_insert = [
+        p for p in docs["pairs"] if p["start_point"] not in existing_pairs
+    ]
+    if pairs_to_insert:
+        db["pairs"].insert_many(pairs_to_insert)
+    print(
+        f"[ok] pairs: insert {len(pairs_to_insert)} "
+        f"(skip {len(docs['pairs']) - len(pairs_to_insert)})"
     )
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Seed zone X vào MongoDB")
+    parser = argparse.ArgumentParser(
+        description="Append seed cột F/G/H (Khang) vào zone X"
+    )
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -249,13 +265,11 @@ def main() -> int:
     client.admin.command("ping")
     db = client[db_name]
 
-    _purge_zone(db)
-    for name in COLLECTIONS:
-        db[name].insert_many(docs[name])
-        print(f"[ok] {name}: {len(docs[name])}")
+    print(f"\nDB=`{db_name}`  mode=APPEND (no purge)")
+    _append_only(db, docs)
 
     client.close()
-    print(f"\n[ok] Seed zone {ZONE_ID} xong -> DB `{db_name}`")
+    print(f"\n[ok] Append F/G/H xong -> DB `{db_name}`")
     return 0
 
 

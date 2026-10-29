@@ -134,6 +134,58 @@ def test_confirm_dispatch_snapshots_ready_starts_sorted_by_priority():
     assert again.data["http_status"] == 409  # batch trước chưa xong
 
 
+def _col_a_state(ready_ids):
+    state = FakeNodeStateStore(
+        validate_pairs=[[f"start_{i}", "end_1"] for i in range(1, 6)]
+    )
+    state._ns.ready_start_list.update(f"start_{i}" for i in ready_ids)
+    meta = {
+        f"start_{i}": {"priority": i, "zone_id": "Z1", "col_id": "A"}
+        for i in range(1, 6)
+    }
+    return state, meta
+
+
+def test_confirm_dispatch_fills_head_to_tail_and_stops_at_lock():
+    state, meta = _col_a_state([1, 5])
+    state.apply_persisted_lock("start_3", user=True)
+    scan = ScanSession()
+
+    ok = _confirm(FakeInference(paused=False), state, scan, meta)
+    assert ok.success
+    assert ok.data["batchNodes"] == ["start_1", "start_2"]
+    assert ok.data["filledNodes"] == ["start_2"]
+    assert scan.get().filled == frozenset({"start_2"})
+
+
+def test_confirm_dispatch_reports_filled_between_head_tail():
+    state, meta = _col_a_state([1, 5])
+    scan = ScanSession()
+
+    ok = _confirm(FakeInference(paused=False), state, scan, meta)
+    assert ok.success
+    assert ok.data["batchNodes"] == [
+        "start_1",
+        "start_2",
+        "start_3",
+        "start_4",
+        "start_5",
+    ]
+    assert ok.data["filledNodes"] == ["start_2", "start_3", "start_4"]
+    assert scan.get().filled == frozenset({"start_2", "start_3", "start_4"})
+
+
+def test_confirm_dispatch_rejects_when_lock_user_before_head():
+    state, meta = _col_a_state([2, 5])
+    state.apply_persisted_lock("start_1", user=True)
+    scan = ScanSession()
+
+    res = _confirm(FakeInference(paused=False), state, scan, meta)
+    assert not res.success
+    assert res.data["http_status"] == 409
+    assert not scan.get().active
+
+
 def test_pause_scan():
     inf = FakeInference(paused=False)
     scan = ScanSession()

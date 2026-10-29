@@ -103,9 +103,23 @@ def test_pending_pairs_waiting_for_and_stuck():
 
     data = uc.execute().data
     assert data["stuckNodes"] == ["start_1"]
+    assert data["filledNodes"] == []
     # Trust: nextPairs có thể gồm start_1 dù không ready
     assert any(p["startNodeId"] == "start_1" for p in data["nextPairs"])
     assert any(p["startNodeId"] == "start_11" for p in data["nextPairs"])
+
+
+def test_pending_pairs_filled_not_stuck():
+    pairs = [["start_1", "end_a"], ["start_2", "end_a"], ["start_11", "end_b"]]
+    state = FakeNodeStateStore(validate_pairs=pairs)
+    state._ns.ready_start_list.update({"start_2", "start_11"})
+    state._ns.ready_end_list.update({"end_a", "end_b"})
+    scan = ScanSession()
+    scan.start(["start_1", "start_2", "start_11"], filled=["start_1"])
+    data = GetPendingPairs(state, scan, lambda: META).execute().data
+    assert data["filledNodes"] == ["start_1"]
+    assert data["stuckNodes"] == []
+    assert data["batch"]["filled"] == ["start_1"]
 
 
 def test_dispatchable_starts_drops_start_empty():

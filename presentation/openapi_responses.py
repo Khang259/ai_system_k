@@ -103,14 +103,19 @@ START_SCAN = merge(
 )
 
 CONFIRM_DISPATCH = merge(
-    {200: _desc("batchSize + batchNodes (sort priority) — cổng gửi ICS mở")},
+    {
+        200: _desc(
+            "batchSize + batchNodes + filledNodes (autofill head→tail) — cổng gửi ICS mở"
+        )
+    },
     {400: _desc("Runtime chưa sẵn sàng")},
     {409: _desc("Inference đang pause / batch trước chưa xong / chưa có start isReady")},
 )
 
 PENDING_PAIRS = {
     200: _desc(
-        "batch + readyStarts + nextPairs + waitingFor + stuckNodes"
+        "batch(+filled) + readyStarts + nextPairs + waitingFor + "
+        "filledNodes + stuckNodes — xem docs/fe_pending_pairs_contract.md"
     ),
 }
 

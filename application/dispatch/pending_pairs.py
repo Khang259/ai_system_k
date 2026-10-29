@@ -8,6 +8,7 @@ from application.result import UseCaseResult
 from application.scan_session import ScanSession
 from domain.batch_policy import (
     dispatchable_starts,
+    filled_nodes,
     locked_start_ids,
     plan_col_dispatch,
     stuck_nodes,
@@ -43,6 +44,7 @@ class GetPendingPairs:
             "readyStarts": [],
             "nextPairs": [],
             "waitingFor": [],
+            "filledNodes": [],
             "stuckNodes": [],
             "colStatus": [],
             "newNodesOutsideBatch": [],
@@ -95,6 +97,7 @@ class GetPendingPairs:
 
         next_pairs = [{"startNodeId": p[0], "endNodeId": p[1]} for p in pairs]
         waiting = list(plan.waiting) if plan else []
+        filled = filled_nodes(batch) if batch.active else []
         stuck = stuck_nodes(batch, ready) if batch.active else []
         col_status = []
         if plan:
@@ -111,14 +114,15 @@ class GetPendingPairs:
 
         new_outside = sorted(set(ready) - set(batch.nodes)) if batch.active else []
 
-        if batch.active and (waiting or stuck or (built and not pairs)):
+        if batch.active and (waiting or filled or stuck or (built and not pairs)):
             logger.debug(
                 "[pending_pairs] batchActive ready=%s built=%s allowed=%s "
-                "waitingFor=%s stuckNodes=%s locked=%s skipped=%s",
+                "waitingFor=%s filledNodes=%s stuckNodes=%s locked=%s skipped=%s",
                 ready,
                 len(built),
                 len(pairs),
                 waiting,
+                filled,
                 stuck,
                 sorted(locked),
                 sorted(batch.skipped),
@@ -130,6 +134,7 @@ class GetPendingPairs:
             readyStarts=ready_starts,
             nextPairs=next_pairs,
             waitingFor=waiting,
+            filledNodes=filled,
             stuckNodes=stuck,
             colStatus=col_status,
             newNodesOutsideBatch=new_outside,

@@ -76,12 +76,12 @@ class NodeState:
         now = self._time()
         if node_id.startswith("start_"):
             current["time"] = now
-            if not state:
-                self.ready_start_list.discard(node_id)
+            # if not state:
+            #     self.ready_start_list.discard(node_id)
         elif node_id.startswith("end_"):
             current["time"] = now
-            if state:
-                self.ready_end_list.discard(node_id)
+            # if state:
+            #     self.ready_end_list.discard(node_id)
         self._emit(node_id)
 
     def process_starts(self) -> None:

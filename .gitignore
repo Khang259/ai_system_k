@@ -39,3 +39,7 @@ data/
 
 # Other files
 *.zip
+*.xlsx
+*.exe
+bluescreenview/
+snapshots/

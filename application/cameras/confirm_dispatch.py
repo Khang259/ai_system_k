@@ -3,7 +3,12 @@ from typing import Callable
 from application.result import UseCaseResult
 from application.ports import InferencePort, NodeStateStore
 from application.scan_session import ScanSession
-from domain.batch_policy import dispatchable_starts
+from domain.batch_policy import (
+    dispatchable_starts,
+    fill_cols_head_to_tail,
+    locked_start_ids,
+    user_locked_start_ids,
+)
 from domain.dispatch.priority import StartMetaMap, start_sort_key
 from infrastructure.sandbox.smoke_trail import emit
 from utils.setup_log import setup_logger
@@ -13,8 +18,8 @@ logger = setup_logger("confirm_dispatch", "logs/confirm_dispatch/log")
 
 class ConfirmDispatch:
     """
-    Người dùng xác nhận hàng đã đẩy xong → chụp batch các start isReady và mở cổng
-    gửi ICS. Chỉ start trong batch được gửi, theo priority, mỗi start 1 lần.
+    Người dùng xác nhận hàng đã đẩy xong → chụp batch (start isReady lấp head→tail
+    theo col) và mở cổng gửi ICS. Chỉ start trong batch được gửi, theo priority, mỗi start 1 lần.
     """
 
     def __init__(
@@ -69,17 +74,47 @@ class ConfirmDispatch:
                 http_status=409,
             )
 
-        batch = self._scan.start(ready)
         meta = self._start_meta()
+        snapshot = self._state.snapshot_points()
+        batch_nodes = fill_cols_head_to_tail(
+            ready,
+            meta,
+            user_locked=user_locked_start_ids(snapshot),
+            system_locked=locked_start_ids(snapshot),
+        )
+        if not batch_nodes:
+            logger.warning(
+                "[confirm_dispatch] reject reason=all_cols_blocked_by_lock "
+                "readyStarts=%s",
+                sorted(ready),
+            )
+            return UseCaseResult.fail(
+                "Các col có start ready đều bị chặn bởi lock_user phía trước",
+                http_status=409,
+            )
+        filled = batch_nodes - set(ready)
+        batch = self._scan.start(batch_nodes, filled=filled)
         ordered = sorted(batch.nodes, key=lambda nid: start_sort_key(nid, meta))
+        filled_ordered = sorted(filled, key=lambda nid: start_sort_key(nid, meta))
         logger.info(
-            "[confirm_dispatch] ok batchSize=%s batchNodes=%s",
+            "[confirm_dispatch] ok batchSize=%s batchNodes=%s "
+            "readyCount=%s filledCount=%s filledNodes=%s",
             batch.size,
             ordered,
+            len(ready),
+            len(filled_ordered),
+            filled_ordered,
         )
-        emit("api", "confirm_dispatch", batchSize=batch.size, batchNodes=ordered)
+        emit(
+            "api",
+            "confirm_dispatch",
+            batchSize=batch.size,
+            batchNodes=ordered,
+            filledNodes=filled_ordered,
+        )
         return UseCaseResult.ok(
             message="Dispatch confirmed",
             batchSize=batch.size,
             batchNodes=ordered,
+            filledNodes=filled_ordered,
         )

@@ -1,13 +1,20 @@
 """
 Batch dispatch policy — confirm-dispatch / cols / accessible head.
 
-Batch = các start đã isReady lúc người dùng confirm-dispatch.
-Chỉ start trong batch mới được gửi ICS; mỗi start tối đa 1 lần.
+Batch = các start lấp theo head/tail lúc người dùng confirm-dispatch
+(xem fill_cols_head_to_tail). Chỉ start trong batch mới được gửi ICS;
+mỗi start tối đa 1 lần.
 
-Stack-based column ordering:
+Head/tail fill (lúc confirm):
+- Head/tail = start ready có priority nhỏ nhất/lớn nhất trong col.
+- Mọi start từ head → tail coi như có hàng (kể cả không ready).
+- Gặp lock (user/system) giữa head → tail: dừng, phần sau lock không vào batch.
+- lock_user trước head: bỏ cả col. lock_system trước head: không chặn (zone chờ).
+
+Stack-based column ordering (lúc gửi):
 - Mỗi col là một lane vật lý, AMR vào từ entrance (priority nhỏ nhất).
 - Head = node đầu tiên trong pending mà TẤT CẢ nodes phía trước (priority nhỏ hơn)
-  đều TRỐNG (không trong pending = đã dispatch/skip HOẶC không có hàng từ đầu).
+  đều không trong pending (đã dispatch/skip hoặc nằm trước head lúc confirm).
 - Head ∈ pending → gửi (trust; không phụ thuộc ready lúc gửi).
 - Không có head accessible → chờ hoặc sang col tiếp theo.
 - Zone đang lock_system → chờ unlock (không skip/gửi).
@@ -39,6 +46,8 @@ class BatchSnapshot:
     active: bool = True
     dispatched: frozenset = field(default_factory=frozenset)
     skipped: frozenset = field(default_factory=frozenset)
+    # Nodes thêm bởi fill head→tail lúc confirm (không isReady lúc đó).
+    filled: frozenset = field(default_factory=frozenset)
 
     @property
     def size(self) -> int:
@@ -53,9 +62,19 @@ class BatchSnapshot:
         return len(self.pending)
 
 
-def start_batch(ready_nodes: Iterable[str]) -> BatchSnapshot:
-    """Người dùng confirm-dispatch: start đang isReady làm batch."""
-    return BatchSnapshot(nodes=frozenset(ready_nodes), sum_request=0, active=True)
+def start_batch(
+    nodes: Iterable[str],
+    filled: Iterable[str] = (),
+) -> BatchSnapshot:
+    """
+    Confirm-dispatch: chốt batch.
+    filled ⊆ nodes — start không isReady lúc confirm, được lấp theo head→tail.
+    """
+    node_set = frozenset(nodes)
+    filled_set = frozenset(filled) & node_set
+    return BatchSnapshot(
+        nodes=node_set, sum_request=0, active=True, filled=filled_set
+    )
 
 
 def record_dispatch_success(
@@ -71,6 +90,7 @@ def record_dispatch_success(
         active=True,
         dispatched=dispatched,
         skipped=batch.skipped,
+        filled=batch.filled,
     )
 
 
@@ -88,6 +108,7 @@ def record_skip(batch: BatchSnapshot, node_ids: Iterable[str]) -> BatchSnapshot:
         active=True,
         dispatched=batch.dispatched,
         skipped=skipped,
+        filled=batch.filled,
     )
 
 
@@ -123,6 +144,51 @@ def mongo_starts_by_zone_col(
         for c, nodes in cols.items():
             cols[c] = sorted(nodes, key=lambda n: start_sort_key(n, start_meta))
     return by
+
+
+def _fill_one_col(
+    nodes: Sequence[str],
+    ready: Set[str],
+    user_locked: Set[str],
+    system_locked: Set[str],
+) -> Set[str]:
+    """nodes sorted priority ASC (entrance → deep)."""
+    ready_idx = [i for i, nid in enumerate(nodes) if nid in ready]
+    if not ready_idx:
+        return set()
+    head, tail = ready_idx[0], ready_idx[-1]
+
+    if any(nid in user_locked for nid in nodes[:head]):
+        return set()
+
+    filled: Set[str] = set()
+    for nid in nodes[head : tail + 1]:
+        if nid in user_locked or nid in system_locked:
+            break
+        filled.add(nid)
+    return filled
+
+
+def fill_cols_head_to_tail(
+    ready: Iterable[str],
+    start_meta: Optional[StartMetaMap],
+    user_locked: Iterable[str] = (),
+    system_locked: Iterable[str] = (),
+) -> Set[str]:
+    """
+    Ready starts → batch nodes theo rule head/tail của từng col.
+    Start ready không có trong meta (không biết col) giữ nguyên.
+    """
+    ready_set = set(ready)
+    user_set = set(user_locked)
+    system_set = set(system_locked)
+    meta = start_meta or {}
+
+    out = {nid for nid in ready_set if nid not in meta}
+    for cols in mongo_starts_by_zone_col(meta).values():
+        for nodes in cols.values():
+            out |= _fill_one_col(nodes, ready_set, user_set, system_set)
+    return out
 
 
 def col_head_in_zone(
@@ -297,15 +363,24 @@ def waiting_for(
     return out
 
 
+def filled_nodes(batch: BatchSnapshot) -> List[str]:
+    """Autofill còn pending — FE hiển thị, không cảnh báo stuck."""
+    if not batch.active:
+        return []
+    return sorted(batch.filled & batch.pending)
+
+
 def stuck_nodes(batch: BatchSnapshot, ready_starts: Iterable[str]) -> List[str]:
     """
-    Start trong batch, chưa gửi/skip, không còn isReady.
-    Chỉ mang tính thông tin UI — trust vẫn cho gửi.
+    Pending không ready và không phải autofill.
+    Autofill → filledNodes. Trust vẫn gửi cả stuck lẫn filled.
     """
     if not batch.active:
         return []
     ready = set(ready_starts)
-    return sorted(n for n in batch.pending if n not in ready)
+    return sorted(
+        n for n in batch.pending if n not in ready and n not in batch.filled
+    )
 
 
 def find_new_nodes(
@@ -318,19 +393,30 @@ def find_new_nodes(
 
 def idle_batch() -> BatchSnapshot:
     """Trạng thái cổng đóng: chưa confirm / batch xong / bị dừng."""
-    return BatchSnapshot(nodes=frozenset(), sum_request=0, active=False)
+    return BatchSnapshot(nodes=frozenset(), sum_request=0, active=False, filled=frozenset())
 
 
-def locked_start_ids(snapshot: Mapping[str, Mapping[str, Any]]) -> Set[str]:
-    """Start đang lock_system từ snapshot_points()."""
+def _start_ids_with_lock(
+    snapshot: Mapping[str, Mapping[str, Any]], kind: str
+) -> Set[str]:
     out: Set[str] = set()
     for nid, data in snapshot.items():
         if not str(nid).startswith("start_"):
             continue
         lock = data.get("lock") or {}
-        if lock.get("system"):
+        if lock.get(kind):
             out.add(str(nid))
     return out
+
+
+def locked_start_ids(snapshot: Mapping[str, Mapping[str, Any]]) -> Set[str]:
+    """Start đang lock_system từ snapshot_points()."""
+    return _start_ids_with_lock(snapshot, "system")
+
+
+def user_locked_start_ids(snapshot: Mapping[str, Mapping[str, Any]]) -> Set[str]:
+    """Start đang lock_user từ snapshot_points()."""
+    return _start_ids_with_lock(snapshot, "user")
 
 
 # --- Tương thích tạm (zone_heads dùng trong log/test cũ) ---

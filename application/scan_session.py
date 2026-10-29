@@ -32,9 +32,9 @@ class ScanSession:
             self._stop_reason = reason
             self._new_nodes = frozenset(new_nodes)
 
-    def start(self, ready_nodes) -> BatchSnapshot:
+    def start(self, nodes, filled=()) -> BatchSnapshot:
         with self._lock:
-            self._batch = start_batch(ready_nodes)
+            self._batch = start_batch(nodes, filled=filled)
             self._stop_reason = None
             self._new_nodes = frozenset()
             return self._batch
@@ -60,6 +60,7 @@ class ScanSession:
                 "active": batch.active,
                 "size": batch.size,
                 "nodes": sorted(batch.nodes),
+                "filled": sorted(batch.filled),
                 "dispatched": sorted(batch.dispatched),
                 "skipped": sorted(batch.skipped),
                 "remaining": max(batch.remaining, 0) if batch.active else 0,
