@@ -6,7 +6,7 @@ from typing import Any, Dict, Iterable, Mapping, Optional, Tuple
 
 from domain.settings import PRIORITY_FALLBACK
 
-# node_id -> { "priority": int|None, "zone_id": str, "col_id": str }
+# node_id -> { "priority", "zone_id", "col_id", "node_name" }
 StartMetaMap = Mapping[str, Mapping[str, Any]]
 
 
@@ -33,6 +33,7 @@ def start_meta_from_docs(docs: Iterable[Mapping[str, Any]]) -> Dict[str, Dict[st
             "priority": doc.get("priority"),
             "zone_id": doc.get("zone_id") or "",
             "col_id": str(doc.get("col_id") or ""),
+            "node_name": str(doc.get("node_name") or ""),
         }
     return meta
 

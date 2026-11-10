@@ -114,8 +114,15 @@ CONFIRM_DISPATCH = merge(
 
 PENDING_PAIRS = {
     200: _desc(
-        "batch(+filled) + readyStarts + nextPairs + waitingFor + "
-        "filledNodes + stuckNodes — xem docs/fe_pending_pairs_contract.md"
+        "batch(+filled) + readyStarts(nodeName) + nextPairs + waitingFor + "
+        "filledNodes + stuckNodes — docs/fe_pending_pairs_contract.md"
+    ),
+}
+
+GET_NODES = {
+    200: _desc(
+        "items[]: nodeId + nodeName (Mongo) + kind + zone/col — "
+        "docs/fe_nodes_contract.md (đã bỏ label S-01)"
     ),
 }
 

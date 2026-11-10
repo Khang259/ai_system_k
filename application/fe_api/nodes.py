@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
-from application.fe_api.mappers import node_label
 from application.fe_api.priority_rules import ensure_start_priority_unique
 from application.ports import NodeRepositoryPort, NodeStateStore
 from application.result import UseCaseResult
@@ -25,7 +24,7 @@ def _node_item(doc: Dict[str, Any]) -> Dict[str, Any]:
     item = {
         "id": doc.get("node_id"),
         "nodeId": doc.get("node_id"),
-        "label": node_label(ntype, priority),
+        "nodeName": doc.get("node_name") or "",
         "kind": ntype,
         "zoneId": doc.get("zone_id"),
         "cameraId": doc.get("camera_id"),

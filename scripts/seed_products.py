@@ -1,15 +1,15 @@
 """
-Append seed cột F/G/H (Khang) vào zone X — KHÔNG xoá / đè dữ liệu cũ.
+Append seed cột I/K (UpdateMap) vào zone X — KHÔNG xoá cameras/pairs cũ.
 
-    # xem docs sẽ insert (không ghi DB)
+    # xem bảng seed + kế hoạch insert/patch (không ghi DB)
     uv run python scripts/seed_products.py --dry-run
 
-    # ghi Mongo (chỉ insert bản ghi chưa có; cần --yes)
+    # ghi Mongo: insert bản ghi chưa có + patch node_name nếu lệch; cần --yes
     uv run python scripts/seed_products.py --yes
 
-Priority tiếp từ 46 (sau A–E). End end_10000013 đã có — không insert lại.
-Cam mới: 7, 10, 12. Cam 8/11/13 đã có — giữ ROI.
-ROI để trống — vẽ sau trên FE.
+Priority tiếp từ 73 (sau F/G/H = 46..72). End end_10000013 đã có — không insert lại.
+Cam 7/10/12: insert nếu chưa có. ROI để trống — vẽ sau trên FE.
+Node đã có: chỉ $set node_name khi khác mapping (không đè field khác).
 """
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ import argparse
 import sys
 from collections import defaultdict
 from pathlib import Path
+from typing import Any
 
 # Windows console (cp1252) khong in duoc tieng Viet / emoji
 if hasattr(sys.stdout, "reconfigure"):
@@ -26,13 +27,13 @@ if hasattr(sys.stderr, "reconfigure"):
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 
 from config.settings import settings
 
 ZONE_ID = "X"
 END_NODE = "end_10000013"
-PRIORITY_START = 46
+PRIORITY_START = 73
 
 RTSP_USER = "admin"
 RTSP_PASS = "Kortek2026#"
@@ -40,39 +41,31 @@ RTSP_PORT = 554
 RTSP_PATH = "/Streaming/Channels/102"
 IP_BASE = "192.168.50"
 
-# Cameras chỉ insert nếu chưa có (8/11/13 đã có ROI — skip)
+# Cameras chỉ insert nếu chưa có
 NEW_CAMERA_IDS = (7, 10, 12)
 
-# (suffix topo, col_id, camera_id) — thứ tự F → G → H
+# (suffix topo, col_id, camera_id) — thứ tự I → K theo UpdateMap.xlsx
 # node_id = start_10000{suffix:03d}; priority = PRIORITY_START + index
-KHANG_SEQ: list[tuple[int, str, int]] = [
-    (118, "F", 8),
-    (121, "F", 8),
-    (124, "F", 8),
-    (127, "F", 11),
-    (130, "F", 11),
-    (133, "F", 11),
-    (136, "F", 13),
-    (139, "F", 13),
-    (142, "F", 13),
-    (257, "G", 7),
-    (260, "G", 7),
-    (264, "G", 7),
-    (267, "G", 10),
-    (270, "G", 10),
-    (273, "G", 10),
-    (276, "G", 12),
-    (279, "G", 12),
-    (282, "G", 12),
-    (285, "H", 7),
-    (287, "H", 7),
-    (288, "H", 7),
-    (290, "H", 10),
-    (292, "H", 10),
-    (294, "H", 10),
-    (296, "H", 12),
-    (298, "H", 12),
-    (300, "H", 12),
+# Excel col I1..I9 / K1..K9 → col_id = I/K, node_name = I1..K9
+UPDATE_MAP_SEQ: list[tuple[int, str, int]] = [
+    (314, "I", 7),
+    (316, "I", 7),
+    (317, "I", 7),
+    (319, "I", 10),
+    (321, "I", 10),
+    (323, "I", 10),
+    (325, "I", 12),
+    (327, "I", 12),
+    (329, "I", 12),
+    (332, "K", 7),
+    (334, "K", 7),
+    (335, "K", 7),
+    (337, "K", 10),
+    (339, "K", 10),
+    (341, "K", 10),
+    (343, "K", 12),
+    (345, "K", 12),
+    (347, "K", 12),
 ]
 
 
@@ -92,7 +85,11 @@ def _rtsp_url(camera_id: int) -> str:
 
 
 def _node_doc(
-    node_id: str, camera_id: int, priority: int, col_id: str
+    node_id: str,
+    camera_id: int,
+    priority: int,
+    col_id: str,
+    node_name: str,
 ) -> dict:
     return {
         "node_id": node_id,
@@ -101,6 +98,7 @@ def _node_doc(
         "camera_id": camera_id,
         "priority": priority,
         "col_id": col_id,
+        "node_name": node_name,
         "enabled": True,
         "is_under_maintenance": False,
         "maintenance_reason": "",
@@ -120,15 +118,19 @@ def _camera_doc(camera_id: int) -> dict:
 
 
 def build_docs() -> dict:
-    starts: list[tuple[int, str, str, int]] = []
-    for i, (suffix, col_id, camera_id) in enumerate(KHANG_SEQ):
+    starts: list[tuple[int, str, str, int, str]] = []
+    rank_by_col: dict[str, int] = defaultdict(int)
+    for i, (suffix, col_id, camera_id) in enumerate(UPDATE_MAP_SEQ):
         priority = PRIORITY_START + i
+        rank_by_col[col_id] += 1
+        label = f"{col_id}{rank_by_col[col_id]}"
         starts.append(
-            (priority, _start_node_id(suffix), col_id, camera_id)
+            (priority, _start_node_id(suffix), col_id, camera_id, label)
         )
 
     nodes = [
-        _node_doc(nid, cam, pri, col) for pri, nid, col, cam in starts
+        _node_doc(nid, cam, pri, col, name)
+        for pri, nid, col, cam, name in starts
     ]
     cameras = [_camera_doc(cid) for cid in NEW_CAMERA_IDS]
     pairs = [
@@ -139,7 +141,7 @@ def build_docs() -> dict:
             "enabled": True,
             "auto_dispatch": True,
         }
-        for _, nid, _, _ in starts
+        for _, nid, _, _, _ in starts
     ]
     return {
         "cameras": cameras,
@@ -156,18 +158,21 @@ def _print_summary(docs: dict) -> None:
         f"nodes={len(docs['nodes'])}  pairs={len(docs['pairs'])}"
     )
     print(
-        f"\n{'#':>2} {'prio':>4} {'col':3} {'node_id':22} "
+        f"\n{'#':>2} {'prio':>4} {'node_name':9} {'col':3} {'node_id':22} "
         f"{'cam':>3}  pair_end"
     )
-    for i, (pri, nid, col, cam) in enumerate(docs["_starts"], start=1):
-        print(f"{i:2d} {pri:4d} {col:3} {nid:22} {cam:3d}  {END_NODE}")
+    for i, (pri, nid, col, cam, name) in enumerate(docs["_starts"], start=1):
+        print(
+            f"{i:2d} {pri:4d} {name:9} {col:3} {nid:22} "
+            f"{cam:3d}  {END_NODE}"
+        )
 
     by_cam: dict[int, list[str]] = defaultdict(list)
-    for pri, nid, col, cam in docs["_starts"]:
-        by_cam[cam].append(f"P{pri}:{col}:{nid}")
+    for pri, nid, col, cam, label in docs["_starts"]:
+        by_cam[cam].append(f"P{pri}:{label}:{nid}")
 
     print("\nRTSP / nodes theo camera:")
-    all_cams = sorted({cam for *_, cam in docs["_starts"]})
+    all_cams = sorted({cam for _, _, _, cam, _ in docs["_starts"]})
     for cid in all_cams:
         tag = "NEW" if cid in NEW_CAMERA_IDS else "SKIP(exist)"
         print(f"  cam {cid:2d}  [{tag}]  {_rtsp_url(cid)}")
@@ -175,8 +180,68 @@ def _print_summary(docs: dict) -> None:
             print(f"           -> {item}")
 
 
-def _append_only(db, docs: dict) -> None:
-    """Chỉ insert bản ghi chưa có — không xoá / không đè."""
+def _node_name_patches(
+    db, docs: dict
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[str]]:
+    """Trả (to_insert, to_patch, name_ok). to_patch: node_id/existing/proposed."""
+    desired = {n["node_id"]: n for n in docs["nodes"]}
+    found = list(
+        db["nodes"].find(
+            {"node_id": {"$in": list(desired.keys())}},
+            {"node_id": 1, "node_name": 1},
+        )
+    )
+    by_id = {str(d["node_id"]): d for d in found}
+
+    to_insert: list[dict[str, Any]] = []
+    to_patch: list[dict[str, Any]] = []
+    name_ok: list[str] = []
+    for nid, node in desired.items():
+        doc = by_id.get(nid)
+        if not doc:
+            to_insert.append(node)
+            continue
+        existing = str(doc.get("node_name") or "")
+        proposed = str(node.get("node_name") or "")
+        if existing != proposed:
+            to_patch.append(
+                {"node_id": nid, "existing": existing, "proposed": proposed}
+            )
+        else:
+            name_ok.append(nid)
+    return to_insert, to_patch, name_ok
+
+
+def _print_db_plan(
+    cams_new: int,
+    cams_skip: int,
+    to_insert: list[dict[str, Any]],
+    to_patch: list[dict[str, Any]],
+    name_ok: list[str],
+    pairs_new: int,
+    pairs_skip: int,
+) -> None:
+    print(
+        f"\n[PLAN] cameras: insert={cams_new} skip={cams_skip}"
+    )
+    print(
+        f"[PLAN] nodes: insert={len(to_insert)} "
+        f"patch_node_name={len(to_patch)} name_ok={len(name_ok)}"
+    )
+    print(f"[PLAN] pairs: insert={pairs_new} skip={pairs_skip}")
+    if to_patch:
+        print(f"\n{'node_id':22} {'existing':10} {'proposed':10}")
+        print("-" * 46)
+        for row in to_patch:
+            print(
+                f"{row['node_id']:22} "
+                f"{row['existing'] or '(empty)':10} "
+                f"{row['proposed']:10}"
+            )
+
+
+def _apply(db, docs: dict, dry_run: bool) -> None:
+    """Insert bản ghi mới + patch node_name cho node đã có nếu lệch."""
     existing_cams = {
         d["cameraId"]
         for d in db["cameras"].find(
@@ -187,29 +252,8 @@ def _append_only(db, docs: dict) -> None:
     cams_to_insert = [
         c for c in docs["cameras"] if c["cameraId"] not in existing_cams
     ]
-    if cams_to_insert:
-        db["cameras"].insert_many(cams_to_insert)
-    print(
-        f"[ok] cameras: insert {len(cams_to_insert)} "
-        f"(skip {len(docs['cameras']) - len(cams_to_insert)})"
-    )
 
-    node_ids = [n["node_id"] for n in docs["nodes"]]
-    existing_nodes = {
-        d["node_id"]
-        for d in db["nodes"].find(
-            {"node_id": {"$in": node_ids}}, {"node_id": 1}
-        )
-    }
-    nodes_to_insert = [
-        n for n in docs["nodes"] if n["node_id"] not in existing_nodes
-    ]
-    if nodes_to_insert:
-        db["nodes"].insert_many(nodes_to_insert)
-    print(
-        f"[ok] nodes: insert {len(nodes_to_insert)} "
-        f"(skip {len(docs['nodes']) - len(nodes_to_insert)})"
-    )
+    to_insert, to_patch, name_ok = _node_name_patches(db, docs)
 
     start_ids = [p["start_point"] for p in docs["pairs"]]
     existing_pairs = {
@@ -225,6 +269,51 @@ def _append_only(db, docs: dict) -> None:
     pairs_to_insert = [
         p for p in docs["pairs"] if p["start_point"] not in existing_pairs
     ]
+
+    _print_db_plan(
+        len(cams_to_insert),
+        len(docs["cameras"]) - len(cams_to_insert),
+        to_insert,
+        to_patch,
+        name_ok,
+        len(pairs_to_insert),
+        len(docs["pairs"]) - len(pairs_to_insert),
+    )
+
+    if dry_run:
+        print("\n(dry-run — chua ghi Mongo)")
+        return
+
+    if cams_to_insert:
+        db["cameras"].insert_many(cams_to_insert)
+    print(
+        f"[ok] cameras: insert {len(cams_to_insert)} "
+        f"(skip {len(docs['cameras']) - len(cams_to_insert)})"
+    )
+
+    if to_insert:
+        db["nodes"].insert_many(to_insert)
+    print(f"[ok] nodes: insert {len(to_insert)}")
+
+    if to_patch:
+        ops = [
+            UpdateOne(
+                {"node_id": row["node_id"], "node_type": "start"},
+                {"$set": {"node_name": row["proposed"]}},
+            )
+            for row in to_patch
+        ]
+        result = db["nodes"].bulk_write(ops, ordered=False)
+        print(
+            f"[ok] nodes: patch node_name matched={result.matched_count} "
+            f"modified={result.modified_count} ops={len(ops)}"
+        )
+    else:
+        print("[ok] nodes: patch node_name 0")
+
+    if name_ok:
+        print(f"[ok] nodes: node_name already ok={len(name_ok)}")
+
     if pairs_to_insert:
         db["pairs"].insert_many(pairs_to_insert)
     print(
@@ -235,12 +324,12 @@ def _append_only(db, docs: dict) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Append seed cột F/G/H (Khang) vào zone X"
+        description="Append seed cột I/K (UpdateMap) vào zone X"
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Chỉ in bảng seed, không ghi DB",
+        help="In bảng seed + kế hoạch insert/patch, không ghi DB",
     )
     parser.add_argument(
         "--yes",
@@ -252,11 +341,7 @@ def main() -> int:
     docs = build_docs()
     _print_summary(docs)
 
-    if args.dry_run:
-        print("\n(dry-run — chua ghi Mongo)")
-        return 0
-
-    if not args.yes:
+    if not args.dry_run and not args.yes:
         print("\n[!] Can --yes de ghi DB (hoac --dry-run de xem).")
         return 1
 
@@ -265,11 +350,13 @@ def main() -> int:
     client.admin.command("ping")
     db = client[db_name]
 
-    print(f"\nDB=`{db_name}`  mode=APPEND (no purge)")
-    _append_only(db, docs)
+    mode = "DRY-RUN" if args.dry_run else "APPEND+PATCH node_name"
+    print(f"\nDB=`{db_name}`  mode={mode}")
+    _apply(db, docs, dry_run=args.dry_run)
 
     client.close()
-    print(f"\n[ok] Append F/G/H xong -> DB `{db_name}`")
+    if not args.dry_run:
+        print(f"\n[ok] Append/patch I/K xong -> DB `{db_name}`")
     return 0
 
 

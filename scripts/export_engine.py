@@ -23,9 +23,9 @@ if platform.system() == "Windows":
 
 from config.settings import settings
 
-PT_PATH = Path("models/KortekFL01102601.pt")
-ONNX_PATH = Path("models/KortekFL01102601.onnx")
-ENGINE_PATH = Path("models/KortekFL01102601.engine")
+PT_PATH = Path("models/KortekFL05112604.pt")
+ONNX_PATH = Path("models/KortekFL05112604.onnx")
+ENGINE_PATH = Path("models/KortekFL05112604.engine")
 INPUT_NAME = "images"
 FIXED_BATCH = 16
 # Khớp Ultralytics default / TrtYoloEngine comment (B, 300, 6)

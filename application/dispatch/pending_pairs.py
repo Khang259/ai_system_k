@@ -65,6 +65,7 @@ class GetPendingPairs:
             {
                 "nodeId": nid,
                 "priority": resolve_priority((meta.get(nid) or {}).get("priority")),
+                "nodeName": (meta.get(nid) or {}).get("node_name") or "",
                 "zoneId": (meta.get(nid) or {}).get("zone_id") or "",
                 "colId": col_of(nid, meta),
                 "inBatch": nid in batch.nodes,

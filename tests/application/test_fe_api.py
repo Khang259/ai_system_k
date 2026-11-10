@@ -102,6 +102,8 @@ def _seed():
         "zone_id": "AE5",
         "camera_id": 1,
         "priority": 1,
+        "col_id": "A",
+        "node_name": "A1",
         "enabled": True,
     }
     nodes.rows["end_10000760"] = {
@@ -218,7 +220,7 @@ def test_create_roi_rejects_bad_box():
     cams, nodes, _, _, _ = _seed()
     bad = _run(
         CreateRoi(cams, nodes, 1280, 736, _inf()).execute(
-            1, "start_10000060", [0, 0, 999, 10]
+            1, "start_10000060", [0, 0, 2000, 10]
         )
     )
     assert not bad.success
@@ -246,7 +248,7 @@ def test_get_nodes_and_maintenance():
     state = FakeNodeStateStore()
     listed = _run(GetNodes(nodes).execute())
     assert len(listed.data["items"]) == 2
-    assert listed.data["items"][0]["label"] == "S-01"
+    assert listed.data["items"][0]["nodeName"] == "A1"
     assert listed.data["items"][0]["lock"] == {
         "user": False,
         "system": False,

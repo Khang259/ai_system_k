@@ -10,7 +10,6 @@ from application.fe_api.cameras_helpers import (
     _priority_for_new_node,
     _reject_duplicate_rtsp,
 )
-from application.fe_api.mappers import node_label
 from application.fe_api.priority_rules import ensure_start_priority_unique
 from application.fe_api.sync_rules import (
     cascade_delete_node,

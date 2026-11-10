@@ -274,7 +274,7 @@ class InferenceEngine(threading.Thread):
                 batch_info["slot_idx"],
                 batch_info["batch_size"],
                 conf=None,  # Dùng settings.THRESHOLD_DETECT
-                max_det=15,
+                max_det=30,
             )
             self._distribute_results(results, batch_info["cam_ids"])
             completed.append(i)

@@ -4,16 +4,6 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, Tuple
 
 
-def node_label(node_type: str, priority: int) -> str:
-    """Sinh label tạm: S-01 / E-02. Đổi khi priority đổi (field Mongo đang hoãn)."""
-    prefix = "S" if (node_type or "").lower() == "start" else "E"
-    try:
-        n = int(priority)
-    except (TypeError, ValueError):
-        n = 0
-    return f"{prefix}-{n:02d}"
-
-
 def camera_status(db_enabled: bool, runtime: Optional[Dict[str, Any]]) -> str:
     """
     disabled | offline | streaming.
@@ -48,7 +38,7 @@ def roi_item(
     node_id: str,
     entry: Any,
     *,
-    label: str,
+    node_name: str,
     kind: str,
     ref_width: int,
     ref_height: int,
@@ -73,7 +63,7 @@ def roi_item(
         "id": f"{camera_id}:{node_id}",
         "cameraId": camera_id,
         "nodeId": node_id,
-        "label": label,
+        "nodeName": node_name or "",
         "kind": kind,
         "box": box,
         "refWidth": ref_w,

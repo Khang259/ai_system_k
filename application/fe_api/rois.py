@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from application.fe_api.mappers import node_label, parse_roi_id, roi_item, validate_box
+from application.fe_api.mappers import parse_roi_id, roi_item, validate_box
 from application.fe_api.sync_rules import (
     cascade_delete_node,
     cascade_delete_pairs_for_node,
@@ -105,7 +105,7 @@ class CreateRoi(_RoiWriteBase):
             camera_id,
             node_id,
             self._roi_doc(box, ntype),
-            label=node_label(ntype, node.get("priority", 0)),
+            node_name=str(node.get("node_name") or ""),
             kind=ntype,
             ref_width=self._ref_w,
             ref_height=self._ref_h,
@@ -169,7 +169,7 @@ class UpdateRoi(_RoiWriteBase):
                     "node_id": node_id,
                     "doc": doc,
                     "ntype": ntype,
-                    "priority": (node or {}).get("priority", 0),
+                    "node_name": str((node or {}).get("node_name") or ""),
                 }
             )
 
@@ -185,7 +185,7 @@ class UpdateRoi(_RoiWriteBase):
                     row["camera_id"],
                     row["node_id"],
                     row["doc"],
-                    label=node_label(row["ntype"], row["priority"]),
+                    node_name=row["node_name"],
                     kind=row["ntype"],
                     ref_width=self._ref_w,
                     ref_height=self._ref_h,

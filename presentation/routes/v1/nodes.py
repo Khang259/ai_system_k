@@ -9,7 +9,7 @@ from application.container import container
 from domain.permissions import CAMERA_WRITE, NODE_MAINTENANCE, NODE_READ
 from presentation.deps import current_user, require_permission
 from presentation.http_v1 import audited_or_error, data_or_error
-from presentation.openapi_responses import RUNTIME_STATE
+from presentation.openapi_responses import GET_NODES, RUNTIME_STATE
 from presentation.schemas import (
     SetLockPayload,
     SetMaintenancePayload,
@@ -38,6 +38,7 @@ def get_runtime_state(
 @router.get(
     "/get_nodes",
     summary="Danh sách node — lọc tùy chọn theo zoneId (mirror từ camera)",
+    responses=GET_NODES,
 )
 async def get_nodes(
     zoneId: Optional[str] = Query(None),

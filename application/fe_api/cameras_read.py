@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from application.fe_api.mappers import camera_status, node_label, roi_item
+from application.fe_api.mappers import camera_status, roi_item
 from application.ports import CameraConfigRepository, CameraRuntime, NodeRepositoryPort
 from application.result import UseCaseResult
 
@@ -85,13 +85,12 @@ class GetRois:
                 ntype = (node or {}).get("node_type") or (
                     "start" if str(node_id).startswith("start_") else "end"
                 )
-                priority = (node or {}).get("priority", 0)
                 items.append(
                     roi_item(
                         cid,
                         node_id,
                         entry,
-                        label=node_label(ntype, priority),
+                        node_name=str((node or {}).get("node_name") or ""),
                         kind=ntype,
                         ref_width=self._ref_w,
                         ref_height=self._ref_h,

@@ -83,7 +83,7 @@ class TrtExecSlot:
         done.record(stream)
         return done, batch_size
 
-    def nms_ready(self, batch_size, conf=None, max_det=15):
+    def nms_ready(self, batch_size, conf=None, max_det=30):
         """Pack output end2end (B,300,6) → list[Tensor (K,6)]. Không gọi NMS CPU."""
         if conf is None:
             conf = settings.THRESHOLD_DETECT
