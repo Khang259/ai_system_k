@@ -112,8 +112,12 @@ uv run uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 | `tests/` | Pytest |
 | `docs/` | Tài liệu tích hợp FE / contract API |
 
-## Tài liệu FE
+## Tài liệu
 
+- **Người mới đọc trước:** [Logic nghiệp vụ + sửa file nào](docs/onboarding-business-logic.md)
+- [Việc còn tồn đọng](docs/pending-tasks.md)
+- [Runbook vận hành ca](docs/runbook-runtime-product.md)
+- [FE — Scan + dispatch theo batch](docs/fe-api-dispatch-batch.md)
 - [Zone runtime flags — `isRunning` / `isStreaming`](docs/fe-zones-runtime-flags.md)
 
 ## Ghi chú

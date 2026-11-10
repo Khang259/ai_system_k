@@ -34,7 +34,7 @@ ALL_PERMISSIONS = [
     MAP_WRITE,
 ]
 
-# Chưa có `node.command`: gửi lệnh thủ công đang hoãn (xem docs/api-fe-integration.md)
+# Chưa có `node.command`: gửi lệnh thủ công đang hoãn (xem docs/pending-tasks.md mục "Không làm")
 ROLE_PERMISSIONS = {
     "admin": list(ALL_PERMISSIONS),
     "operator": [

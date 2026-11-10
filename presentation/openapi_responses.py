@@ -115,7 +115,7 @@ CONFIRM_DISPATCH = merge(
 PENDING_PAIRS = {
     200: _desc(
         "batch(+filled) + readyStarts(nodeName) + nextPairs + waitingFor + "
-        "filledNodes + stuckNodes — docs/fe_pending_pairs_contract.md"
+        "filledNodes + stuckNodes — docs/fe-api-dispatch-batch.md"
     ),
 }
 

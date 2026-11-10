@@ -33,8 +33,6 @@ profiling/
 *.bak
 *.bak_eng
 
-docs/
-
 data/
 
 # Other files
